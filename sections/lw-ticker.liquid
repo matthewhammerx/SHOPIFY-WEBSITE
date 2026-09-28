@@ -4,7 +4,7 @@
       <div class="lw-ticker__group"{% if n == 2 %} aria-hidden="true"{% endif %}>
         {%- for r in (1..section.settings.repeat) -%}
           {%- for block in section.blocks -%}
-            <span class="lw-ticker__item" {% if n == 1 and r == 1 %}{{ block.shopify_attributes }}{% endif %}>{% render 'lw-icon', icon: block.settings.icon %}{{ block.settings.text }}</span>
+            <span class="lw-ticker__item" {% if n == 1 and r == 1 %}{{ block.shopify_attributes }}{% endif %}>{% render 'lw-icon', icon: block.settings.icon %}<span>{{ block.settings.text | replace: '†', '<sup>†</sup>' }}</span></span>
           {%- endfor -%}
         {%- endfor -%}
       </div>

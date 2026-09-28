@@ -324,10 +324,47 @@
     if (typeof target.update === 'function') target.update();
   }
 
+  /* ------------------------------------------------------------------ */
+  /* Sale countdown bar                                                  */
+  /* ------------------------------------------------------------------ */
+  function initCountdown(root) {
+    root.querySelectorAll('[data-lw-countdown]').forEach((el) => {
+      if (el._lw) return; el._lw = true;
+      const mode = el.dataset.mode;
+      const endFor = () => {
+        const now = new Date();
+        if (mode === 'date') {
+          const d = new Date((el.dataset.end || '').replace(' ', 'T'));
+          if (!isNaN(d) && d > now) return d;
+        }
+        if (mode === 'session') {
+          const key = 'lw-cd-end';
+          let end = 0;
+          try { end = Number(localStorage.getItem(key)); } catch (e) {}
+          if (!end || end < Date.now()) {
+            end = Date.now() + Number(el.dataset.hours || 2) * 3600000;
+            try { localStorage.setItem(key, String(end)); } catch (e) {}
+          }
+          return new Date(end);
+        }
+        const m = new Date(now); m.setHours(24, 0, 0, 0); return m;
+      };
+      let end = endFor();
+      const h = el.querySelector('[data-h]'), m = el.querySelector('[data-m]'), s = el.querySelector('[data-s]');
+      const pad = (n) => String(n).padStart(2, '0');
+      const tick = () => {
+        let left = Math.floor((end - Date.now()) / 1000);
+        if (left < 0) { end = endFor(); left = Math.max(0, Math.floor((end - Date.now()) / 1000)); }
+        h.textContent = pad(Math.floor(left / 3600)); m.textContent = pad(Math.floor((left % 3600) / 60)); s.textContent = pad(left % 60);
+      };
+      tick(); setInterval(tick, 1000);
+    });
+  }
+
   function initAll(root) {
     root = root || document;
     initGallery(root); initSliders(root); initVideos(root); initObservers(root);
-    initDelivery(root); initLoadMore(root); initSticky();
+    initDelivery(root); initLoadMore(root); initCountdown(root); initSticky();
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => initAll());

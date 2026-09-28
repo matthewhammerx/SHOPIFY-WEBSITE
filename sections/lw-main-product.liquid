@@ -138,7 +138,7 @@
                   assign k_icon = 'icon_' | append: i
                   assign t = block.settings[k_text]
                 -%}
-                {%- if t != blank -%}<div class="lw-benefit-grid__item">{% render 'lw-icon', icon: block.settings[k_icon] %}<span>{{ t }}</span></div>{%- endif -%}
+                {%- if t != blank -%}<div class="lw-benefit-grid__item">{% render 'lw-icon', icon: block.settings[k_icon] %}<span>{{ t | replace: '†', '<sup>†</sup>' }}</span></div>{%- endif -%}
               {%- endfor -%}
             </div>
           {%- when 'stock' -%}
