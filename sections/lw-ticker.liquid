@@ -1,0 +1,251 @@
+<div class="lw lw-ticker" style="--lw-bg: {{ section.settings.bg }}; --lw-fg: {{ section.settings.fg }}; --lw-ic: {{ section.settings.icon_color }}; --lw-speed: {{ section.settings.speed }}s; --lw-ticker-border: {% if section.settings.border %}1px{% else %}0{% endif %};">
+  <div class="lw-ticker__track">
+    {%- for n in (1..2) -%}
+      <div class="lw-ticker__group"{% if n == 2 %} aria-hidden="true"{% endif %}>
+        {%- for r in (1..section.settings.repeat) -%}
+          {%- for block in section.blocks -%}
+            <span class="lw-ticker__item" {% if n == 1 and r == 1 %}{{ block.shopify_attributes }}{% endif %}>{% render 'lw-icon', icon: block.settings.icon %}{{ block.settings.text }}</span>
+          {%- endfor -%}
+        {%- endfor -%}
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "LW · Benefit ticker",
+  "tag": "section",
+  "class": "lw-section-ticker",
+  "settings": [
+    {
+      "type": "range",
+      "id": "speed",
+      "label": "Scroll duration (seconds)",
+      "min": 10,
+      "max": 120,
+      "step": 5,
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "repeat",
+      "label": "Repeat items (fill wide screens)",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "checkbox",
+      "id": "border",
+      "label": "Top/bottom border",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "bg",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "fg",
+      "label": "Text",
+      "default": "#111511"
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Icons",
+      "default": "#009370"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Item",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "default": "check-circle",
+          "options": [
+            {
+              "value": "liver",
+              "label": "Liver"
+            },
+            {
+              "value": "shield",
+              "label": "Shield"
+            },
+            {
+              "value": "bolt",
+              "label": "Bolt"
+            },
+            {
+              "value": "leaf",
+              "label": "Leaf"
+            },
+            {
+              "value": "heart",
+              "label": "Heart"
+            },
+            {
+              "value": "brain",
+              "label": "Brain"
+            },
+            {
+              "value": "gut",
+              "label": "Gut"
+            },
+            {
+              "value": "flask",
+              "label": "Flask"
+            },
+            {
+              "value": "microscope",
+              "label": "Microscope"
+            },
+            {
+              "value": "check",
+              "label": "Check"
+            },
+            {
+              "value": "check-circle",
+              "label": "Check Circle"
+            },
+            {
+              "value": "x-circle",
+              "label": "X Circle"
+            },
+            {
+              "value": "star",
+              "label": "Star"
+            },
+            {
+              "value": "truck",
+              "label": "Truck"
+            },
+            {
+              "value": "gift",
+              "label": "Gift"
+            },
+            {
+              "value": "lock",
+              "label": "Lock"
+            },
+            {
+              "value": "refresh",
+              "label": "Refresh"
+            },
+            {
+              "value": "globe",
+              "label": "Globe"
+            },
+            {
+              "value": "sparkle",
+              "label": "Sparkle"
+            },
+            {
+              "value": "droplet",
+              "label": "Droplet"
+            },
+            {
+              "value": "sun",
+              "label": "Sun"
+            },
+            {
+              "value": "moon",
+              "label": "Moon"
+            },
+            {
+              "value": "scale",
+              "label": "Scale"
+            },
+            {
+              "value": "award",
+              "label": "Award"
+            },
+            {
+              "value": "capsule",
+              "label": "Capsule"
+            },
+            {
+              "value": "clock",
+              "label": "Clock"
+            },
+            {
+              "value": "smile",
+              "label": "Smile"
+            },
+            {
+              "value": "flame",
+              "label": "Flame"
+            },
+            {
+              "value": "wine",
+              "label": "Wine"
+            },
+            {
+              "value": "thumbs-up",
+              "label": "Thumbs Up"
+            },
+            {
+              "value": "vegan",
+              "label": "Vegan"
+            },
+            {
+              "value": "factory",
+              "label": "Factory"
+            },
+            {
+              "value": "filter",
+              "label": "Filter"
+            },
+            {
+              "value": "plus",
+              "label": "Plus"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Liver Support*"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "LW · Benefit ticker",
+      "blocks": [
+        {
+          "type": "item",
+          "settings": {
+            "icon": "liver",
+            "text": "Liver Support*"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon": "bolt",
+            "text": "Natural Energy*"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon": "gut",
+            "text": "Less Bloating*"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

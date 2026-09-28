@@ -1,0 +1,96 @@
+<section class="lw lw-guar" style="--lw-bg: {{ section.settings.bg }}; --lw-seal: {{ section.settings.seal_color }}; color: {{ section.settings.fg }};">
+  <div class="lw-wrap lw-guar__grid">
+    <div class="lw-guar__copy">
+      <div class="lw-guar__seal">
+        <svg viewBox="0 0 100 100" fill="currentColor" aria-hidden="true"><path d="M50 2l7.6 7.2 10.2-2.5 3.2 10 10 3.2-2.5 10.2L86 37.7 91 47l-5 9.3.6 10.2-10.2 2.8-3.2 10-10.2-.5L55.6 86 50 94l-5.6-8-7.5 7.2-10.2-.5-3.2-10-10.2-2.8.6-10.2L9 56.3 4 47l5-9.3-2.5-10.2 10-3.2 3.2-10 10.2 2.5L42.4 9.2 50 2Z"/></svg>
+        <b>{{ section.settings.days }}<small>{{ section.settings.seal_label }}</small></b>
+      </div>
+      {%- if section.settings.eyebrow != blank -%}<span class="lw-guar__eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+      <h2 class="lw-h lw-h--md">{{ section.settings.heading | replace: '[days]', section.settings.days }}</h2>
+      <div class="lw-sub lw-rte" style="max-width: 460px;">{{ section.settings.text | replace: '[days]', section.settings.days }}</div>
+      {%- if section.settings.button_label != blank -%}<a class="lw-btn" href="{{ section.settings.button_link | default: '#lw-product' }}">{{ section.settings.button_label }}</a>{%- endif -%}
+    </div>
+    <div class="lw-guar__img">
+      {%- if section.settings.image != blank -%}{{ section.settings.image | image_url: width: 900 | image_tag: loading: 'lazy', alt: '' }}{%- else -%}{{ 'lifestyle-2' | placeholder_svg_tag: 'lw-placeholder' }}{%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "LW · Guarantee",
+  "tag": "section",
+  "class": "lw-section-guarantee",
+  "settings": [
+    {
+      "type": "text",
+      "id": "days",
+      "label": "Days",
+      "default": "90"
+    },
+    {
+      "type": "text",
+      "id": "seal_label",
+      "label": "Seal label",
+      "default": "DAYS"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Feel the difference"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "[days]-Day Risk-Free Trial",
+      "info": "[days] = days setting"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>If you're not completely satisfied within [days] days, simply contact us for a full refund — even if the bottle is empty. No questions asked.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image (cut-out person/product works best)"
+    },
+    {
+      "type": "color",
+      "id": "bg",
+      "label": "Background",
+      "default": "#f1f0e8"
+    },
+    {
+      "type": "color",
+      "id": "fg",
+      "label": "Text",
+      "default": "#111511"
+    },
+    {
+      "type": "color",
+      "id": "seal_color",
+      "label": "Seal color",
+      "default": "#009370"
+    }
+  ],
+  "presets": [
+    {
+      "name": "LW · Guarantee"
+    }
+  ]
+}
+{% endschema %}

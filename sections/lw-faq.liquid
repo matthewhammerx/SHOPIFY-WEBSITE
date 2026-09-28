@@ -1,0 +1,154 @@
+<section class="lw lw-section lw-faq" style="--lw-pt: {{ section.settings.padding_top }}px; --lw-pb: {{ section.settings.padding_bottom }}px; --lw-bg: {{ section.settings.bg }}; --lw-fg: {{ section.settings.fg }}; --lw-hl: {{ section.settings.accent }}; --lw-accent: {{ section.settings.accent }};">
+  <div class="lw-wrap lw-wrap--narrow">
+    <div class="lw-head lw-center">
+      <h2 class="lw-h lw-h--lg">{{ section.settings.heading }}</h2>
+      {%- if section.settings.text != blank -%}<p class="lw-sub">{{ section.settings.text }}</p>{%- endif -%}
+    </div>
+    <div class="lw-acc">
+      {%- for block in section.blocks -%}
+        <details {{ block.shopify_attributes }}{% if forloop.first and section.settings.open_first %} open{% endif %}>
+          <summary><span>{{ block.settings.question }}</span><span class="lw-acc__plus" aria-hidden="true"></span></summary>
+          <div class="lw-acc__body lw-rte">{{ block.settings.answer }}</div>
+        </details>
+      {%- endfor -%}
+    </div>
+    {%- if section.settings.contact != blank -%}<div class="lw-sub lw-center lw-rte" style="margin-top: 28px;">{{ section.settings.contact }}</div>{%- endif -%}
+  </div>
+</section>
+{%- if section.settings.schema_markup and section.blocks.size > 0 -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {%- for block in section.blocks -%}
+    { "@type": "Question", "name": {{ block.settings.question | json }}, "acceptedAnswer": { "@type": "Answer", "text": {{ block.settings.answer | strip_html | json }} } }{% unless forloop.last %},{% endunless %}
+    {%- endfor -%}
+  ]
+}
+</script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "LW · FAQ",
+  "tag": "section",
+  "class": "lw-section-faq",
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Frequently Asked Questions"
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Subheading",
+      "default": "Got questions? We've got answers."
+    },
+    {
+      "type": "richtext",
+      "id": "contact",
+      "label": "Text below"
+    },
+    {
+      "type": "checkbox",
+      "id": "open_first",
+      "label": "Open first question",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "schema_markup",
+      "label": "Add FAQ rich-results markup (SEO)",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg",
+      "label": "Background",
+      "default": "#f1f0e8"
+    },
+    {
+      "type": "color",
+      "id": "fg",
+      "label": "Text",
+      "default": "#111511"
+    },
+    {
+      "type": "color",
+      "id": "accent",
+      "label": "Accent / highlighted words",
+      "default": "#009370"
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    }
+  ],
+  "blocks": [
+    {
+      "type": "question",
+      "name": "Question",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "How do I take it?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>Take 2 capsules daily with food and water.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "LW · FAQ",
+      "blocks": [
+        {
+          "type": "question"
+        },
+        {
+          "type": "question"
+        },
+        {
+          "type": "question"
+        },
+        {
+          "type": "question"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

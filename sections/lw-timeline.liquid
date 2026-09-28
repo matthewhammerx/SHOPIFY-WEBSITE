@@ -1,0 +1,145 @@
+<section class="lw lw-section" style="--lw-pt: {{ section.settings.padding_top }}px; --lw-pb: {{ section.settings.padding_bottom }}px; --lw-bg: {{ section.settings.bg }}; --lw-fg: {{ section.settings.fg }}; --lw-hl: {{ section.settings.accent }}; --lw-accent: {{ section.settings.accent }};">
+  <div class="lw-wrap lw-tl__grid">
+    <div class="lw-tl__intro">
+      <div class="lw-tl__img">{%- if section.settings.image != blank -%}{{ section.settings.image | image_url: width: 1000 | image_tag: loading: 'lazy', alt: '' }}{%- else -%}{{ 'lifestyle-2' | placeholder_svg_tag: 'lw-placeholder' }}{%- endif -%}</div>
+      <h2 class="lw-h lw-h--lg">{{ section.settings.heading }}</h2>
+      {%- if section.settings.text != blank -%}<div class="lw-sub lw-rte">{{ section.settings.text }}</div>{%- endif -%}
+      {%- if section.settings.button_label != blank -%}<a class="lw-btn lw-btn--block" href="{{ section.settings.button_link | default: '#lw-product' }}">{{ section.settings.button_label }}</a>{%- endif -%}
+    </div>
+    <div class="lw-tl__list">
+      {%- for block in section.blocks -%}
+        <div class="lw-tl__step lw-reveal" {{ block.shopify_attributes }}>
+          <div class="lw-tl__label">{{ block.settings.label }}</div>
+          <ul class="lw-tl__points">
+            {%- assign lines = block.settings.points | newline_to_br | split: '<br />' -%}
+            {%- for l in lines -%}{%- assign l = l | strip -%}{%- if l != blank -%}<li>{% render 'lw-icon', icon: 'check' %}<span>{{ l }}</span></li>{%- endif -%}{%- endfor -%}
+          </ul>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "LW · Results timeline",
+  "tag": "section",
+  "class": "lw-section-timeline",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "<em>Your Liver Wellness</em> Journey with LiverWell",
+      "info": "Tip: make words italic to highlight them in the accent color."
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>LiverWell is built for daily use, not quick fixes. Here's how things tend to shift once it's part of your routine.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Start My Journey →"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "fg",
+      "label": "Text",
+      "default": "#111511"
+    },
+    {
+      "type": "color",
+      "id": "accent",
+      "label": "Accent / highlighted words",
+      "default": "#009370"
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Week 1: Early Shifts"
+        },
+        {
+          "type": "textarea",
+          "id": "points",
+          "label": "Points (one per line)",
+          "default": "Digestion starts to feel lighter*\nBloating begins to settle*"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "LW · Results timeline",
+      "blocks": [
+        {
+          "type": "step"
+        },
+        {
+          "type": "step"
+        },
+        {
+          "type": "step"
+        },
+        {
+          "type": "step"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

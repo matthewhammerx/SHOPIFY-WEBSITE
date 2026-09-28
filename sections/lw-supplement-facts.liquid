@@ -1,0 +1,163 @@
+<section class="lw lw-section" style="--lw-pt: {{ section.settings.padding_top }}px; --lw-pb: {{ section.settings.padding_bottom }}px; --lw-bg: {{ section.settings.bg }}; --lw-fg: {{ section.settings.fg }}; --lw-hl: {{ section.settings.accent }}; --lw-accent: {{ section.settings.accent }};">
+  <div class="lw-wrap lw-facts__grid">
+    <div class="lw-head" style="margin: 0; max-width: none;">
+      <h2 class="lw-h lw-h--lg">{{ section.settings.heading }}</h2>
+      {%- if section.settings.text != blank -%}<div class="lw-sub lw-rte">{{ section.settings.text }}</div>{%- endif -%}
+      {%- if section.settings.image != blank -%}<div class="lw-facts__img">{{ section.settings.image | image_url: width: 900 | image_tag: loading: 'lazy', alt: '' }}</div>{%- endif -%}
+    </div>
+    <div class="lw-facts__label">
+      <h3>Supplement Facts</h3>
+      <div class="lw-facts__serv">
+        <div>Serving Size: {{ section.settings.serving_size }}</div>
+        <div>Servings Per Container: {{ section.settings.servings }}</div>
+      </div>
+      <div class="lw-facts__row lw-facts__row--head"><span>Amount Per Serving</span><span>% DV</span></div>
+      {%- for block in section.blocks -%}
+        <div class="lw-facts__row" {{ block.shopify_attributes }}><span>{{ block.settings.name }}</span><span>{{ block.settings.amount }} &nbsp; {{ block.settings.dv }}</span></div>
+      {%- endfor -%}
+      <div class="lw-facts__foot">{{ section.settings.footnote }}</div>
+      {%- if section.settings.other != blank -%}<div class="lw-facts__foot"><strong>Other ingredients:</strong> {{ section.settings.other }}</div>{%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "LW · Supplement facts",
+  "tag": "section",
+  "class": "lw-section-facts",
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Full Transparency. <em>No Proprietary Blends.</em>",
+      "info": "Tip: make words italic to highlight them in the accent color."
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "serving_size",
+      "label": "Serving size",
+      "default": "2 Capsules"
+    },
+    {
+      "type": "text",
+      "id": "servings",
+      "label": "Servings per container",
+      "default": "30"
+    },
+    {
+      "type": "text",
+      "id": "footnote",
+      "label": "Footnote",
+      "default": "† Daily Value (DV) not established."
+    },
+    {
+      "type": "textarea",
+      "id": "other",
+      "label": "Other ingredients"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "fg",
+      "label": "Text",
+      "default": "#111511"
+    },
+    {
+      "type": "color",
+      "id": "accent",
+      "label": "Accent / highlighted words",
+      "default": "#009370"
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    }
+  ],
+  "blocks": [
+    {
+      "type": "row",
+      "name": "Ingredient row",
+      "settings": [
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Ingredient",
+          "default": "Milk Thistle Extract (80% Silymarin)"
+        },
+        {
+          "type": "text",
+          "id": "amount",
+          "label": "Amount",
+          "default": "300mg"
+        },
+        {
+          "type": "text",
+          "id": "dv",
+          "label": "% DV",
+          "default": "†"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "LW · Supplement facts",
+      "blocks": [
+        {
+          "type": "row"
+        },
+        {
+          "type": "row"
+        },
+        {
+          "type": "row"
+        },
+        {
+          "type": "row"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,286 @@
+{%- liquid
+  assign img = section.settings.image
+  if img == blank and product
+    assign img = product.featured_image
+  endif
+-%}
+<section class="lw lw-section lw-bprod" style="--lw-pt: {{ section.settings.padding_top }}px; --lw-pb: {{ section.settings.padding_bottom }}px; --lw-fg: {{ section.settings.fg }}; --lw-bg-grad: linear-gradient(180deg, {{ section.settings.bg }} 0%, {{ section.settings.bg_2 }} 100%);">
+  <div class="lw-wrap">
+    <div class="lw-head lw-center">
+      <h2 class="lw-h lw-h--lg">{{ section.settings.heading }}</h2>
+      {%- if section.settings.text != blank -%}<p class="lw-sub" style="color: inherit; opacity: .85;">{{ section.settings.text }}</p>{%- endif -%}
+    </div>
+    <div class="lw-bprod__grid">
+      <div class="lw-bprod__icons">
+        {%- for block in section.blocks -%}
+          <div class="lw-bprod__icon lw-reveal" {{ block.shopify_attributes }}>
+            {%- if block.settings.image != blank -%}{{ block.settings.image | image_url: width: 120 | image_tag: loading: 'lazy', alt: '' }}{%- else -%}{% render 'lw-icon', icon: block.settings.icon %}{%- endif -%}
+            <span>{{ block.settings.text }}</span>
+          </div>
+        {%- endfor -%}
+      </div>
+      <div class="lw-bprod__visual">
+        {%- assign lw_alt = section.settings.heading | strip_html -%}
+        <div class="lw-bprod__rings" aria-hidden="true"><span></span><span></span><span></span></div>
+        {%- if img != blank -%}{{ img | image_url: width: 900 | image_tag: loading: 'lazy', alt: lw_alt }}{%- else -%}{{ 'product-2' | placeholder_svg_tag: 'lw-placeholder' }}{%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "LW · Benefits + product",
+  "tag": "section",
+  "class": "lw-section-bprod",
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Feel Better. Every Day."
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Subheading",
+      "default": "From digestion to steady energy, here's what LiverWell does every morning."
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Product image",
+      "info": "Defaults to the product's featured image. Transparent PNG looks best."
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg",
+      "label": "Gradient top",
+      "default": "#0a5a47"
+    },
+    {
+      "type": "color",
+      "id": "bg_2",
+      "label": "Gradient bottom",
+      "default": "#002a21"
+    },
+    {
+      "type": "color",
+      "id": "fg",
+      "label": "Text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Benefit",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "default": "liver",
+          "options": [
+            {
+              "value": "liver",
+              "label": "Liver"
+            },
+            {
+              "value": "shield",
+              "label": "Shield"
+            },
+            {
+              "value": "bolt",
+              "label": "Bolt"
+            },
+            {
+              "value": "leaf",
+              "label": "Leaf"
+            },
+            {
+              "value": "heart",
+              "label": "Heart"
+            },
+            {
+              "value": "brain",
+              "label": "Brain"
+            },
+            {
+              "value": "gut",
+              "label": "Gut"
+            },
+            {
+              "value": "flask",
+              "label": "Flask"
+            },
+            {
+              "value": "microscope",
+              "label": "Microscope"
+            },
+            {
+              "value": "check",
+              "label": "Check"
+            },
+            {
+              "value": "check-circle",
+              "label": "Check Circle"
+            },
+            {
+              "value": "x-circle",
+              "label": "X Circle"
+            },
+            {
+              "value": "star",
+              "label": "Star"
+            },
+            {
+              "value": "truck",
+              "label": "Truck"
+            },
+            {
+              "value": "gift",
+              "label": "Gift"
+            },
+            {
+              "value": "lock",
+              "label": "Lock"
+            },
+            {
+              "value": "refresh",
+              "label": "Refresh"
+            },
+            {
+              "value": "globe",
+              "label": "Globe"
+            },
+            {
+              "value": "sparkle",
+              "label": "Sparkle"
+            },
+            {
+              "value": "droplet",
+              "label": "Droplet"
+            },
+            {
+              "value": "sun",
+              "label": "Sun"
+            },
+            {
+              "value": "moon",
+              "label": "Moon"
+            },
+            {
+              "value": "scale",
+              "label": "Scale"
+            },
+            {
+              "value": "award",
+              "label": "Award"
+            },
+            {
+              "value": "capsule",
+              "label": "Capsule"
+            },
+            {
+              "value": "clock",
+              "label": "Clock"
+            },
+            {
+              "value": "smile",
+              "label": "Smile"
+            },
+            {
+              "value": "flame",
+              "label": "Flame"
+            },
+            {
+              "value": "wine",
+              "label": "Wine"
+            },
+            {
+              "value": "thumbs-up",
+              "label": "Thumbs Up"
+            },
+            {
+              "value": "vegan",
+              "label": "Vegan"
+            },
+            {
+              "value": "factory",
+              "label": "Factory"
+            },
+            {
+              "value": "filter",
+              "label": "Filter"
+            },
+            {
+              "value": "plus",
+              "label": "Plus"
+            }
+          ]
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Custom icon image"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Liver Support*"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "LW · Benefits + product",
+      "blocks": [
+        {
+          "type": "benefit"
+        },
+        {
+          "type": "benefit"
+        },
+        {
+          "type": "benefit"
+        },
+        {
+          "type": "benefit"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

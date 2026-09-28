@@ -1,0 +1,222 @@
+{%- comment -%}
+  LiverWell buy box. Renders the "offer" and "gift" blocks of the given section.
+  Params:
+    lw_product – product object
+    bs         – settings object holding the buy box settings (block.settings or section.settings)
+    section    – current section (for blocks + ids)
+    main       – true on the main product section (used by sticky ATC)
+    attrs      – optional block.shopify_attributes for theme editor
+
+  Pricing model (always matches checkout):
+    * Each offer points to a variant (by position, 0 = current variant) and a quantity.
+      Recommended setup: create variants "1 Bottle / 2 Bottles / 3 Bottles" priced as bundles.
+    * Optional per-offer discount code + percent (for single-variant products). The code is
+      applied via /discount/CODE before adding to cart, and the displayed price uses the percent.
+{%- endcomment -%}
+{%- liquid
+  assign current = lw_product.selected_or_first_available_variant
+  assign sub_enabled = false
+  if bs.enable_subscription and lw_product.selling_plan_groups.size > 0
+    assign sub_enabled = true
+  endif
+  assign offer_count = 0
+  assign default_index = 0
+  for b in section.blocks
+    if b.type == 'offer'
+      assign offer_count = offer_count | plus: 1
+      if b.settings.default_selected and default_index == 0
+        assign default_index = offer_count
+        assign default_gifts = b.settings.gifts
+      endif
+      if offer_count == 1
+        assign first_gifts = b.settings.gifts
+      endif
+    endif
+  endfor
+  if default_index == 0
+    assign default_index = 1
+    assign default_gifts = first_gifts
+  endif
+  assign default_gifts = default_gifts | default: 0
+-%}
+<lw-buy-box class="lw-buy" id="LwBuy-{{ section.id }}" {% if main %}data-main{% endif %} data-redirect="{{ bs.after_add | default: 'drawer' }}" {{ attrs }}>
+  {%- if bs.show_price_header -%}
+    <div class="lw-buy__price">
+      <span class="lw-buy__now" data-lw-price>{{ current.price | money }}</span>
+      <s class="lw-buy__was" data-lw-compare></s>
+      {%- if bs.sale_badge_text != blank -%}
+        <span class="lw-buy__badge" data-lw-save data-template="{{ bs.sale_badge_text | escape }}" hidden></span>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+
+  {%- if offer_count > 0 -%}
+    <div class="lw-offers" role="radiogroup" aria-label="Choose your bundle">
+      {%- assign oi = 0 -%}
+      {%- for b in section.blocks -%}
+        {%- if b.type != 'offer' -%}{%- continue -%}{%- endif -%}
+        {%- liquid
+          assign oi = oi | plus: 1
+          assign s = b.settings
+          assign v = current
+          if s.variant_position > 0 and lw_product.variants.size >= s.variant_position
+            assign vi = s.variant_position | minus: 1
+            assign v = lw_product.variants[vi]
+          endif
+          assign qty = s.quantity | default: 1
+          assign price = v.price | times: qty
+          if s.discount_code != blank and s.discount_percent > 0
+            assign keep = 100 | minus: s.discount_percent
+            assign price = price | times: keep | divided_by: 100
+          endif
+          assign unit_compare = v.compare_at_price | default: v.price
+          if s.compare_price_override > 0
+            assign unit_compare = s.compare_price_override | times: 100 | round
+            assign compare = unit_compare
+          else
+            assign compare = unit_compare | times: qty
+          endif
+          if compare <= price
+            assign compare = 0
+          endif
+          assign bottles = s.bottles | default: qty
+          if bottles < 1
+            assign bottles = 1
+          endif
+          assign per_unit = price | divided_by: bottles
+          assign sub_price = ''
+          assign plan_id = ''
+          if sub_enabled
+            for alloc in v.selling_plan_allocations
+              assign sub_price = alloc.price | times: qty
+              assign plan_id = alloc.selling_plan.id
+              break
+            endfor
+          endif
+          assign per_unit_money = per_unit | money
+          assign subtitle = s.subtitle | replace: '[per_unit]', per_unit_money
+        -%}
+        <label class="lw-offer{% if oi == default_index %} is-selected{% endif %}" data-lw-offer
+          data-variant="{{ v.id }}" data-qty="{{ qty }}" data-gifts="{{ s.gifts | default: 0 }}" data-price="{{ price }}" data-compare="{{ compare }}"
+          data-available="{{ v.available }}"
+          {% if sub_price != '' %}data-sub-price="{{ sub_price }}" data-selling-plan="{{ plan_id }}"{% endif %}
+          {% if s.discount_code != blank %}data-discount="{{ s.discount_code | escape }}"{% endif %}
+          {{ b.shopify_attributes }}>
+          <input type="radio" name="lw-offer-{{ section.id }}" value="{{ oi }}" {% if oi == default_index %}checked{% endif %}>
+          {%- if s.badge != blank -%}<span class="lw-offer__badge" style="{% if s.badge_color != blank %}background: {{ s.badge_color }};{% endif %}">{{ s.badge }}</span>{%- endif -%}
+          <div class="lw-offer__row">
+            <div class="lw-offer__img">
+              {%- if s.image != blank -%}
+                {{ s.image | image_url: width: 240 | image_tag: loading: 'lazy', alt: s.title }}
+              {%- elsif v.featured_image -%}
+                {{ v.featured_image | image_url: width: 160 | image_tag: loading: 'lazy' }}
+              {%- elsif lw_product.featured_image -%}
+                {{ lw_product.featured_image | image_url: width: 160 | image_tag: loading: 'lazy' }}
+              {%- endif -%}
+            </div>
+            <div>
+              <div class="lw-offer__title">{{ s.title }}</div>
+              {%- if subtitle != blank -%}<div class="lw-offer__per">{{ subtitle }}</div>{%- endif -%}
+            </div>
+            <div class="lw-offer__prices">
+              <div class="lw-offer__now" data-lw-offer-now>{{ price | money }}</div>
+              {%- if compare > 0 -%}<div class="lw-offer__was">{{ compare | money }}</div>{%- endif -%}
+            </div>
+          </div>
+          {%- if s.extra_title != blank -%}
+            <div class="lw-offer__extra">
+              <div class="lw-offer__extra-line">
+                {% render 'lw-icon', icon: 'check' %}
+                <div><strong>{{ s.extra_title }}</strong>{% if s.extra_text != blank %}<small>{{ s.extra_text }}</small>{% endif %}</div>
+              </div>
+            </div>
+          {%- endif -%}
+        </label>
+      {%- endfor -%}
+    </div>
+  {%- else -%}
+    {%- comment -%} No offers configured: fall back to the current variant, quantity 1 {%- endcomment -%}
+    <div hidden>
+      <label data-lw-offer data-variant="{{ current.id }}" data-qty="1" data-price="{{ current.price }}" data-compare="{{ current.compare_at_price | default: 0 }}" data-available="{{ current.available }}"
+        {%- if sub_enabled -%}{%- for alloc in current.selling_plan_allocations -%} data-sub-price="{{ alloc.price }}" data-selling-plan="{{ alloc.selling_plan.id }}"{%- break -%}{%- endfor -%}{%- endif -%}>
+        <input type="radio" name="lw-offer-{{ section.id }}" checked>
+      </label>
+    </div>
+  {%- endif -%}
+
+  {%- if sub_enabled -%}
+    <label class="lw-sub-toggle">
+      <input type="checkbox" data-lw-subscribe {% if bs.subscription_default %}checked{% endif %}>
+      <span><strong>{{ bs.subscription_label }}</strong>{% if bs.subscription_sub != blank %}<small>{{ bs.subscription_sub }}</small>{% endif %}</span>
+    </label>
+  {%- endif -%}
+
+  {%- liquid
+    assign gift_count = 0
+    for b in section.blocks
+      if b.type == 'gift'
+        assign gift_count = gift_count | plus: 1
+      endif
+    endfor
+  -%}
+  {%- if gift_count > 0 -%}
+    <div class="lw-gifts">
+      <span class="lw-gifts__label">{{ bs.gifts_label | default: 'Gifts unlocked' }}</span>
+      <div class="lw-gifts__row">
+        {%- assign gi = 0 -%}
+        {%- for b in section.blocks -%}
+          {%- if b.type != 'gift' -%}{%- continue -%}{%- endif -%}
+          {%- assign gi = gi | plus: 1 -%}
+          {%- if gi > 1 -%}<span class="lw-gifts__sep" aria-hidden="true"></span>{%- endif -%}
+          <div class="lw-gift{% if gi > default_gifts %} is-locked{% endif %}" data-lw-gift
+            {% if b.settings.gift_product != blank %}data-gift-variant="{{ b.settings.gift_product.selected_or_first_available_variant.id }}"{% endif %} {{ b.shopify_attributes }}>
+            <div class="lw-gift__img">
+              {%- if b.settings.image != blank -%}
+                {{ b.settings.image | image_url: width: 160 | image_tag: loading: 'lazy', alt: b.settings.title }}
+              {%- else -%}
+                {% render 'lw-icon', icon: b.settings.icon %}
+              {%- endif -%}
+              <span class="lw-gift__lock">{% render 'lw-icon', icon: 'lock' %}</span>
+            </div>
+            {%- if b.settings.value != blank -%}<span class="lw-gift__value">{{ b.settings.value }}</span>{%- endif -%}
+            <span class="lw-gift__name">{{ b.settings.title }}</span>
+            <span class="lw-gift__locked-text">{{ bs.gifts_locked_text | default: 'Locked' }}</span>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- if bs.show_delivery -%}
+    <div class="lw-delivery">
+      <span class="lw-delivery__dot" aria-hidden="true"></span>
+      <span>{{ bs.delivery_text }} <strong data-lw-delivery="{{ bs.delivery_days }}"></strong></span>
+      {%- if bs.ships_from != blank -%}<span>· {{ bs.ships_from }}</span>{%- endif -%}
+    </div>
+  {%- endif -%}
+
+  <button type="button" class="lw-btn lw-atc" data-lw-atc {% unless current.available %}disabled{% endunless %}>
+    <span class="lw-atc__label">{% if current.available %}{{ bs.atc_label | default: 'Add To Cart' }}{% else %}{{ 'products.product.sold_out' | t }}{% endif %}</span>
+    {%- if bs.show_atc_price -%}
+      <span class="lw-atc__price"><s data-lw-compare></s><span data-lw-price>{{ current.price | money }}</span></span>
+    {%- endif -%}
+    <svg class="lw-atc__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16M14 6l6 6-6 6"/></svg>
+  </button>
+  <p class="lw-buy__error" data-lw-error role="alert"></p>
+
+  {%- if bs.note_1 != blank or bs.note_2 != blank -%}
+    <div class="lw-buy__notes" {% if bs.notes_only_subscription and sub_enabled %}data-lw-sub-note{% unless bs.subscription_default %} hidden{% endunless %}{% endif %}>
+      {%- if bs.note_1 != blank -%}<span>{% render 'lw-icon', icon: 'refresh' %}{{ bs.note_1 }}</span>{%- endif -%}
+      {%- if bs.note_1 != blank and bs.note_2 != blank -%}<span aria-hidden="true">|</span>{%- endif -%}
+      {%- if bs.note_2 != blank -%}<span>{% render 'lw-icon', icon: 'clock' %}{{ bs.note_2 }}</span>{%- endif -%}
+    </div>
+  {%- endif -%}
+
+  {%- if bs.trust_1 != blank or bs.trust_2 != blank or bs.trust_3 != blank -%}
+    <div class="lw-trust">
+      {%- if bs.trust_1 != blank -%}<span>{% render 'lw-icon', icon: 'shield' %}{{ bs.trust_1 }}</span>{%- endif -%}
+      {%- if bs.trust_2 != blank -%}<span>{% render 'lw-icon', icon: 'truck' %}{{ bs.trust_2 }}</span>{%- endif -%}
+      {%- if bs.trust_3 != blank -%}<span>{% render 'lw-icon', icon: 'leaf' %}{{ bs.trust_3 }}</span>{%- endif -%}
+    </div>
+  {%- endif -%}
+</lw-buy-box>

@@ -1,0 +1,135 @@
+<section class="lw lw-section" style="--lw-pt: {{ section.settings.padding_top }}px; --lw-pb: {{ section.settings.padding_bottom }}px; --lw-bg: {{ section.settings.bg }}; --lw-fg: {{ section.settings.fg }}; --lw-hl: {{ section.settings.accent }}; --lw-accent: {{ section.settings.accent }};">
+  <div class="lw-wrap">
+    <div class="lw-head lw-center">
+      <h2 class="lw-h lw-h--lg">{{ section.settings.heading }}</h2>
+      {%- if section.settings.text != blank -%}<p class="lw-sub">{{ section.settings.text }}</p>{%- endif -%}
+    </div>
+    <div class="lw-science__grid" style="--lw-cols: {{ section.blocks.size | at_most: 4 | at_least: 1 }};">
+      {%- for block in section.blocks -%}
+        <div class="lw-science__item lw-reveal" {{ block.shopify_attributes }}>
+          <div class="lw-science__num" data-lw-count="{{ block.settings.number }}" data-suffix="{{ block.settings.suffix | escape }}">{{ block.settings.number }}{{ block.settings.suffix }}</div>
+          <p class="lw-science__text">{{ block.settings.text }}</p>
+        </div>
+      {%- endfor -%}
+    </div>
+    {%- if section.settings.footnote != blank -%}<p class="lw-sub lw-center" style="font-size: 12px; margin-top: 20px;">{{ section.settings.footnote }}</p>{%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "LW · Research stats",
+  "tag": "section",
+  "class": "lw-section-science",
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Backed by Research. <em>Built on Results.</em>",
+      "info": "Tip: make words italic to highlight them in the accent color."
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Subheading"
+    },
+    {
+      "type": "text",
+      "id": "footnote",
+      "label": "Footnote"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "fg",
+      "label": "Text",
+      "default": "#111511"
+    },
+    {
+      "type": "color",
+      "id": "accent",
+      "label": "Accent / highlighted words",
+      "default": "#009370"
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Stat",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "text",
+          "id": "number",
+          "label": "Number",
+          "default": "80"
+        },
+        {
+          "type": "text",
+          "id": "suffix",
+          "label": "Suffix"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text",
+          "default": "Silymarin concentration"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "LW · Research stats",
+      "blocks": [
+        {
+          "type": "stat"
+        },
+        {
+          "type": "stat"
+        },
+        {
+          "type": "stat"
+        },
+        {
+          "type": "stat"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

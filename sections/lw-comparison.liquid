@@ -1,0 +1,342 @@
+{%- assign rows = section.blocks | where: 'type', 'row' -%}
+{%- assign points = section.blocks | where: 'type', 'point' -%}
+<section class="lw lw-section lw-cmp" style="--lw-pt: {{ section.settings.padding_top }}px; --lw-pb: {{ section.settings.padding_bottom }}px; --lw-fg: {{ section.settings.fg }}; --lw-bg-grad: linear-gradient(180deg, {{ section.settings.bg }} 0%, {{ section.settings.bg_2 }} 100%); --lw-us-bg: {{ section.settings.us_bg }};">
+  <div class="lw-wrap lw-cmp__grid">
+    <div class="lw-cmp__table">
+      <div class="lw-cmp__col lw-cmp__col--us">
+        {%- if section.settings.us_image != blank -%}<div class="lw-cmp__colimg">{{ section.settings.us_image | image_url: width: 200 | image_tag: loading: 'lazy', alt: section.settings.us_label }}</div>{%- endif -%}
+        <div class="lw-cmp__head">{{ section.settings.us_label }}</div>
+        {%- for block in rows -%}<div class="lw-cmp__cell" {{ block.shopify_attributes }}>{% render 'lw-icon', icon: block.settings.icon %}<span>{{ block.settings.us_text }}</span></div>{%- endfor -%}
+      </div>
+      <div class="lw-cmp__col lw-cmp__col--them">
+        {%- if section.settings.them_image != blank -%}<div class="lw-cmp__colimg">{{ section.settings.them_image | image_url: width: 200 | image_tag: loading: 'lazy', alt: section.settings.them_label }}</div>{%- endif -%}
+        <div class="lw-cmp__head">{{ section.settings.them_label }}</div>
+        {%- for block in rows -%}<div class="lw-cmp__cell">{% render 'lw-icon', icon: 'x-circle' %}<span>{{ block.settings.them_text }}</span></div>{%- endfor -%}
+      </div>
+    </div>
+    <div class="lw-cmp__copy">
+      <h2 class="lw-h lw-h--lg">{{ section.settings.heading }}</h2>
+      <ul class="lw-cmp__list">
+        {%- for block in points -%}<li {{ block.shopify_attributes }}>{% render 'lw-icon', icon: 'check-circle' %}<span><strong>{{ block.settings.bold }}</strong> {{ block.settings.text }}</span></li>{%- endfor -%}
+      </ul>
+      {%- if section.settings.button_label != blank -%}<a class="lw-btn lw-btn--cream lw-btn--block" href="{{ section.settings.button_link | default: '#lw-product' }}">{{ section.settings.button_label }}</a>{%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "LW · Us vs. them",
+  "tag": "section",
+  "class": "lw-section-comparison",
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "LiverWell vs. Other Brands"
+    },
+    {
+      "type": "text",
+      "id": "us_label",
+      "label": "Our column label",
+      "default": "LiverWell"
+    },
+    {
+      "type": "image_picker",
+      "id": "us_image",
+      "label": "Our product image"
+    },
+    {
+      "type": "text",
+      "id": "them_label",
+      "label": "Their column label",
+      "default": "Other Brands"
+    },
+    {
+      "type": "image_picker",
+      "id": "them_image",
+      "label": "Generic product image"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Try Risk-Free Today"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg",
+      "label": "Gradient top",
+      "default": "#243015"
+    },
+    {
+      "type": "color",
+      "id": "bg_2",
+      "label": "Gradient bottom",
+      "default": "#151b0c"
+    },
+    {
+      "type": "color",
+      "id": "fg",
+      "label": "Text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "us_bg",
+      "label": "Our column background",
+      "default": "#5c6b2e"
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    }
+  ],
+  "blocks": [
+    {
+      "type": "row",
+      "name": "Table row",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Our icon",
+          "default": "microscope",
+          "options": [
+            {
+              "value": "liver",
+              "label": "Liver"
+            },
+            {
+              "value": "shield",
+              "label": "Shield"
+            },
+            {
+              "value": "bolt",
+              "label": "Bolt"
+            },
+            {
+              "value": "leaf",
+              "label": "Leaf"
+            },
+            {
+              "value": "heart",
+              "label": "Heart"
+            },
+            {
+              "value": "brain",
+              "label": "Brain"
+            },
+            {
+              "value": "gut",
+              "label": "Gut"
+            },
+            {
+              "value": "flask",
+              "label": "Flask"
+            },
+            {
+              "value": "microscope",
+              "label": "Microscope"
+            },
+            {
+              "value": "check",
+              "label": "Check"
+            },
+            {
+              "value": "check-circle",
+              "label": "Check Circle"
+            },
+            {
+              "value": "x-circle",
+              "label": "X Circle"
+            },
+            {
+              "value": "star",
+              "label": "Star"
+            },
+            {
+              "value": "truck",
+              "label": "Truck"
+            },
+            {
+              "value": "gift",
+              "label": "Gift"
+            },
+            {
+              "value": "lock",
+              "label": "Lock"
+            },
+            {
+              "value": "refresh",
+              "label": "Refresh"
+            },
+            {
+              "value": "globe",
+              "label": "Globe"
+            },
+            {
+              "value": "sparkle",
+              "label": "Sparkle"
+            },
+            {
+              "value": "droplet",
+              "label": "Droplet"
+            },
+            {
+              "value": "sun",
+              "label": "Sun"
+            },
+            {
+              "value": "moon",
+              "label": "Moon"
+            },
+            {
+              "value": "scale",
+              "label": "Scale"
+            },
+            {
+              "value": "award",
+              "label": "Award"
+            },
+            {
+              "value": "capsule",
+              "label": "Capsule"
+            },
+            {
+              "value": "clock",
+              "label": "Clock"
+            },
+            {
+              "value": "smile",
+              "label": "Smile"
+            },
+            {
+              "value": "flame",
+              "label": "Flame"
+            },
+            {
+              "value": "wine",
+              "label": "Wine"
+            },
+            {
+              "value": "thumbs-up",
+              "label": "Thumbs Up"
+            },
+            {
+              "value": "vegan",
+              "label": "Vegan"
+            },
+            {
+              "value": "factory",
+              "label": "Factory"
+            },
+            {
+              "value": "filter",
+              "label": "Filter"
+            },
+            {
+              "value": "plus",
+              "label": "Plus"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "us_text",
+          "label": "Our text",
+          "default": "80% Silymarin"
+        },
+        {
+          "type": "text",
+          "id": "them_text",
+          "label": "Their text",
+          "default": "Underdosed Extracts"
+        }
+      ]
+    },
+    {
+      "type": "point",
+      "name": "Checklist point",
+      "settings": [
+        {
+          "type": "text",
+          "id": "bold",
+          "label": "Bold lead",
+          "default": "Clinically-Studied Ingredients —"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Ingredients with real research behind them."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "LW · Us vs. them",
+      "blocks": [
+        {
+          "type": "row"
+        },
+        {
+          "type": "row"
+        },
+        {
+          "type": "row"
+        },
+        {
+          "type": "row"
+        },
+        {
+          "type": "row"
+        },
+        {
+          "type": "point"
+        },
+        {
+          "type": "point"
+        },
+        {
+          "type": "point"
+        },
+        {
+          "type": "point"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,249 @@
+{%- assign strip = section.blocks | where: 'type', 'photo' -%}
+{%- assign reviews = section.blocks | where: 'type', 'review' -%}
+<section class="lw lw-section" style="--lw-pt: {{ section.settings.padding_top }}px; --lw-pb: {{ section.settings.padding_bottom }}px; --lw-bg: {{ section.settings.bg }}; --lw-fg: {{ section.settings.fg }}; --lw-hl: {{ section.settings.accent }}; --lw-accent: {{ section.settings.accent }};">
+  <div class="lw-wrap">
+    <div class="lw-head lw-center">
+      {% render 'lw-stars', count: 5 %}
+      <h2 class="lw-h lw-h--lg">{{ section.settings.heading }}</h2>
+      {%- if section.settings.text != blank -%}<p class="lw-sub">{{ section.settings.text }}</p>{%- endif -%}
+    </div>
+  </div>
+  {%- if strip.size > 0 -%}
+    <div class="lw-strip" style="--lw-speed: {{ section.settings.speed }}s;">
+      <div class="lw-strip__track">
+        {%- for n in (1..2) -%}
+          {%- for r in (1..section.settings.strip_repeat) -%}
+            {%- for block in strip -%}
+              {%- if block.settings.image != blank -%}{{ block.settings.image | image_url: width: 200 | image_tag: loading: 'lazy', alt: '' }}{%- else -%}{{ 'lifestyle-2' | placeholder_svg_tag: 'lw-placeholder' }}{%- endif -%}
+            {%- endfor -%}
+          {%- endfor -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+  <div class="lw-wrap">
+    <div class="lw-slider" data-lw-slider style="--lw-cols: 3; --lw-col-m: 86%;">
+      <div class="lw-slider__track">
+        {%- for block in reviews -%}
+<article class="lw-review" {{ block.shopify_attributes }}>
+  <div class="lw-review__top">{{ block.settings.score }} {% render 'lw-stars', count: block.settings.rating %}</div>
+  {%- if block.settings.title != blank -%}<div class="lw-review__title">{{ block.settings.title }}</div>{%- endif -%}
+  <div class="lw-review__body">{{ block.settings.body | newline_to_br }}</div>
+  {%- if block.settings.photo != blank -%}<div class="lw-review__img">{{ block.settings.photo | image_url: width: 240 | image_tag: loading: 'lazy' }}</div>{%- endif -%}
+  {%- if block.settings.tags != blank -%}
+    <div class="lw-review__tags">{%- assign tags = block.settings.tags | split: ',' -%}{%- for t in tags -%}<span class="lw-tag">{{ t | strip }}</span>{%- endfor -%}</div>
+  {%- endif -%}
+  <div class="lw-review__meta">
+    <span class="lw-review__who">
+      {%- if block.settings.avatar != blank -%}{{ block.settings.avatar | image_url: width: 60 | image_tag: loading: 'lazy' }}{%- else -%}<span class="lw-review__initial">{{ block.settings.name | slice: 0 }}</span>{%- endif -%}
+      {{ block.settings.name }}
+    </span>
+    {%- if section.settings.verified_label != blank -%}<span class="lw-review__verified">{% render 'lw-icon', icon: 'check-circle' %}{{ section.settings.verified_label }}</span>{%- endif -%}
+  </div>
+</article>
+        {%- endfor -%}
+      </div>
+      <div class="lw-slider__nav">
+      <div class="lw-slider__dots"></div>
+      <div class="lw-slider__arrows">
+        <button type="button" data-lw-prev aria-label="Previous">{% render 'lw-icon', icon: 'arrow-left' %}</button>
+        <button type="button" data-lw-next aria-label="Next">{% render 'lw-icon', icon: 'arrow-right' %}</button>
+      </div>
+    </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "LW · Reviews (stories)",
+  "tag": "section",
+  "class": "lw-section-reviews",
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Real Stories, <em>Real Results</em>",
+      "info": "Tip: make words italic to highlight them in the accent color."
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Subheading",
+      "default": "See what our customers are saying about LiverWell"
+    },
+    {
+      "type": "text",
+      "id": "verified_label",
+      "label": "Verified label",
+      "default": "Verified customer"
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "label": "Photo strip duration (s)",
+      "min": 10,
+      "max": 120,
+      "step": 5,
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "strip_repeat",
+      "label": "Repeat photos",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg",
+      "label": "Background",
+      "default": "#f1f0e8"
+    },
+    {
+      "type": "color",
+      "id": "fg",
+      "label": "Text",
+      "default": "#111511"
+    },
+    {
+      "type": "color",
+      "id": "accent",
+      "label": "Accent / highlighted words",
+      "default": "#009370"
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    }
+  ],
+  "blocks": [
+    {
+      "type": "photo",
+      "name": "Strip photo",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        }
+      ]
+    },
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        {
+          "type": "range",
+          "id": "rating",
+          "label": "Stars",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        },
+        {
+          "type": "text",
+          "id": "score",
+          "label": "Score label",
+          "default": "5.0"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Headline",
+          "default": "\"Finally feel like myself again.\""
+        },
+        {
+          "type": "textarea",
+          "id": "body",
+          "label": "Review"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Name",
+          "default": "Customer N."
+        },
+        {
+          "type": "image_picker",
+          "id": "avatar",
+          "label": "Avatar"
+        },
+        {
+          "type": "image_picker",
+          "id": "photo",
+          "label": "Review photo"
+        },
+        {
+          "type": "text",
+          "id": "tags",
+          "label": "Tags (comma separated)",
+          "default": "Less Bloating, More Energy"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "LW · Reviews (stories)",
+      "blocks": [
+        {
+          "type": "photo"
+        },
+        {
+          "type": "photo"
+        },
+        {
+          "type": "photo"
+        },
+        {
+          "type": "photo"
+        },
+        {
+          "type": "photo"
+        },
+        {
+          "type": "photo"
+        },
+        {
+          "type": "review"
+        },
+        {
+          "type": "review"
+        },
+        {
+          "type": "review"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

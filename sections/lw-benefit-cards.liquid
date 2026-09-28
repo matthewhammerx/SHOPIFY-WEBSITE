@@ -1,0 +1,137 @@
+<section class="lw lw-section" style="--lw-pt: {{ section.settings.padding_top }}px; --lw-pb: {{ section.settings.padding_bottom }}px; --lw-bg: {{ section.settings.bg }}; --lw-fg: {{ section.settings.fg }}; --lw-hl: {{ section.settings.accent }}; --lw-accent: {{ section.settings.accent }};">
+  <div class="lw-wrap">
+    <div class="lw-head lw-center">
+      <h2 class="lw-h lw-h--lg">{{ section.settings.heading }}</h2>
+      {%- if section.settings.text != blank -%}<div class="lw-sub lw-rte">{{ section.settings.text }}</div>{%- endif -%}
+    </div>
+    <div class="lw-bcards">
+      {%- for block in section.blocks -%}
+        <details class="lw-bcard" {{ block.shopify_attributes }}>
+          <summary>
+            <div class="lw-bcard__img">{%- if block.settings.image != blank -%}{{ block.settings.image | image_url: width: 240 | image_tag: loading: 'lazy', alt: block.settings.title }}{%- else -%}{{ 'lifestyle-1' | placeholder_svg_tag: 'lw-placeholder' }}{%- endif -%}</div>
+            <div><div class="lw-bcard__title">{{ block.settings.title }}</div><div class="lw-bcard__sub">{{ block.settings.subtitle }}</div></div>
+            <span class="lw-bcard__toggle"><span class="lw-acc__plus" aria-hidden="true"></span></span>
+          </summary>
+          <div class="lw-bcard__body lw-rte">{{ block.settings.content }}</div>
+        </details>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "LW · Benefit cards",
+  "tag": "section",
+  "class": "lw-section-bcards",
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "<em>Real Benefits.</em> Backed by Research.",
+      "info": "Tip: make words italic to highlight them in the accent color."
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg",
+      "label": "Background",
+      "default": "#f1f0e8"
+    },
+    {
+      "type": "color",
+      "id": "fg",
+      "label": "Text",
+      "default": "#111511"
+    },
+    {
+      "type": "color",
+      "id": "accent",
+      "label": "Accent / highlighted words",
+      "default": "#009370"
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Benefit card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Liver"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "default": "Your body's filter, supported."
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Expanded content"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "LW · Benefit cards",
+      "blocks": [
+        {
+          "type": "card"
+        },
+        {
+          "type": "card"
+        },
+        {
+          "type": "card"
+        },
+        {
+          "type": "card"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

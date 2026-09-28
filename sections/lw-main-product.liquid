@@ -1,0 +1,2143 @@
+{%- liquid
+  assign lw_product = product
+  if section.settings.product != blank
+    assign lw_product = section.settings.product
+  endif
+  assign tiles = section.blocks | where: 'type', 'tile'
+  assign ugc = section.blocks | where: 'type', 'ugc_video'
+-%}
+<section class="lw lw-pdp" id="lw-product" style="--lw-bg: {{ section.settings.bg }};">
+  <div class="lw-wrap lw-pdp__grid">
+    <div class="lw-pdp__media">
+      <div class="lw-gallery" data-lw-gallery>
+        <div class="lw-gallery__stage{% if tiles.size > 0 %} lw-gallery__stage--tiles{% endif %}">
+          <div class="lw-gallery__main">
+            <div class="lw-gallery__slides">
+              {%- for media in lw_product.media -%}
+                <div class="lw-gallery__slide">
+                  {%- liquid
+                    assign load = 'lazy'
+                    if forloop.first
+                      assign load = 'eager'
+                    endif
+                  -%}
+                  {%- case media.media_type -%}
+                    {%- when 'video' -%}
+                      {{ media | video_tag: controls: true, playsinline: true, muted: true, loop: true, image_size: '1100x' }}
+                    {%- when 'external_video' -%}
+                      {{ media | external_video_tag }}
+                    {%- else -%}
+                      {{ media.preview_image | image_url: width: 1100 | image_tag: loading: load, sizes: '(min-width: 990px) 600px, 100vw', widths: '400, 600, 800, 1100', alt: media.alt }}
+                  {%- endcase -%}
+                </div>
+              {%- else -%}
+                <div class="lw-gallery__slide">{{ 'product-1' | placeholder_svg_tag: 'lw-placeholder' }}</div>
+              {%- endfor -%}
+            </div>
+            {%- if lw_product.media.size > 1 -%}
+              <button type="button" class="lw-gallery__arrow lw-gallery__arrow--prev" aria-label="Previous image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m15 6-6 6 6 6"/></svg></button>
+              <button type="button" class="lw-gallery__arrow lw-gallery__arrow--next" aria-label="Next image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m9 6 6 6-6 6"/></svg></button>
+            {%- endif -%}
+          </div>
+          {%- if tiles.size > 0 -%}
+            <div class="lw-gallery__tiles">
+              {%- for block in tiles -%}
+                <div class="lw-gallery__tile{% if block.settings.image != blank %} lw-gallery__tile--img{% endif %}" style="--lw-tile-bg: {{ block.settings.bg }}; --lw-tile-fg: {{ block.settings.fg }};" {{ block.shopify_attributes }}>
+                  {%- if block.settings.image != blank -%}
+                    {{ block.settings.image | image_url: width: 400 | image_tag: loading: 'lazy', alt: block.settings.text }}
+                  {%- else -%}
+                    {% render 'lw-icon', icon: block.settings.icon %}
+                    <span>{{ block.settings.text }}</span>
+                  {%- endif -%}
+                </div>
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+        </div>
+        {%- if lw_product.media.size > 1 -%}
+          <div class="lw-gallery__thumbs">
+            {%- for media in lw_product.media -%}
+              <button type="button" class="lw-gallery__thumb{% if forloop.first %} is-active{% endif %}" aria-label="Show media {{ forloop.index }}">
+                {{ media.preview_image | image_url: width: 160 | image_tag: loading: 'lazy', alt: '' }}
+              </button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- if ugc.size > 0 -%}
+        <div class="lw-ugc">
+          {%- if section.settings.ugc_heading != blank -%}<h3 class="lw-h lw-h--sm">{{ section.settings.ugc_heading }}</h3>{%- endif -%}
+          <div class="lw-slider" data-lw-slider style="--lw-cols: 3; --lw-cols-t: 3; --lw-col-m: 42%; --lw-gap: 10px;">
+            <div class="lw-slider__track">
+              {%- for block in ugc -%}
+                <div class="lw-vid" data-lw-video {{ block.shopify_attributes }}>
+                  {%- if block.settings.video != blank -%}
+                    {{ block.settings.video | video_tag: playsinline: true, loop: true, muted: true, preload: 'metadata', image_size: '500x' }}
+                  {%- elsif block.settings.image != blank -%}
+                    {{ block.settings.image | image_url: width: 500 | image_tag: loading: 'lazy' }}
+                  {%- else -%}
+                    {{ 'lifestyle-1' | placeholder_svg_tag: 'lw-placeholder' }}
+                  {%- endif -%}
+                  {%- if block.settings.video != blank -%}<span class="lw-vid__play">{% render 'lw-icon', icon: 'play' %}</span>{%- endif -%}
+                  {%- if block.settings.caption != blank -%}<span class="lw-vid__cap">{{ block.settings.caption }}</span>{%- endif -%}
+                </div>
+              {%- endfor -%}
+            </div>
+            <div class="lw-slider__nav"><div class="lw-slider__dots" hidden></div><div class="lw-slider__arrows">
+              <button type="button" data-lw-prev aria-label="Previous">{% render 'lw-icon', icon: 'arrow-left' %}</button>
+              <button type="button" data-lw-next aria-label="Next">{% render 'lw-icon', icon: 'arrow-right' %}</button>
+            </div></div>
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="lw-pdp__info">
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when '@app' -%}
+            {% render block %}
+          {%- when 'rating' -%}
+            <div class="lw-rating" {{ block.shopify_attributes }}>
+              {% render 'lw-stars', count: 5 %}
+              <span>{{ block.settings.text }}</span>
+              {%- if block.settings.avatar_1 != blank or block.settings.show_avatars -%}
+                <span class="lw-rating__avatars">
+                  {%- for i in (1..4) -%}
+                    {%- liquid
+                      case i
+                        when 1
+                          assign av = block.settings.avatar_1
+                        when 2
+                          assign av = block.settings.avatar_2
+                        when 3
+                          assign av = block.settings.avatar_3
+                        else
+                          assign av = block.settings.avatar_4
+                      endcase
+                    -%}
+                    {%- if av != blank -%}{{ av | image_url: width: 60 | image_tag: loading: 'lazy', alt: '' }}{%- elsif block.settings.show_avatars -%}<span></span>{%- endif -%}
+                  {%- endfor -%}
+                </span>
+              {%- endif -%}
+            </div>
+          {%- when 'eyebrow' -%}
+            <div class="lw-pdp__eyebrow" {{ block.shopify_attributes }}>{{ block.settings.text }}</div>
+          {%- when 'title' -%}
+            <h1 class="lw-pdp__title" {{ block.shopify_attributes }}>{% if block.settings.title != blank %}{{ block.settings.title }}{% else %}{{ lw_product.title }}{% endif %}</h1>
+          {%- when 'text' -%}
+            <div class="lw-pdp__desc lw-rte" {{ block.shopify_attributes }}>
+              {%- if block.settings.use_product_description -%}{{ lw_product.description }}{%- else -%}{{ block.settings.text }}{%- endif -%}
+            </div>
+          {%- when 'benefits' -%}
+            <div class="lw-benefit-grid" {{ block.shopify_attributes }}>
+              {%- for i in (1..6) -%}
+                {%- liquid
+                  assign k_text = 'text_' | append: i
+                  assign k_icon = 'icon_' | append: i
+                  assign t = block.settings[k_text]
+                -%}
+                {%- if t != blank -%}<div class="lw-benefit-grid__item">{% render 'lw-icon', icon: block.settings[k_icon] %}<span>{{ t }}</span></div>{%- endif -%}
+              {%- endfor -%}
+            </div>
+          {%- when 'stock' -%}
+            <div class="lw-stock" {{ block.shopify_attributes }}>
+              <div class="lw-stock__bar"><span data-lw-width="{{ block.settings.percent }}%"></span></div>
+              <span>{{ block.settings.text | replace: '[percent]', block.settings.percent }}</span>
+            </div>
+          {%- when 'buy_box' -%}
+            {%- render 'lw-buy-box', lw_product: lw_product, bs: block.settings, section: section, main: true, attrs: block.shopify_attributes -%}
+          {%- when 'collapsible' -%}
+            <div class="lw-acc" {{ block.shopify_attributes }}>
+              <details{% if block.settings.open %} open{% endif %}>
+                <summary><span class="lw-acc__title">{% if block.settings.icon != 'none' %}{% render 'lw-icon', icon: block.settings.icon %}{% endif %}{{ block.settings.heading }}</span><span class="lw-acc__plus" aria-hidden="true"></span></summary>
+                <div class="lw-acc__body lw-rte">
+                  {{ block.settings.content }}
+                  {%- if block.settings.page != blank -%}{{ block.settings.page.content }}{%- endif -%}
+                </div>
+              </details>
+            </div>
+          {%- when 'custom_liquid' -%}
+            <div {{ block.shopify_attributes }}>{{ block.settings.custom_liquid }}</div>
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{%- if lw_product != blank -%}
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": {{ lw_product.title | json }},
+    "url": {{ request.origin | append: lw_product.url | json }},
+    {% if lw_product.featured_image %}"image": [{{ lw_product.featured_image | image_url: width: 1200 | prepend: "https:" | json }}],{% endif %}
+    "description": {{ lw_product.description | strip_html | json }},
+    "brand": { "@type": "Brand", "name": {{ lw_product.vendor | json }} },
+    "offers": [
+      {%- for variant in lw_product.variants -%}
+        {
+          "@type": "Offer",
+          {% if variant.sku != blank %}"sku": {{ variant.sku | json }},{% endif %}
+          "availability": "http://schema.org/{% if variant.available %}InStock{% else %}OutOfStock{% endif %}",
+          "price": {{ variant.price | divided_by: 100.00 | json }},
+          "priceCurrency": {{ cart.currency.iso_code | json }},
+          "url": {{ request.origin | append: variant.url | json }}
+        }{% unless forloop.last %},{% endunless %}
+      {%- endfor -%}
+    ]
+  }
+</script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "LW · Product (main)",
+  "tag": "section",
+  "class": "lw-section-main",
+  "settings": [
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Product",
+      "info": "Leave empty on product pages – uses the current product. Set it when using this section on a landing page."
+    },
+    {
+      "type": "color",
+      "id": "bg",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "text",
+      "id": "ugc_heading",
+      "label": "Customer video heading",
+      "default": "What our customers are saying:"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@app"
+    },
+    {
+      "type": "tile",
+      "name": "Gallery side tile",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "default": "shield",
+          "options": [
+            {
+              "value": "liver",
+              "label": "Liver"
+            },
+            {
+              "value": "shield",
+              "label": "Shield"
+            },
+            {
+              "value": "bolt",
+              "label": "Bolt"
+            },
+            {
+              "value": "leaf",
+              "label": "Leaf"
+            },
+            {
+              "value": "heart",
+              "label": "Heart"
+            },
+            {
+              "value": "brain",
+              "label": "Brain"
+            },
+            {
+              "value": "gut",
+              "label": "Gut"
+            },
+            {
+              "value": "flask",
+              "label": "Flask"
+            },
+            {
+              "value": "microscope",
+              "label": "Microscope"
+            },
+            {
+              "value": "check",
+              "label": "Check"
+            },
+            {
+              "value": "check-circle",
+              "label": "Check Circle"
+            },
+            {
+              "value": "x-circle",
+              "label": "X Circle"
+            },
+            {
+              "value": "star",
+              "label": "Star"
+            },
+            {
+              "value": "truck",
+              "label": "Truck"
+            },
+            {
+              "value": "gift",
+              "label": "Gift"
+            },
+            {
+              "value": "lock",
+              "label": "Lock"
+            },
+            {
+              "value": "refresh",
+              "label": "Refresh"
+            },
+            {
+              "value": "globe",
+              "label": "Globe"
+            },
+            {
+              "value": "sparkle",
+              "label": "Sparkle"
+            },
+            {
+              "value": "droplet",
+              "label": "Droplet"
+            },
+            {
+              "value": "sun",
+              "label": "Sun"
+            },
+            {
+              "value": "moon",
+              "label": "Moon"
+            },
+            {
+              "value": "scale",
+              "label": "Scale"
+            },
+            {
+              "value": "award",
+              "label": "Award"
+            },
+            {
+              "value": "capsule",
+              "label": "Capsule"
+            },
+            {
+              "value": "clock",
+              "label": "Clock"
+            },
+            {
+              "value": "smile",
+              "label": "Smile"
+            },
+            {
+              "value": "flame",
+              "label": "Flame"
+            },
+            {
+              "value": "wine",
+              "label": "Wine"
+            },
+            {
+              "value": "thumbs-up",
+              "label": "Thumbs Up"
+            },
+            {
+              "value": "vegan",
+              "label": "Vegan"
+            },
+            {
+              "value": "factory",
+              "label": "Factory"
+            },
+            {
+              "value": "filter",
+              "label": "Filter"
+            },
+            {
+              "value": "plus",
+              "label": "Plus"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Daily Liver Support*"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image (replaces icon + text)"
+        },
+        {
+          "type": "color",
+          "id": "bg",
+          "label": "Background",
+          "default": "#dbe8c6"
+        },
+        {
+          "type": "color",
+          "id": "fg",
+          "label": "Text",
+          "default": "#095946"
+        }
+      ]
+    },
+    {
+      "type": "ugc_video",
+      "name": "Customer video",
+      "settings": [
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image (if no video)"
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "Caption"
+        }
+      ]
+    },
+    {
+      "type": "rating",
+      "name": "Rating badge",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Rated 4.9 | Loved by thousands"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_avatars",
+          "label": "Show avatar bubbles",
+          "default": true
+        },
+        {
+          "type": "image_picker",
+          "id": "avatar_1",
+          "label": "Avatar 1"
+        },
+        {
+          "type": "image_picker",
+          "id": "avatar_2",
+          "label": "Avatar 2"
+        },
+        {
+          "type": "image_picker",
+          "id": "avatar_3",
+          "label": "Avatar 3"
+        },
+        {
+          "type": "image_picker",
+          "id": "avatar_4",
+          "label": "Avatar 4"
+        }
+      ]
+    },
+    {
+      "type": "eyebrow",
+      "name": "Eyebrow",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Daily Liver Support"
+        }
+      ]
+    },
+    {
+      "type": "title",
+      "name": "Title",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "info": "Leave empty to use the product title."
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "use_product_description",
+          "label": "Use product description",
+          "default": false
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Your liver works 24/7 – give it daily support.</p>"
+        }
+      ]
+    },
+    {
+      "type": "benefits",
+      "name": "Benefit icons",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon_1",
+          "label": "Icon 1",
+          "default": "liver",
+          "options": [
+            {
+              "value": "liver",
+              "label": "Liver"
+            },
+            {
+              "value": "shield",
+              "label": "Shield"
+            },
+            {
+              "value": "bolt",
+              "label": "Bolt"
+            },
+            {
+              "value": "leaf",
+              "label": "Leaf"
+            },
+            {
+              "value": "heart",
+              "label": "Heart"
+            },
+            {
+              "value": "brain",
+              "label": "Brain"
+            },
+            {
+              "value": "gut",
+              "label": "Gut"
+            },
+            {
+              "value": "flask",
+              "label": "Flask"
+            },
+            {
+              "value": "microscope",
+              "label": "Microscope"
+            },
+            {
+              "value": "check",
+              "label": "Check"
+            },
+            {
+              "value": "check-circle",
+              "label": "Check Circle"
+            },
+            {
+              "value": "x-circle",
+              "label": "X Circle"
+            },
+            {
+              "value": "star",
+              "label": "Star"
+            },
+            {
+              "value": "truck",
+              "label": "Truck"
+            },
+            {
+              "value": "gift",
+              "label": "Gift"
+            },
+            {
+              "value": "lock",
+              "label": "Lock"
+            },
+            {
+              "value": "refresh",
+              "label": "Refresh"
+            },
+            {
+              "value": "globe",
+              "label": "Globe"
+            },
+            {
+              "value": "sparkle",
+              "label": "Sparkle"
+            },
+            {
+              "value": "droplet",
+              "label": "Droplet"
+            },
+            {
+              "value": "sun",
+              "label": "Sun"
+            },
+            {
+              "value": "moon",
+              "label": "Moon"
+            },
+            {
+              "value": "scale",
+              "label": "Scale"
+            },
+            {
+              "value": "award",
+              "label": "Award"
+            },
+            {
+              "value": "capsule",
+              "label": "Capsule"
+            },
+            {
+              "value": "clock",
+              "label": "Clock"
+            },
+            {
+              "value": "smile",
+              "label": "Smile"
+            },
+            {
+              "value": "flame",
+              "label": "Flame"
+            },
+            {
+              "value": "wine",
+              "label": "Wine"
+            },
+            {
+              "value": "thumbs-up",
+              "label": "Thumbs Up"
+            },
+            {
+              "value": "vegan",
+              "label": "Vegan"
+            },
+            {
+              "value": "factory",
+              "label": "Factory"
+            },
+            {
+              "value": "filter",
+              "label": "Filter"
+            },
+            {
+              "value": "plus",
+              "label": "Plus"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "text_1",
+          "label": "Text 1",
+          "default": "Liver Support*"
+        },
+        {
+          "type": "select",
+          "id": "icon_2",
+          "label": "Icon 2",
+          "default": "gut",
+          "options": [
+            {
+              "value": "liver",
+              "label": "Liver"
+            },
+            {
+              "value": "shield",
+              "label": "Shield"
+            },
+            {
+              "value": "bolt",
+              "label": "Bolt"
+            },
+            {
+              "value": "leaf",
+              "label": "Leaf"
+            },
+            {
+              "value": "heart",
+              "label": "Heart"
+            },
+            {
+              "value": "brain",
+              "label": "Brain"
+            },
+            {
+              "value": "gut",
+              "label": "Gut"
+            },
+            {
+              "value": "flask",
+              "label": "Flask"
+            },
+            {
+              "value": "microscope",
+              "label": "Microscope"
+            },
+            {
+              "value": "check",
+              "label": "Check"
+            },
+            {
+              "value": "check-circle",
+              "label": "Check Circle"
+            },
+            {
+              "value": "x-circle",
+              "label": "X Circle"
+            },
+            {
+              "value": "star",
+              "label": "Star"
+            },
+            {
+              "value": "truck",
+              "label": "Truck"
+            },
+            {
+              "value": "gift",
+              "label": "Gift"
+            },
+            {
+              "value": "lock",
+              "label": "Lock"
+            },
+            {
+              "value": "refresh",
+              "label": "Refresh"
+            },
+            {
+              "value": "globe",
+              "label": "Globe"
+            },
+            {
+              "value": "sparkle",
+              "label": "Sparkle"
+            },
+            {
+              "value": "droplet",
+              "label": "Droplet"
+            },
+            {
+              "value": "sun",
+              "label": "Sun"
+            },
+            {
+              "value": "moon",
+              "label": "Moon"
+            },
+            {
+              "value": "scale",
+              "label": "Scale"
+            },
+            {
+              "value": "award",
+              "label": "Award"
+            },
+            {
+              "value": "capsule",
+              "label": "Capsule"
+            },
+            {
+              "value": "clock",
+              "label": "Clock"
+            },
+            {
+              "value": "smile",
+              "label": "Smile"
+            },
+            {
+              "value": "flame",
+              "label": "Flame"
+            },
+            {
+              "value": "wine",
+              "label": "Wine"
+            },
+            {
+              "value": "thumbs-up",
+              "label": "Thumbs Up"
+            },
+            {
+              "value": "vegan",
+              "label": "Vegan"
+            },
+            {
+              "value": "factory",
+              "label": "Factory"
+            },
+            {
+              "value": "filter",
+              "label": "Filter"
+            },
+            {
+              "value": "plus",
+              "label": "Plus"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "text_2",
+          "label": "Text 2",
+          "default": "Less Bloating*"
+        },
+        {
+          "type": "select",
+          "id": "icon_3",
+          "label": "Icon 3",
+          "default": "bolt",
+          "options": [
+            {
+              "value": "liver",
+              "label": "Liver"
+            },
+            {
+              "value": "shield",
+              "label": "Shield"
+            },
+            {
+              "value": "bolt",
+              "label": "Bolt"
+            },
+            {
+              "value": "leaf",
+              "label": "Leaf"
+            },
+            {
+              "value": "heart",
+              "label": "Heart"
+            },
+            {
+              "value": "brain",
+              "label": "Brain"
+            },
+            {
+              "value": "gut",
+              "label": "Gut"
+            },
+            {
+              "value": "flask",
+              "label": "Flask"
+            },
+            {
+              "value": "microscope",
+              "label": "Microscope"
+            },
+            {
+              "value": "check",
+              "label": "Check"
+            },
+            {
+              "value": "check-circle",
+              "label": "Check Circle"
+            },
+            {
+              "value": "x-circle",
+              "label": "X Circle"
+            },
+            {
+              "value": "star",
+              "label": "Star"
+            },
+            {
+              "value": "truck",
+              "label": "Truck"
+            },
+            {
+              "value": "gift",
+              "label": "Gift"
+            },
+            {
+              "value": "lock",
+              "label": "Lock"
+            },
+            {
+              "value": "refresh",
+              "label": "Refresh"
+            },
+            {
+              "value": "globe",
+              "label": "Globe"
+            },
+            {
+              "value": "sparkle",
+              "label": "Sparkle"
+            },
+            {
+              "value": "droplet",
+              "label": "Droplet"
+            },
+            {
+              "value": "sun",
+              "label": "Sun"
+            },
+            {
+              "value": "moon",
+              "label": "Moon"
+            },
+            {
+              "value": "scale",
+              "label": "Scale"
+            },
+            {
+              "value": "award",
+              "label": "Award"
+            },
+            {
+              "value": "capsule",
+              "label": "Capsule"
+            },
+            {
+              "value": "clock",
+              "label": "Clock"
+            },
+            {
+              "value": "smile",
+              "label": "Smile"
+            },
+            {
+              "value": "flame",
+              "label": "Flame"
+            },
+            {
+              "value": "wine",
+              "label": "Wine"
+            },
+            {
+              "value": "thumbs-up",
+              "label": "Thumbs Up"
+            },
+            {
+              "value": "vegan",
+              "label": "Vegan"
+            },
+            {
+              "value": "factory",
+              "label": "Factory"
+            },
+            {
+              "value": "filter",
+              "label": "Filter"
+            },
+            {
+              "value": "plus",
+              "label": "Plus"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "text_3",
+          "label": "Text 3",
+          "default": "Natural Energy*"
+        },
+        {
+          "type": "select",
+          "id": "icon_4",
+          "label": "Icon 4",
+          "default": "sparkle",
+          "options": [
+            {
+              "value": "liver",
+              "label": "Liver"
+            },
+            {
+              "value": "shield",
+              "label": "Shield"
+            },
+            {
+              "value": "bolt",
+              "label": "Bolt"
+            },
+            {
+              "value": "leaf",
+              "label": "Leaf"
+            },
+            {
+              "value": "heart",
+              "label": "Heart"
+            },
+            {
+              "value": "brain",
+              "label": "Brain"
+            },
+            {
+              "value": "gut",
+              "label": "Gut"
+            },
+            {
+              "value": "flask",
+              "label": "Flask"
+            },
+            {
+              "value": "microscope",
+              "label": "Microscope"
+            },
+            {
+              "value": "check",
+              "label": "Check"
+            },
+            {
+              "value": "check-circle",
+              "label": "Check Circle"
+            },
+            {
+              "value": "x-circle",
+              "label": "X Circle"
+            },
+            {
+              "value": "star",
+              "label": "Star"
+            },
+            {
+              "value": "truck",
+              "label": "Truck"
+            },
+            {
+              "value": "gift",
+              "label": "Gift"
+            },
+            {
+              "value": "lock",
+              "label": "Lock"
+            },
+            {
+              "value": "refresh",
+              "label": "Refresh"
+            },
+            {
+              "value": "globe",
+              "label": "Globe"
+            },
+            {
+              "value": "sparkle",
+              "label": "Sparkle"
+            },
+            {
+              "value": "droplet",
+              "label": "Droplet"
+            },
+            {
+              "value": "sun",
+              "label": "Sun"
+            },
+            {
+              "value": "moon",
+              "label": "Moon"
+            },
+            {
+              "value": "scale",
+              "label": "Scale"
+            },
+            {
+              "value": "award",
+              "label": "Award"
+            },
+            {
+              "value": "capsule",
+              "label": "Capsule"
+            },
+            {
+              "value": "clock",
+              "label": "Clock"
+            },
+            {
+              "value": "smile",
+              "label": "Smile"
+            },
+            {
+              "value": "flame",
+              "label": "Flame"
+            },
+            {
+              "value": "wine",
+              "label": "Wine"
+            },
+            {
+              "value": "thumbs-up",
+              "label": "Thumbs Up"
+            },
+            {
+              "value": "vegan",
+              "label": "Vegan"
+            },
+            {
+              "value": "factory",
+              "label": "Factory"
+            },
+            {
+              "value": "filter",
+              "label": "Filter"
+            },
+            {
+              "value": "plus",
+              "label": "Plus"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "text_4",
+          "label": "Text 4",
+          "default": "Glowing Skin*"
+        },
+        {
+          "type": "select",
+          "id": "icon_5",
+          "label": "Icon 5",
+          "default": "brain",
+          "options": [
+            {
+              "value": "liver",
+              "label": "Liver"
+            },
+            {
+              "value": "shield",
+              "label": "Shield"
+            },
+            {
+              "value": "bolt",
+              "label": "Bolt"
+            },
+            {
+              "value": "leaf",
+              "label": "Leaf"
+            },
+            {
+              "value": "heart",
+              "label": "Heart"
+            },
+            {
+              "value": "brain",
+              "label": "Brain"
+            },
+            {
+              "value": "gut",
+              "label": "Gut"
+            },
+            {
+              "value": "flask",
+              "label": "Flask"
+            },
+            {
+              "value": "microscope",
+              "label": "Microscope"
+            },
+            {
+              "value": "check",
+              "label": "Check"
+            },
+            {
+              "value": "check-circle",
+              "label": "Check Circle"
+            },
+            {
+              "value": "x-circle",
+              "label": "X Circle"
+            },
+            {
+              "value": "star",
+              "label": "Star"
+            },
+            {
+              "value": "truck",
+              "label": "Truck"
+            },
+            {
+              "value": "gift",
+              "label": "Gift"
+            },
+            {
+              "value": "lock",
+              "label": "Lock"
+            },
+            {
+              "value": "refresh",
+              "label": "Refresh"
+            },
+            {
+              "value": "globe",
+              "label": "Globe"
+            },
+            {
+              "value": "sparkle",
+              "label": "Sparkle"
+            },
+            {
+              "value": "droplet",
+              "label": "Droplet"
+            },
+            {
+              "value": "sun",
+              "label": "Sun"
+            },
+            {
+              "value": "moon",
+              "label": "Moon"
+            },
+            {
+              "value": "scale",
+              "label": "Scale"
+            },
+            {
+              "value": "award",
+              "label": "Award"
+            },
+            {
+              "value": "capsule",
+              "label": "Capsule"
+            },
+            {
+              "value": "clock",
+              "label": "Clock"
+            },
+            {
+              "value": "smile",
+              "label": "Smile"
+            },
+            {
+              "value": "flame",
+              "label": "Flame"
+            },
+            {
+              "value": "wine",
+              "label": "Wine"
+            },
+            {
+              "value": "thumbs-up",
+              "label": "Thumbs Up"
+            },
+            {
+              "value": "vegan",
+              "label": "Vegan"
+            },
+            {
+              "value": "factory",
+              "label": "Factory"
+            },
+            {
+              "value": "filter",
+              "label": "Filter"
+            },
+            {
+              "value": "plus",
+              "label": "Plus"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "text_5",
+          "label": "Text 5",
+          "default": "Mental Clarity*"
+        },
+        {
+          "type": "select",
+          "id": "icon_6",
+          "label": "Icon 6",
+          "default": "shield",
+          "options": [
+            {
+              "value": "liver",
+              "label": "Liver"
+            },
+            {
+              "value": "shield",
+              "label": "Shield"
+            },
+            {
+              "value": "bolt",
+              "label": "Bolt"
+            },
+            {
+              "value": "leaf",
+              "label": "Leaf"
+            },
+            {
+              "value": "heart",
+              "label": "Heart"
+            },
+            {
+              "value": "brain",
+              "label": "Brain"
+            },
+            {
+              "value": "gut",
+              "label": "Gut"
+            },
+            {
+              "value": "flask",
+              "label": "Flask"
+            },
+            {
+              "value": "microscope",
+              "label": "Microscope"
+            },
+            {
+              "value": "check",
+              "label": "Check"
+            },
+            {
+              "value": "check-circle",
+              "label": "Check Circle"
+            },
+            {
+              "value": "x-circle",
+              "label": "X Circle"
+            },
+            {
+              "value": "star",
+              "label": "Star"
+            },
+            {
+              "value": "truck",
+              "label": "Truck"
+            },
+            {
+              "value": "gift",
+              "label": "Gift"
+            },
+            {
+              "value": "lock",
+              "label": "Lock"
+            },
+            {
+              "value": "refresh",
+              "label": "Refresh"
+            },
+            {
+              "value": "globe",
+              "label": "Globe"
+            },
+            {
+              "value": "sparkle",
+              "label": "Sparkle"
+            },
+            {
+              "value": "droplet",
+              "label": "Droplet"
+            },
+            {
+              "value": "sun",
+              "label": "Sun"
+            },
+            {
+              "value": "moon",
+              "label": "Moon"
+            },
+            {
+              "value": "scale",
+              "label": "Scale"
+            },
+            {
+              "value": "award",
+              "label": "Award"
+            },
+            {
+              "value": "capsule",
+              "label": "Capsule"
+            },
+            {
+              "value": "clock",
+              "label": "Clock"
+            },
+            {
+              "value": "smile",
+              "label": "Smile"
+            },
+            {
+              "value": "flame",
+              "label": "Flame"
+            },
+            {
+              "value": "wine",
+              "label": "Wine"
+            },
+            {
+              "value": "thumbs-up",
+              "label": "Thumbs Up"
+            },
+            {
+              "value": "vegan",
+              "label": "Vegan"
+            },
+            {
+              "value": "factory",
+              "label": "Factory"
+            },
+            {
+              "value": "filter",
+              "label": "Filter"
+            },
+            {
+              "value": "plus",
+              "label": "Plus"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "text_6",
+          "label": "Text 6",
+          "default": "Antioxidant Defense*"
+        }
+      ]
+    },
+    {
+      "type": "stock",
+      "name": "Stock bar",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "range",
+          "id": "percent",
+          "label": "Percent sold",
+          "min": 1,
+          "max": 100,
+          "step": 1,
+          "default": 93
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Label",
+          "default": "[percent]% Sold"
+        }
+      ]
+    },
+    {
+      "type": "buy_box",
+      "name": "Buy box",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Price header"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_price_header",
+          "label": "Show price row above offers",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "sale_badge_text",
+          "label": "Sale badge",
+          "default": "FALL SALE - Save [amount]",
+          "info": "[amount] = savings of the selected offer. Leave empty to hide."
+        },
+        {
+          "type": "header",
+          "content": "Subscribe & save"
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_subscription",
+          "label": "Show subscription toggle",
+          "default": true,
+          "info": "Only appears when the product has a selling plan (e.g. from a subscriptions app)."
+        },
+        {
+          "type": "checkbox",
+          "id": "subscription_default",
+          "label": "Subscription selected by default",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "subscription_label",
+          "label": "Toggle title",
+          "default": "Subscribe & Save an extra 15%"
+        },
+        {
+          "type": "text",
+          "id": "subscription_sub",
+          "label": "Toggle subtext",
+          "default": "Delivered every 30 days. Skip, pause or cancel anytime."
+        },
+        {
+          "type": "header",
+          "content": "Gifts"
+        },
+        {
+          "type": "text",
+          "id": "gifts_label",
+          "label": "Gifts box label",
+          "default": "Gifts unlocked"
+        },
+        {
+          "type": "text",
+          "id": "gifts_locked_text",
+          "label": "Locked label",
+          "default": "Locked"
+        },
+        {
+          "type": "header",
+          "content": "Delivery estimate"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_delivery",
+          "label": "Show delivery estimate",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "delivery_text",
+          "label": "Text",
+          "default": "Order today for delivery by"
+        },
+        {
+          "type": "range",
+          "id": "delivery_days",
+          "label": "Business days to deliver",
+          "min": 1,
+          "max": 14,
+          "step": 1,
+          "default": 3
+        },
+        {
+          "type": "text",
+          "id": "ships_from",
+          "label": "Ships from",
+          "default": "Ships from US 🇺🇸"
+        },
+        {
+          "type": "header",
+          "content": "Add to cart"
+        },
+        {
+          "type": "text",
+          "id": "atc_label",
+          "label": "Button label",
+          "default": "Add To Cart"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_atc_price",
+          "label": "Show price inside button",
+          "default": true
+        },
+        {
+          "type": "select",
+          "id": "after_add",
+          "label": "After adding",
+          "default": "drawer",
+          "options": [
+            {
+              "value": "drawer",
+              "label": "Open cart drawer"
+            },
+            {
+              "value": "cart",
+              "label": "Go to cart page"
+            },
+            {
+              "value": "checkout",
+              "label": "Go straight to checkout"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "note_1",
+          "label": "Note 1 (under button)",
+          "default": "Free shipping on 2+ bottles"
+        },
+        {
+          "type": "text",
+          "id": "note_2",
+          "label": "Note 2 (under button)",
+          "default": "90-Day Money-Back Guarantee"
+        },
+        {
+          "type": "checkbox",
+          "id": "notes_only_subscription",
+          "label": "Only show notes when subscription is selected",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "trust_1",
+          "label": "Trust badge 1"
+        },
+        {
+          "type": "text",
+          "id": "trust_2",
+          "label": "Trust badge 2"
+        },
+        {
+          "type": "text",
+          "id": "trust_3",
+          "label": "Trust badge 3"
+        }
+      ]
+    },
+    {
+      "type": "offer",
+      "name": "Bundle offer",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Point each offer at a product variant (e.g. variant 1 = \"1 Bottle\", 2 = \"2 Bottles\"…) so the price shown always matches checkout."
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Buy One"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "default": "[per_unit] per bottle",
+          "info": "[per_unit] = price ÷ bottles"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "range",
+          "id": "variant_position",
+          "label": "Variant position",
+          "min": 0,
+          "max": 10,
+          "step": 1,
+          "default": 0,
+          "info": "0 = the product's current/first variant. 1 = first variant, 2 = second…"
+        },
+        {
+          "type": "range",
+          "id": "quantity",
+          "label": "Quantity added to cart",
+          "min": 1,
+          "max": 10,
+          "step": 1,
+          "default": 1
+        },
+        {
+          "type": "range",
+          "id": "bottles",
+          "label": "Bottles in this offer (for per-bottle price)",
+          "min": 1,
+          "max": 12,
+          "step": 1,
+          "default": 1
+        },
+        {
+          "type": "number",
+          "id": "compare_price_override",
+          "label": "Compare-at price override (total, e.g. 119.97)",
+          "info": "Optional. By default uses the variant compare-at price × quantity."
+        },
+        {
+          "type": "text",
+          "id": "badge",
+          "label": "Badge (e.g. Most Popular)"
+        },
+        {
+          "type": "color",
+          "id": "badge_color",
+          "label": "Badge color"
+        },
+        {
+          "type": "checkbox",
+          "id": "default_selected",
+          "label": "Selected by default",
+          "default": false
+        },
+        {
+          "type": "range",
+          "id": "gifts",
+          "label": "Free gifts unlocked by this offer",
+          "min": 0,
+          "max": 4,
+          "step": 1,
+          "default": 0,
+          "info": "Unlocks the first N \"Free gift\" blocks, in order."
+        },
+        {
+          "type": "text",
+          "id": "extra_title",
+          "label": "Bonus line (shown when selected)"
+        },
+        {
+          "type": "text",
+          "id": "extra_text",
+          "label": "Bonus subtext"
+        },
+        {
+          "type": "header",
+          "content": "Discount code (single-variant products only)"
+        },
+        {
+          "type": "text",
+          "id": "discount_code",
+          "label": "Discount code to apply"
+        },
+        {
+          "type": "range",
+          "id": "discount_percent",
+          "label": "Displayed discount %",
+          "min": 0,
+          "max": 80,
+          "step": 1,
+          "default": 0
+        }
+      ]
+    },
+    {
+      "type": "gift",
+      "name": "Free gift",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Each offer unlocks the first N gifts (set on the offer). Order gifts from most to least common."
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Gift name",
+          "default": "FREE Shipping"
+        },
+        {
+          "type": "text",
+          "id": "value",
+          "label": "Value (shown struck through)",
+          "default": "$4.95"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon (if no image)",
+          "default": "truck",
+          "options": [
+            {
+              "value": "liver",
+              "label": "Liver"
+            },
+            {
+              "value": "shield",
+              "label": "Shield"
+            },
+            {
+              "value": "bolt",
+              "label": "Bolt"
+            },
+            {
+              "value": "leaf",
+              "label": "Leaf"
+            },
+            {
+              "value": "heart",
+              "label": "Heart"
+            },
+            {
+              "value": "brain",
+              "label": "Brain"
+            },
+            {
+              "value": "gut",
+              "label": "Gut"
+            },
+            {
+              "value": "flask",
+              "label": "Flask"
+            },
+            {
+              "value": "microscope",
+              "label": "Microscope"
+            },
+            {
+              "value": "check",
+              "label": "Check"
+            },
+            {
+              "value": "check-circle",
+              "label": "Check Circle"
+            },
+            {
+              "value": "x-circle",
+              "label": "X Circle"
+            },
+            {
+              "value": "star",
+              "label": "Star"
+            },
+            {
+              "value": "truck",
+              "label": "Truck"
+            },
+            {
+              "value": "gift",
+              "label": "Gift"
+            },
+            {
+              "value": "lock",
+              "label": "Lock"
+            },
+            {
+              "value": "refresh",
+              "label": "Refresh"
+            },
+            {
+              "value": "globe",
+              "label": "Globe"
+            },
+            {
+              "value": "sparkle",
+              "label": "Sparkle"
+            },
+            {
+              "value": "droplet",
+              "label": "Droplet"
+            },
+            {
+              "value": "sun",
+              "label": "Sun"
+            },
+            {
+              "value": "moon",
+              "label": "Moon"
+            },
+            {
+              "value": "scale",
+              "label": "Scale"
+            },
+            {
+              "value": "award",
+              "label": "Award"
+            },
+            {
+              "value": "capsule",
+              "label": "Capsule"
+            },
+            {
+              "value": "clock",
+              "label": "Clock"
+            },
+            {
+              "value": "smile",
+              "label": "Smile"
+            },
+            {
+              "value": "flame",
+              "label": "Flame"
+            },
+            {
+              "value": "wine",
+              "label": "Wine"
+            },
+            {
+              "value": "thumbs-up",
+              "label": "Thumbs Up"
+            },
+            {
+              "value": "vegan",
+              "label": "Vegan"
+            },
+            {
+              "value": "factory",
+              "label": "Factory"
+            },
+            {
+              "value": "filter",
+              "label": "Filter"
+            },
+            {
+              "value": "plus",
+              "label": "Plus"
+            }
+          ]
+        },
+        {
+          "type": "product",
+          "id": "gift_product",
+          "label": "Gift product to add to cart (optional)",
+          "info": "Leave empty for display-only gifts (e.g. free shipping). If set, create an automatic discount that makes this product free."
+        }
+      ]
+    },
+    {
+      "type": "collapsible",
+      "name": "Collapsible tab",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Description"
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "default": "none",
+          "options": [
+            {
+              "value": "none",
+              "label": "None"
+            },
+            {
+              "value": "liver",
+              "label": "Liver"
+            },
+            {
+              "value": "shield",
+              "label": "Shield"
+            },
+            {
+              "value": "bolt",
+              "label": "Bolt"
+            },
+            {
+              "value": "leaf",
+              "label": "Leaf"
+            },
+            {
+              "value": "heart",
+              "label": "Heart"
+            },
+            {
+              "value": "brain",
+              "label": "Brain"
+            },
+            {
+              "value": "gut",
+              "label": "Gut"
+            },
+            {
+              "value": "flask",
+              "label": "Flask"
+            },
+            {
+              "value": "microscope",
+              "label": "Microscope"
+            },
+            {
+              "value": "check",
+              "label": "Check"
+            },
+            {
+              "value": "check-circle",
+              "label": "Check Circle"
+            },
+            {
+              "value": "x-circle",
+              "label": "X Circle"
+            },
+            {
+              "value": "star",
+              "label": "Star"
+            },
+            {
+              "value": "truck",
+              "label": "Truck"
+            },
+            {
+              "value": "gift",
+              "label": "Gift"
+            },
+            {
+              "value": "lock",
+              "label": "Lock"
+            },
+            {
+              "value": "refresh",
+              "label": "Refresh"
+            },
+            {
+              "value": "globe",
+              "label": "Globe"
+            },
+            {
+              "value": "sparkle",
+              "label": "Sparkle"
+            },
+            {
+              "value": "droplet",
+              "label": "Droplet"
+            },
+            {
+              "value": "sun",
+              "label": "Sun"
+            },
+            {
+              "value": "moon",
+              "label": "Moon"
+            },
+            {
+              "value": "scale",
+              "label": "Scale"
+            },
+            {
+              "value": "award",
+              "label": "Award"
+            },
+            {
+              "value": "capsule",
+              "label": "Capsule"
+            },
+            {
+              "value": "clock",
+              "label": "Clock"
+            },
+            {
+              "value": "smile",
+              "label": "Smile"
+            },
+            {
+              "value": "flame",
+              "label": "Flame"
+            },
+            {
+              "value": "wine",
+              "label": "Wine"
+            },
+            {
+              "value": "thumbs-up",
+              "label": "Thumbs Up"
+            },
+            {
+              "value": "vegan",
+              "label": "Vegan"
+            },
+            {
+              "value": "factory",
+              "label": "Factory"
+            },
+            {
+              "value": "filter",
+              "label": "Filter"
+            },
+            {
+              "value": "plus",
+              "label": "Plus"
+            }
+          ]
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content"
+        },
+        {
+          "type": "page",
+          "id": "page",
+          "label": "Content from page"
+        },
+        {
+          "type": "checkbox",
+          "id": "open",
+          "label": "Open by default",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "custom_liquid",
+      "name": "Custom liquid",
+      "settings": [
+        {
+          "type": "liquid",
+          "id": "custom_liquid",
+          "label": "Custom liquid"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "LW · Product (main)",
+      "blocks": [
+        {
+          "type": "rating"
+        },
+        {
+          "type": "eyebrow"
+        },
+        {
+          "type": "title"
+        },
+        {
+          "type": "text"
+        },
+        {
+          "type": "benefits"
+        },
+        {
+          "type": "stock"
+        },
+        {
+          "type": "buy_box"
+        },
+        {
+          "type": "offer",
+          "settings": {
+            "title": "Buy 3 Bottles",
+            "variant_position": 0,
+            "quantity": 3,
+            "bottles": 3,
+            "badge": "Best Value"
+          }
+        },
+        {
+          "type": "offer",
+          "settings": {
+            "title": "Buy 2 Bottles",
+            "variant_position": 0,
+            "quantity": 2,
+            "bottles": 2,
+            "badge": "Most Popular",
+            "default_selected": true
+          }
+        },
+        {
+          "type": "offer",
+          "settings": {
+            "title": "Buy One",
+            "variant_position": 0,
+            "quantity": 1,
+            "bottles": 1
+          }
+        },
+        {
+          "type": "collapsible"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

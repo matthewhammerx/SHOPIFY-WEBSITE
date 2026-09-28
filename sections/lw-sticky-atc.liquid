@@ -1,0 +1,61 @@
+{%- liquid
+  assign lw_product = product
+  if section.settings.product != blank
+    assign lw_product = section.settings.product
+  endif
+-%}
+{%- if lw_product != blank -%}
+<div class="lw lw-sticky" data-lw-sticky>
+  <div class="lw-sticky__inner">
+    <div class="lw-sticky__img">{%- if lw_product.featured_image -%}{{ lw_product.featured_image | image_url: width: 120 | image_tag: loading: 'lazy', alt: '' }}{%- endif -%}</div>
+    <div class="lw-sticky__info">
+      <div class="lw-sticky__title">{{ lw_product.title }}</div>
+      <div class="lw-sticky__rating">{% render 'lw-stars', count: 5 %}<span>{{ section.settings.rating_text }}</span></div>
+    </div>
+    <a href="#lw-product" class="lw-btn" data-lw-sticky-btn>{{ section.settings.label }}{% if section.settings.show_price %} · <span data-lw-price>{{ lw_product.price | money }}</span>{% endif %}</a>
+  </div>
+</div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "LW · Sticky add to cart",
+  "tag": "div",
+  "class": "lw-section-sticky",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Appears after scrolling past the main buy box. The button scrolls back to the offers."
+    },
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Product",
+      "info": "Leave empty on product pages."
+    },
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Button label",
+      "default": "Claim My Offer"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_price",
+      "label": "Show selected price",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "rating_text",
+      "label": "Rating text",
+      "default": "4.9 | Loved by thousands"
+    }
+  ],
+  "presets": [
+    {
+      "name": "LW · Sticky add to cart"
+    }
+  ]
+}
+{% endschema %}

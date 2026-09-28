@@ -1,0 +1,164 @@
+<section class="lw lw-section" style="--lw-pt: {{ section.settings.padding_top }}px; --lw-pb: {{ section.settings.padding_bottom }}px; --lw-bg: {{ section.settings.bg }}; --lw-fg: {{ section.settings.fg }}; --lw-hl: {{ section.settings.accent }}; --lw-accent: {{ section.settings.accent }};">
+  <div class="lw-wrap">
+    <div class="lw-head lw-center">
+      <h2 class="lw-h lw-h--lg">{{ section.settings.heading }}</h2>
+      {%- if section.settings.text != blank -%}<p class="lw-sub">{{ section.settings.text }}</p>{%- endif -%}
+    </div>
+    <div class="lw-slider" data-lw-slider style="--lw-cols: {{ section.settings.columns }}; --lw-cols-t: 3; --lw-col-m: 46%; --lw-gap: 12px;">
+      <div class="lw-slider__track">
+        {%- for block in section.blocks -%}
+          <div class="lw-vid" data-lw-video {{ block.shopify_attributes }}>
+            {%- if block.settings.video != blank -%}
+              {{ block.settings.video | video_tag: playsinline: true, loop: true, muted: true, preload: 'metadata', image_size: '500x' }}
+              <span class="lw-vid__play">{% render 'lw-icon', icon: 'play' %}</span>
+            {%- elsif block.settings.image != blank -%}
+              {{ block.settings.image | image_url: width: 500 | image_tag: loading: 'lazy', alt: block.settings.name }}
+            {%- else -%}
+              {{ 'lifestyle-1' | placeholder_svg_tag: 'lw-placeholder' }}
+            {%- endif -%}
+            {%- if block.settings.caption != blank -%}<span class="lw-vid__cap">{{ block.settings.caption }}</span>{%- endif -%}
+            {%- if block.settings.name != blank -%}<span class="lw-vid__name">{{ block.settings.name }}</span>{%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+      <div class="lw-slider__nav">
+      <div class="lw-slider__dots"></div>
+      <div class="lw-slider__arrows">
+        <button type="button" data-lw-prev aria-label="Previous">{% render 'lw-icon', icon: 'arrow-left' %}</button>
+        <button type="button" data-lw-next aria-label="Next">{% render 'lw-icon', icon: 'arrow-right' %}</button>
+      </div>
+    </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "LW · Video reviews",
+  "tag": "section",
+  "class": "lw-section-videos",
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Real People. <em>Real Results.</em>",
+      "info": "Tip: make words italic to highlight them in the accent color."
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Subheading",
+      "default": "Hear it in their own words."
+    },
+    {
+      "type": "range",
+      "id": "columns",
+      "label": "Videos visible (desktop)",
+      "min": 3,
+      "max": 6,
+      "step": 1,
+      "default": 6
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "fg",
+      "label": "Text",
+      "default": "#111511"
+    },
+    {
+      "type": "color",
+      "id": "accent",
+      "label": "Accent / highlighted words",
+      "default": "#009370"
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    }
+  ],
+  "blocks": [
+    {
+      "type": "video",
+      "name": "Video",
+      "settings": [
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video (vertical 9:16)"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image (if no video)"
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "Caption sticker"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Name"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "LW · Video reviews",
+      "blocks": [
+        {
+          "type": "video"
+        },
+        {
+          "type": "video"
+        },
+        {
+          "type": "video"
+        },
+        {
+          "type": "video"
+        },
+        {
+          "type": "video"
+        },
+        {
+          "type": "video"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

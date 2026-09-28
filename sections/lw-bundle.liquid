@@ -1,0 +1,619 @@
+{%- liquid
+  assign lw_product = product
+  if section.settings.product != blank
+    assign lw_product = section.settings.product
+  endif
+-%}
+<section class="lw lw-section lw-bundle" style="--lw-pt: {{ section.settings.padding_top }}px; --lw-pb: {{ section.settings.padding_bottom }}px; --lw-bg: {{ section.settings.bg }}; --lw-fg: {{ section.settings.fg }}; --lw-hl: {{ section.settings.accent }}; --lw-accent: {{ section.settings.accent }};">
+  <div class="lw-wrap">
+    {%- if section.settings.image != blank -%}<div class="lw-bundle__hero">{{ section.settings.image | image_url: width: 900 | image_tag: loading: 'lazy', alt: '' }}</div>{%- endif -%}
+    <div class="lw-head lw-center">
+      <h2 class="lw-h lw-h--lg">{{ section.settings.heading }}</h2>
+      {%- if section.settings.text != blank -%}<p class="lw-sub">{{ section.settings.text }}</p>{%- endif -%}
+    </div>
+    <div class="lw-bundle__box" style="--lw-bg-card: {{ section.settings.bg }};">
+      {%- if section.settings.show_stock -%}
+        <div class="lw-stock" style="margin-bottom: 16px;"><div class="lw-stock__bar"><span data-lw-width="{{ section.settings.stock_percent }}%"></span></div><span>{{ section.settings.stock_text | replace: '[percent]', section.settings.stock_percent }}</span></div>
+      {%- endif -%}
+      {%- if lw_product != blank -%}
+        {%- render 'lw-buy-box', lw_product: lw_product, bs: section.settings, section: section, main: false -%}
+      {%- else -%}
+        <p class="lw-center lw-sub">Select a product in the section settings.</p>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "LW · Stock up bundle",
+  "tag": "section",
+  "class": "lw-section-bundle",
+  "settings": [
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Product",
+      "info": "Leave empty on product pages."
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Top image (e.g. 3 bottles)"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "<em>Share the benefits.</em> Stock up. Save more.",
+      "info": "Tip: make words italic to highlight them in the accent color."
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Text",
+      "default": "Your liver works every day — and so does LiverWell. Stock up and save on your supply."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_stock",
+      "label": "Show stock bar",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "stock_percent",
+      "label": "Percent sold",
+      "min": 1,
+      "max": 100,
+      "step": 1,
+      "default": 93
+    },
+    {
+      "type": "text",
+      "id": "stock_text",
+      "label": "Stock label",
+      "default": "[percent]% Sold"
+    },
+    {
+      "type": "header",
+      "content": "Price header"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_price_header",
+      "label": "Show price row above offers",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "sale_badge_text",
+      "label": "Sale badge",
+      "default": "FALL SALE - Save [amount]",
+      "info": "[amount] = savings of the selected offer. Leave empty to hide."
+    },
+    {
+      "type": "header",
+      "content": "Subscribe & save"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_subscription",
+      "label": "Show subscription toggle",
+      "default": true,
+      "info": "Only appears when the product has a selling plan (e.g. from a subscriptions app)."
+    },
+    {
+      "type": "checkbox",
+      "id": "subscription_default",
+      "label": "Subscription selected by default",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "subscription_label",
+      "label": "Toggle title",
+      "default": "Subscribe & Save an extra 15%"
+    },
+    {
+      "type": "text",
+      "id": "subscription_sub",
+      "label": "Toggle subtext",
+      "default": "Delivered every 30 days. Skip, pause or cancel anytime."
+    },
+    {
+      "type": "header",
+      "content": "Gifts"
+    },
+    {
+      "type": "text",
+      "id": "gifts_label",
+      "label": "Gifts box label",
+      "default": "Gifts unlocked"
+    },
+    {
+      "type": "text",
+      "id": "gifts_locked_text",
+      "label": "Locked label",
+      "default": "Locked"
+    },
+    {
+      "type": "header",
+      "content": "Delivery estimate"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_delivery",
+      "label": "Show delivery estimate",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "delivery_text",
+      "label": "Text",
+      "default": "Order today for delivery by"
+    },
+    {
+      "type": "range",
+      "id": "delivery_days",
+      "label": "Business days to deliver",
+      "min": 1,
+      "max": 14,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "text",
+      "id": "ships_from",
+      "label": "Ships from",
+      "default": "Ships from US 🇺🇸"
+    },
+    {
+      "type": "header",
+      "content": "Add to cart"
+    },
+    {
+      "type": "text",
+      "id": "atc_label",
+      "label": "Button label",
+      "default": "Add To Cart"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_atc_price",
+      "label": "Show price inside button",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "after_add",
+      "label": "After adding",
+      "default": "drawer",
+      "options": [
+        {
+          "value": "drawer",
+          "label": "Open cart drawer"
+        },
+        {
+          "value": "cart",
+          "label": "Go to cart page"
+        },
+        {
+          "value": "checkout",
+          "label": "Go straight to checkout"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "note_1",
+      "label": "Note 1 (under button)",
+      "default": "Free shipping on 2+ bottles"
+    },
+    {
+      "type": "text",
+      "id": "note_2",
+      "label": "Note 2 (under button)",
+      "default": "90-Day Money-Back Guarantee"
+    },
+    {
+      "type": "checkbox",
+      "id": "notes_only_subscription",
+      "label": "Only show notes when subscription is selected",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "trust_1",
+      "label": "Trust badge 1"
+    },
+    {
+      "type": "text",
+      "id": "trust_2",
+      "label": "Trust badge 2"
+    },
+    {
+      "type": "text",
+      "id": "trust_3",
+      "label": "Trust badge 3"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg",
+      "label": "Background",
+      "default": "#f1f0e8"
+    },
+    {
+      "type": "color",
+      "id": "fg",
+      "label": "Text",
+      "default": "#111511"
+    },
+    {
+      "type": "color",
+      "id": "accent",
+      "label": "Accent / highlighted words",
+      "default": "#009370"
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    }
+  ],
+  "blocks": [
+    {
+      "type": "offer",
+      "name": "Bundle offer",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Point each offer at a product variant (e.g. variant 1 = \"1 Bottle\", 2 = \"2 Bottles\"…) so the price shown always matches checkout."
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Buy One"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "default": "[per_unit] per bottle",
+          "info": "[per_unit] = price ÷ bottles"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "range",
+          "id": "variant_position",
+          "label": "Variant position",
+          "min": 0,
+          "max": 10,
+          "step": 1,
+          "default": 0,
+          "info": "0 = the product's current/first variant. 1 = first variant, 2 = second…"
+        },
+        {
+          "type": "range",
+          "id": "quantity",
+          "label": "Quantity added to cart",
+          "min": 1,
+          "max": 10,
+          "step": 1,
+          "default": 1
+        },
+        {
+          "type": "range",
+          "id": "bottles",
+          "label": "Bottles in this offer (for per-bottle price)",
+          "min": 1,
+          "max": 12,
+          "step": 1,
+          "default": 1
+        },
+        {
+          "type": "number",
+          "id": "compare_price_override",
+          "label": "Compare-at price override (total, e.g. 119.97)",
+          "info": "Optional. By default uses the variant compare-at price × quantity."
+        },
+        {
+          "type": "text",
+          "id": "badge",
+          "label": "Badge (e.g. Most Popular)"
+        },
+        {
+          "type": "color",
+          "id": "badge_color",
+          "label": "Badge color"
+        },
+        {
+          "type": "checkbox",
+          "id": "default_selected",
+          "label": "Selected by default",
+          "default": false
+        },
+        {
+          "type": "range",
+          "id": "gifts",
+          "label": "Free gifts unlocked by this offer",
+          "min": 0,
+          "max": 4,
+          "step": 1,
+          "default": 0,
+          "info": "Unlocks the first N \"Free gift\" blocks, in order."
+        },
+        {
+          "type": "text",
+          "id": "extra_title",
+          "label": "Bonus line (shown when selected)"
+        },
+        {
+          "type": "text",
+          "id": "extra_text",
+          "label": "Bonus subtext"
+        },
+        {
+          "type": "header",
+          "content": "Discount code (single-variant products only)"
+        },
+        {
+          "type": "text",
+          "id": "discount_code",
+          "label": "Discount code to apply"
+        },
+        {
+          "type": "range",
+          "id": "discount_percent",
+          "label": "Displayed discount %",
+          "min": 0,
+          "max": 80,
+          "step": 1,
+          "default": 0
+        }
+      ]
+    },
+    {
+      "type": "gift",
+      "name": "Free gift",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Each offer unlocks the first N gifts (set on the offer). Order gifts from most to least common."
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Gift name",
+          "default": "FREE Shipping"
+        },
+        {
+          "type": "text",
+          "id": "value",
+          "label": "Value (shown struck through)",
+          "default": "$4.95"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon (if no image)",
+          "default": "truck",
+          "options": [
+            {
+              "value": "liver",
+              "label": "Liver"
+            },
+            {
+              "value": "shield",
+              "label": "Shield"
+            },
+            {
+              "value": "bolt",
+              "label": "Bolt"
+            },
+            {
+              "value": "leaf",
+              "label": "Leaf"
+            },
+            {
+              "value": "heart",
+              "label": "Heart"
+            },
+            {
+              "value": "brain",
+              "label": "Brain"
+            },
+            {
+              "value": "gut",
+              "label": "Gut"
+            },
+            {
+              "value": "flask",
+              "label": "Flask"
+            },
+            {
+              "value": "microscope",
+              "label": "Microscope"
+            },
+            {
+              "value": "check",
+              "label": "Check"
+            },
+            {
+              "value": "check-circle",
+              "label": "Check Circle"
+            },
+            {
+              "value": "x-circle",
+              "label": "X Circle"
+            },
+            {
+              "value": "star",
+              "label": "Star"
+            },
+            {
+              "value": "truck",
+              "label": "Truck"
+            },
+            {
+              "value": "gift",
+              "label": "Gift"
+            },
+            {
+              "value": "lock",
+              "label": "Lock"
+            },
+            {
+              "value": "refresh",
+              "label": "Refresh"
+            },
+            {
+              "value": "globe",
+              "label": "Globe"
+            },
+            {
+              "value": "sparkle",
+              "label": "Sparkle"
+            },
+            {
+              "value": "droplet",
+              "label": "Droplet"
+            },
+            {
+              "value": "sun",
+              "label": "Sun"
+            },
+            {
+              "value": "moon",
+              "label": "Moon"
+            },
+            {
+              "value": "scale",
+              "label": "Scale"
+            },
+            {
+              "value": "award",
+              "label": "Award"
+            },
+            {
+              "value": "capsule",
+              "label": "Capsule"
+            },
+            {
+              "value": "clock",
+              "label": "Clock"
+            },
+            {
+              "value": "smile",
+              "label": "Smile"
+            },
+            {
+              "value": "flame",
+              "label": "Flame"
+            },
+            {
+              "value": "wine",
+              "label": "Wine"
+            },
+            {
+              "value": "thumbs-up",
+              "label": "Thumbs Up"
+            },
+            {
+              "value": "vegan",
+              "label": "Vegan"
+            },
+            {
+              "value": "factory",
+              "label": "Factory"
+            },
+            {
+              "value": "filter",
+              "label": "Filter"
+            },
+            {
+              "value": "plus",
+              "label": "Plus"
+            }
+          ]
+        },
+        {
+          "type": "product",
+          "id": "gift_product",
+          "label": "Gift product to add to cart (optional)",
+          "info": "Leave empty for display-only gifts (e.g. free shipping). If set, create an automatic discount that makes this product free."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "LW · Stock up bundle",
+      "blocks": [
+        {
+          "type": "offer",
+          "settings": {
+            "title": "Buy 3 Bottles",
+            "quantity": 3,
+            "bottles": 3,
+            "badge": "Best Value"
+          }
+        },
+        {
+          "type": "offer",
+          "settings": {
+            "title": "Buy 2 Bottles",
+            "quantity": 2,
+            "bottles": 2,
+            "badge": "Most Popular",
+            "default_selected": true
+          }
+        },
+        {
+          "type": "offer",
+          "settings": {
+            "title": "Buy One",
+            "quantity": 1,
+            "bottles": 1
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

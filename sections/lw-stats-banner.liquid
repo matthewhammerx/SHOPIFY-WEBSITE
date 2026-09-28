@@ -1,0 +1,159 @@
+<section class="lw lw-section lw-stats" style="--lw-pt: {{ section.settings.padding_top }}px; --lw-pb: {{ section.settings.padding_bottom }}px; --lw-bg: {{ section.settings.bg }}; --lw-fg: {{ section.settings.fg }}; --lw-img-opacity: {{ section.settings.image_opacity | divided_by: 100.0 }};">
+  {%- if section.settings.image != blank -%}<div class="lw-stats__bgimg">{{ section.settings.image | image_url: width: 1800 | image_tag: loading: 'lazy', alt: '' }}</div>{%- endif -%}
+  <div class="lw-wrap lw-stats__grid">
+    <div class="lw-stats__nums">
+      {%- for block in section.blocks -%}
+        <div class="lw-stat" {{ block.shopify_attributes }}>
+          <div class="lw-stat__num" data-lw-count="{{ block.settings.number }}" data-prefix="{{ block.settings.prefix | escape }}" data-suffix="{{ block.settings.suffix | escape }}">{{ block.settings.prefix }}{{ block.settings.number }}{{ block.settings.suffix }}</div>
+          <div class="lw-stat__label">{{ block.settings.label }}</div>
+        </div>
+      {%- endfor -%}
+    </div>
+    <div class="lw-stats__copy">
+      <h2 class="lw-h lw-h--md">{{ section.settings.heading }}</h2>
+      {%- if section.settings.text != blank -%}<p class="lw-sub">{{ section.settings.text }}</p>{%- endif -%}
+      {%- if section.settings.button_label != blank -%}
+        <a class="lw-btn lw-btn--cream lw-btn--block" href="{{ section.settings.button_link | default: '#lw-product' }}">{{ section.settings.button_label }}</a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "LW · Stats banner",
+  "tag": "section",
+  "class": "lw-section-stats",
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Clinically Studied. More Energy. A Happier Liver.*"
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Text",
+      "default": "When traditional botanicals meet modern research, the results speak for themselves."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Try Risk-Free Today"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link",
+      "info": "Empty = scroll to buy box"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Background image"
+    },
+    {
+      "type": "range",
+      "id": "image_opacity",
+      "label": "Image opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg",
+      "label": "Background",
+      "default": "#095946"
+    },
+    {
+      "type": "color",
+      "id": "fg",
+      "label": "Text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 56
+    }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Stat",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "text",
+          "id": "prefix",
+          "label": "Prefix"
+        },
+        {
+          "type": "text",
+          "id": "number",
+          "label": "Number (animated)",
+          "default": "80"
+        },
+        {
+          "type": "text",
+          "id": "suffix",
+          "label": "Suffix"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Silymarin concentration"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "LW · Stats banner",
+      "blocks": [
+        {
+          "type": "stat"
+        },
+        {
+          "type": "stat"
+        },
+        {
+          "type": "stat"
+        },
+        {
+          "type": "stat"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
