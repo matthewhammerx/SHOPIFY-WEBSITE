@@ -74,61 +74,57 @@
     "main": {
       "type": "lw-main-product",
       "settings": {
-        "bg": "#ffffff",
-        "ugc_heading": "What our customers are saying:"
+        "bg": "#ffffff"
       },
       "blocks": {
-        "ugc_video_1": {
-          "type": "ugc_video",
+        "ugc_videos_1": {
+          "type": "ugc_videos",
           "settings": {
-            "caption": "I was skeptical…"
+            "heading": "What our customers are saying:",
+            "position": "media",
+            "show_desktop": true,
+            "show_mobile": true,
+            "columns_desktop": 3,
+            "columns_mobile": 2,
+            "show_arrows": true,
+            "show_dots": false,
+            "show_1": true,
+            "caption_1": "I was skeptical…",
+            "show_2": true,
+            "caption_2": "Week 3 update",
+            "show_3": true,
+            "caption_3": "My honest review",
+            "show_4": true,
+            "caption_4": "No more bloat"
           }
         },
-        "ugc_video_2": {
-          "type": "ugc_video",
-          "settings": {
-            "caption": "Week 3 update"
-          }
-        },
-        "ugc_video_3": {
-          "type": "ugc_video",
-          "settings": {
-            "caption": "My honest review"
-          }
-        },
-        "ugc_video_4": {
-          "type": "ugc_video",
-          "settings": {
-            "caption": "No more bloat"
-          }
-        },
-        "rating_5": {
+        "rating_2": {
           "type": "rating",
           "settings": {
             "text": "Rated 4.9 | Loved by thousands",
             "show_avatars": true
           }
         },
-        "eyebrow_6": {
+        "eyebrow_3": {
           "type": "eyebrow",
           "settings": {
             "text": "Daily Liver Support"
           }
         },
-        "title_7": {
+        "title_4": {
           "type": "title",
           "settings": {
             "title": "A Lighter, Clearer You Starts With Your Liver"
           }
         },
-        "text_8": {
+        "text_5": {
           "type": "text",
           "settings": {
             "use_product_description": false,
             "text": "<p>Made with clinically studied milk thistle standardized to 80% silymarin plus 7 supporting botanicals to help support liver function, ease bloating, and restore natural energy.†</p>"
           }
         },
-        "benefits_9": {
+        "benefits_6": {
           "type": "benefits",
           "settings": {
             "icon_1": "liver",
@@ -145,14 +141,14 @@
             "text_6": "Antioxidant Defense†"
           }
         },
-        "stock_10": {
+        "stock_7": {
           "type": "stock",
           "settings": {
             "percent": 93,
             "text": "[percent]% Sold"
           }
         },
-        "buy_box_11": {
+        "buy_box_8": {
           "type": "buy_box",
           "settings": {
             "show_price_header": true,
@@ -175,7 +171,7 @@
             "notes_only_subscription": false
           }
         },
-        "offer_12": {
+        "offer_9": {
           "type": "offer",
           "settings": {
             "title": "Buy 3 Get 2 Free Gifts",
@@ -189,7 +185,7 @@
             "extra_text": "Our 30-day liver-friendly meal & habit plan ($19.99 value)"
           }
         },
-        "offer_13": {
+        "offer_10": {
           "type": "offer",
           "settings": {
             "title": "Buy 2 Get 1 Free Gift",
@@ -204,7 +200,7 @@
             "extra_text": "Ships in discreet packaging"
           }
         },
-        "offer_14": {
+        "offer_11": {
           "type": "offer",
           "settings": {
             "title": "Buy One",
@@ -215,7 +211,7 @@
             "gifts": 0
           }
         },
-        "gift_15": {
+        "gift_12": {
           "type": "gift",
           "settings": {
             "title": "FREE Shipping",
@@ -223,7 +219,7 @@
             "icon": "truck"
           }
         },
-        "gift_16": {
+        "gift_13": {
           "type": "gift",
           "settings": {
             "title": "FREE Liver Reset Guide",
@@ -231,7 +227,7 @@
             "icon": "gift"
           }
         },
-        "gift_17": {
+        "gift_14": {
           "type": "gift",
           "settings": {
             "title": "FREE Anti-Bloat Blueprint",
@@ -239,7 +235,7 @@
             "icon": "gift"
           }
         },
-        "collapsible_18": {
+        "collapsible_15": {
           "type": "collapsible",
           "settings": {
             "heading": "Description",
@@ -247,7 +243,7 @@
             "content": "<p>LiverWell Milk Thistle is a daily liver support formula built around milk thistle extract standardized to 80% silymarin — the concentration used in clinical research — plus 7 supporting ingredients for digestion, energy, and antioxidant protection.†</p><p>No proprietary blends. No fillers. Third-party tested.</p>"
           }
         },
-        "collapsible_19": {
+        "collapsible_16": {
           "type": "collapsible",
           "settings": {
             "heading": "Why You Need LiverWell®?",
@@ -255,7 +251,7 @@
             "content": "<p>Your liver filters everything you eat, drink, and breathe — every day. Processed food, alcohol, medications and stress all add to its workload. When it's overworked, it can show up as bloating, sluggish digestion, afternoon crashes and brain fog.</p><p>LiverWell gives your liver the daily nutritional support it needs to do its job.†</p>"
           }
         },
-        "collapsible_20": {
+        "collapsible_17": {
           "type": "collapsible",
           "settings": {
             "heading": "About Your Free Gifts",
@@ -263,7 +259,7 @@
             "content": "<p><strong>Liver Reset Guide</strong> – a 30-day plan of simple liver-friendly meals and habits.</p><p><strong>Anti-Bloat Blueprint</strong> – practical tips to reduce bloating and support digestion.</p><p>Free items are digital and delivered by email with your first order.</p>"
           }
         },
-        "collapsible_21": {
+        "collapsible_18": {
           "type": "collapsible",
           "settings": {
             "heading": "Benefits",
@@ -271,7 +267,7 @@
             "content": "<ul><li>Supports healthy liver function†</li><li>Helps ease occasional bloating†</li><li>Supports steady, natural energy†</li><li>Antioxidant protection for liver cells†</li><li>Supports clearer skin and mental clarity†</li></ul>"
           }
         },
-        "collapsible_22": {
+        "collapsible_19": {
           "type": "collapsible",
           "settings": {
             "heading": "Recommended Use",
@@ -279,7 +275,7 @@
             "content": "<p>Take 2 capsules daily with water, preferably with a meal. For best results, take at the same time each day. Most customers take it in the morning.</p>"
           }
         },
-        "collapsible_23": {
+        "collapsible_20": {
           "type": "collapsible",
           "settings": {
             "heading": "Do You Offer a Guarantee?",
@@ -289,29 +285,26 @@
         }
       },
       "block_order": [
-        "ugc_video_1",
-        "ugc_video_2",
-        "ugc_video_3",
-        "ugc_video_4",
-        "rating_5",
-        "eyebrow_6",
-        "title_7",
-        "text_8",
-        "benefits_9",
-        "stock_10",
-        "buy_box_11",
-        "offer_14",
-        "offer_13",
-        "offer_12",
-        "gift_15",
-        "gift_16",
-        "gift_17",
+        "ugc_videos_1",
+        "rating_2",
+        "eyebrow_3",
+        "title_4",
+        "text_5",
+        "benefits_6",
+        "stock_7",
+        "buy_box_8",
+        "offer_11",
+        "offer_10",
+        "offer_9",
+        "gift_12",
+        "gift_13",
+        "gift_14",
+        "collapsible_15",
+        "collapsible_16",
+        "collapsible_17",
         "collapsible_18",
         "collapsible_19",
-        "collapsible_20",
-        "collapsible_21",
-        "collapsible_22",
-        "collapsible_23"
+        "collapsible_20"
       ]
     },
     "stats": {

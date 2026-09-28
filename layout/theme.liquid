@@ -457,8 +457,16 @@
       }
     </script>
     {%- comment -%} LiverWell custom sections (lw-*) {%- endcomment -%}
-    <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
-    <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@500,600&f[]=satoshi@400,500,700&display=swap">
+    {%- comment -%} Clash Grotesk + Satoshi (Fontshare, ITF Free Font License) served from theme assets {%- endcomment -%}
+    {{ 'lw-satoshi-400.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: 'anonymous' }}
+    {{ 'lw-clash-grotesk-600.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: 'anonymous' }}
+    <style>
+      @font-face { font-family: 'Clash Grotesk'; src: url({{ 'lw-clash-grotesk-500.woff2' | asset_url }}) format('woff2'); font-weight: 500; font-style: normal; font-display: swap; }
+      @font-face { font-family: 'Clash Grotesk'; src: url({{ 'lw-clash-grotesk-600.woff2' | asset_url }}) format('woff2'); font-weight: 600; font-style: normal; font-display: swap; }
+      @font-face { font-family: 'Satoshi'; src: url({{ 'lw-satoshi-400.woff2' | asset_url }}) format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+      @font-face { font-family: 'Satoshi'; src: url({{ 'lw-satoshi-500.woff2' | asset_url }}) format('woff2'); font-weight: 500; font-style: normal; font-display: swap; }
+      @font-face { font-family: 'Satoshi'; src: url({{ 'lw-satoshi-700.woff2' | asset_url }}) format('woff2'); font-weight: 700; font-style: normal; font-display: swap; }
+    </style>
     {{ 'liverwell.css' | asset_url | stylesheet_tag }}
     <script>window.LW = { moneyFormat: {{ shop.money_format | json }} };</script>
     <script src="{{ 'liverwell.js' | asset_url }}" defer="defer"></script>

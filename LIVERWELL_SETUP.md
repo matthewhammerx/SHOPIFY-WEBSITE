@@ -19,6 +19,16 @@ The bundle cards read their price from real variants:
 Create one option, such as **"Bundle"**, with the values *1 Bottle / 2 Bottles / 3 Bottles*, in that order. The "per bottle" text is worked out automatically.
 If you'd rather keep a single variant, set each offer's *Variant position* to 0, *Quantity* to 1/2/3, and optionally add a *Discount code* with its matching *Displayed discount %*.
 
+## Customer videos
+Every customer video lives in one **Customer videos** block inside the product section. It holds up to 8 video slots, each with a video, a poster image, a caption and a Show checkbox.
+In the same block you can set:
+- **Show on desktop** and **Show on mobile**, separately
+- how many videos are visible at once on each device
+- the **Position**: under the image (on phones that's the bottom of the product area), or inside the product info column wherever you drag the block
+
+## Fonts
+The theme includes Clash Grotesk and Satoshi, the fonts Resilia uses. They're free (Fontshare ITF license) and there's nothing to buy or install. The LiverWell sections ignore your theme's global font and letter-spacing settings, so they always look the same.
+
 ## Using Kaching Bundles instead
 1. In the theme editor, open the product section, click the **Buy box** block, and tick **"Use a bundle app instead of the built-in offers"**. This hides my offer cards, the gifts box, the price row and the subscribe toggle, and outputs a standard Shopify product form.
 2. Click **Add block → Apps → Kaching Bundles** and drag it right above the Buy box.

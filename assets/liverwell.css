@@ -26,8 +26,9 @@
   --lw-shadow: 0 6px 24px rgba(0, 42, 33, 0.08);
 }
 
-.lw { font-family: var(--lw-font-body); color: var(--lw-text); -webkit-font-smoothing: antialiased; }
-.lw *, .lw *::before, .lw *::after { box-sizing: border-box; }
+.lw { font-family: var(--lw-font-body); color: var(--lw-text); -webkit-font-smoothing: antialiased; letter-spacing: normal; line-height: 1.5; font-weight: 400; }
+/* Stop the theme's global font / letter-spacing rules (body, h1–h5) leaking into LiverWell sections */
+.lw *, .lw *::before, .lw *::after { box-sizing: border-box; font-family: inherit; letter-spacing: inherit; }
 .lw img, .lw video { max-width: 100%; display: block; }
 .lw p { margin: 0; }
 .lw :where(a) { color: inherit; }
@@ -440,3 +441,8 @@
 .lw-cd__unit span { font-size: 12px; opacity: .9; margin-top: 3px; }
 @media (max-width: 749px) { .lw-cd__inner { gap: 16px; } .lw-cd__title { font-size: 17px; } .lw-cd__text { font-size: 11.5px; } .lw-cd__unit b { font-size: 20px; } .lw-cd__timer i { font-size: 18px; } .lw-cd__unit { min-width: 26px; } .lw-cd__unit span { font-size: 10px; } }
 @media (max-width: 749px) { .lw-rating { flex-wrap: nowrap; font-size: 12px; gap: 8px; } .lw-rating__avatars img, .lw-rating__avatars span { width: 20px; height: 20px; } }
+
+/* Device visibility */
+@media (min-width: 990px) { .lw-hide-desktop { display: none !important; } }
+@media (max-width: 989px) { .lw-hide-mobile { display: none !important; } }
+.lw-pdp__info .lw-ugc { margin-top: 8px; }
