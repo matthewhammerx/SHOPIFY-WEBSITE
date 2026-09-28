@@ -1,0 +1,609 @@
+{% comment %}
+  Herbans Ingredient
+  - Mobile: image left, text card right
+  - Desktop: ingredient cards side-by-side, image on top and text below
+  - Ingredient label: top-left inside image
+  - Yellow badge: bottom-left of image on mobile, top-right of image on desktop
+{% endcomment %}
+
+<section id="herbans-ingredient-{{ section.id }}" class="hbi-section">
+  <div class="hbi-container">
+    <div class="hbi-header">
+      {% if section.settings.eyebrow != blank %}
+        <div class="hbi-eyebrow">{{ section.settings.eyebrow }}</div>
+      {% endif %}
+
+      {% if section.settings.heading != blank %}
+        <div class="hbi-heading rte">{{ section.settings.heading }}</div>
+      {% endif %}
+
+      {% if section.settings.subheading != blank %}
+        <div class="hbi-subheading rte">{{ section.settings.subheading }}</div>
+      {% endif %}
+    </div>
+
+    <div class="hbi-list">
+      {% for block in section.blocks %}
+        <article class="hbi-card" {{ block.shopify_attributes }}>
+          <div class="hbi-image-box">
+            {% if block.settings.image != blank %}
+              <img
+                src="{{ block.settings.image | image_url: width: 900 }}"
+                alt="{{ block.settings.image_alt | escape }}"
+                loading="lazy"
+                width="{{ block.settings.image.width }}"
+                height="{{ block.settings.image.height }}"
+              >
+            {% else %}
+              <div class="hbi-placeholder">
+                {{ block.settings.ingredient_name | default: 'Ingredient' }}
+              </div>
+            {% endif %}
+
+            {% if block.settings.ingredient_name != blank %}
+              <div class="hbi-image-label">{{ block.settings.ingredient_name }}</div>
+            {% endif %}
+
+            {% if block.settings.badge != blank %}
+              <div class="hbi-image-badge">{{ block.settings.badge }}</div>
+            {% endif %}
+          </div>
+
+          <div class="hbi-text-card">
+            {% if block.settings.title != blank %}
+              <h3>{{ block.settings.title }}</h3>
+            {% endif %}
+
+            {% if block.settings.text != blank %}
+              <p>{{ block.settings.text }}</p>
+            {% endif %}
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+
+    {% if section.settings.button_1_label != blank or section.settings.button_2_label != blank %}
+      <div class="hbi-buttons">
+        {% if section.settings.button_1_label != blank %}
+          <a class="hbi-btn hbi-btn-primary" href="{{ section.settings.button_1_link | default: '#' }}">
+            {{ section.settings.button_1_label }}
+          </a>
+        {% endif %}
+
+        {% if section.settings.button_2_label != blank %}
+          <a class="hbi-btn hbi-btn-secondary" href="{{ section.settings.button_2_link | default: '#' }}">
+            {{ section.settings.button_2_label }}
+          </a>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+<style>
+  {% unless section.settings.show_on_mobile %}
+    @media screen and (max-width: 767px) {
+      #herbans-ingredient-{{ section.id }} {
+        display: none !important;
+      }
+    }
+  {% endunless %}
+
+  {% unless section.settings.show_on_desktop %}
+    @media screen and (min-width: 768px) {
+      #herbans-ingredient-{{ section.id }} {
+        display: none !important;
+      }
+    }
+  {% endunless %}
+
+  #herbans-ingredient-{{ section.id }} {
+    background: {{ section.settings.section_bg }};
+    padding: {{ section.settings.padding_top_mobile }}px {{ section.settings.side_padding_mobile }}px {{ section.settings.padding_bottom_mobile }}px;
+    overflow: hidden;
+  }
+
+  #herbans-ingredient-{{ section.id }} * {
+    box-sizing: border-box;
+  }
+
+  #herbans-ingredient-{{ section.id }} .hbi-container {
+    max-width: {{ section.settings.max_width }}px;
+    margin: 0 auto;
+  }
+
+  #herbans-ingredient-{{ section.id }} .hbi-header {
+    max-width: {{ section.settings.header_width }}px;
+    margin: 0 auto {{ section.settings.header_bottom_mobile }}px;
+    text-align: {{ section.settings.mobile_header_align }};
+  }
+
+  #herbans-ingredient-{{ section.id }} .hbi-eyebrow {
+    margin: 0 0 10px;
+    color: {{ section.settings.eyebrow_color }};
+    font-size: {{ section.settings.eyebrow_size_mobile }}px;
+    line-height: 1;
+    font-weight: 900;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  #herbans-ingredient-{{ section.id }} .hbi-heading,
+  #herbans-ingredient-{{ section.id }} .hbi-heading p {
+    margin: 0;
+    color: {{ section.settings.heading_color }};
+    font-size: {{ section.settings.heading_size_mobile }}px;
+    line-height: {{ section.settings.heading_line_height_mobile }}px;
+    font-weight: {{ section.settings.heading_weight }};
+    letter-spacing: {{ section.settings.heading_letter_spacing }}px;
+  }
+
+  #herbans-ingredient-{{ section.id }} .hbi-heading strong,
+  #herbans-ingredient-{{ section.id }} .hbi-heading b {
+    color: {{ section.settings.heading_accent_color }};
+    font-weight: inherit;
+  }
+
+  #herbans-ingredient-{{ section.id }} .hbi-heading em,
+  #herbans-ingredient-{{ section.id }} .hbi-heading i {
+    color: {{ section.settings.heading_accent_color }};
+    font-family: Georgia, serif;
+    font-style: italic;
+  }
+
+  #herbans-ingredient-{{ section.id }} .hbi-subheading,
+  #herbans-ingredient-{{ section.id }} .hbi-subheading p {
+    margin: 14px auto 0;
+    color: {{ section.settings.subheading_color }};
+    font-size: {{ section.settings.subheading_size_mobile }}px;
+    line-height: {{ section.settings.subheading_line_height_mobile }}px;
+    font-weight: {{ section.settings.subheading_weight }};
+  }
+
+  #herbans-ingredient-{{ section.id }} .hbi-list {
+    display: flex;
+    flex-direction: column;
+    gap: {{ section.settings.card_gap_mobile }}px;
+    max-width: {{ section.settings.list_width_mobile }}px;
+    margin: 0 auto;
+  }
+
+  #herbans-ingredient-{{ section.id }} .hbi-card {
+    display: grid;
+    grid-template-columns: {{ section.settings.mobile_image_width }}px minmax(0, 1fr);
+    gap: {{ section.settings.mobile_image_text_gap }}px;
+    align-items: stretch;
+  }
+
+  #herbans-ingredient-{{ section.id }} .hbi-image-box {
+    position: relative;
+    width: {{ section.settings.mobile_image_width }}px;
+    height: {{ section.settings.mobile_card_height }}px;
+    min-height: {{ section.settings.mobile_card_height }}px;
+    border-radius: {{ section.settings.mobile_image_radius }}px;
+    background: {{ section.settings.image_bg }};
+    overflow: hidden;
+    box-shadow: {{ section.settings.image_shadow }};
+    isolation: isolate;
+  }
+
+  #herbans-ingredient-{{ section.id }} .hbi-image-box::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, {{ section.settings.image_gradient_top | divided_by: 100.0 }}) 0%,
+      rgba(0, 0, 0, {{ section.settings.image_gradient_mid | divided_by: 100.0 }}) 36%,
+      rgba(0, 0, 0, 0) 72%
+    );
+  }
+
+  #herbans-ingredient-{{ section.id }} .hbi-image-box img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: {{ section.settings.image_fit }};
+    object-position: center;
+    transform: scale({{ section.settings.image_zoom | divided_by: 100.0 }});
+  }
+
+  #herbans-ingredient-{{ section.id }} .hbi-placeholder {
+    width: 100%;
+    height: 100%;
+    min-height: {{ section.settings.mobile_card_height }}px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    text-align: center;
+    background: linear-gradient(135deg, {{ section.settings.placeholder_bg_1 }}, {{ section.settings.placeholder_bg_2 }});
+    color: {{ section.settings.placeholder_text_color }};
+    font-size: 11px;
+    line-height: 1.1;
+    font-weight: 900;
+  }
+
+  #herbans-ingredient-{{ section.id }} .hbi-image-label {
+    position: absolute;
+    top: {{ section.settings.mobile_label_top }}px;
+    left: {{ section.settings.mobile_label_left }}px;
+    right: 10px;
+    z-index: 3;
+    color: {{ section.settings.image_label_color }};
+    font-size: {{ section.settings.mobile_label_size }}px;
+    line-height: 1.05;
+    font-weight: 900;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    word-break: break-word;
+    text-shadow: 0 1px 8px rgba(0,0,0,.28);
+  }
+
+  #herbans-ingredient-{{ section.id }} .hbi-image-badge {
+    position: absolute;
+    left: {{ section.settings.mobile_badge_left }}px;
+    bottom: {{ section.settings.mobile_badge_bottom }}px;
+    z-index: 4;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: {{ section.settings.mobile_badge_width }}px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: {{ section.settings.badge_bg }};
+    color: {{ section.settings.badge_color }};
+    font-size: {{ section.settings.badge_size_mobile }}px;
+    line-height: 1;
+    font-weight: 900;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    box-shadow: 0 4px 14px rgba(0,0,0,.12);
+  }
+
+  #herbans-ingredient-{{ section.id }} .hbi-text-card {
+    min-height: {{ section.settings.mobile_card_height }}px;
+    padding: {{ section.settings.mobile_text_padding }}px;
+    border-radius: {{ section.settings.mobile_text_radius }}px;
+    background: {{ section.settings.card_bg }};
+    border: {{ section.settings.card_border_width }}px solid {{ section.settings.card_border_color }};
+    box-shadow: {{ section.settings.card_shadow }};
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    text-align: left;
+    overflow: hidden;
+  }
+
+  #herbans-ingredient-{{ section.id }} .hbi-text-card h3 {
+    margin: 0 0 8px;
+    color: {{ section.settings.card_title_color }};
+    font-size: {{ section.settings.card_title_size_mobile }}px;
+    line-height: {{ section.settings.card_title_line_height_mobile }}px;
+    font-weight: 900;
+    letter-spacing: -0.03em;
+  }
+
+  #herbans-ingredient-{{ section.id }} .hbi-text-card p {
+    margin: 0;
+    color: {{ section.settings.card_text_color }};
+    font-size: {{ section.settings.card_text_size_mobile }}px;
+    line-height: {{ section.settings.card_text_line_height_mobile }}px;
+    font-weight: {{ section.settings.card_text_weight }};
+  }
+
+  #herbans-ingredient-{{ section.id }} .hbi-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: {{ section.settings.button_gap }}px;
+    margin-top: {{ section.settings.buttons_top_mobile }}px;
+  }
+
+  #herbans-ingredient-{{ section.id }} .hbi-btn {
+    min-width: {{ section.settings.button_min_width }}px;
+    min-height: {{ section.settings.button_height }}px;
+    padding: 12px 22px;
+    border-radius: {{ section.settings.button_radius }}px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    text-decoration: none;
+    font-size: {{ section.settings.button_font_size }}px;
+    line-height: 1;
+    font-weight: 900;
+    transition: transform .2s ease, opacity .2s ease;
+  }
+
+  #herbans-ingredient-{{ section.id }} .hbi-btn:hover {
+    transform: translateY(-1px);
+    opacity: .92;
+  }
+
+  #herbans-ingredient-{{ section.id }} .hbi-btn-primary {
+    background: {{ section.settings.button_1_bg }};
+    color: {{ section.settings.button_1_color }};
+    border: 1px solid {{ section.settings.button_1_border }};
+  }
+
+  #herbans-ingredient-{{ section.id }} .hbi-btn-secondary {
+    background: {{ section.settings.button_2_bg }};
+    color: {{ section.settings.button_2_color }};
+    border: 1px solid {{ section.settings.button_2_border }};
+  }
+
+  @media screen and (min-width: 768px) {
+    #herbans-ingredient-{{ section.id }} {
+      padding: {{ section.settings.padding_top_desktop }}px {{ section.settings.side_padding_desktop }}px {{ section.settings.padding_bottom_desktop }}px;
+    }
+
+    #herbans-ingredient-{{ section.id }} .hbi-header {
+      margin-bottom: {{ section.settings.header_bottom_desktop }}px;
+      text-align: {{ section.settings.desktop_header_align }};
+    }
+
+    #herbans-ingredient-{{ section.id }} .hbi-eyebrow {
+      font-size: {{ section.settings.eyebrow_size_desktop }}px;
+    }
+
+    #herbans-ingredient-{{ section.id }} .hbi-heading,
+    #herbans-ingredient-{{ section.id }} .hbi-heading p {
+      font-size: {{ section.settings.heading_size_desktop }}px;
+      line-height: {{ section.settings.heading_line_height_desktop }}px;
+    }
+
+    #herbans-ingredient-{{ section.id }} .hbi-subheading,
+    #herbans-ingredient-{{ section.id }} .hbi-subheading p {
+      font-size: {{ section.settings.subheading_size_desktop }}px;
+      line-height: {{ section.settings.subheading_line_height_desktop }}px;
+    }
+
+    #herbans-ingredient-{{ section.id }} .hbi-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: {{ section.settings.card_gap_desktop }}px;
+      max-width: {{ section.settings.list_width_desktop }}px;
+      align-items: stretch;
+      justify-content: center;
+    }
+
+    #herbans-ingredient-{{ section.id }} .hbi-card {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      width: 100%;
+      border-radius: {{ section.settings.desktop_card_radius }}px;
+      overflow: hidden;
+      box-shadow: {{ section.settings.card_shadow }};
+      background: {{ section.settings.card_bg }};
+    }
+
+    #herbans-ingredient-{{ section.id }} .hbi-image-box {
+      width: 100%;
+      height: {{ section.settings.desktop_image_height }}px;
+      min-height: {{ section.settings.desktop_image_height }}px;
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    #herbans-ingredient-{{ section.id }} .hbi-placeholder {
+      min-height: {{ section.settings.desktop_image_height }}px;
+    }
+
+    #herbans-ingredient-{{ section.id }} .hbi-image-label {
+      top: {{ section.settings.desktop_label_top }}px;
+      left: {{ section.settings.desktop_label_left }}px;
+      font-size: {{ section.settings.desktop_label_size }}px;
+    }
+
+    #herbans-ingredient-{{ section.id }} .hbi-image-badge {
+      top: {{ section.settings.desktop_badge_top }}px;
+      right: {{ section.settings.desktop_badge_right }}px;
+      left: auto;
+      bottom: auto;
+      min-width: {{ section.settings.desktop_badge_width }}px;
+      font-size: {{ section.settings.badge_size_desktop }}px;
+    }
+
+    #herbans-ingredient-{{ section.id }} .hbi-text-card {
+      min-height: {{ section.settings.desktop_text_height }}px;
+      padding: {{ section.settings.desktop_text_padding }}px;
+      border-radius: 0;
+      box-shadow: none;
+      border: 0;
+      flex: 1;
+      justify-content: flex-start;
+    }
+
+    #herbans-ingredient-{{ section.id }} .hbi-text-card h3 {
+      font-size: {{ section.settings.card_title_size_desktop }}px;
+      line-height: {{ section.settings.card_title_line_height_desktop }}px;
+    }
+
+    #herbans-ingredient-{{ section.id }} .hbi-text-card p {
+      font-size: {{ section.settings.card_text_size_desktop }}px;
+      line-height: {{ section.settings.card_text_line_height_desktop }}px;
+    }
+
+    #herbans-ingredient-{{ section.id }} .hbi-buttons {
+      margin-top: {{ section.settings.buttons_top_desktop }}px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Herbans Ingredient",
+  "settings": [
+    { "type": "header", "content": "Visibility" },
+    { "type": "checkbox", "id": "show_on_desktop", "label": "Show on desktop", "default": true },
+    { "type": "checkbox", "id": "show_on_mobile", "label": "Show on mobile", "default": true },
+
+    { "type": "header", "content": "Header" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "FORMULA SPOTLIGHT" },
+    { "type": "richtext", "id": "heading", "label": "Heading", "default": "<p>Quality botanicals designed for <strong>daily hair support</strong></p>" },
+    { "type": "richtext", "id": "subheading", "label": "Subheading", "default": "<p>Herbans combines targeted plant-based ingredients to support fuller-looking hair, scalp wellness, and daily comfort from within.</p>" },
+
+    { "type": "header", "content": "Buttons" },
+    { "type": "text", "id": "button_1_label", "label": "Button 1 label", "default": "View Ingredients" },
+    { "type": "url", "id": "button_1_link", "label": "Button 1 link" },
+    { "type": "text", "id": "button_2_label", "label": "Button 2 label", "default": "Supplement Facts" },
+    { "type": "url", "id": "button_2_link", "label": "Button 2 link" },
+    { "type": "range", "id": "buttons_top_mobile", "label": "Buttons top mobile", "min": 0, "max": 80, "step": 2, "default": 24 },
+    { "type": "range", "id": "buttons_top_desktop", "label": "Buttons top desktop", "min": 0, "max": 100, "step": 2, "default": 30 },
+    { "type": "range", "id": "button_gap", "label": "Button gap", "min": 6, "max": 30, "step": 2, "default": 12 },
+    { "type": "range", "id": "button_height", "label": "Button height", "min": 36, "max": 70, "step": 2, "default": 44 },
+    { "type": "range", "id": "button_min_width", "label": "Button min width", "min": 110, "max": 260, "step": 10, "default": 170 },
+    { "type": "range", "id": "button_radius", "label": "Button radius", "min": 0, "max": 40, "step": 1, "default": 24 },
+    { "type": "range", "id": "button_font_size", "label": "Button font size", "min": 11, "max": 20, "step": 1, "default": 14 },
+
+    { "type": "header", "content": "Layout" },
+    { "type": "range", "id": "max_width", "label": "Max width", "min": 700, "max": 1500, "step": 20, "default": 1100 },
+    { "type": "range", "id": "header_width", "label": "Header width", "min": 360, "max": 1000, "step": 20, "default": 720 },
+    { "type": "range", "id": "list_width_mobile", "label": "List width mobile", "min": 300, "max": 700, "step": 20, "default": 420 },
+    { "type": "range", "id": "list_width_desktop", "label": "List width desktop", "min": 700, "max": 1300, "step": 20, "default": 900 },
+    { "type": "range", "id": "card_gap_mobile", "label": "Card gap mobile", "min": 8, "max": 44, "step": 2, "default": 16 },
+    { "type": "range", "id": "card_gap_desktop", "label": "Card gap desktop", "min": 8, "max": 60, "step": 2, "default": 20 },
+    { "type": "range", "id": "mobile_image_text_gap", "label": "Image text gap mobile", "min": 6, "max": 30, "step": 2, "default": 10 },
+    { "type": "range", "id": "mobile_image_width", "label": "Mobile image width", "min": 70, "max": 190, "step": 4, "default": 110 },
+    { "type": "range", "id": "mobile_card_height", "label": "Mobile card height", "min": 120, "max": 320, "step": 4, "default": 180 },
+    { "type": "range", "id": "desktop_image_height", "label": "Desktop image height", "min": 140, "max": 360, "step": 10, "default": 220 },
+    { "type": "range", "id": "desktop_text_height", "label": "Desktop text height", "min": 100, "max": 300, "step": 10, "default": 190 },
+    { "type": "range", "id": "mobile_text_padding", "label": "Mobile text padding", "min": 10, "max": 40, "step": 2, "default": 18 },
+    { "type": "range", "id": "desktop_text_padding", "label": "Desktop text padding", "min": 16, "max": 60, "step": 2, "default": 24 },
+    { "type": "range", "id": "mobile_image_radius", "label": "Mobile image radius", "min": 0, "max": 40, "step": 1, "default": 18 },
+    { "type": "range", "id": "mobile_text_radius", "label": "Mobile text radius", "min": 0, "max": 40, "step": 1, "default": 18 },
+    { "type": "range", "id": "desktop_card_radius", "label": "Desktop card radius", "min": 0, "max": 50, "step": 1, "default": 22 },
+    { "type": "range", "id": "card_border_width", "label": "Card border width", "min": 0, "max": 4, "step": 1, "default": 0 },
+    { "type": "text", "id": "card_shadow", "label": "Card shadow CSS", "default": "0 10px 28px rgba(0,0,0,0.08)" },
+    { "type": "text", "id": "image_shadow", "label": "Image shadow CSS", "default": "0 10px 24px rgba(0,0,0,0.06)" },
+    { "type": "select", "id": "image_fit", "label": "Image fit", "options": [ { "value": "cover", "label": "Cover" }, { "value": "contain", "label": "Contain" } ], "default": "cover" },
+    { "type": "range", "id": "image_zoom", "label": "Image zoom", "min": 100, "max": 140, "step": 1, "default": 100 },
+    { "type": "range", "id": "image_gradient_top", "label": "Image gradient top", "min": 0, "max": 90, "step": 5, "default": 55 },
+    { "type": "range", "id": "image_gradient_mid", "label": "Image gradient middle", "min": 0, "max": 70, "step": 5, "default": 25 },
+
+    { "type": "header", "content": "Image label" },
+    { "type": "range", "id": "mobile_label_top", "label": "Mobile label top", "min": 6, "max": 40, "step": 1, "default": 14 },
+    { "type": "range", "id": "mobile_label_left", "label": "Mobile label left", "min": 6, "max": 40, "step": 1, "default": 14 },
+    { "type": "range", "id": "mobile_label_size", "label": "Mobile label size", "min": 8, "max": 18, "step": 1, "default": 9 },
+    { "type": "range", "id": "desktop_label_top", "label": "Desktop label top", "min": 8, "max": 50, "step": 1, "default": 18 },
+    { "type": "range", "id": "desktop_label_left", "label": "Desktop label left", "min": 8, "max": 50, "step": 1, "default": 20 },
+    { "type": "range", "id": "desktop_label_size", "label": "Desktop label size", "min": 9, "max": 20, "step": 1, "default": 11 },
+
+    { "type": "header", "content": "Badge" },
+    { "type": "range", "id": "mobile_badge_left", "label": "Mobile badge left", "min": 6, "max": 40, "step": 1, "default": 12 },
+    { "type": "range", "id": "mobile_badge_bottom", "label": "Mobile badge bottom", "min": 6, "max": 40, "step": 1, "default": 12 },
+    { "type": "range", "id": "mobile_badge_width", "label": "Mobile badge width", "min": 42, "max": 130, "step": 2, "default": 70 },
+    { "type": "range", "id": "desktop_badge_top", "label": "Desktop badge top", "min": 8, "max": 50, "step": 1, "default": 16 },
+    { "type": "range", "id": "desktop_badge_right", "label": "Desktop badge right", "min": 8, "max": 50, "step": 1, "default": 16 },
+    { "type": "range", "id": "desktop_badge_width", "label": "Desktop badge width", "min": 50, "max": 160, "step": 2, "default": 92 },
+    { "type": "range", "id": "badge_size_mobile", "label": "Badge size mobile", "min": 8, "max": 16, "step": 1, "default": 9 },
+    { "type": "range", "id": "badge_size_desktop", "label": "Badge size desktop", "min": 9, "max": 16, "step": 1, "default": 10 },
+
+    { "type": "header", "content": "Spacing" },
+    { "type": "range", "id": "padding_top_mobile", "label": "Padding top mobile", "min": 0, "max": 140, "step": 4, "default": 56 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Padding bottom mobile", "min": 0, "max": 140, "step": 4, "default": 56 },
+    { "type": "range", "id": "padding_top_desktop", "label": "Padding top desktop", "min": 0, "max": 180, "step": 4, "default": 80 },
+    { "type": "range", "id": "padding_bottom_desktop", "label": "Padding bottom desktop", "min": 0, "max": 180, "step": 4, "default": 80 },
+    { "type": "range", "id": "side_padding_mobile", "label": "Side padding mobile", "min": 0, "max": 30, "step": 2, "default": 16 },
+    { "type": "range", "id": "side_padding_desktop", "label": "Side padding desktop", "min": 0, "max": 80, "step": 4, "default": 40 },
+    { "type": "range", "id": "header_bottom_mobile", "label": "Header bottom mobile", "min": 10, "max": 80, "step": 2, "default": 28 },
+    { "type": "range", "id": "header_bottom_desktop", "label": "Header bottom desktop", "min": 10, "max": 100, "step": 2, "default": 40 },
+
+    { "type": "header", "content": "Typography" },
+    { "type": "select", "id": "mobile_header_align", "label": "Mobile header align", "options": [ { "value": "left", "label": "Left" }, { "value": "center", "label": "Center" } ], "default": "center" },
+    { "type": "select", "id": "desktop_header_align", "label": "Desktop header align", "options": [ { "value": "left", "label": "Left" }, { "value": "center", "label": "Center" } ], "default": "center" },
+    { "type": "range", "id": "eyebrow_size_mobile", "label": "Eyebrow size mobile", "min": 9, "max": 18, "step": 1, "default": 11 },
+    { "type": "range", "id": "eyebrow_size_desktop", "label": "Eyebrow size desktop", "min": 9, "max": 20, "step": 1, "default": 12 },
+    { "type": "range", "id": "heading_size_mobile", "label": "Heading size mobile", "min": 24, "max": 56, "step": 1, "default": 34 },
+    { "type": "range", "id": "heading_line_height_mobile", "label": "Heading line mobile", "min": 26, "max": 64, "step": 1, "default": 38 },
+    { "type": "range", "id": "heading_size_desktop", "label": "Heading size desktop", "min": 28, "max": 90, "step": 1, "default": 52 },
+    { "type": "range", "id": "heading_line_height_desktop", "label": "Heading line desktop", "min": 30, "max": 96, "step": 1, "default": 58 },
+    { "type": "select", "id": "heading_weight", "label": "Heading weight", "options": [ { "value": "600", "label": "Semi bold" }, { "value": "700", "label": "Bold" }, { "value": "800", "label": "Extra bold" }, { "value": "900", "label": "Black" } ], "default": "800" },
+    { "type": "range", "id": "heading_letter_spacing", "label": "Heading letter spacing", "min": -4, "max": 3, "step": 1, "default": -2 },
+    { "type": "range", "id": "subheading_size_mobile", "label": "Subheading size mobile", "min": 13, "max": 22, "step": 1, "default": 16 },
+    { "type": "range", "id": "subheading_line_height_mobile", "label": "Subheading line mobile", "min": 18, "max": 32, "step": 1, "default": 23 },
+    { "type": "range", "id": "subheading_size_desktop", "label": "Subheading size desktop", "min": 13, "max": 24, "step": 1, "default": 18 },
+    { "type": "range", "id": "subheading_line_height_desktop", "label": "Subheading line desktop", "min": 18, "max": 34, "step": 1, "default": 26 },
+    { "type": "select", "id": "subheading_weight", "label": "Subheading weight", "options": [ { "value": "400", "label": "Regular" }, { "value": "500", "label": "Medium" }, { "value": "600", "label": "Semi bold" } ], "default": "500" },
+
+    { "type": "header", "content": "Card text" },
+    { "type": "range", "id": "card_title_size_mobile", "label": "Title size mobile", "min": 14, "max": 30, "step": 1, "default": 18 },
+    { "type": "range", "id": "card_title_line_height_mobile", "label": "Title line mobile", "min": 16, "max": 36, "step": 1, "default": 21 },
+    { "type": "range", "id": "card_title_size_desktop", "label": "Title size desktop", "min": 16, "max": 38, "step": 1, "default": 24 },
+    { "type": "range", "id": "card_title_line_height_desktop", "label": "Title line desktop", "min": 18, "max": 44, "step": 1, "default": 27 },
+    { "type": "range", "id": "card_text_size_mobile", "label": "Text size mobile", "min": 10, "max": 20, "step": 1, "default": 13 },
+    { "type": "range", "id": "card_text_line_height_mobile", "label": "Text line mobile", "min": 14, "max": 30, "step": 1, "default": 18 },
+    { "type": "range", "id": "card_text_size_desktop", "label": "Text size desktop", "min": 11, "max": 22, "step": 1, "default": 15 },
+    { "type": "range", "id": "card_text_line_height_desktop", "label": "Text line desktop", "min": 15, "max": 34, "step": 1, "default": 21 },
+    { "type": "select", "id": "card_text_weight", "label": "Card text weight", "options": [ { "value": "400", "label": "Regular" }, { "value": "500", "label": "Medium" }, { "value": "600", "label": "Semi bold" } ], "default": "500" },
+
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "section_bg", "label": "Section background", "default": "#F8F2E8" },
+    { "type": "color", "id": "eyebrow_color", "label": "Eyebrow color", "default": "#D76F3D" },
+    { "type": "color", "id": "heading_color", "label": "Heading color", "default": "#111111" },
+    { "type": "color", "id": "heading_accent_color", "label": "Heading accent color", "default": "#D76F3D" },
+    { "type": "color", "id": "subheading_color", "label": "Subheading color", "default": "#111111" },
+    { "type": "color", "id": "card_bg", "label": "Card background", "default": "#FFFFFF" },
+    { "type": "color", "id": "image_bg", "label": "Image background", "default": "#E8D5C4" },
+    { "type": "color", "id": "card_border_color", "label": "Card border", "default": "#EAD8C9" },
+    { "type": "color", "id": "image_label_color", "label": "Image label color", "default": "#FFFFFF" },
+    { "type": "color", "id": "card_title_color", "label": "Card title color", "default": "#00452F" },
+    { "type": "color", "id": "card_text_color", "label": "Card text color", "default": "#111111" },
+    { "type": "color", "id": "badge_bg", "label": "Badge background", "default": "#FFD26F" },
+    { "type": "color", "id": "badge_color", "label": "Badge text color", "default": "#111111" },
+    { "type": "color", "id": "button_1_bg", "label": "Button 1 background", "default": "#00452F" },
+    { "type": "color", "id": "button_1_color", "label": "Button 1 text", "default": "#FFFFFF" },
+    { "type": "color", "id": "button_1_border", "label": "Button 1 border", "default": "#00452F" },
+    { "type": "color_background", "id": "button_2_bg", "label": "Button 2 background", "default": "transparent" },
+    { "type": "color", "id": "button_2_color", "label": "Button 2 text", "default": "#00452F" },
+    { "type": "color", "id": "button_2_border", "label": "Button 2 border", "default": "#00452F" },
+    { "type": "color", "id": "placeholder_bg_1", "label": "Placeholder bg 1", "default": "#F7E6DA" },
+    { "type": "color", "id": "placeholder_bg_2", "label": "Placeholder bg 2", "default": "#D58764" },
+    { "type": "color", "id": "placeholder_text_color", "label": "Placeholder text color", "default": "#103B38" }
+  ],
+  "blocks": [
+    {
+      "type": "ingredient",
+      "name": "Ingredient",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "image_alt", "label": "Image alt text", "default": "Herbans ingredient" },
+        { "type": "text", "id": "ingredient_name", "label": "Ingredient name", "default": "PUMPKIN SEED OIL" },
+        { "type": "text", "id": "badge", "label": "Badge", "default": "3,000MG" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Plant-based hair support" },
+        { "type": "textarea", "id": "text", "label": "Description", "default": "Supports fuller-looking hair, scalp wellness, and daily comfort from within." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Herbans Ingredient",
+      "blocks": [
+        {
+          "type": "ingredient",
+          "settings": {
+            "ingredient_name": "PUMPKIN SEED OIL",
+            "badge": "3,000MG",
+            "title": "Plant-based hair support",
+            "text": "Supports fuller-looking hair, scalp wellness, and daily comfort from within."
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "ingredient_name": "SAW PALMETTO",
+            "badge": "300MG",
+            "title": "DHT pathway support",
+            "text": "A targeted botanical used to support normal DHT pathways and healthy hair wellness."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

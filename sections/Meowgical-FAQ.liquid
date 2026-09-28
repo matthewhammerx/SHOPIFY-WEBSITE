@@ -1,0 +1,1319 @@
+
+{% comment %}
+  Meowgical FAQ Accordion
+  Product + general FAQ tabs with CTA and uploaded guarantee icon.
+{% endcomment %}
+
+<section id="mg-faq-{{ section.id }}" class="mg-faq">
+  <div class="mg-faq__inner">
+
+    <header class="mg-faq__header">
+      {% if section.settings.eyebrow != blank %}
+        <div class="mg-faq__eyebrow">{{ section.settings.eyebrow }}</div>
+      {% endif %}
+
+      {% if section.settings.heading != blank %}
+        <h2 class="mg-faq__heading">{{ section.settings.heading }}</h2>
+      {% endif %}
+
+      {% if section.settings.subheading != blank %}
+        <div class="mg-faq__subheading rte">{{ section.settings.subheading }}</div>
+      {% endif %}
+    </header>
+
+    {% if section.settings.show_tabs %}
+      <div class="mg-faq__tabs" role="tablist" aria-label="FAQ categories">
+        <button
+          type="button"
+          class="mg-faq__tab is-active"
+          role="tab"
+          aria-selected="true"
+          data-mg-faq-tab="product"
+        >
+          {{ section.settings.product_tab_label }}
+        </button>
+
+        <button
+          type="button"
+          class="mg-faq__tab"
+          role="tab"
+          aria-selected="false"
+          data-mg-faq-tab="general"
+        >
+          {{ section.settings.general_tab_label }}
+        </button>
+      </div>
+    {% endif %}
+
+    <div class="mg-faq__groups">
+      <div class="mg-faq__group is-active" data-mg-faq-group="product">
+        {% for block in section.blocks %}
+          {% if block.type == 'faq' and block.settings.category == 'product' %}
+            <details class="mg-faq__item" {{ block.shopify_attributes }}>
+              <summary class="mg-faq__question">
+                <span>{{ block.settings.question }}</span>
+                <span class="mg-faq__plus" aria-hidden="true"></span>
+              </summary>
+
+              <div class="mg-faq__answer rte">
+                {{ block.settings.answer }}
+              </div>
+            </details>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+      <div
+        class="mg-faq__group{% unless section.settings.show_tabs %} is-active{% endunless %}"
+        data-mg-faq-group="general"
+      >
+        {% for block in section.blocks %}
+          {% if block.type == 'faq' and block.settings.category == 'general' %}
+            <details class="mg-faq__item" {{ block.shopify_attributes }}>
+              <summary class="mg-faq__question">
+                <span>{{ block.settings.question }}</span>
+                <span class="mg-faq__plus" aria-hidden="true"></span>
+              </summary>
+
+              <div class="mg-faq__answer rte">
+                {{ block.settings.answer }}
+              </div>
+            </details>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+
+    {% if section.settings.button_text != blank %}
+      <div class="mg-faq__cta-wrap">
+        <a
+          href="{{ section.settings.button_link | default: '#MainProduct' }}"
+          class="mg-faq__cta"
+        >
+          {{ section.settings.button_text }}
+        </a>
+
+        {% if section.settings.guarantee_text != blank %}
+          <div class="mg-faq__guarantee">
+            {% if section.settings.guarantee_icon != blank %}
+              <img
+                src="{{ section.settings.guarantee_icon | image_url: width: 100 }}"
+                alt=""
+                class="mg-faq__guarantee-icon"
+                loading="lazy"
+                width="{{ section.settings.guarantee_icon_size_mobile }}"
+                height="{{ section.settings.guarantee_icon_size_mobile }}"
+              >
+            {% endif %}
+            <span>{{ section.settings.guarantee_text }}</span>
+          </div>
+        {% endif %}
+      </div>
+    {% endif %}
+
+  </div>
+
+  {% if section.settings.enable_faq_schema %}
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {% assign first_faq = true %}
+          {% for block in section.blocks %}
+            {% if block.type == 'faq' and block.settings.question != blank and block.settings.answer != blank %}
+              {% unless first_faq %},{% endunless %}
+              {
+                "@type": "Question",
+                "name": {{ block.settings.question | json }},
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": {{ block.settings.answer | strip_html | strip_newlines | json }}
+                }
+              }
+              {% assign first_faq = false %}
+            {% endif %}
+          {% endfor %}
+        ]
+      }
+    </script>
+  {% endif %}
+</section>
+
+<style>
+  #mg-faq-{{ section.id }} {
+    --mgfaq-bg: {{ section.settings.section_bg }};
+    --mgfaq-card: {{ section.settings.card_bg }};
+    --mgfaq-heading: {{ section.settings.heading_color }};
+    --mgfaq-text: {{ section.settings.text_color }};
+    --mgfaq-accent: {{ section.settings.accent_color }};
+    --mgfaq-soft: {{ section.settings.soft_accent }};
+    --mgfaq-border: {{ section.settings.border_color }};
+    --mgfaq-button-text: {{ section.settings.button_text_color }};
+    background: var(--mgfaq-bg);
+    padding:
+      {{ section.settings.padding_top_mobile }}px
+      {{ section.settings.padding_side_mobile }}px
+      {{ section.settings.padding_bottom_mobile }}px;
+  }
+
+  #mg-faq-{{ section.id }} * {
+    box-sizing: border-box;
+  }
+
+  #mg-faq-{{ section.id }} .mg-faq__inner {
+    max-width: {{ section.settings.max_width }}px;
+    margin: 0 auto;
+  }
+
+  #mg-faq-{{ section.id }} .mg-faq__header {
+    max-width: 760px;
+    margin: 0 auto;
+    text-align: {{ section.settings.heading_alignment_mobile }};
+  }
+
+  #mg-faq-{{ section.id }} .mg-faq__eyebrow {
+    display: inline-flex;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: var(--mgfaq-soft);
+    color: var(--mgfaq-accent);
+    font-size: 12px;
+    line-height: 1;
+    font-weight: 800;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+
+  #mg-faq-{{ section.id }} .mg-faq__heading {
+    margin: 14px 0 0;
+    color: var(--mgfaq-heading);
+    font-size: {{ section.settings.heading_size_mobile }}px;
+    line-height: 1.02;
+    font-weight: 900;
+    letter-spacing: -.04em;
+  }
+
+  #mg-faq-{{ section.id }} .mg-faq__subheading {
+    margin-top: 14px;
+    color: var(--mgfaq-text);
+    font-size: {{ section.settings.subheading_size_mobile }}px;
+    line-height: 1.55;
+  }
+
+  #mg-faq-{{ section.id }} .mg-faq__subheading p {
+    margin: 0;
+  }
+
+  #mg-faq-{{ section.id }} .mg-faq__subheading a {
+    color: var(--mgfaq-accent);
+    font-weight: 700;
+  }
+
+  #mg-faq-{{ section.id }} .mg-faq__tabs {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: {{ section.settings.tabs_gap_mobile }}px;
+  }
+
+  #mg-faq-{{ section.id }} .mg-faq__tab {
+    appearance: none;
+    padding: 11px 17px;
+    border: 1px solid var(--mgfaq-accent);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--mgfaq-heading);
+    font: inherit;
+    font-size: 13px;
+    line-height: 1;
+    font-weight: 750;
+    cursor: pointer;
+    transition: background .2s ease, color .2s ease;
+  }
+
+  #mg-faq-{{ section.id }} .mg-faq__tab.is-active {
+    background: var(--mgfaq-accent);
+    color: #fff;
+  }
+
+  #mg-faq-{{ section.id }} .mg-faq__groups {
+    margin-top: {{ section.settings.list_gap_mobile }}px;
+    border-top: 0;
+  }
+
+  #mg-faq-{{ section.id }} .mg-faq__group {
+    display: none;
+  }
+
+  #mg-faq-{{ section.id }} .mg-faq__group.is-active {
+    display: block;
+  }
+
+  #mg-faq-{{ section.id }} .mg-faq__item {
+    border-bottom: {{ section.settings.divider_width }}px solid var(--mgfaq-border);
+    background: var(--mgfaq-card);
+  }
+
+  #mg-faq-{{ section.id }} .mg-faq__group .mg-faq__item:last-child {
+    border-bottom: 0;
+  }
+
+  #mg-faq-{{ section.id }} .mg-faq__question {
+    display: grid;
+    grid-template-columns: 1fr 28px;
+    gap: 16px;
+    align-items: center;
+    min-height: {{ section.settings.question_min_height_mobile }}px;
+    padding: {{ section.settings.question_padding_mobile }}px 0;
+    color: var(--mgfaq-heading);
+    font-size: {{ section.settings.question_size_mobile }}px;
+    line-height: 1.3;
+    font-weight: 600;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  #mg-faq-{{ section.id }} .mg-faq__question::-webkit-details-marker {
+    display: none;
+  }
+
+  #mg-faq-{{ section.id }} .mg-faq__plus {
+    position: relative;
+    display: block;
+    width: 26px;
+    height: 26px;
+    color: var(--mgfaq-heading);
+  }
+
+  #mg-faq-{{ section.id }} .mg-faq__plus::before,
+  #mg-faq-{{ section.id }} .mg-faq__plus::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 22px;
+    height: {{ section.settings.plus_thickness }}px;
+    border-radius: 999px;
+    background: currentColor;
+    transform: translate(-50%, -50%);
+    transition: transform .22s ease, opacity .22s ease;
+  }
+
+  #mg-faq-{{ section.id }} .mg-faq__plus::after {
+    transform: translate(-50%, -50%) rotate(90deg);
+  }
+
+  #mg-faq-{{ section.id }} details[open] .mg-faq__plus::after {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  #mg-faq-{{ section.id }} .mg-faq__answer {
+    padding: 0 42px {{ section.settings.answer_padding_bottom_mobile }}px 0;
+    color: var(--mgfaq-text);
+    font-size: {{ section.settings.answer_size_mobile }}px;
+    line-height: 1.65;
+  }
+
+  #mg-faq-{{ section.id }} .mg-faq__answer p {
+    margin: 0 0 14px;
+  }
+
+  #mg-faq-{{ section.id }} .mg-faq__answer p:last-child {
+    margin-bottom: 0;
+  }
+
+  #mg-faq-{{ section.id }} .mg-faq__answer ul,
+  #mg-faq-{{ section.id }} .mg-faq__answer ol {
+    margin: 12px 0 14px;
+    padding-left: 22px;
+  }
+
+  #mg-faq-{{ section.id }} .mg-faq__answer li + li {
+    margin-top: 6px;
+  }
+
+  #mg-faq-{{ section.id }} .mg-faq__answer strong {
+    color: var(--mgfaq-heading);
+  }
+
+  #mg-faq-{{ section.id }} .mg-faq__answer table {
+    width: 100%;
+    margin: 18px 0;
+    border-collapse: collapse;
+    overflow: hidden;
+    border: 1px solid var(--mgfaq-border);
+    border-radius: 12px;
+  }
+
+  #mg-faq-{{ section.id }} .mg-faq__answer th,
+  #mg-faq-{{ section.id }} .mg-faq__answer td {
+    padding: 12px;
+    border: 1px solid var(--mgfaq-border);
+    text-align: center;
+  }
+
+  #mg-faq-{{ section.id }} .mg-faq__cta-wrap {
+    margin-top: {{ section.settings.cta_gap_mobile }}px;
+    text-align: center;
+  }
+
+  #mg-faq-{{ section.id }} .mg-faq__cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: min(100%, {{ section.settings.button_width_mobile }}px);
+    min-height: {{ section.settings.button_height_mobile }}px;
+    padding: 14px 28px;
+    border: {{ section.settings.button_border_width }}px solid {{ section.settings.button_border_color }};
+    border-radius: {{ section.settings.button_radius }}px;
+    {% if section.settings.button_use_gradient %}
+      background: linear-gradient(
+        {{ section.settings.button_gradient_angle }}deg,
+        {{ section.settings.button_gradient_1 }},
+        {{ section.settings.button_gradient_2 }}
+      );
+    {% else %}
+      background: {{ section.settings.button_bg }};
+    {% endif %}
+    box-shadow: {{ section.settings.button_shadow }};
+    color: var(--mgfaq-button-text);
+    font-size: {{ section.settings.button_text_size_mobile }}px;
+    line-height: 1;
+    font-weight: 900;
+    letter-spacing: .01em;
+    text-align: center;
+    text-decoration: none;
+    transition: transform .2s ease;
+  }
+
+  #mg-faq-{{ section.id }} .mg-faq__cta:hover {
+    transform: translateY(-1px);
+  }
+
+  #mg-faq-{{ section.id }} .mg-faq__guarantee {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: {{ section.settings.guarantee_icon_gap }}px;
+    width: min(100%, {{ section.settings.button_width_mobile }}px);
+    margin: {{ section.settings.guarantee_gap_mobile }}px auto 0;
+    color: {{ section.settings.guarantee_color }};
+    font-size: {{ section.settings.guarantee_size_mobile }}px;
+    line-height: 1.25;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  #mg-faq-{{ section.id }} .mg-faq__guarantee-icon {
+    flex: 0 0 auto;
+    width: {{ section.settings.guarantee_icon_size_mobile }}px;
+    height: {{ section.settings.guarantee_icon_size_mobile }}px;
+    object-fit: contain;
+  }
+
+  @media screen and (min-width: 750px) {
+    #mg-faq-{{ section.id }} {
+      padding:
+        {{ section.settings.padding_top_desktop }}px
+        {{ section.settings.padding_side_desktop }}px
+        {{ section.settings.padding_bottom_desktop }}px;
+    }
+
+    #mg-faq-{{ section.id }} .mg-faq__header {
+      text-align: {{ section.settings.heading_alignment_desktop }};
+    }
+
+    #mg-faq-{{ section.id }} .mg-faq__heading {
+      font-size: {{ section.settings.heading_size_desktop }}px;
+    }
+
+    #mg-faq-{{ section.id }} .mg-faq__subheading {
+      font-size: {{ section.settings.subheading_size_desktop }}px;
+    }
+
+    #mg-faq-{{ section.id }} .mg-faq__tabs {
+      margin-top: {{ section.settings.tabs_gap_desktop }}px;
+    }
+
+    #mg-faq-{{ section.id }} .mg-faq__groups {
+      margin-top: {{ section.settings.list_gap_desktop }}px;
+    }
+
+    #mg-faq-{{ section.id }} .mg-faq__question {
+      min-height: {{ section.settings.question_min_height_desktop }}px;
+      padding: {{ section.settings.question_padding_desktop }}px 0;
+      font-size: {{ section.settings.question_size_desktop }}px;
+    }
+
+    #mg-faq-{{ section.id }} .mg-faq__answer {
+      padding-bottom: {{ section.settings.answer_padding_bottom_desktop }}px;
+      font-size: {{ section.settings.answer_size_desktop }}px;
+    }
+
+    #mg-faq-{{ section.id }} .mg-faq__cta-wrap {
+      margin-top: {{ section.settings.cta_gap_desktop }}px;
+    }
+
+    #mg-faq-{{ section.id }} .mg-faq__cta {
+      width: min(100%, {{ section.settings.button_width_desktop }}px);
+      min-height: {{ section.settings.button_height_desktop }}px;
+      font-size: {{ section.settings.button_text_size_desktop }}px;
+    }
+
+    #mg-faq-{{ section.id }} .mg-faq__guarantee {
+      width: min(100%, {{ section.settings.button_width_desktop }}px);
+      margin-top: {{ section.settings.guarantee_gap_desktop }}px;
+      font-size: {{ section.settings.guarantee_size_desktop }}px;
+    }
+
+    #mg-faq-{{ section.id }} .mg-faq__guarantee-icon {
+      width: {{ section.settings.guarantee_icon_size_desktop }}px;
+      height: {{ section.settings.guarantee_icon_size_desktop }}px;
+    }
+  }
+</style>
+
+<script>
+  (() => {
+    const section = document.getElementById('mg-faq-{{ section.id }}');
+    if (!section) return;
+
+    const tabs = section.querySelectorAll('[data-mg-faq-tab]');
+    const groups = section.querySelectorAll('[data-mg-faq-group]');
+
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        const target = tab.dataset.mgFaqTab;
+
+        tabs.forEach((item) => {
+          const active = item === tab;
+          item.classList.toggle('is-active', active);
+          item.setAttribute('aria-selected', active ? 'true' : 'false');
+        });
+
+        groups.forEach((group) => {
+          group.classList.toggle('is-active', group.dataset.mgFaqGroup === target);
+        });
+      });
+    });
+
+    if ({{ section.settings.only_one_open | json }}) {
+      section.querySelectorAll('details').forEach((detail) => {
+        detail.addEventListener('toggle', () => {
+          if (!detail.open) return;
+          section.querySelectorAll('details[open]').forEach((other) => {
+            if (other !== detail) other.removeAttribute('open');
+          });
+        });
+      });
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Meowgical FAQs",
+  "tag": "section",
+  "class": "section-meowgical-faqs",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Header"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Need help?"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Frequently Asked Questions"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "<p>Everything you need to know about SuperTaurine, serving, safety and your order.</p>"
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment_mobile",
+      "label": "Heading alignment mobile",
+      "default": "center",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment_desktop",
+      "label": "Heading alignment desktop",
+      "default": "center",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "show_tabs",
+      "label": "Show category tabs",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "product_tab_label",
+      "label": "Product tab label",
+      "default": "SUPERTAURINE"
+    },
+    {
+      "type": "text",
+      "id": "general_tab_label",
+      "label": "General tab label",
+      "default": "ORDERS & ACCOUNT"
+    },
+    {
+      "type": "checkbox",
+      "id": "only_one_open",
+      "label": "Only allow one open answer",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_faq_schema",
+      "label": "Enable FAQ structured data",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "CTA"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "PROTECT MY CAT TODAY"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "image_picker",
+      "id": "guarantee_icon",
+      "label": "Guarantee icon"
+    },
+    {
+      "type": "text",
+      "id": "guarantee_text",
+      "label": "Guarantee text",
+      "default": "60-day risk-free guarantee"
+    },
+    {
+      "type": "checkbox",
+      "id": "button_use_gradient",
+      "label": "Use gradient button",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "button_gradient_1",
+      "label": "Gradient color 1",
+      "default": "#3E50DC"
+    },
+    {
+      "type": "color",
+      "id": "button_gradient_2",
+      "label": "Gradient color 2",
+      "default": "#6695DE"
+    },
+    {
+      "type": "range",
+      "id": "button_gradient_angle",
+      "label": "Gradient angle",
+      "min": 0,
+      "max": 180,
+      "step": 5,
+      "unit": "deg",
+      "default": 135
+    },
+    {
+      "type": "color",
+      "id": "button_bg",
+      "label": "Solid button background",
+      "default": "#3E50DC"
+    },
+    {
+      "type": "color",
+      "id": "button_border_color",
+      "label": "Button border",
+      "default": "#173FAE"
+    },
+    {
+      "type": "range",
+      "id": "button_border_width",
+      "label": "Button border width",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "button_radius",
+      "label": "Button radius",
+      "min": 10,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "button_width_mobile",
+      "label": "Button width mobile",
+      "min": 220,
+      "max": 420,
+      "step": 10,
+      "unit": "px",
+      "default": 330
+    },
+    {
+      "type": "range",
+      "id": "button_width_desktop",
+      "label": "Button width desktop",
+      "min": 280,
+      "max": 720,
+      "step": 10,
+      "unit": "px",
+      "default": 520
+    },
+    {
+      "type": "range",
+      "id": "button_height_mobile",
+      "label": "Button height mobile",
+      "min": 48,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 58
+    },
+    {
+      "type": "range",
+      "id": "button_height_desktop",
+      "label": "Button height desktop",
+      "min": 52,
+      "max": 88,
+      "step": 2,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "button_text_size_mobile",
+      "label": "Button text mobile",
+      "min": 14,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "button_text_size_desktop",
+      "label": "Button text desktop",
+      "min": 16,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "text",
+      "id": "button_shadow",
+      "label": "Button shadow CSS",
+      "default": "0 10px 24px rgba(47, 126, 216, 0.24)"
+    },
+    {
+      "type": "range",
+      "id": "cta_gap_mobile",
+      "label": "CTA spacing mobile",
+      "min": 16,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "cta_gap_desktop",
+      "label": "CTA spacing desktop",
+      "min": 20,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "guarantee_gap_mobile",
+      "label": "Guarantee spacing mobile",
+      "min": 4,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "guarantee_gap_desktop",
+      "label": "Guarantee spacing desktop",
+      "min": 4,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "guarantee_size_mobile",
+      "label": "Guarantee text mobile",
+      "min": 10,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "guarantee_size_desktop",
+      "label": "Guarantee text desktop",
+      "min": 11,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "guarantee_icon_size_mobile",
+      "label": "Guarantee icon mobile",
+      "min": 12,
+      "max": 36,
+      "step": 1,
+      "unit": "px",
+      "default": 19
+    },
+    {
+      "type": "range",
+      "id": "guarantee_icon_size_desktop",
+      "label": "Guarantee icon desktop",
+      "min": 14,
+      "max": 42,
+      "step": 1,
+      "unit": "px",
+      "default": 21
+    },
+    {
+      "type": "range",
+      "id": "guarantee_icon_gap",
+      "label": "Guarantee icon gap",
+      "min": 2,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "color",
+      "id": "guarantee_color",
+      "label": "Guarantee color",
+      "default": "#6A78B8"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Heading mobile",
+      "min": 28,
+      "max": 56,
+      "step": 1,
+      "unit": "px",
+      "default": 38
+    },
+    {
+      "type": "range",
+      "id": "heading_size_desktop",
+      "label": "Heading desktop",
+      "min": 38,
+      "max": 76,
+      "step": 1,
+      "unit": "px",
+      "default": 54
+    },
+    {
+      "type": "range",
+      "id": "subheading_size_mobile",
+      "label": "Subheading mobile",
+      "min": 13,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "subheading_size_desktop",
+      "label": "Subheading desktop",
+      "min": 14,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "question_size_mobile",
+      "label": "Question mobile",
+      "min": 14,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 17
+    },
+    {
+      "type": "range",
+      "id": "question_size_desktop",
+      "label": "Question desktop",
+      "min": 15,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "answer_size_mobile",
+      "label": "Answer mobile",
+      "min": 13,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "answer_size_desktop",
+      "label": "Answer desktop",
+      "min": 14,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 17
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Max width",
+      "min": 700,
+      "max": 1400,
+      "step": 20,
+      "unit": "px",
+      "default": 980
+    },
+    {
+      "type": "range",
+      "id": "tabs_gap_mobile",
+      "label": "Tabs top spacing mobile",
+      "min": 14,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 26
+    },
+    {
+      "type": "range",
+      "id": "tabs_gap_desktop",
+      "label": "Tabs top spacing desktop",
+      "min": 18,
+      "max": 70,
+      "step": 2,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "list_gap_mobile",
+      "label": "FAQ list spacing mobile",
+      "min": 16,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "list_gap_desktop",
+      "label": "FAQ list spacing desktop",
+      "min": 20,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "question_min_height_mobile",
+      "label": "Question minimum height mobile",
+      "min": 48,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 62
+    },
+    {
+      "type": "range",
+      "id": "question_min_height_desktop",
+      "label": "Question minimum height desktop",
+      "min": 52,
+      "max": 110,
+      "step": 2,
+      "unit": "px",
+      "default": 68
+    },
+    {
+      "type": "range",
+      "id": "question_padding_mobile",
+      "label": "Question vertical padding mobile",
+      "min": 10,
+      "max": 34,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "question_padding_desktop",
+      "label": "Question vertical padding desktop",
+      "min": 12,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "answer_padding_bottom_mobile",
+      "label": "Answer bottom padding mobile",
+      "min": 10,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "answer_padding_bottom_desktop",
+      "label": "Answer bottom padding desktop",
+      "min": 12,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "divider_width",
+      "label": "Divider width",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "unit": "px",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "plus_thickness",
+      "label": "Plus icon thickness",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "default": 2
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Top padding mobile",
+      "min": 20,
+      "max": 140,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Bottom padding mobile",
+      "min": 20,
+      "max": 140,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_side_mobile",
+      "label": "Side padding mobile",
+      "min": 10,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Top padding desktop",
+      "min": 32,
+      "max": 180,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Bottom padding desktop",
+      "min": 32,
+      "max": 180,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding_side_desktop",
+      "label": "Side padding desktop",
+      "min": 20,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "section_bg",
+      "label": "Section background",
+      "default": "#FBF9F7"
+    },
+    {
+      "type": "color",
+      "id": "card_bg",
+      "label": "FAQ background",
+      "default": "#FBF9F7"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading",
+      "default": "#183F3A"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Answer text",
+      "default": "#373737"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent",
+      "default": "#3E50DC"
+    },
+    {
+      "type": "color",
+      "id": "soft_accent",
+      "label": "Soft accent",
+      "default": "#EDF2FF"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Dividers",
+      "default": "#2C2C2C"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text",
+      "default": "#FFFFFF"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "FAQ item",
+      "settings": [
+        {
+          "type": "select",
+          "id": "category",
+          "label": "Category",
+          "default": "product",
+          "options": [
+            { "value": "product", "label": "SuperTaurine" },
+            { "value": "general", "label": "Orders & account" }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "How do I use SuperTaurine?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>Mix the recommended serving into your cat's regular food once daily. Follow the serving directions shown on your product label.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Meowgical FAQs",
+      "blocks": [
+        {
+          "type": "faq",
+          "settings": {
+            "category": "product",
+            "question": "How much SuperTaurine should I give my cat?",
+            "answer": "<p>Use the serving guide printed on your SuperTaurine label and measure each serving with the included scoop. Do not exceed the recommended daily amount unless your veterinarian advises otherwise.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "category": "product",
+            "question": "How should I serve it?",
+            "answer": "<p>Mix the measured serving thoroughly into your cat's regular food once daily. Wet food is usually easiest, but it can also be introduced through a small amount of food your cat reliably finishes.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "category": "product",
+            "question": "What does taurine support in cats?",
+            "answer": "<p>Taurine is an essential amino acid for cats. It supports normal heart function, vision and retinal health, nervous-system function and everyday vitality.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "category": "product",
+            "question": "Does my cat still need taurine if they eat complete food?",
+            "answer": "<p>Complete commercial foods are formulated to meet established nutritional requirements when fed as directed. Some cat parents still choose a measured taurine supplement for added consistency, especially when meals are not always finished or the diet includes homemade or raw food. Speak with your veterinarian before changing your cat's nutrition plan.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "category": "product",
+            "question": "Will my cat notice it in their food?",
+            "answer": "<p>SuperTaurine is designed to mix easily into food. For especially selective cats, begin with a smaller amount and increase gradually while mixing it thoroughly into a familiar meal.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "category": "product",
+            "question": "How should SuperTaurine be stored?",
+            "answer": "<p>Keep the tub tightly closed in a cool, dry place away from direct sunlight, moisture and heat. Always use a clean, dry scoop.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "category": "product",
+            "question": "Can it be used with other supplements or medication?",
+            "answer": "<p>If your cat takes another supplement, prescription medication or has a diagnosed medical condition, check with your veterinarian before adding SuperTaurine.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "category": "product",
+            "question": "Can I give it to a pregnant or nursing cat?",
+            "answer": "<p>Ask your veterinarian before giving any new supplement to a pregnant or nursing cat.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "category": "product",
+            "question": "What should I do if my cat consumes too much?",
+            "answer": "<p>Stop serving the supplement and contact your veterinarian or an animal poison-control service for guidance. Keep the tub available so you can provide the ingredient and serving information.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "category": "general",
+            "question": "Where can I manage my subscription?",
+            "answer": "<p>Use the subscription-management link sent to the email address associated with your order. If you cannot find it, check your spam folder or contact Meowgical support.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "category": "general",
+            "question": "How long does order processing take?",
+            "answer": "<p>Your current processing and estimated delivery times are shown at checkout and in your order-confirmation email. Tracking details are emailed once your package is on the way.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "category": "general",
+            "question": "How do I track my order?",
+            "answer": "<p>Once your order ships, you will receive a tracking email. Use the tracking link in that message to view the latest carrier updates.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "category": "general",
+            "question": "What is the 60-day guarantee?",
+            "answer": "<p>Try SuperTaurine for up to 60 days. If it is not right for you and your cat, contact our support team within the guarantee period for help with your refund request. Any eligibility terms shown in our refund policy apply.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

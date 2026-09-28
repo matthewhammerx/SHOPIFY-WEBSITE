@@ -1,0 +1,977 @@
+{% style %}
+  #shopify-section-{{ section.id }} {
+    position: relative;
+    /* FIX: lowered from 30 to 1. The mobile menu drawer (#menu-drawer)
+       has z-index: 10 in the theme's base.css. This section was set
+       higher than that, so it always painted on top of the drawer
+       when open. Dropping this below 10 lets the drawer render above
+       the sale bar instead. */
+    z-index: 1;
+  }
+
+  #shopify-section-{{ section.id }} .mg-sale-bar {
+    width: 100%;
+    box-sizing: border-box;
+    background: linear-gradient(
+      {{ section.settings.gradient_angle }}deg,
+      {{ section.settings.background_start }} 0%,
+      {{ section.settings.background_end }} 100%
+    );
+  }
+
+  #shopify-section-{{ section.id }} .mg-sale-bar__inner {
+    width: 100%;
+    max-width: {{ section.settings.max_width }}px;
+    min-height: {{ section.settings.desktop_height }}px;
+    margin: 0 auto;
+    padding: {{ section.settings.desktop_padding_vertical }}px 12px;
+    box-sizing: border-box;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: {{ section.settings.desktop_gap }}px;
+  }
+
+  #shopify-section-{{ section.id }} .mg-sale-bar__link {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  #shopify-section-{{ section.id }} .mg-sale-bar__copy {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    flex-shrink: 1;
+    min-width: 0;
+  }
+
+  #shopify-section-{{ section.id }} .mg-sale-bar__headline,
+  #shopify-section-{{ section.id }} .mg-sale-bar__subtext {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  #shopify-section-{{ section.id }} .mg-sale-bar__headline {
+    color: {{ section.settings.headline_color }};
+    font-family: inherit;
+    font-size: {{ section.settings.headline_size }}px;
+    font-weight: {{ section.settings.headline_weight }};
+    line-height: 1.12;
+    letter-spacing: {{ section.settings.headline_spacing | divided_by: 100.0 }}em;
+  }
+
+  #shopify-section-{{ section.id }} .mg-sale-bar__subtext {
+    margin-top: {{ section.settings.text_gap }}px;
+    color: {{ section.settings.subtext_color }};
+    font-family: inherit;
+    font-size: {{ section.settings.subtext_size }}px;
+    font-weight: {{ section.settings.subtext_weight }};
+    line-height: 1.12;
+    letter-spacing: {{ section.settings.subtext_spacing | divided_by: 100.0 }}em;
+  }
+
+  #shopify-section-{{ section.id }} .mg-sale-bar__link:hover .mg-sale-bar__headline,
+  #shopify-section-{{ section.id }} .mg-sale-bar__link:hover .mg-sale-bar__subtext {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  #shopify-section-{{ section.id }} .mg-sale-bar__timer {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-shrink: 0;
+
+    padding:
+      {{ section.settings.timer_padding_vertical }}px
+      {{ section.settings.timer_padding_horizontal }}px;
+
+    background: {{ section.settings.timer_background }};
+    color: {{ section.settings.timer_text_color }};
+
+    border:
+      {{ section.settings.timer_border_width }}px
+      solid
+      {{ section.settings.timer_border_color }};
+
+    border-radius: {{ section.settings.timer_radius }}px;
+
+    box-shadow:
+      0 2px 7px
+      rgba(0, 0, 0, {{ section.settings.timer_shadow | divided_by: 100.0 }});
+  }
+
+  #shopify-section-{{ section.id }} .mg-sale-bar__unit {
+    width: {{ section.settings.timer_unit_width }}px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  #shopify-section-{{ section.id }} .mg-sale-bar__digits {
+    display: block;
+    color: inherit;
+    font-family: inherit;
+    font-size: {{ section.settings.digit_size }}px;
+    font-weight: 800;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+
+  #shopify-section-{{ section.id }} .mg-sale-bar__label {
+    display: block;
+    margin-top: 2px;
+    color: inherit;
+    font-family: inherit;
+    font-size: {{ section.settings.label_size }}px;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  #shopify-section-{{ section.id }} .mg-sale-bar__colon {
+    display: block;
+    padding: 0 1px;
+    color: inherit;
+    font-family: inherit;
+    font-size: {{ section.settings.colon_size }}px;
+    font-weight: 800;
+    line-height: {{ section.settings.digit_size }}px;
+  }
+
+  @media screen and (max-width: 749px) {
+    #shopify-section-{{ section.id }} .mg-sale-bar__inner {
+      min-height: {{ section.settings.mobile_height }}px;
+      padding:
+        {{ section.settings.mobile_padding_vertical }}px
+        5px;
+      gap: {{ section.settings.mobile_gap }}px;
+    }
+
+    #shopify-section-{{ section.id }} .mg-sale-bar__headline {
+      font-size: {{ section.settings.mobile_headline_size }}px;
+    }
+
+    #shopify-section-{{ section.id }} .mg-sale-bar__subtext {
+      font-size: {{ section.settings.mobile_subtext_size }}px;
+    }
+
+    #shopify-section-{{ section.id }} .mg-sale-bar__timer {
+      padding:
+        {{ section.settings.mobile_timer_padding_vertical }}px
+        {{ section.settings.mobile_timer_padding_horizontal }}px;
+    }
+
+    #shopify-section-{{ section.id }} .mg-sale-bar__unit {
+      width: {{ section.settings.mobile_timer_unit_width }}px;
+    }
+
+    #shopify-section-{{ section.id }} .mg-sale-bar__digits {
+      font-size: {{ section.settings.mobile_digit_size }}px;
+    }
+
+    #shopify-section-{{ section.id }} .mg-sale-bar__label {
+      font-size: {{ section.settings.mobile_label_size }}px;
+    }
+
+    #shopify-section-{{ section.id }} .mg-sale-bar__colon {
+      font-size: {{ section.settings.mobile_colon_size }}px;
+      line-height: {{ section.settings.mobile_digit_size }}px;
+    }
+  }
+
+  @media screen and (max-width: 380px) {
+    #shopify-section-{{ section.id }} .mg-sale-bar__inner {
+      gap: 5px;
+    }
+
+    #shopify-section-{{ section.id }} .mg-sale-bar__headline {
+      font-size: calc({{ section.settings.mobile_headline_size }}px - 1px);
+    }
+
+    #shopify-section-{{ section.id }} .mg-sale-bar__subtext {
+      font-size: calc({{ section.settings.mobile_subtext_size }}px - 1px);
+    }
+  }
+{% endstyle %}
+
+<div
+  class="mg-sale-bar"
+  data-mg-countdown
+  data-mode="{{ section.settings.schedule_mode }}"
+  data-fixed-date="{{ section.settings.fixed_date | escape }}"
+  data-reset-hour="{{ section.settings.reset_hour }}"
+  data-reset-minute="{{ section.settings.reset_minute }}"
+  data-reset-weekday="{{ section.settings.reset_weekday }}"
+>
+  <div class="mg-sale-bar__inner">
+
+    {% if section.settings.link != blank %}
+      <a
+        class="mg-sale-bar__link"
+        href="{{ section.settings.link }}"
+        aria-label="{{ section.settings.headline | escape }}"
+      >
+    {% endif %}
+
+    <div class="mg-sale-bar__copy">
+      {% if section.settings.headline != blank %}
+        <p class="mg-sale-bar__headline">
+          {{ section.settings.headline }}
+        </p>
+      {% endif %}
+
+      {% if section.settings.subtext != blank %}
+        <p class="mg-sale-bar__subtext">
+          {{ section.settings.subtext }}
+        </p>
+      {% endif %}
+    </div>
+
+    {% if section.settings.link != blank %}
+      </a>
+    {% endif %}
+
+    {% if section.settings.show_timer %}
+      <div
+        class="mg-sale-bar__timer"
+        role="timer"
+        aria-label="Sale countdown timer"
+      >
+        <div class="mg-sale-bar__unit">
+          <span class="mg-sale-bar__digits" data-hours>00</span>
+          <span class="mg-sale-bar__label">Hrs</span>
+        </div>
+
+        <span class="mg-sale-bar__colon">:</span>
+
+        <div class="mg-sale-bar__unit">
+          <span class="mg-sale-bar__digits" data-minutes>00</span>
+          <span class="mg-sale-bar__label">Min</span>
+        </div>
+
+        <span class="mg-sale-bar__colon">:</span>
+
+        <div class="mg-sale-bar__unit">
+          <span class="mg-sale-bar__digits" data-seconds>00</span>
+          <span class="mg-sale-bar__label">Sec</span>
+        </div>
+      </div>
+    {% endif %}
+
+  </div>
+</div>
+
+<script>
+  (() => {
+    const sectionRoot = document.getElementById(
+      'shopify-section-{{ section.id }}'
+    );
+
+    if (!sectionRoot) return;
+
+    const countdown = sectionRoot.querySelector('[data-mg-countdown]');
+
+    if (!countdown || countdown.dataset.initialized === 'true') return;
+
+    countdown.dataset.initialized = 'true';
+
+    const hoursElement = countdown.querySelector('[data-hours]');
+    const minutesElement = countdown.querySelector('[data-minutes]');
+    const secondsElement = countdown.querySelector('[data-seconds]');
+
+    if (!hoursElement || !minutesElement || !secondsElement) return;
+
+    const mode = countdown.dataset.mode || 'reset_daily';
+    const fixedDateValue = countdown.dataset.fixedDate || '';
+
+    const resetHour =
+      Number.parseInt(countdown.dataset.resetHour, 10) || 0;
+
+    const resetMinute =
+      Number.parseInt(countdown.dataset.resetMinute, 10) || 0;
+
+    const resetWeekday =
+      Number.parseInt(countdown.dataset.resetWeekday, 10) || 0;
+
+    let timerInterval = null;
+
+    function getDailyTarget() {
+      const now = new Date();
+
+      const target = new Date(
+        now.getFullYear(),
+        now.getMonth(),
+        now.getDate(),
+        resetHour,
+        resetMinute,
+        0,
+        0
+      );
+
+      if (target.getTime() <= now.getTime()) {
+        target.setDate(target.getDate() + 1);
+      }
+
+      return target.getTime();
+    }
+
+    function getWeeklyTarget() {
+      const now = new Date();
+
+      const target = new Date(
+        now.getFullYear(),
+        now.getMonth(),
+        now.getDate(),
+        resetHour,
+        resetMinute,
+        0,
+        0
+      );
+
+      let daysUntilReset =
+        (resetWeekday - now.getDay() + 7) % 7;
+
+      if (
+        daysUntilReset === 0 &&
+        target.getTime() <= now.getTime()
+      ) {
+        daysUntilReset = 7;
+      }
+
+      target.setDate(target.getDate() + daysUntilReset);
+
+      return target.getTime();
+    }
+
+    function getFixedTarget() {
+      const parsedDate = new Date(fixedDateValue).getTime();
+
+      return Number.isNaN(parsedDate)
+        ? Date.now()
+        : parsedDate;
+    }
+
+    function getTargetTime() {
+      if (mode === 'fixed_date') {
+        return getFixedTarget();
+      }
+
+      if (mode === 'reset_weekly') {
+        return getWeeklyTarget();
+      }
+
+      return getDailyTarget();
+    }
+
+    function renderTime(milliseconds) {
+      const safeMilliseconds = Math.max(0, milliseconds);
+
+      const hours = Math.floor(
+        safeMilliseconds / 3600000
+      );
+
+      const minutes = Math.floor(
+        (safeMilliseconds % 3600000) / 60000
+      );
+
+      const seconds = Math.floor(
+        (safeMilliseconds % 60000) / 1000
+      );
+
+      hoursElement.textContent =
+        String(hours).padStart(2, '0');
+
+      minutesElement.textContent =
+        String(minutes).padStart(2, '0');
+
+      secondsElement.textContent =
+        String(seconds).padStart(2, '0');
+    }
+
+    function updateCountdown() {
+      const difference = getTargetTime() - Date.now();
+
+      if (mode === 'fixed_date' && difference <= 0) {
+        renderTime(0);
+
+        if (timerInterval) {
+          window.clearInterval(timerInterval);
+        }
+
+        return;
+      }
+
+      renderTime(difference);
+    }
+
+    updateCountdown();
+
+    timerInterval = window.setInterval(
+      updateCountdown,
+      1000
+    );
+
+    document.addEventListener(
+      'shopify:section:unload',
+      (event) => {
+        if (event.detail.sectionId !== '{{ section.id }}') {
+          return;
+        }
+
+        if (timerInterval) {
+          window.clearInterval(timerInterval);
+        }
+      },
+      { once: true }
+    );
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Sale countdown bar",
+  "tag": "section",
+  "class": "sale-countdown-bar-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Text"
+    },
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Top text",
+      "default": "☀️ SUMMER SALE ☀️"
+    },
+    {
+      "type": "text",
+      "id": "subtext",
+      "label": "Bottom text",
+      "default": "UP TO 61% OFF + FREE GIFTS"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Optional link"
+    },
+    {
+      "type": "color",
+      "id": "headline_color",
+      "label": "Top text color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "subtext_color",
+      "label": "Bottom text color",
+      "default": "#FFF200"
+    },
+    {
+      "type": "range",
+      "id": "headline_size",
+      "label": "Desktop top text size",
+      "min": 8,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "subtext_size",
+      "label": "Desktop bottom text size",
+      "min": 8,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "default": 11
+    },
+    {
+      "type": "range",
+      "id": "mobile_headline_size",
+      "label": "Mobile top text size",
+      "min": 7,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 11
+    },
+    {
+      "type": "range",
+      "id": "mobile_subtext_size",
+      "label": "Mobile bottom text size",
+      "min": 7,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 9
+    },
+    {
+      "type": "range",
+      "id": "headline_weight",
+      "label": "Top text weight",
+      "min": 400,
+      "max": 900,
+      "step": 100,
+      "default": 800
+    },
+    {
+      "type": "range",
+      "id": "subtext_weight",
+      "label": "Bottom text weight",
+      "min": 400,
+      "max": 900,
+      "step": 100,
+      "default": 800
+    },
+    {
+      "type": "range",
+      "id": "headline_spacing",
+      "label": "Top letter spacing",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "subtext_spacing",
+      "label": "Bottom letter spacing",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "text_gap",
+      "label": "Space between text lines",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "default": 2
+    },
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "color",
+      "id": "background_start",
+      "label": "Gradient start",
+      "default": "#1737A6"
+    },
+    {
+      "type": "color",
+      "id": "background_end",
+      "label": "Gradient end",
+      "default": "#244ED8"
+    },
+    {
+      "type": "range",
+      "id": "gradient_angle",
+      "label": "Gradient angle",
+      "min": 0,
+      "max": 360,
+      "step": 5,
+      "unit": "°",
+      "default": 90
+    },
+    {
+      "type": "header",
+      "content": "Schedule"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_timer",
+      "label": "Show countdown timer",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "schedule_mode",
+      "label": "Mode",
+      "default": "reset_daily",
+      "options": [
+        {
+          "value": "fixed_date",
+          "label": "Fixed date"
+        },
+        {
+          "value": "reset_daily",
+          "label": "Reset daily"
+        },
+        {
+          "value": "reset_weekly",
+          "label": "Reset weekly"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "fixed_date",
+      "label": "Fixed end date",
+      "info": "Example: 2026-08-01T23:59:59-04:00",
+      "default": "2026-08-01T23:59:59-04:00"
+    },
+    {
+      "type": "select",
+      "id": "reset_weekday",
+      "label": "Weekly reset day",
+      "default": "0",
+      "options": [
+        {
+          "value": "0",
+          "label": "Sunday"
+        },
+        {
+          "value": "1",
+          "label": "Monday"
+        },
+        {
+          "value": "2",
+          "label": "Tuesday"
+        },
+        {
+          "value": "3",
+          "label": "Wednesday"
+        },
+        {
+          "value": "4",
+          "label": "Thursday"
+        },
+        {
+          "value": "5",
+          "label": "Friday"
+        },
+        {
+          "value": "6",
+          "label": "Saturday"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "reset_hour",
+      "label": "Reset hour",
+      "info": "Uses each visitor's local time.",
+      "default": "0",
+      "options": [
+        { "value": "0", "label": "12 AM" },
+        { "value": "1", "label": "1 AM" },
+        { "value": "2", "label": "2 AM" },
+        { "value": "3", "label": "3 AM" },
+        { "value": "4", "label": "4 AM" },
+        { "value": "5", "label": "5 AM" },
+        { "value": "6", "label": "6 AM" },
+        { "value": "7", "label": "7 AM" },
+        { "value": "8", "label": "8 AM" },
+        { "value": "9", "label": "9 AM" },
+        { "value": "10", "label": "10 AM" },
+        { "value": "11", "label": "11 AM" },
+        { "value": "12", "label": "12 PM" },
+        { "value": "13", "label": "1 PM" },
+        { "value": "14", "label": "2 PM" },
+        { "value": "15", "label": "3 PM" },
+        { "value": "16", "label": "4 PM" },
+        { "value": "17", "label": "5 PM" },
+        { "value": "18", "label": "6 PM" },
+        { "value": "19", "label": "7 PM" },
+        { "value": "20", "label": "8 PM" },
+        { "value": "21", "label": "9 PM" },
+        { "value": "22", "label": "10 PM" },
+        { "value": "23", "label": "11 PM" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "reset_minute",
+      "label": "Reset minute",
+      "default": "0",
+      "options": [
+        {
+          "value": "0",
+          "label": ":00"
+        },
+        {
+          "value": "15",
+          "label": ":15"
+        },
+        {
+          "value": "30",
+          "label": ":30"
+        },
+        {
+          "value": "45",
+          "label": ":45"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Timer"
+    },
+    {
+      "type": "color",
+      "id": "timer_background",
+      "label": "Timer background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "timer_text_color",
+      "label": "Timer text",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "timer_border_color",
+      "label": "Timer border",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "timer_border_width",
+      "label": "Timer border width",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "timer_radius",
+      "label": "Timer corner radius",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "timer_padding_vertical",
+      "label": "Desktop timer vertical padding",
+      "min": 1,
+      "max": 12,
+      "step": 1,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "timer_padding_horizontal",
+      "label": "Desktop timer horizontal padding",
+      "min": 3,
+      "max": 25,
+      "step": 1,
+      "unit": "px",
+      "default": 9
+    },
+    {
+      "type": "range",
+      "id": "timer_unit_width",
+      "label": "Desktop timer unit width",
+      "min": 20,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 27
+    },
+    {
+      "type": "range",
+      "id": "digit_size",
+      "label": "Desktop digit size",
+      "min": 11,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 17
+    },
+    {
+      "type": "range",
+      "id": "label_size",
+      "label": "Desktop label size",
+      "min": 6,
+      "max": 14,
+      "step": 1,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "colon_size",
+      "label": "Desktop colon size",
+      "min": 8,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "timer_shadow",
+      "label": "Timer shadow opacity",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "%",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "mobile_timer_padding_vertical",
+      "label": "Mobile timer vertical padding",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "mobile_timer_padding_horizontal",
+      "label": "Mobile timer horizontal padding",
+      "min": 2,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 5
+    },
+    {
+      "type": "range",
+      "id": "mobile_timer_unit_width",
+      "label": "Mobile timer unit width",
+      "min": 18,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 22
+    },
+    {
+      "type": "range",
+      "id": "mobile_digit_size",
+      "label": "Mobile digit size",
+      "min": 9,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "mobile_label_size",
+      "label": "Mobile label size",
+      "min": 5,
+      "max": 12,
+      "step": 1,
+      "unit": "px",
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "mobile_colon_size",
+      "label": "Mobile colon size",
+      "min": 7,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Content maximum width",
+      "min": 500,
+      "max": 1600,
+      "step": 50,
+      "unit": "px",
+      "default": 1200
+    },
+    {
+      "type": "range",
+      "id": "desktop_height",
+      "label": "Desktop minimum height",
+      "min": 35,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 52
+    },
+    {
+      "type": "range",
+      "id": "mobile_height",
+      "label": "Mobile minimum height",
+      "min": 35,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "desktop_padding_vertical",
+      "label": "Desktop vertical padding",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 5
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_vertical",
+      "label": "Mobile vertical padding",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 5
+    },
+    {
+      "type": "range",
+      "id": "desktop_gap",
+      "label": "Desktop text-to-timer gap",
+      "min": 2,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "mobile_gap",
+      "label": "Mobile text-to-timer gap",
+      "min": 2,
+      "max": 25,
+      "step": 1,
+      "unit": "px",
+      "default": 7
+    }
+  ],
+  "presets": [
+    {
+      "name": "Sale countdown bar"
+    }
+  ]
+}
+{% endschema %}

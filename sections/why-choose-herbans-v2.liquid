@@ -1,0 +1,1111 @@
+{% comment %}
+  Section: Herbans Why Choose - Fully Customizable
+{% endcomment %}
+
+<section
+  id="herbans-why-choose-{{ section.id }}"
+  class="herbans-why-choose-{{ section.id }}"
+>
+  <div class="herbans-inner">
+
+    <div class="herbans-top">
+      <h2 class="herbans-heading">
+        {{ section.settings.heading }}
+      </h2>
+
+      {% if section.settings.show_feature_box %}
+        <div class="herbans-feature-box">
+          {% if section.settings.badge_image != blank %}
+            <div class="herbans-badge-wrap">
+              <img
+                src="{{ section.settings.badge_image | image_url: width: 500 }}"
+                alt="{{ section.settings.badge_alt | escape }}"
+                loading="lazy"
+                class="herbans-badge"
+              >
+            </div>
+          {% endif %}
+
+          <div class="herbans-feature-content">
+            {% if section.settings.feature_text != blank %}
+              <p class="herbans-feature-text">
+                {{ section.settings.feature_text }}
+              </p>
+            {% endif %}
+
+            <div class="herbans-feature-bottom">
+              <div class="herbans-avatar-group">
+                {% if section.settings.avatar_1 != blank %}
+                  <img src="{{ section.settings.avatar_1 | image_url: width: 80 }}" alt="" loading="lazy">
+                {% endif %}
+                {% if section.settings.avatar_2 != blank %}
+                  <img src="{{ section.settings.avatar_2 | image_url: width: 80 }}" alt="" loading="lazy">
+                {% endif %}
+                {% if section.settings.avatar_3 != blank %}
+                  <img src="{{ section.settings.avatar_3 | image_url: width: 80 }}" alt="" loading="lazy">
+                {% endif %}
+              </div>
+
+              {% if section.settings.link_text != blank %}
+                <a href="{{ section.settings.link_url }}" class="herbans-feature-link">
+                  {{ section.settings.link_text }}
+                </a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="herbans-cards">
+      {% for block in section.blocks %}
+        <div class="herbans-card" {{ block.shopify_attributes }}>
+          <div class="herbans-card-head">
+            <h3>{{ block.settings.card_title }}</h3>
+
+            {% if block.settings.card_icon != blank %}
+              <div class="herbans-icon-circle">
+                <img
+                  src="{{ block.settings.card_icon | image_url: width: 100 }}"
+                  alt=""
+                  loading="lazy"
+                >
+              </div>
+            {% endif %}
+          </div>
+
+          {% if block.settings.card_text != blank %}
+            <p>{{ block.settings.card_text }}</p>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+
+  </div>
+</section>
+
+<style>
+  #herbans-why-choose-{{ section.id }} {
+    background: {{ section.settings.section_bg }};
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    padding-left: {{ section.settings.padding_sides }}px;
+    padding-right: {{ section.settings.padding_sides }}px;
+  }
+
+  #herbans-why-choose-{{ section.id }} .herbans-inner {
+    max-width: {{ section.settings.max_width }}px;
+    margin: 0 auto;
+  }
+
+  #herbans-why-choose-{{ section.id }} .herbans-top {
+    display: flex;
+    flex-direction: column;
+    gap: {{ section.settings.top_gap }}px;
+    margin-bottom: {{ section.settings.cards_gap_top }}px;
+  }
+
+  #herbans-why-choose-{{ section.id }} .herbans-heading {
+    margin: 0;
+    color: {{ section.settings.heading_color }};
+    font-size: {{ section.settings.heading_size_mobile }}px;
+    line-height: {{ section.settings.heading_line_height }};
+    font-weight: {{ section.settings.heading_weight }};
+    text-align: {{ section.settings.heading_align_mobile }};
+    letter-spacing: {{ section.settings.heading_letter_spacing }}px;
+  }
+
+  #herbans-why-choose-{{ section.id }} .herbans-feature-box {
+    background: {{ section.settings.feature_bg }};
+    border-radius: {{ section.settings.feature_radius_mobile }}px;
+    padding: {{ section.settings.feature_padding_mobile }}px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: {{ section.settings.feature_gap }}px;
+    max-width: {{ section.settings.feature_max_width }}px;
+    width: 100%;
+    box-shadow: {{ section.settings.feature_shadow }};
+  }
+
+  #herbans-why-choose-{{ section.id }} .herbans-badge-wrap {
+    flex-shrink: 0;
+  }
+
+  #herbans-why-choose-{{ section.id }} .herbans-badge {
+    width: {{ section.settings.badge_width_mobile }}px;
+    height: auto;
+    display: block;
+  }
+
+  #herbans-why-choose-{{ section.id }} .herbans-feature-content {
+    display: flex;
+    flex-direction: column;
+    gap: {{ section.settings.feature_content_gap }}px;
+    align-items: center;
+  }
+
+  #herbans-why-choose-{{ section.id }} .herbans-feature-text {
+    margin: 0;
+    color: {{ section.settings.feature_text_color }};
+    font-size: {{ section.settings.feature_text_size_mobile }}px;
+    line-height: {{ section.settings.feature_text_line_height }};
+    font-weight: {{ section.settings.feature_text_weight }};
+    text-align: {{ section.settings.feature_text_align_mobile }};
+  }
+
+  #herbans-why-choose-{{ section.id }} .herbans-feature-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: {{ section.settings.avatar_link_gap }}px;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  #herbans-why-choose-{{ section.id }} .herbans-avatar-group {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  #herbans-why-choose-{{ section.id }} .herbans-avatar-group img {
+    width: {{ section.settings.avatar_size }}px;
+    height: {{ section.settings.avatar_size }}px;
+    border-radius: 999px;
+    object-fit: cover;
+    border: {{ section.settings.avatar_border_width }}px solid {{ section.settings.avatar_border_color }};
+    margin-left: -{{ section.settings.avatar_overlap }}px;
+  }
+
+  #herbans-why-choose-{{ section.id }} .herbans-avatar-group img:first-child {
+    margin-left: 0;
+  }
+
+  #herbans-why-choose-{{ section.id }} .herbans-feature-link {
+    color: {{ section.settings.link_color }};
+    font-size: {{ section.settings.link_size }}px;
+    font-weight: {{ section.settings.link_weight }};
+    text-decoration: {{ section.settings.link_underline }};
+  }
+
+  #herbans-why-choose-{{ section.id }} .herbans-cards {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: {{ section.settings.card_gap_mobile }}px;
+  }
+
+  #herbans-why-choose-{{ section.id }} .herbans-card {
+    background: {{ section.settings.card_bg }};
+    border-radius: {{ section.settings.card_radius }}px;
+    padding: {{ section.settings.card_padding_mobile }}px;
+    box-shadow: {{ section.settings.card_shadow }};
+    border: {{ section.settings.card_border_width }}px solid {{ section.settings.card_border_color }};
+  }
+
+  #herbans-why-choose-{{ section.id }} .herbans-card-head {
+    display: flex;
+    align-items: flex-start;
+    gap: {{ section.settings.card_head_gap }}px;
+    margin-bottom: {{ section.settings.card_title_bottom_gap }}px;
+  }
+
+  #herbans-why-choose-{{ section.id }} .herbans-card h3 {
+    margin: 0;
+    flex: 1;
+    color: {{ section.settings.card_title_color }};
+    font-size: {{ section.settings.card_title_size_mobile }}px;
+    line-height: {{ section.settings.card_title_line_height }};
+    font-weight: {{ section.settings.card_title_weight }};
+    letter-spacing: {{ section.settings.card_title_letter_spacing }}px;
+  }
+
+  #herbans-why-choose-{{ section.id }} .herbans-card p {
+    margin: 0;
+    color: {{ section.settings.card_text_color }};
+    font-size: {{ section.settings.card_text_size_mobile }}px;
+    line-height: {{ section.settings.card_text_line_height }};
+    font-weight: {{ section.settings.card_text_weight }};
+  }
+
+  #herbans-why-choose-{{ section.id }} .herbans-icon-circle {
+    width: {{ section.settings.icon_circle_size_mobile }}px;
+    height: {{ section.settings.icon_circle_size_mobile }}px;
+    border-radius: 999px;
+    border: {{ section.settings.icon_border_width }}px solid {{ section.settings.icon_border_color }};
+    background: {{ section.settings.icon_circle_bg }};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  #herbans-why-choose-{{ section.id }} .herbans-icon-circle img {
+    width: {{ section.settings.icon_size_mobile }}px;
+    height: {{ section.settings.icon_size_mobile }}px;
+    object-fit: contain;
+  }
+
+  @media screen and (min-width: 768px) {
+    #herbans-why-choose-{{ section.id }} .herbans-top {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    #herbans-why-choose-{{ section.id }} .herbans-heading {
+      font-size: {{ section.settings.heading_size_desktop }}px;
+      text-align: {{ section.settings.heading_align_desktop }};
+      max-width: {{ section.settings.heading_max_width }}px;
+    }
+
+    #herbans-why-choose-{{ section.id }} .herbans-feature-box {
+      flex-direction: row;
+      align-items: center;
+      border-radius: {{ section.settings.feature_radius_desktop }}px;
+      padding: {{ section.settings.feature_padding_desktop }}px;
+    }
+
+    #herbans-why-choose-{{ section.id }} .herbans-badge {
+      width: {{ section.settings.badge_width_desktop }}px;
+    }
+
+    #herbans-why-choose-{{ section.id }} .herbans-feature-content {
+      align-items: flex-start;
+    }
+
+    #herbans-why-choose-{{ section.id }} .herbans-feature-text {
+      font-size: {{ section.settings.feature_text_size_desktop }}px;
+      text-align: {{ section.settings.feature_text_align_desktop }};
+    }
+
+    #herbans-why-choose-{{ section.id }} .herbans-feature-bottom {
+      justify-content: flex-start;
+    }
+
+    #herbans-why-choose-{{ section.id }} .herbans-cards {
+      grid-template-columns: repeat({{ section.settings.columns_desktop }}, 1fr);
+      gap: {{ section.settings.card_gap_desktop }}px;
+    }
+
+    #herbans-why-choose-{{ section.id }} .herbans-card {
+      padding: {{ section.settings.card_padding_desktop }}px;
+    }
+
+    #herbans-why-choose-{{ section.id }} .herbans-card h3 {
+      font-size: {{ section.settings.card_title_size_desktop }}px;
+    }
+
+    #herbans-why-choose-{{ section.id }} .herbans-card p {
+      font-size: {{ section.settings.card_text_size_desktop }}px;
+    }
+
+    #herbans-why-choose-{{ section.id }} .herbans-icon-circle {
+      width: {{ section.settings.icon_circle_size_desktop }}px;
+      height: {{ section.settings.icon_circle_size_desktop }}px;
+    }
+
+    #herbans-why-choose-{{ section.id }} .herbans-icon-circle img {
+      width: {{ section.settings.icon_size_desktop }}px;
+      height: {{ section.settings.icon_size_desktop }}px;
+    }
+  }
+  /* MOBILE ONLY — Move Clinicians' Choice box under all cards */
+@media screen and (max-width: 767px) {
+  #herbans-why-choose-{{ section.id }} .herbans-inner {
+    display: flex;
+    flex-direction: column;
+  }
+
+  #herbans-why-choose-{{ section.id }} .herbans-top {
+    display: contents;
+  }
+
+  #herbans-why-choose-{{ section.id }} .herbans-heading {
+    order: 1;
+    margin-bottom: {{ section.settings.cards_gap_top }}px;
+  }
+
+  #herbans-why-choose-{{ section.id }} .herbans-cards {
+    order: 2;
+  }
+
+  #herbans-why-choose-{{ section.id }} .herbans-feature-box {
+    order: 3;
+    margin-top: {{ section.settings.cards_gap_top }}px;
+    max-width: 100%;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Why Choose Herbans V2",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Layout"
+    },
+    {
+      "type": "color",
+      "id": "section_bg",
+      "label": "Section background",
+      "default": "#F7F1E8"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Max width",
+      "min": 900,
+      "max": 1600,
+      "step": 20,
+      "default": 1280
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding_sides",
+      "label": "Side padding",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "top_gap",
+      "label": "Header gap",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "cards_gap_top",
+      "label": "Space between header and cards",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "default": 36
+    },
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Why Customers Choose Herbans"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#1F3D2D"
+    },
+    {
+      "type": "range",
+      "id": "heading_size_desktop",
+      "label": "Heading size desktop",
+      "min": 24,
+      "max": 80,
+      "step": 1,
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Heading size mobile",
+      "min": 20,
+      "max": 56,
+      "step": 1,
+      "default": 34
+    },
+    {
+      "type": "range",
+      "id": "heading_weight",
+      "label": "Heading weight",
+      "min": 300,
+      "max": 900,
+      "step": 100,
+      "default": 700
+    },
+    {
+      "type": "range",
+      "id": "heading_line_height",
+      "label": "Heading line height",
+      "min": 0.8,
+      "max": 1.6,
+      "step": 0.1,
+      "default": 1.1
+    },
+    {
+      "type": "range",
+      "id": "heading_letter_spacing",
+      "label": "Heading letter spacing",
+      "min": -3,
+      "max": 5,
+      "step": 0.5,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "heading_max_width",
+      "label": "Heading max width desktop",
+      "min": 300,
+      "max": 900,
+      "step": 20,
+      "default": 540
+    },
+    {
+      "type": "select",
+      "id": "heading_align_desktop",
+      "label": "Heading align desktop",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "heading_align_mobile",
+      "label": "Heading align mobile",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Top Feature Box"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_feature_box",
+      "label": "Show feature box",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "feature_bg",
+      "label": "Feature box background",
+      "default": "#D97B4C"
+    },
+    {
+      "type": "text",
+      "id": "feature_shadow",
+      "label": "Feature box shadow CSS",
+      "default": "none"
+    },
+    {
+      "type": "range",
+      "id": "feature_max_width",
+      "label": "Feature box max width",
+      "min": 300,
+      "max": 900,
+      "step": 20,
+      "default": 660
+    },
+    {
+      "type": "range",
+      "id": "feature_padding_desktop",
+      "label": "Feature padding desktop",
+      "min": 10,
+      "max": 60,
+      "step": 2,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "feature_padding_mobile",
+      "label": "Feature padding mobile",
+      "min": 10,
+      "max": 60,
+      "step": 2,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "feature_radius_desktop",
+      "label": "Feature radius desktop",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "feature_radius_mobile",
+      "label": "Feature radius mobile",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "feature_gap",
+      "label": "Badge/text gap",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "feature_content_gap",
+      "label": "Feature content gap",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "default": 14
+    },
+    {
+      "type": "image_picker",
+      "id": "badge_image",
+      "label": "Badge/logo image"
+    },
+    {
+      "type": "text",
+      "id": "badge_alt",
+      "label": "Badge alt text",
+      "default": "Herbans badge"
+    },
+    {
+      "type": "range",
+      "id": "badge_width_desktop",
+      "label": "Badge width desktop",
+      "min": 60,
+      "max": 320,
+      "step": 5,
+      "default": 170
+    },
+    {
+      "type": "range",
+      "id": "badge_width_mobile",
+      "label": "Badge width mobile",
+      "min": 60,
+      "max": 320,
+      "step": 5,
+      "default": 150
+    },
+    {
+      "type": "textarea",
+      "id": "feature_text",
+      "label": "Feature text",
+      "default": "Thousands trust Herbans as part of their daily hair wellness routine."
+    },
+    {
+      "type": "color",
+      "id": "feature_text_color",
+      "label": "Feature text color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "feature_text_size_desktop",
+      "label": "Feature text size desktop",
+      "min": 10,
+      "max": 32,
+      "step": 1,
+      "default": 17
+    },
+    {
+      "type": "range",
+      "id": "feature_text_size_mobile",
+      "label": "Feature text size mobile",
+      "min": 10,
+      "max": 28,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "feature_text_weight",
+      "label": "Feature text weight",
+      "min": 300,
+      "max": 900,
+      "step": 100,
+      "default": 400
+    },
+    {
+      "type": "range",
+      "id": "feature_text_line_height",
+      "label": "Feature text line height",
+      "min": 1,
+      "max": 2,
+      "step": 0.1,
+      "default": 1.4
+    },
+    {
+      "type": "select",
+      "id": "feature_text_align_desktop",
+      "label": "Feature text align desktop",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "feature_text_align_mobile",
+      "label": "Feature text align mobile",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Avatars + Link"
+    },
+    {
+      "type": "image_picker",
+      "id": "avatar_1",
+      "label": "Avatar 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "avatar_2",
+      "label": "Avatar 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "avatar_3",
+      "label": "Avatar 3"
+    },
+    {
+      "type": "range",
+      "id": "avatar_size",
+      "label": "Avatar size",
+      "min": 16,
+      "max": 60,
+      "step": 1,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "avatar_overlap",
+      "label": "Avatar overlap",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "default": 7
+    },
+    {
+      "type": "range",
+      "id": "avatar_border_width",
+      "label": "Avatar border width",
+      "min": 0,
+      "max": 8,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "color",
+      "id": "avatar_border_color",
+      "label": "Avatar border color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "avatar_link_gap",
+      "label": "Avatar/link gap",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "default": 10
+    },
+    {
+      "type": "text",
+      "id": "link_text",
+      "label": "Link text",
+      "default": "View results & learn more"
+    },
+    {
+      "type": "url",
+      "id": "link_url",
+      "label": "Link URL"
+    },
+    {
+      "type": "color",
+      "id": "link_color",
+      "label": "Link color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "link_size",
+      "label": "Link size",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "link_weight",
+      "label": "Link weight",
+      "min": 300,
+      "max": 900,
+      "step": 100,
+      "default": 600
+    },
+    {
+      "type": "select",
+      "id": "link_underline",
+      "label": "Link underline",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "underline", "label": "Underline" }
+      ],
+      "default": "underline"
+    },
+    {
+      "type": "header",
+      "content": "Cards Layout"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "Columns desktop",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "card_gap_desktop",
+      "label": "Card gap desktop",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "card_gap_mobile",
+      "label": "Card gap mobile",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "default": 18
+    },
+    {
+      "type": "color",
+      "id": "card_bg",
+      "label": "Card background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Card radius",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "card_padding_desktop",
+      "label": "Card padding desktop",
+      "min": 10,
+      "max": 70,
+      "step": 2,
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "card_padding_mobile",
+      "label": "Card padding mobile",
+      "min": 10,
+      "max": 70,
+      "step": 2,
+      "default": 24
+    },
+    {
+      "type": "text",
+      "id": "card_shadow",
+      "label": "Card shadow CSS",
+      "default": "2px 4px 16px rgba(0,0,0,0.10)"
+    },
+    {
+      "type": "range",
+      "id": "card_border_width",
+      "label": "Card border width",
+      "min": 0,
+      "max": 6,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Card border color",
+      "default": "#E8DED2"
+    },
+    {
+      "type": "range",
+      "id": "card_head_gap",
+      "label": "Card title/icon gap",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "card_title_bottom_gap",
+      "label": "Space under card title row",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "header",
+      "content": "Card Title"
+    },
+    {
+      "type": "color",
+      "id": "card_title_color",
+      "label": "Card title color",
+      "default": "#1F3D2D"
+    },
+    {
+      "type": "range",
+      "id": "card_title_size_desktop",
+      "label": "Card title size desktop",
+      "min": 14,
+      "max": 48,
+      "step": 1,
+      "default": 27
+    },
+    {
+      "type": "range",
+      "id": "card_title_size_mobile",
+      "label": "Card title size mobile",
+      "min": 14,
+      "max": 40,
+      "step": 1,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "card_title_weight",
+      "label": "Card title weight",
+      "min": 300,
+      "max": 900,
+      "step": 100,
+      "default": 700
+    },
+    {
+      "type": "range",
+      "id": "card_title_line_height",
+      "label": "Card title line height",
+      "min": 0.8,
+      "max": 1.8,
+      "step": 0.1,
+      "default": 1.2
+    },
+    {
+      "type": "range",
+      "id": "card_title_letter_spacing",
+      "label": "Card title letter spacing",
+      "min": -3,
+      "max": 5,
+      "step": 0.5,
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Card Text"
+    },
+    {
+      "type": "color",
+      "id": "card_text_color",
+      "label": "Card text color",
+      "default": "#3E3E3E"
+    },
+    {
+      "type": "range",
+      "id": "card_text_size_desktop",
+      "label": "Card text size desktop",
+      "min": 12,
+      "max": 28,
+      "step": 1,
+      "default": 17
+    },
+    {
+      "type": "range",
+      "id": "card_text_size_mobile",
+      "label": "Card text size mobile",
+      "min": 12,
+      "max": 26,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "card_text_weight",
+      "label": "Card text weight",
+      "min": 300,
+      "max": 900,
+      "step": 100,
+      "default": 400
+    },
+    {
+      "type": "range",
+      "id": "card_text_line_height",
+      "label": "Card text line height",
+      "min": 1,
+      "max": 2.2,
+      "step": 0.1,
+      "default": 1.6
+    },
+    {
+      "type": "header",
+      "content": "Icons"
+    },
+    {
+      "type": "color",
+      "id": "icon_circle_bg",
+      "label": "Icon circle background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "icon_border_color",
+      "label": "Icon circle border color",
+      "default": "#D97B4C"
+    },
+    {
+      "type": "range",
+      "id": "icon_border_width",
+      "label": "Icon circle border width",
+      "min": 0,
+      "max": 6,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "icon_circle_size_desktop",
+      "label": "Icon circle size desktop",
+      "min": 30,
+      "max": 100,
+      "step": 1,
+      "default": 58
+    },
+    {
+      "type": "range",
+      "id": "icon_circle_size_mobile",
+      "label": "Icon circle size mobile",
+      "min": 30,
+      "max": 100,
+      "step": 1,
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "icon_size_desktop",
+      "label": "Icon size desktop",
+      "min": 10,
+      "max": 70,
+      "step": 1,
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "icon_size_mobile",
+      "label": "Icon size mobile",
+      "min": 10,
+      "max": 70,
+      "step": 1,
+      "default": 26
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Reason card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "card_title",
+          "label": "Card title",
+          "default": "Try it with a 90-day guarantee"
+        },
+        {
+          "type": "textarea",
+          "id": "card_text",
+          "label": "Card text",
+          "default": "We want Herbans to earn its place in your routine. If it’s not the right fit, you can request support within your guarantee window."
+        },
+        {
+          "type": "image_picker",
+          "id": "card_icon",
+          "label": "Card icon"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Why Choose Herbans V2",
+      "blocks": [
+        {
+          "type": "card",
+          "settings": {
+            "card_title": "Try it with a 90-day guarantee",
+            "card_text": "We want Herbans to earn its place in your routine. If it’s not the right fit, you’re protected by our customer-first guarantee."
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "card_title": "Supports hair wellness from within",
+            "card_text": "Herbans combines pumpkin seed oil and saw palmetto to support scalp wellness, healthy hair growth, and normal DHT pathways."
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "card_title": "Simple daily softgels",
+            "card_text": "No messy oils, sprays, or complicated routines. Just easy-to-take softgels designed to fit into your daily wellness routine."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

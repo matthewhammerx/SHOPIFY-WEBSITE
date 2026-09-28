@@ -1,0 +1,397 @@
+<style>
+  .il-feature {
+    background: var(--il-bg);
+    color: var(--il-ink);
+  }
+
+  .il-feature__inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: var(--il-padding, 32px) 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  .il-text {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .il-title {
+    margin: 0;
+    font-size: 26px;
+    line-height: 1.2;
+    font-weight: 800;
+    color: var(--il-heading);
+    text-wrap: balance;
+  }
+  .il-desc {
+    max-width: 60ch;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+  .il-desc p {
+    margin: 0;
+  }
+  .il-button {
+    align-self: flex-start;
+    background: var(--il-button-bg, #1e3d2c);
+    color: var(--il-button-text, #fff);
+    border: none;
+    border-radius: 999px;
+    padding: 14px 28px;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    text-transform: uppercase;
+    display: inline-block;
+    cursor: pointer;
+  }
+  .il-button:focus-visible {
+    outline: 2px solid var(--il-button-bg, #1e3d2c);
+    outline-offset: 3px;
+  }
+
+  .il-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .il-row {
+    border-bottom: 1px solid var(--il-divider, rgba(0, 0, 0, 0.12));
+  }
+  .il-row__summary {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 0;
+    cursor: pointer;
+    list-style: none;
+  }
+  .il-row__summary::-webkit-details-marker {
+    display: none;
+  }
+  .il-row__summary::marker {
+    content: "";
+  }
+  .il-row__icon {
+    flex-shrink: 0;
+    width: var(--il-icon-size, 40px);
+    height: var(--il-icon-size, 40px);
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1px solid var(--il-divider, rgba(0, 0, 0, 0.12));
+    background: rgba(0, 0, 0, 0.03);
+  }
+  .il-row__icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .il-row__name {
+    flex: 1 1 auto;
+    font-weight: 700;
+    font-size: 15px;
+  }
+  .il-row__dose {
+    flex-shrink: 0;
+    font-size: 15px;
+    color: var(--il-dose, var(--il-ink));
+  }
+  .il-row__chevron {
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+    color: var(--il-chevron, var(--il-ink));
+    transition: transform 0.2s ease;
+  }
+  .il-row[open] > .il-row__summary .il-row__chevron {
+    transform: rotate(180deg);
+  }
+  .il-row__detail {
+    padding: 0 0 16px calc(var(--il-icon-size, 40px) + 16px);
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--il-ink);
+  }
+  .il-row__detail p {
+    margin: 0;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .il-row__chevron {
+      transition: transform 0.2s ease;
+    }
+  }
+
+  @media (min-width: 860px) {
+    .il-feature__inner {
+      flex-direction: var(--il-list-direction, row);
+      align-items: center;
+      gap: 56px;
+      padding: var(--il-padding, 56px) 40px;
+    }
+    .il-text {
+      flex: 1 1 0%;
+    }
+    .il-list {
+      flex: 0 0 var(--il-list-width, 50%);
+    }
+    .il-title {
+      font-size: 32px;
+    }
+  }
+</style>
+
+{%- if section.settings.list_position == 'left' -%}
+  {%- assign list_direction = 'row-reverse' -%}
+{%- else -%}
+  {%- assign list_direction = 'row' -%}
+{%- endif -%}
+
+<section class="il-feature" style="
+  --il-bg: {{ section.settings.bg_color }};
+  --il-heading: {{ section.settings.heading_color }};
+  --il-ink: {{ section.settings.text_color }};
+  --il-button-bg: {{ section.settings.button_bg }};
+  --il-button-text: {{ section.settings.button_text }};
+  --il-divider: {{ section.settings.divider_color }};
+  --il-dose: {{ section.settings.dose_color }};
+  --il-chevron: {{ section.settings.chevron_color }};
+  --il-padding: {{ section.settings.section_padding }}px;
+  --il-icon-size: {{ section.settings.icon_size }}px;
+  --il-list-direction: {{ list_direction }};
+  --il-list-width: {{ section.settings.list_width }}%;
+">
+  <div class="il-feature__inner">
+
+    <div class="il-text">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="il-title">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.description != blank -%}
+        <div class="il-desc">{{ section.settings.description }}</div>
+      {%- endif -%}
+      {%- if section.settings.button_label != blank -%}
+        {%- if section.settings.button_link != blank -%}
+          <a href="{{ section.settings.button_link }}" class="il-button">{{ section.settings.button_label }}</a>
+        {%- else -%}
+          <span class="il-button">{{ section.settings.button_label }}</span>
+        {%- endif -%}
+      {%- endif -%}
+    </div>
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="il-list">
+        {%- for block in section.blocks -%}
+          <details class="il-row" {{ block.shopify_attributes }}>
+            <summary class="il-row__summary">
+              <span class="il-row__icon">
+                {%- if block.settings.icon != blank -%}
+                  <img src="{{ block.settings.icon | image_url: width: 84 }}" alt="" loading="lazy" width="{{ section.settings.icon_size }}" height="{{ section.settings.icon_size }}">
+                {%- endif -%}
+              </span>
+              <span class="il-row__name">{{ block.settings.name }}</span>
+              <span class="il-row__dose">{{ block.settings.dose }}</span>
+              <span class="il-row__chevron">
+                <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" fill="currentColor"/></svg>
+              </span>
+            </summary>
+            {%- if block.settings.detail != blank -%}
+              <div class="il-row__detail">{{ block.settings.detail }}</div>
+            {%- endif -%}
+          </details>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Ingredient list",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "3. Formulated With Research-Backed Nutrients"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Every active nutrient in Meowgical’s SuperTaurine is supported by published research and carefully combined to work together. Taurine forms the foundation, while DHA, essential vitamins, and trace minerals provide broader daily support for your cat’s heart, vision, brain function, energy, and overall vitality.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Try risk-free today"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "header",
+      "content": "List"
+    },
+    {
+      "type": "select",
+      "id": "list_position",
+      "label": "List position (desktop)",
+      "options": [
+        { "value": "right", "label": "Right" },
+        { "value": "left", "label": "Left" }
+      ],
+      "default": "right"
+    },
+    {
+      "type": "range",
+      "id": "list_width",
+      "label": "List width (desktop)",
+      "min": 30,
+      "max": 70,
+      "step": 1,
+      "unit": "%",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "label": "Icon size",
+      "min": 24,
+      "max": 64,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "section_padding",
+      "label": "Vertical padding",
+      "min": 16,
+      "max": 96,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background",
+      "default": "#FAF5EC"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading",
+      "default": "#1E3D2C"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Body text",
+      "default": "#1A1A17"
+    },
+    {
+      "type": "color",
+      "id": "button_bg",
+      "label": "Button background",
+      "default": "#1E3D2C"
+    },
+    {
+      "type": "color",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "divider_color",
+      "label": "Row divider",
+      "default": "#E4DCC8"
+    },
+    {
+      "type": "color",
+      "id": "dose_color",
+      "label": "Dose text",
+      "default": "#1A1A17"
+    },
+    {
+      "type": "color",
+      "id": "chevron_color",
+      "label": "Chevron icon",
+      "default": "#1A1A17"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "ingredient",
+      "name": "Ingredient",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Name",
+          "default": "Ingredient name"
+        },
+        {
+          "type": "text",
+          "id": "dose",
+          "label": "Dose",
+          "default": "0 mg"
+        },
+        {
+          "type": "richtext",
+          "id": "detail",
+          "label": "Detail (shown when expanded)",
+          "info": "Optional. Leave empty to hide the expand arrow's content."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Ingredient list",
+      "blocks": [
+        { "type": "ingredient", "settings": { "name": "Glucosamine HCl", "dose": "1,250 mg" } },
+        { "type": "ingredient", "settings": { "name": "Chondroitin Sulfate", "dose": "150 mg" } },
+        { "type": "ingredient", "settings": { "name": "MSM", "dose": "400 mg" } },
+        { "type": "ingredient", "settings": { "name": "Hyaluronic Acid", "dose": "21 mg" } },
+        { "type": "ingredient", "settings": { "name": "Green-Lipped Mussels", "dose": "100 mg" } },
+        { "type": "ingredient", "settings": { "name": "Omega-3 Fatty Acids", "dose": "16.5 mg" } },
+        { "type": "ingredient", "settings": { "name": "Vitamin C", "dose": "50 mg" } },
+        { "type": "ingredient", "settings": { "name": "Yucca Schidigera", "dose": "10 mg" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,711 @@
+{% comment %}
+  Meowgical — Quality Icon Row (v2)
+  Layout reference: Wuffes "Quality You Don't Have to Question" section.
+  Works two ways depending on what the merchant fills in:
+  - Image + subheading + button filled in  -> full layout (photo left, heading/
+    text/icon-grid right, centered CTA button below).
+  - Image/subheading/button left blank     -> falls back to the original
+    centered icon-row-only layout.
+  Icon grid is flexible on both mobile and desktop: any number of blocks,
+  wraps to the configured column count, incomplete last row auto-centers.
+{% endcomment %}
+
+<section id="mg-quality-{{ section.id }}" class="mg-quality">
+  <div class="mg-quality__wrap">
+
+    <div class="mg-quality__top{% if section.settings.image != blank %} mg-quality__top--has-image{% endif %}">
+
+      {% if section.settings.image != blank %}
+        <div class="mg-quality__media">
+          <img
+            src="{{ section.settings.image | image_url: width: 900 }}"
+            alt="{{ section.settings.image_alt | default: section.settings.heading | escape }}"
+            class="mg-quality__media-image"
+            loading="lazy"
+            width="{{ section.settings.image.width }}"
+            height="{{ section.settings.image.height }}"
+          >
+        </div>
+      {% endif %}
+
+      <div class="mg-quality__content">
+        {% if section.settings.heading != blank %}
+          <h2 class="mg-quality__heading">{{ section.settings.heading }}</h2>
+        {% endif %}
+
+        {% if section.settings.subheading != blank %}
+          <div class="mg-quality__subheading">{{ section.settings.subheading }}</div>
+        {% endif %}
+
+        {% if section.blocks.size > 0 %}
+          <div class="mg-quality__grid">
+            {% for block in section.blocks %}
+              <div class="mg-quality__item" {{ block.shopify_attributes }}>
+                <div class="mg-quality__icon-circle">
+                  {% if block.settings.icon != blank %}
+                    <img
+                      src="{{ block.settings.icon | image_url: width: 160 }}"
+                      alt=""
+                      class="mg-quality__icon-image"
+                      loading="lazy"
+                      width="40"
+                      height="40"
+                    >
+                  {% else %}
+                    <span class="mg-quality__icon-fallback" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none">
+                        <path d="M5 12.5 9.2 17 19 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </span>
+                  {% endif %}
+                </div>
+                <p class="mg-quality__label">{{ block.settings.label }}</p>
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+
+    </div>
+
+    {% if section.settings.button_label != blank %}
+      <div class="mg-quality__cta">
+        <a
+          href="{{ section.settings.button_link | default: '#' }}"
+          class="mg-quality__cta-button"
+        >
+          {{ section.settings.button_label }}
+        </a>
+      </div>
+    {% endif %}
+
+  </div>
+</section>
+
+<style>
+  #mg-quality-{{ section.id }} {
+    background: {{ section.settings.background_color }};
+    padding: {{ section.settings.padding_top_mobile }}px 16px {{ section.settings.padding_bottom_mobile }}px;
+  }
+
+  #mg-quality-{{ section.id }} * {
+    box-sizing: border-box;
+  }
+
+  #mg-quality-{{ section.id }} .mg-quality__wrap {
+    max-width: {{ section.settings.max_width }}px;
+    margin: 0 auto;
+  }
+
+  #mg-quality-{{ section.id }} .mg-quality__top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: {{ section.settings.image_gap_mobile }}px;
+  }
+
+  #mg-quality-{{ section.id }} .mg-quality__media {
+    width: 100%;
+  }
+
+  #mg-quality-{{ section.id }} .mg-quality__media-image {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: {{ section.settings.image_aspect_ratio }};
+    object-fit: cover;
+    border-radius: {{ section.settings.image_radius }}px;
+  }
+
+  #mg-quality-{{ section.id }} .mg-quality__content {
+    width: 100%;
+  }
+
+  #mg-quality-{{ section.id }} .mg-quality__heading {
+    margin: 0 0 {{ section.settings.heading_gap_mobile }}px;
+    color: {{ section.settings.heading_color }};
+    font-size: {{ section.settings.heading_size_mobile }}px;
+    line-height: 1.15;
+    font-weight: 800;
+    letter-spacing: -.02em;
+    text-align: center;
+  }
+
+  #mg-quality-{{ section.id }} .mg-quality__subheading {
+    margin: -{{ section.settings.heading_gap_mobile | minus: 12 }}px 0 {{ section.settings.heading_gap_mobile }}px;
+    color: {{ section.settings.subheading_color }};
+    font-size: {{ section.settings.subheading_size_mobile }}px;
+    line-height: 1.5;
+    text-align: center;
+  }
+
+  #mg-quality-{{ section.id }} .mg-quality__top--has-image .mg-quality__heading,
+  #mg-quality-{{ section.id }} .mg-quality__top--has-image .mg-quality__subheading {
+    text-align: center;
+  }
+
+  /* Flexible icon grid: wraps to the configured column count, incomplete
+     last row centers itself instead of left-aligning like a strict grid would. */
+  #mg-quality-{{ section.id }} .mg-quality__grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: {{ section.settings.row_gap_mobile }}px {{ section.settings.column_gap_mobile }}px;
+  }
+
+  #mg-quality-{{ section.id }} .mg-quality__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    flex: 0 1 calc((100% - {{ section.settings.mobile_columns | minus: 1 }} * {{ section.settings.column_gap_mobile }}px) / {{ section.settings.mobile_columns }});
+    max-width: calc((100% - {{ section.settings.mobile_columns | minus: 1 }} * {{ section.settings.column_gap_mobile }}px) / {{ section.settings.mobile_columns }});
+  }
+
+  #mg-quality-{{ section.id }} .mg-quality__icon-circle {
+    display: grid;
+    place-items: center;
+    width: {{ section.settings.icon_circle_size_mobile }}px;
+    height: {{ section.settings.icon_circle_size_mobile }}px;
+    border: {{ section.settings.icon_border_width }}px solid {{ section.settings.icon_color }};
+    border-radius: 999px;
+    margin-bottom: 14px;
+  }
+
+  #mg-quality-{{ section.id }} .mg-quality__icon-image {
+    width: 60%;
+    height: 60%;
+    object-fit: contain;
+  }
+
+  #mg-quality-{{ section.id }} .mg-quality__icon-fallback {
+    display: grid;
+    place-items: center;
+    width: 60%;
+    height: 60%;
+    color: {{ section.settings.icon_color }};
+  }
+
+  #mg-quality-{{ section.id }} .mg-quality__icon-fallback svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  #mg-quality-{{ section.id }} .mg-quality__label {
+    margin: 0;
+    max-width: 180px;
+    color: {{ section.settings.label_color }};
+    font-size: {{ section.settings.label_size_mobile }}px;
+    line-height: 1.35;
+    font-weight: 700;
+  }
+
+  #mg-quality-{{ section.id }} .mg-quality__cta {
+    display: flex;
+    justify-content: center;
+    margin-top: {{ section.settings.button_gap_mobile }}px;
+  }
+
+  #mg-quality-{{ section.id }} .mg-quality__cta-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 16px 32px;
+    background: {{ section.settings.button_background_color }};
+    color: {{ section.settings.button_text_color }};
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: .02em;
+    text-transform: uppercase;
+    text-decoration: none;
+    text-align: center;
+  }
+
+  @media screen and (min-width: 750px) {
+    #mg-quality-{{ section.id }} {
+      padding: {{ section.settings.padding_top_desktop }}px 40px {{ section.settings.padding_bottom_desktop }}px;
+    }
+
+    #mg-quality-{{ section.id }} .mg-quality__top {
+      gap: {{ section.settings.image_gap_desktop }}px;
+    }
+
+    #mg-quality-{{ section.id }} .mg-quality__top--has-image {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr);
+      align-items: center;
+    }
+
+    #mg-quality-{{ section.id }} .mg-quality__top--has-image .mg-quality__media {
+      max-width: none;
+    }
+
+    #mg-quality-{{ section.id }} .mg-quality__heading {
+      margin-bottom: {{ section.settings.heading_gap_desktop }}px;
+      font-size: {{ section.settings.heading_size_desktop }}px;
+    }
+
+    #mg-quality-{{ section.id }} .mg-quality__subheading {
+      margin: -{{ section.settings.heading_gap_desktop | minus: 16 }}px 0 {{ section.settings.heading_gap_desktop }}px;
+      font-size: {{ section.settings.subheading_size_desktop }}px;
+    }
+
+    #mg-quality-{{ section.id }} .mg-quality__grid {
+      gap: {{ section.settings.row_gap_desktop }}px {{ section.settings.column_gap_desktop }}px;
+    }
+
+    #mg-quality-{{ section.id }} .mg-quality__item {
+      flex-basis: calc((100% - {{ section.settings.desktop_columns | minus: 1 }} * {{ section.settings.column_gap_desktop }}px) / {{ section.settings.desktop_columns }});
+      max-width: calc((100% - {{ section.settings.desktop_columns | minus: 1 }} * {{ section.settings.column_gap_desktop }}px) / {{ section.settings.desktop_columns }});
+    }
+
+    #mg-quality-{{ section.id }} .mg-quality__icon-circle {
+      width: {{ section.settings.icon_circle_size_desktop }}px;
+      height: {{ section.settings.icon_circle_size_desktop }}px;
+    }
+
+    #mg-quality-{{ section.id }} .mg-quality__label {
+      font-size: {{ section.settings.label_size_desktop }}px;
+    }
+
+    #mg-quality-{{ section.id }} .mg-quality__cta {
+      margin-top: {{ section.settings.button_gap_desktop }}px;
+    }
+
+    #mg-quality-{{ section.id }} .mg-quality__cta-button {
+      width: auto;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Meowgical Quality Icons",
+  "tag": "section",
+  "class": "section-meowgical-quality-icons",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Heading & text"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Our standards go beyond industry expectations"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Subheading text (optional)",
+      "info": "Leave blank to hide."
+    },
+
+    {
+      "type": "header",
+      "content": "Image (optional)"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image",
+      "info": "Leave blank for a centered icon-row-only layout with no photo."
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "Image alt text"
+    },
+    {
+      "type": "range",
+      "id": "image_radius",
+      "label": "Image corner radius",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "select",
+      "id": "image_aspect_ratio",
+      "label": "Image aspect ratio",
+      "options": [
+        { "value": "1 / 1", "label": "Square" },
+        { "value": "4 / 5", "label": "Portrait" },
+        { "value": "3 / 2", "label": "Landscape" }
+      ],
+      "default": "1 / 1"
+    },
+
+    {
+      "type": "header",
+      "content": "Button (optional)"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "info": "Leave blank to hide the button."
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#12204A"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "subheading_color",
+      "label": "Subheading text",
+      "default": "#D7DEEE"
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Icon circle & icon color",
+      "default": "#6695DE"
+    },
+    {
+      "type": "color",
+      "id": "label_color",
+      "label": "Label text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "button_background_color",
+      "label": "Button background",
+      "default": "#C6F135"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text",
+      "default": "#12204A"
+    },
+
+    {
+      "type": "header",
+      "content": "Icon Circle"
+    },
+    {
+      "type": "range",
+      "id": "icon_border_width",
+      "label": "Circle border width",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "icon_circle_size_mobile",
+      "label": "Circle size mobile",
+      "min": 56,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 88
+    },
+    {
+      "type": "range",
+      "id": "icon_circle_size_desktop",
+      "label": "Circle size desktop",
+      "min": 64,
+      "max": 140,
+      "step": 2,
+      "unit": "px",
+      "default": 96
+    },
+
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Heading size mobile",
+      "min": 20,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 26
+    },
+    {
+      "type": "range",
+      "id": "heading_size_desktop",
+      "label": "Heading size desktop",
+      "min": 24,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "subheading_size_mobile",
+      "label": "Subheading size mobile",
+      "min": 12,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "subheading_size_desktop",
+      "label": "Subheading size desktop",
+      "min": 13,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 17
+    },
+    {
+      "type": "range",
+      "id": "label_size_mobile",
+      "label": "Label size mobile",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "label_size_desktop",
+      "label": "Label size desktop",
+      "min": 13,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+
+    {
+      "type": "header",
+      "content": "Layout & Spacing"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Max width",
+      "min": 700,
+      "max": 1400,
+      "step": 20,
+      "unit": "px",
+      "default": 1180
+    },
+    {
+      "type": "range",
+      "id": "mobile_columns",
+      "label": "Icon columns on mobile",
+      "info": "Any number of icon blocks is supported — an incomplete last row centers itself automatically.",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "desktop_columns",
+      "label": "Icon columns on desktop",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "image_gap_mobile",
+      "label": "Gap above content mobile",
+      "min": 16,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "image_gap_desktop",
+      "label": "Gap between image & content desktop",
+      "min": 16,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "heading_gap_mobile",
+      "label": "Space below heading mobile",
+      "min": 16,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "heading_gap_desktop",
+      "label": "Space below heading desktop",
+      "min": 20,
+      "max": 70,
+      "step": 2,
+      "unit": "px",
+      "default": 44
+    },
+    {
+      "type": "range",
+      "id": "row_gap_mobile",
+      "label": "Row gap mobile",
+      "min": 16,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "column_gap_mobile",
+      "label": "Column gap mobile",
+      "min": 8,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "row_gap_desktop",
+      "label": "Row gap desktop",
+      "min": 16,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "column_gap_desktop",
+      "label": "Column gap desktop",
+      "min": 8,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "button_gap_mobile",
+      "label": "Space above button mobile",
+      "min": 16,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "button_gap_desktop",
+      "label": "Space above button desktop",
+      "min": 16,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Top padding mobile",
+      "min": 20,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Bottom padding mobile",
+      "min": 20,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Top padding desktop",
+      "min": 20,
+      "max": 140,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Bottom padding desktop",
+      "min": 20,
+      "max": 140,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    }
+  ],
+  "blocks": [
+    {
+      "type": "point",
+      "name": "Quality point",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon (optional — falls back to a checkmark)"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Third-Party Lab Tested"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Meowgical Quality Icons",
+      "blocks": [
+        { "type": "point", "settings": { "label": "Third-Party Lab Tested" } },
+        { "type": "point", "settings": { "label": "No Unnecessary Fillers" } },
+        { "type": "point", "settings": { "label": "No Artificial Colors or Flavors" } },
+        { "type": "point", "settings": { "label": "Made in the USA" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,488 @@
+<style>
+  .rt-feature {
+    background: var(--rt-bg);
+    color: var(--rt-ink);
+  }
+
+  .rt-feature__inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: var(--rt-padding, 32px) 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 44px;
+  }
+
+  .rt-text {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  .rt-title {
+    margin: 0;
+    font-size: 26px;
+    line-height: 1.2;
+    font-weight: 800;
+    color: var(--rt-heading);
+    text-wrap: balance;
+  }
+  .rt-desc {
+    max-width: 60ch;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--rt-desc, var(--rt-ink));
+  }
+  .rt-desc p {
+    margin: 0;
+  }
+  .rt-button {
+    background: var(--rt-button-bg, #bfe94a);
+    color: var(--rt-button-text, #14210e);
+    border: 2px solid var(--rt-button-border, transparent);
+    border-radius: 999px;
+    padding: 16px 32px;
+    font-weight: 800;
+    font-size: 14px;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    text-transform: uppercase;
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+    margin-top: 16px;
+    cursor: pointer;
+  }
+  .rt-button:focus-visible {
+    outline: 2px solid var(--rt-button-border, var(--rt-button-bg));
+    outline-offset: 3px;
+  }
+
+  .rt-list {
+    position: relative;
+    background: var(--rt-card-bg, transparent);
+    border-radius: var(--rt-card-radius, 16px);
+    padding: 0 0 0 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+  .rt-list::before {
+    content: '';
+    position: absolute;
+    top: 6px;
+    bottom: 6px;
+    left: 13px;
+    width: 2px;
+    background: var(--rt-timeline-accent, #2E8B3D);
+    opacity: 0.35;
+  }
+
+  .rt-milestone {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .rt-milestone::before {
+    content: '';
+    position: absolute;
+    left: -19px;
+    top: 5px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--rt-timeline-accent, #2E8B3D);
+  }
+  .rt-milestone__day {
+    margin: 0;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--rt-timeline-accent, var(--rt-heading));
+  }
+  .rt-milestone__title {
+    margin: 0;
+    font-weight: 800;
+    font-size: 17px;
+    line-height: 1.3;
+    color: var(--rt-heading);
+  }
+  .rt-milestone__body {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.55;
+  }
+  .rt-callout {
+    display: inline-block;
+    background: var(--rt-callout-bg, #EAF6EC);
+    color: var(--rt-callout-text, #1E3D2C);
+    border-radius: var(--rt-callout-radius, 8px);
+    padding: 10px 14px;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 13px;
+    line-height: 1.4;
+  }
+  .rt-callout p {
+    margin: 0;
+  }
+
+  .rt-disclaimer {
+    margin: 28px 0 0;
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--rt-disclaimer, var(--rt-ink));
+    text-align: center;
+  }
+  .rt-disclaimer p {
+    margin: 0;
+  }
+
+  @media (min-width: 860px) {
+    .rt-feature__inner {
+      flex-direction: var(--rt-list-direction, row);
+      align-items: center;
+      gap: 56px;
+      padding: var(--rt-padding, 56px) 40px;
+    }
+    .rt-text {
+      flex: 1 1 0%;
+    }
+    .rt-button {
+      width: auto;
+    }
+    .rt-list-col {
+      flex: 0 0 var(--rt-list-width, 50%);
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+    .rt-list {
+      background: transparent;
+      border-radius: 0;
+      padding-left: 28px;
+      gap: 40px;
+    }
+    .rt-disclaimer {
+      margin-top: 0;
+      text-align: left;
+    }
+  }
+</style>
+
+{%- if section.settings.list_position == 'left' -%}
+  {%- assign list_direction = 'row-reverse' -%}
+{%- else -%}
+  {%- assign list_direction = 'row' -%}
+{%- endif -%}
+
+<section class="rt-feature" style="
+  --rt-bg: {{ section.settings.bg_color }};
+  --rt-heading: {{ section.settings.heading_color }};
+  --rt-ink: {{ section.settings.text_color }};
+  --rt-button-bg: {{ section.settings.button_bg }};
+  --rt-button-text: {{ section.settings.button_text }};
+  --rt-button-border: {{ section.settings.button_border }};
+  --rt-card-bg: {{ section.settings.card_bg }};
+  --rt-card-radius: {{ section.settings.card_radius }}px;
+  --rt-callout-bg: {{ section.settings.callout_bg }};
+  --rt-callout-text: {{ section.settings.callout_text }};
+  --rt-callout-radius: {{ section.settings.callout_radius }}px;
+  --rt-timeline-accent: {{ section.settings.timeline_accent_color }};
+  --rt-disclaimer: {{ section.settings.disclaimer_color }};
+  --rt-padding: {{ section.settings.section_padding }}px;
+  --rt-list-direction: {{ list_direction }};
+  --rt-list-width: {{ section.settings.list_width }}%;
+">
+  <div class="rt-feature__inner">
+
+    <div class="rt-text">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="rt-title">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.description != blank -%}
+        <div class="rt-desc">{{ section.settings.description }}</div>
+      {%- endif -%}
+      {%- if section.settings.button_label != blank -%}
+        {%- if section.settings.button_link != blank -%}
+          <a href="{{ section.settings.button_link }}" class="rt-button">{{ section.settings.button_label }}</a>
+        {%- else -%}
+          <span class="rt-button">{{ section.settings.button_label }}</span>
+        {%- endif -%}
+      {%- endif -%}
+    </div>
+
+    <div class="rt-list-col">
+      {%- if section.blocks.size > 0 -%}
+        <div class="rt-list">
+          {%- for block in section.blocks -%}
+            <div class="rt-milestone" {{ block.shopify_attributes }}>
+              {%- if block.settings.day_label != blank -%}
+                <p class="rt-milestone__day">{{ block.settings.day_label }}</p>
+              {%- endif -%}
+              {%- if block.settings.milestone_title != blank -%}
+                <p class="rt-milestone__title">{{ block.settings.milestone_title }}</p>
+              {%- endif -%}
+              {%- if block.settings.body != blank -%}
+                <div class="rt-milestone__body">{{ block.settings.body }}</div>
+              {%- endif -%}
+              {%- if block.settings.callout != blank -%}
+                <div class="rt-callout">{{ block.settings.callout }}</div>
+              {%- endif -%}
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.disclaimer != blank -%}
+        <div class="rt-disclaimer">{{ section.settings.disclaimer }}</div>
+      {%- endif -%}
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Results timeline",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "4. Visible Full-Body Support in as Little as 3 Weeks"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Most cat parents begin noticing positive changes within the first month. The most common mistake is inconsistency&mdash;skipping days makes it harder to maintain steady taurine support. Use Meowgical's SuperTaurine daily for the best results.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Try risk-free today"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "header",
+      "content": "Disclaimer"
+    },
+    {
+      "type": "richtext",
+      "id": "disclaimer",
+      "label": "Disclaimer text",
+      "default": "<p>Individual results may vary based on your cat's age, diet, health, and consistency of use.</p>"
+    },
+    {
+      "type": "header",
+      "content": "List"
+    },
+    {
+      "type": "select",
+      "id": "list_position",
+      "label": "List position (desktop)",
+      "options": [
+        { "value": "right", "label": "Right" },
+        { "value": "left", "label": "Left" }
+      ],
+      "default": "right"
+    },
+    {
+      "type": "range",
+      "id": "list_width",
+      "label": "List width (desktop)",
+      "min": 30,
+      "max": 70,
+      "step": 1,
+      "unit": "%",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Card corner radius (mobile)",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 16,
+      "info": "The card background only shows on mobile; on desktop the list sits directly on the section background."
+    },
+    {
+      "type": "range",
+      "id": "callout_radius",
+      "label": "Callout box corner radius",
+      "min": 0,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "section_padding",
+      "label": "Vertical padding",
+      "min": 16,
+      "max": 96,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background",
+      "default": "#FAF5EC"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading",
+      "default": "#1E3D2C"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Body text",
+      "default": "#1A1A17"
+    },
+    {
+      "type": "color",
+      "id": "button_bg",
+      "label": "Button background",
+      "default": "#BFE94A"
+    },
+    {
+      "type": "color",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "#14210E"
+    },
+    {
+      "type": "color",
+      "id": "button_border",
+      "label": "Button border",
+      "default": "#14210E"
+    },
+    {
+      "type": "color",
+      "id": "card_bg",
+      "label": "Mobile card background",
+      "default": "rgba(0,0,0,0)",
+      "info": "Leave transparent for the clean, card-free timeline look. Set a color if you want the old boxed-card style back."
+    },
+    {
+      "type": "color",
+      "id": "callout_bg",
+      "label": "Callout background",
+      "default": "#EAF6EC"
+    },
+    {
+      "type": "color",
+      "id": "callout_text",
+      "label": "Callout text",
+      "default": "#1E3D2C"
+    },
+    {
+      "type": "color",
+      "id": "timeline_accent_color",
+      "label": "Timeline dot/line/eyebrow color",
+      "default": "#2E8B3D"
+    },
+    {
+      "type": "color",
+      "id": "disclaimer_color",
+      "label": "Disclaimer text",
+      "default": "#6B6558"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "milestone",
+      "name": "Milestone",
+      "settings": [
+        {
+          "type": "text",
+          "id": "day_label",
+          "label": "Day label (small eyebrow text)",
+          "default": "Day 7"
+        },
+        {
+          "type": "text",
+          "id": "milestone_title",
+          "label": "Milestone title (bold subheading)",
+          "default": "Milestone title"
+        },
+        {
+          "type": "richtext",
+          "id": "body",
+          "label": "Body text"
+        },
+        {
+          "type": "richtext",
+          "id": "callout",
+          "label": "Callout / stat"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Results timeline",
+      "blocks": [
+        {
+          "type": "milestone",
+          "settings": {
+            "day_label": "Day 7",
+            "milestone_title": "Daily Support Begins",
+            "body": "<p>Taurine, DHA, vitamins, and trace minerals begin supporting the essential systems your cat relies on every day.</p>",
+            "callout": "<p>One measured scoop keeps their taurine support consistent&mdash;even on picky or unfinished-meal days.</p>"
+          }
+        },
+        {
+          "type": "milestone",
+          "settings": {
+            "day_label": "Day 30",
+            "milestone_title": "Visible Changes",
+            "body": "<p>With consistent daily use, many cat parents begin noticing steadier energy, greater alertness, and more interest in everyday play and activity.</p>",
+            "callout": "<p>Noticeable improvements in energy and vitality may begin within the first few weeks.</p>"
+          }
+        },
+        {
+          "type": "milestone",
+          "settings": {
+            "day_label": "Day 90",
+            "milestone_title": "Full Impact",
+            "body": "<p>The complete formula is now working as part of your cat's daily routine&mdash;supporting their heart, eyesight, brain, muscles, digestion, and long-term vitality.</p>",
+            "callout": "<p>Consistent daily use provides ongoing full-body nutritional support.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

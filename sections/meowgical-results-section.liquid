@@ -1,0 +1,1455 @@
+{% comment %}
+  Meowgical - Quick Results
+  Wuffes-inspired scan-first results section with Meowgical styling.
+  IMPORTANT: Replace percentage claims and source note with verified customer data before publishing.
+{% endcomment %}
+
+<section id="meowgical-quick-results-{{ section.id }}" class="meowgical-quick-results">
+  <div class="mqr-wrap">
+
+    {% if section.settings.heading != blank %}
+      <div class="mqr-heading">{{ section.settings.heading }}</div>
+    {% endif %}
+
+    <div class="mqr-shell">
+
+      <div class="mqr-box">
+        <div class="mqr-box-title">
+          {% if section.settings.results_icon != blank %}
+            <img
+              src="{{ section.settings.results_icon | image_url: width: 90 }}"
+              alt=""
+              loading="lazy"
+              width="30"
+              height="30"
+            >
+          {% endif %}
+          <h3>{{ section.settings.results_heading }}</h3>
+        </div>
+
+        <div class="mqr-result-list">
+          {% for block in section.blocks %}
+            {% if block.type == 'result' %}
+              <div class="mqr-result-row" {{ block.shopify_attributes }}>
+                <div class="mqr-time-badge">
+                  <span class="mqr-time-number">{{ block.settings.time_number }}</span>
+                  <span class="mqr-time-unit">{{ block.settings.time_unit }}</span>
+                </div>
+                <div class="mqr-result-text">{{ block.settings.text }}</div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+
+        {% if section.settings.source_note != blank %}
+          <div class="mqr-source-note">{{ section.settings.source_note }}</div>
+        {% endif %}
+      </div>
+
+      <div class="mqr-box mqr-lookout-box">
+        <div class="mqr-box-title">
+          {% if section.settings.lookout_icon != blank %}
+            <img src="{{ section.settings.lookout_icon | image_url: width: 90 }}" alt="" loading="lazy" width="30" height="30">
+          {% endif %}
+          <h3>{{ section.settings.lookout_heading }}</h3>
+        </div>
+
+        {% if section.settings.lookout_description != blank %}
+          <div class="mqr-lookout-description">{{ section.settings.lookout_description }}</div>
+        {% endif %}
+
+        <div class="mqr-outcome-list">
+          {% for block in section.blocks %}
+            {% if block.type == 'outcome' %}
+            <div class="mqr-outcome-row" {{ block.shopify_attributes }}>
+              {% if block.settings.icon != blank %}
+                <img src="{{ block.settings.icon | image_url: width: 120 }}" alt="" loading="lazy" width="30" height="30">
+              {% endif %}
+              <span>{{ block.settings.label }}</span>
+            </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+
+      {% if section.settings.button_text != blank %}
+        <div class="mqr-cta-wrap">
+          <a href="{{ section.settings.button_link | default: '#product-form' }}" class="mqr-cta">
+            {{ section.settings.button_text }}
+          </a>
+
+          {% if section.settings.guarantee_text != blank %}
+            <div class="mqr-guarantee">
+              {% if section.settings.guarantee_icon != blank %}
+                <img
+                  src="{{ section.settings.guarantee_icon | image_url: width: 80 }}"
+                  alt=""
+                  class="mqr-guarantee-icon"
+                  loading="lazy"
+                  width="24"
+                  height="24"
+                >
+              {% endif %}
+              <span>{{ section.settings.guarantee_text }}</span>
+            </div>
+          {% endif %}
+        </div>
+      {% endif %}
+
+    </div>
+  </div>
+</section>
+
+<style>
+  #meowgical-quick-results-{{ section.id }} {
+    background: {{ section.settings.section_bg }};
+    padding:
+      {{ section.settings.padding_top_mobile }}px
+      {{ section.settings.padding_side_mobile }}px
+      {{ section.settings.padding_bottom_mobile }}px;
+  }
+
+  #meowgical-quick-results-{{ section.id }} * {
+    box-sizing: border-box;
+  }
+
+  #meowgical-quick-results-{{ section.id }} .mqr-wrap {
+    max-width: {{ section.settings.max_width }}px;
+    margin: 0 auto;
+  }
+
+  #meowgical-quick-results-{{ section.id }} .mqr-heading,
+  #meowgical-quick-results-{{ section.id }} .mqr-heading p {
+    margin: 0 0 {{ section.settings.heading_gap_mobile }}px;
+    color: {{ section.settings.heading_color }};
+    font-size: {{ section.settings.heading_size_mobile }}px;
+    line-height: .98;
+    font-weight: 900;
+    letter-spacing: -.045em;
+    text-align: center;
+  }
+
+  #meowgical-quick-results-{{ section.id }} .mqr-heading strong {
+    color: {{ section.settings.heading_accent }};
+    font-weight: inherit;
+  }
+
+  #meowgical-quick-results-{{ section.id }} .mqr-shell {
+    background: transparent;
+    border:0;
+    border-radius: {{ section.settings.shell_radius }}px;
+    padding: {{ section.settings.shell_padding_mobile }}px;
+    box-shadow:none;
+  }
+
+  #meowgical-quick-results-{{ section.id }} .mqr-box {
+    background: {{ section.settings.box_bg }};
+    border: {{ section.settings.box_border_width }}px solid {{ section.settings.box_border_color }};
+    border-radius: {{ section.settings.box_radius }}px;
+    padding: {{ section.settings.box_padding_mobile }}px;
+  }
+
+  #meowgical-quick-results-{{ section.id }} .mqr-lookout-box {
+    margin-top: {{ section.settings.box_gap_mobile }}px;
+  }
+
+  #meowgical-quick-results-{{ section.id }} .mqr-box-title {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin-bottom: 14px;
+  }
+
+  #meowgical-quick-results-{{ section.id }} .mqr-box-title img {
+    width: 26px;
+    height: 26px;
+    object-fit: contain;
+  }
+
+  #meowgical-quick-results-{{ section.id }} .mqr-box-title h3 {
+    margin: 0;
+    color: {{ section.settings.box_heading_color }};
+    font-size: {{ section.settings.box_heading_size_mobile }}px;
+    line-height: 1.05;
+    font-weight: 900;
+    letter-spacing: -.025em;
+  }
+
+  #meowgical-quick-results-{{ section.id }} .mqr-lookout-description {
+    max-width: 760px;
+    margin: -2px 0 14px;
+    color: {{ section.settings.lookout_description_color }};
+    font-size: {{ section.settings.lookout_description_size_mobile }}px;
+    line-height: 1.4;
+    font-weight: 500;
+  }
+
+  #meowgical-quick-results-{{ section.id }} .mqr-lookout-description p {
+    margin: 0;
+  }
+
+  #meowgical-quick-results-{{ section.id }} .mqr-result-list {
+    display: grid;
+    gap: {{ section.settings.result_gap_mobile }}px;
+  }
+
+  #meowgical-quick-results-{{ section.id }} .mqr-result-row {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: {{ section.settings.result_bg }};
+    border: {{ section.settings.inner_border_width }}px solid {{ section.settings.inner_border_color }};
+    border-radius: {{ section.settings.inner_radius }}px;
+  }
+
+  #meowgical-quick-results-{{ section.id }} .mqr-time-badge {
+    width: {{ section.settings.time_badge_width_mobile }}px;
+    min-height: {{ section.settings.time_badge_height_mobile }}px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 9px 8px;
+    border-radius: {{ section.settings.time_badge_radius }}px;
+    background: {{ section.settings.percent_bg }};
+    color: {{ section.settings.percent_color }};
+    text-align: center;
+  }
+
+  #meowgical-quick-results-{{ section.id }} .mqr-time-number {
+    display: block;
+    font-size: {{ section.settings.time_number_size_mobile }}px;
+    line-height: .95;
+    font-weight: 900;
+    letter-spacing: -.03em;
+  }
+
+  #meowgical-quick-results-{{ section.id }} .mqr-time-unit {
+    display: block;
+    margin-top: 4px;
+    font-size: {{ section.settings.time_unit_size_mobile }}px;
+    line-height: 1;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+  }
+
+  #meowgical-quick-results-{{ section.id }} .mqr-result-text {
+    color: {{ section.settings.result_text_color }};
+    font-size: {{ section.settings.result_text_size_mobile }}px;
+    line-height: 1.25;
+    font-weight: 800;
+  }
+
+  #meowgical-quick-results-{{ section.id }} .mqr-source-note {
+    width: calc(100% - 24px);
+    max-width: 360px;
+    margin: 13px auto 0;
+    color: {{ section.settings.source_note_color }};
+    font-size: {{ section.settings.source_note_size_mobile }}px;
+    line-height: 1.35;
+    text-align: center;
+    font-weight: 500;
+  }
+
+  #meowgical-quick-results-{{ section.id }} .mqr-lookout-box{
+margin-top:24px;
+}
+
+#meowgical-quick-results-{{ section.id }} .mqr-outcome-list{
+background:#fff;
+border:1px solid {{ section.settings.inner_border_color }};
+border-radius:18px;
+overflow:hidden;
+}
+
+#meowgical-quick-results-{{ section.id }} .mqr-outcome-row{
+display:flex;
+align-items:center;
+gap:16px;
+padding:16px 20px;
+border-bottom:1px solid {{ section.settings.inner_border_color }};
+}
+
+#meowgical-quick-results-{{ section.id }} .mqr-outcome-row:last-child{border-bottom:none;}
+
+#meowgical-quick-results-{{ section.id }} .mqr-outcome-row img{
+width:{{ section.settings.outcome_icon_size_mobile }}px;
+height:{{ section.settings.outcome_icon_size_mobile }}px;
+object-fit:contain;
+}
+
+#meowgical-quick-results-{{ section.id }} .mqr-outcome-row span{
+font-size:{{ section.settings.outcome_text_size_mobile }}px;
+font-weight:700;
+color:{{ section.settings.outcome_text_color }};
+line-height:1.3;
+}
+
+#meowgical-quick-results-{{ section.id }} .mqr-cta-wrap {
+    margin-top: {{ section.settings.cta_gap_mobile }}px;
+    text-align: center;
+  }
+
+  #meowgical-quick-results-{{ section.id }} .mqr-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: min(100%, {{ section.settings.button_width_mobile }}px);
+    min-height: {{ section.settings.button_height_mobile }}px;
+    padding: 14px 28px;
+    border: {{ section.settings.button_border_width }}px solid {{ section.settings.button_border_color }};
+    border-radius: 999px;
+    {% if section.settings.button_use_gradient %}
+      background: linear-gradient(
+        135deg,
+        {{ section.settings.button_gradient_1 }},
+        {{ section.settings.button_gradient_2 }}
+      );
+    {% else %}
+      background: {{ section.settings.button_bg }};
+    {% endif %}
+    color: {{ section.settings.button_text_color }};
+    text-decoration: none;
+    font-size: {{ section.settings.button_text_size_mobile }}px;
+    line-height: 1;
+    font-weight: 900;
+    letter-spacing: .01em;
+    box-shadow: {{ section.settings.button_shadow }};
+    transition: transform .2s ease, box-shadow .2s ease;
+  }
+
+  #meowgical-quick-results-{{ section.id }} .mqr-cta:hover {
+    transform: translateY(-1px);
+  }
+
+  #meowgical-quick-results-{{ section.id }} .mqr-guarantee {
+    margin-top: {{ section.settings.guarantee_gap_mobile }}px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: {{ section.settings.guarantee_color }};
+    font-size: {{ section.settings.guarantee_size_mobile }}px;
+    line-height: 1.25;
+    font-weight: 600;
+  }
+
+  #meowgical-quick-results-{{ section.id }} .mqr-guarantee-icon {
+    flex: 0 0 auto;
+    width: {{ section.settings.guarantee_icon_size_mobile }}px;
+    height: {{ section.settings.guarantee_icon_size_mobile }}px;
+    object-fit: contain;
+  }
+
+  @media screen and (min-width: 768px) {
+    #meowgical-quick-results-{{ section.id }} {
+      padding:
+        {{ section.settings.padding_top_desktop }}px
+        {{ section.settings.padding_side_desktop }}px
+        {{ section.settings.padding_bottom_desktop }}px;
+    }
+
+    #meowgical-quick-results-{{ section.id }} .mqr-heading,
+    #meowgical-quick-results-{{ section.id }} .mqr-heading p {
+      margin-bottom: {{ section.settings.heading_gap_desktop }}px;
+      font-size: {{ section.settings.heading_size_desktop }}px;
+    }
+
+    #meowgical-quick-results-{{ section.id }} .mqr-shell {
+      padding: {{ section.settings.shell_padding_desktop }}px;
+    }
+
+    #meowgical-quick-results-{{ section.id }} .mqr-box {
+      padding: {{ section.settings.box_padding_desktop }}px;
+    }
+
+    #meowgical-quick-results-{{ section.id }} .mqr-lookout-box {
+      margin-top: {{ section.settings.box_gap_desktop }}px;
+    }
+
+    #meowgical-quick-results-{{ section.id }} .mqr-box-title h3 {
+      font-size: {{ section.settings.box_heading_size_desktop }}px;
+    }
+
+    #meowgical-quick-results-{{ section.id }} .mqr-lookout-description {
+      margin-bottom: 18px;
+      font-size: {{ section.settings.lookout_description_size_desktop }}px;
+    }
+
+    #meowgical-quick-results-{{ section.id }} .mqr-result-list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: {{ section.settings.result_gap_desktop }}px;
+    }
+
+    #meowgical-quick-results-{{ section.id }} .mqr-result-row {
+      padding: {{ section.settings.result_padding_desktop }}px;
+    }
+
+    #meowgical-quick-results-{{ section.id }} .mqr-time-badge {
+      width: {{ section.settings.time_badge_width_desktop }}px;
+      min-height: {{ section.settings.time_badge_height_desktop }}px;
+    }
+
+    #meowgical-quick-results-{{ section.id }} .mqr-time-number {
+      font-size: {{ section.settings.time_number_size_desktop }}px;
+    }
+
+    #meowgical-quick-results-{{ section.id }} .mqr-time-unit {
+      font-size: {{ section.settings.time_unit_size_desktop }}px;
+    }
+
+    #meowgical-quick-results-{{ section.id }} .mqr-result-text {
+      font-size: {{ section.settings.result_text_size_desktop }}px;
+    }
+
+    #meowgical-quick-results-{{ section.id }} .mqr-source-note {
+      max-width: 760px;
+      font-size: {{ section.settings.source_note_size_desktop }}px;
+    }
+
+    #meowgical-quick-results-{{ section.id }} .mqr-lookout-box{
+margin-top:24px;
+}
+
+#meowgical-quick-results-{{ section.id }} .mqr-outcome-list{
+background:#fff;
+border:1px solid {{ section.settings.inner_border_color }};
+border-radius:18px;
+overflow:hidden;
+}
+
+#meowgical-quick-results-{{ section.id }} .mqr-outcome-row{
+display:flex;
+align-items:center;
+gap:16px;
+padding:16px 20px;
+border-bottom:1px solid {{ section.settings.inner_border_color }};
+}
+
+#meowgical-quick-results-{{ section.id }} .mqr-outcome-row:last-child{border-bottom:none;}
+
+#meowgical-quick-results-{{ section.id }} .mqr-outcome-row img{
+width:{{ section.settings.outcome_icon_size_mobile }}px;
+height:{{ section.settings.outcome_icon_size_mobile }}px;
+object-fit:contain;
+}
+
+#meowgical-quick-results-{{ section.id }} .mqr-outcome-row span{
+font-size:{{ section.settings.outcome_text_size_mobile }}px;
+font-weight:700;
+color:{{ section.settings.outcome_text_color }};
+line-height:1.3;
+}
+
+#meowgical-quick-results-{{ section.id }} .mqr-cta-wrap {
+      margin-top: {{ section.settings.cta_gap_desktop }}px;
+    }
+
+    #meowgical-quick-results-{{ section.id }} .mqr-cta {
+      width: min(100%, {{ section.settings.button_width_desktop }}px);
+      min-height: {{ section.settings.button_height_desktop }}px;
+      font-size: {{ section.settings.button_text_size_desktop }}px;
+    }
+
+    #meowgical-quick-results-{{ section.id }} .mqr-guarantee {
+      margin-top: {{ section.settings.guarantee_gap_desktop }}px;
+      font-size: {{ section.settings.guarantee_size_desktop }}px;
+    }
+
+    #meowgical-quick-results-{{ section.id }} .mqr-guarantee-icon {
+      width: {{ section.settings.guarantee_icon_size_desktop }}px;
+      height: {{ section.settings.guarantee_icon_size_desktop }}px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Meowgical Quick Results",
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "<p>What to Expect With <strong>SuperTaurine</strong></p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "results_icon",
+      "label": "Results heading icon"
+    },
+    {
+      "type": "text",
+      "id": "results_heading",
+      "label": "Results heading",
+      "default": "When to Expect Results"
+    },
+    {
+      "type": "richtext",
+      "id": "source_note",
+      "label": "Survey source note",
+      "default": "<p>*Individual timelines and visible results may vary.</p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "lookout_icon",
+      "label": "Lookout heading icon"
+    },
+    {
+      "type": "text",
+      "id": "lookout_heading",
+      "label": "Lookout heading",
+      "default": "What to Look Out For"
+    },
+    {
+      "type": "richtext",
+      "id": "lookout_description",
+      "label": "Lookout description",
+      "default": "<p>As your cat gets the taurine they need every day, here's what you may begin to notice over time.</p>"
+    },
+
+    {
+      "type": "header",
+      "content": "CTA"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "START NOW"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "image_picker",
+      "id": "guarantee_icon",
+      "label": "Guarantee icon"
+    },
+    {
+      "type": "text",
+      "id": "guarantee_text",
+      "label": "Guarantee text",
+      "default": "60-day money-back guarantee"
+    },
+
+    {
+      "type": "header",
+      "content": "Main sizing"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Max width",
+      "min": 900,
+      "max": 1500,
+      "step": 20,
+      "default": 1180
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Heading mobile",
+      "min": 26,
+      "max": 52,
+      "step": 1,
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "heading_size_desktop",
+      "label": "Heading desktop",
+      "min": 40,
+      "max": 78,
+      "step": 1,
+      "default": 58
+    },
+    {
+      "type": "range",
+      "id": "heading_gap_mobile",
+      "label": "Heading gap mobile",
+      "min": 18,
+      "max": 60,
+      "step": 2,
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "heading_gap_desktop",
+      "label": "Heading gap desktop",
+      "min": 24,
+      "max": 80,
+      "step": 2,
+      "default": 38
+    },
+
+    {
+      "type": "header",
+      "content": "Shell and boxes"
+    },
+    {
+      "type": "range",
+      "id": "shell_padding_mobile",
+      "label": "Shell padding mobile",
+      "min": 10,
+      "max": 40,
+      "step": 2,
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "shell_padding_desktop",
+      "label": "Shell padding desktop",
+      "min": 16,
+      "max": 60,
+      "step": 2,
+      "default": 22
+    },
+    {
+      "type": "range",
+      "id": "shell_radius",
+      "label": "Shell radius",
+      "min": 12,
+      "max": 42,
+      "step": 1,
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "shell_border_width",
+      "label": "Shell border width",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "box_padding_mobile",
+      "label": "Box padding mobile",
+      "min": 14,
+      "max": 44,
+      "step": 2,
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "box_padding_desktop",
+      "label": "Box padding desktop",
+      "min": 18,
+      "max": 60,
+      "step": 2,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "box_radius",
+      "label": "Box radius",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "box_border_width",
+      "label": "Box border width",
+      "min": 0,
+      "max": 3,
+      "step": 1,
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "box_gap_mobile",
+      "label": "Box gap mobile",
+      "min": 12,
+      "max": 40,
+      "step": 2,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "box_gap_desktop",
+      "label": "Box gap desktop",
+      "min": 16,
+      "max": 54,
+      "step": 2,
+      "default": 22
+    },
+    {
+      "type": "range",
+      "id": "box_heading_size_mobile",
+      "label": "Box heading mobile",
+      "min": 18,
+      "max": 32,
+      "step": 1,
+      "default": 23
+    },
+    {
+      "type": "range",
+      "id": "box_heading_size_desktop",
+      "label": "Box heading desktop",
+      "min": 20,
+      "max": 38,
+      "step": 1,
+      "default": 28
+    },
+
+    {
+      "type": "header",
+      "content": "Lookout description"
+    },
+    {
+      "type": "range",
+      "id": "lookout_description_size_mobile",
+      "label": "Description size mobile",
+      "min": 12,
+      "max": 21,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "lookout_description_size_desktop",
+      "label": "Description size desktop",
+      "min": 13,
+      "max": 23,
+      "step": 1,
+      "default": 17
+    },
+
+    {
+      "type": "header",
+      "content": "Result rows"
+    },
+    {
+      "type": "range",
+      "id": "result_padding_mobile",
+      "label": "Result padding mobile",
+      "min": 12,
+      "max": 34,
+      "step": 2,
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "result_padding_desktop",
+      "label": "Result padding desktop",
+      "min": 14,
+      "max": 42,
+      "step": 2,
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "result_gap_mobile",
+      "label": "Result gap mobile",
+      "min": 8,
+      "max": 28,
+      "step": 2,
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "result_gap_desktop",
+      "label": "Result gap desktop",
+      "min": 10,
+      "max": 34,
+      "step": 2,
+      "default": 14
+    },    {
+      "type": "range",
+      "id": "time_badge_width_mobile",
+      "label": "Time badge width mobile",
+      "min": 64,
+      "max": 120,
+      "step": 2,
+      "default": 82
+    },
+    {
+      "type": "range",
+      "id": "time_badge_width_desktop",
+      "label": "Time badge width desktop",
+      "min": 72,
+      "max": 140,
+      "step": 2,
+      "default": 92
+    },
+    {
+      "type": "range",
+      "id": "time_badge_height_mobile",
+      "label": "Time badge height mobile",
+      "min": 58,
+      "max": 110,
+      "step": 2,
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "time_badge_height_desktop",
+      "label": "Time badge height desktop",
+      "min": 64,
+      "max": 120,
+      "step": 2,
+      "default": 82
+    },
+    {
+      "type": "range",
+      "id": "time_badge_radius",
+      "label": "Time badge radius",
+      "min": 12,
+      "max": 40,
+      "step": 1,
+      "default": 22
+    },
+    {
+      "type": "range",
+      "id": "time_number_size_mobile",
+      "label": "Time number size mobile",
+      "min": 18,
+      "max": 34,
+      "step": 1,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "time_number_size_desktop",
+      "label": "Time number size desktop",
+      "min": 20,
+      "max": 38,
+      "step": 1,
+      "default": 27
+    },
+    {
+      "type": "range",
+      "id": "time_unit_size_mobile",
+      "label": "Time unit size mobile",
+      "min": 9,
+      "max": 16,
+      "step": 1,
+      "default": 11
+    },
+    {
+      "type": "range",
+      "id": "time_unit_size_desktop",
+      "label": "Time unit size desktop",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "result_text_size_mobile",
+      "label": "Result text mobile",
+      "min": 13,
+      "max": 22,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "result_text_size_desktop",
+      "label": "Result text desktop",
+      "min": 14,
+      "max": 24,
+      "step": 1,
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "source_note_size_mobile",
+      "label": "Source note mobile",
+      "min": 9,
+      "max": 16,
+      "step": 1,
+      "default": 11
+    },
+    {
+      "type": "range",
+      "id": "source_note_size_desktop",
+      "label": "Source note desktop",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "default": 12
+    },
+
+    {
+      "type": "header",
+      "content": "Outcome cards"
+    },
+    {
+      "type": "range",
+      "id": "outcome_padding_mobile",
+      "label": "Outcome padding mobile",
+      "min": 10,
+      "max": 30,
+      "step": 2,
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "outcome_padding_desktop",
+      "label": "Outcome padding desktop",
+      "min": 12,
+      "max": 36,
+      "step": 2,
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "outcome_gap_mobile",
+      "label": "Outcome gap mobile",
+      "min": 8,
+      "max": 26,
+      "step": 2,
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "outcome_gap_desktop",
+      "label": "Outcome gap desktop",
+      "min": 10,
+      "max": 30,
+      "step": 2,
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "outcome_min_height_mobile",
+      "label": "Outcome minimum height mobile",
+      "min": 90,
+      "max": 180,
+      "step": 10,
+      "default": 120
+    },
+    {
+      "type": "range",
+      "id": "outcome_min_height_desktop",
+      "label": "Outcome minimum height desktop",
+      "min": 120,
+      "max": 240,
+      "step": 10,
+      "default": 160
+    },
+    {
+      "type": "range",
+      "id": "outcome_icon_size_mobile",
+      "label": "Outcome icon mobile",
+      "min": 24,
+      "max": 58,
+      "step": 2,
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "outcome_icon_size_desktop",
+      "label": "Outcome icon desktop",
+      "min": 28,
+      "max": 68,
+      "step": 2,
+      "default": 42
+    },
+    {
+      "type": "range",
+      "id": "outcome_text_size_mobile",
+      "label": "Outcome text mobile",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "outcome_text_size_desktop",
+      "label": "Outcome text desktop",
+      "min": 13,
+      "max": 22,
+      "step": 1,
+      "default": 17
+    },
+
+    {
+      "type": "header",
+      "content": "CTA sizing"
+    },
+    {
+      "type": "range",
+      "id": "cta_gap_mobile",
+      "label": "CTA gap mobile",
+      "min": 16,
+      "max": 54,
+      "step": 2,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "cta_gap_desktop",
+      "label": "CTA gap desktop",
+      "min": 20,
+      "max": 70,
+      "step": 2,
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "button_width_mobile",
+      "label": "Button width mobile",
+      "min": 220,
+      "max": 420,
+      "step": 10,
+      "default": 330
+    },
+    {
+      "type": "range",
+      "id": "button_width_desktop",
+      "label": "Button width desktop",
+      "min": 280,
+      "max": 720,
+      "step": 10,
+      "default": 520
+    },
+    {
+      "type": "range",
+      "id": "button_height_mobile",
+      "label": "Button height mobile",
+      "min": 48,
+      "max": 80,
+      "step": 2,
+      "default": 58
+    },
+    {
+      "type": "range",
+      "id": "button_height_desktop",
+      "label": "Button height desktop",
+      "min": 52,
+      "max": 88,
+      "step": 2,
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "button_text_size_mobile",
+      "label": "Button text mobile",
+      "min": 14,
+      "max": 24,
+      "step": 1,
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "button_text_size_desktop",
+      "label": "Button text desktop",
+      "min": 16,
+      "max": 28,
+      "step": 1,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "button_border_width",
+      "label": "Button border width",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "guarantee_gap_mobile",
+      "label": "Guarantee top spacing mobile",
+      "min": 4,
+      "max": 40,
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "guarantee_gap_desktop",
+      "label": "Guarantee top spacing desktop",
+      "min": 4,
+      "max": 50,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "guarantee_size_mobile",
+      "label": "Guarantee font size mobile",
+      "min": 10,
+      "max": 22,
+      "step": 1,
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "guarantee_size_desktop",
+      "label": "Guarantee font size desktop",
+      "min": 11,
+      "max": 24,
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "guarantee_icon_size_mobile",
+      "label": "Guarantee icon size mobile",
+      "min": 12,
+      "max": 36,
+      "step": 1,
+      "default": 19
+    },
+    {
+      "type": "range",
+      "id": "guarantee_icon_size_desktop",
+      "label": "Guarantee icon size desktop",
+      "min": 14,
+      "max": 42,
+      "step": 1,
+      "default": 21
+    },
+
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Top padding mobile",
+      "min": 20,
+      "max": 140,
+      "step": 4,
+      "default": 52
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Bottom padding mobile",
+      "min": 20,
+      "max": 140,
+      "step": 4,
+      "default": 52
+    },
+    {
+      "type": "range",
+      "id": "padding_side_mobile",
+      "label": "Side padding mobile",
+      "min": 10,
+      "max": 30,
+      "step": 2,
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Top padding desktop",
+      "min": 40,
+      "max": 180,
+      "step": 4,
+      "default": 76
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Bottom padding desktop",
+      "min": 40,
+      "max": 180,
+      "step": 4,
+      "default": 76
+    },
+    {
+      "type": "range",
+      "id": "padding_side_desktop",
+      "label": "Side padding desktop",
+      "min": 20,
+      "max": 80,
+      "step": 4,
+      "default": 40
+    },
+
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "section_bg",
+      "label": "Section background",
+      "default": "#F6F7FC"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading",
+      "default": "#101010"
+    },
+    {
+      "type": "color",
+      "id": "heading_accent",
+      "label": "Heading accent",
+      "default": "#3456D1"
+    },
+    {
+      "type": "color",
+      "id": "shell_bg",
+      "label": "Shell background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "shell_border_color",
+      "label": "Shell border",
+      "default": "#D9DFF4"
+    },
+    {
+      "type": "color",
+      "id": "box_bg",
+      "label": "Box background",
+      "default": "#FBFCFF"
+    },
+    {
+      "type": "color",
+      "id": "box_border_color",
+      "label": "Box border",
+      "default": "#D9DFF4"
+    },
+    {
+      "type": "color",
+      "id": "box_heading_color",
+      "label": "Box heading",
+      "default": "#171717"
+    },
+    {
+      "type": "color",
+      "id": "lookout_description_color",
+      "label": "Lookout description",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "result_bg",
+      "label": "Result background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "percent_bg",
+      "label": "Percent background",
+      "default": "#DDE5FF"
+    },
+    {
+      "type": "color",
+      "id": "percent_color",
+      "label": "Percent text",
+      "default": "#173FAE"
+    },
+    {
+      "type": "color",
+      "id": "result_text_color",
+      "label": "Result text",
+      "default": "#222222"
+    },
+    {
+      "type": "color",
+      "id": "source_note_color",
+      "label": "Source note",
+      "default": "#697084"
+    },
+    {
+      "type": "color",
+      "id": "outcome_bg",
+      "label": "Outcome background",
+      "default": "#F7F9FF"
+    },
+    {
+      "type": "color",
+      "id": "outcome_text_color",
+      "label": "Outcome text",
+      "default": "#173FAE"
+    },
+    {
+      "type": "color",
+      "id": "inner_border_color",
+      "label": "Inner border",
+      "default": "#DCE2F5"
+    },
+    {
+      "type": "checkbox",
+      "id": "button_use_gradient",
+      "label": "Use gradient button",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "button_gradient_1",
+      "label": "Gradient color 1",
+      "default": "#3E50DC"
+    },
+    {
+      "type": "color",
+      "id": "button_gradient_2",
+      "label": "Gradient color 2",
+      "default": "#6695DE"
+    },
+    {
+      "type": "color",
+      "id": "button_bg",
+      "label": "Solid button background",
+      "default": "#3E50DC"
+    },
+    {
+      "type": "color",
+      "id": "button_border_color",
+      "label": "Button border",
+      "default": "#173FAE"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "guarantee_color",
+      "label": "Guarantee text",
+      "default": "#6A78B8"
+    },
+    {
+      "type": "text",
+      "id": "shell_shadow",
+      "label": "Shell shadow CSS",
+      "default": "0 16px 42px rgba(24, 45, 110, 0.06)"
+    },
+    {
+      "type": "text",
+      "id": "button_shadow",
+      "label": "Button shadow CSS",
+      "default": "0 10px 24px rgba(47, 126, 216, 0.24)"
+    },
+
+    {
+      "type": "header",
+      "content": "Inner shape"
+    },
+    {
+      "type": "range",
+      "id": "inner_radius",
+      "label": "Inner radius",
+      "min": 8,
+      "max": 26,
+      "step": 1,
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "inner_border_width",
+      "label": "Inner border width",
+      "min": 0,
+      "max": 3,
+      "step": 1,
+      "default": 1
+    }
+  ],
+  "blocks": [
+    {
+      "type": "result",
+      "name": "Result percentage",
+      "limit": 2,
+      "settings": [
+        {
+          "type": "text",
+          "id": "time_number",
+          "label": "Time number",
+          "default": "2–4"
+        },
+        {
+          "type": "text",
+          "id": "time_unit",
+          "label": "Time unit",
+          "default": "Weeks"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Result text",
+          "default": "More playful"
+        }
+      ]
+    },
+    {
+      "type": "outcome",
+      "name": "Outcome",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Outcome label",
+          "default": "More Everyday Energy"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Meowgical Quick Results",
+      "blocks": [
+        {
+          "type": "result",
+          "settings": {
+            "time_number": "2–4",
+            "time_unit": "Weeks",
+            "text": "More playful"
+          }
+        },
+        {
+          "type": "result",
+          "settings": {
+            "time_number": "1–3",
+            "time_unit": "Months",
+            "text": "Supports long-term heart & vision health"
+          }
+        },
+        {
+          "type": "outcome",
+          "settings": {
+            "label": "More Everyday Energy"
+          }
+        },
+        {
+          "type": "outcome",
+          "settings": {
+            "label": "More Interest in Play"
+          }
+        },
+        {
+          "type": "outcome",
+          "settings": {
+            "label": "Bright, Alert-Looking Eyes"
+          }
+        },
+        {
+          "type": "outcome",
+          "settings": {
+            "label": "Healthy Everyday Vitality"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

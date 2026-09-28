@@ -1,0 +1,385 @@
+{% comment %}
+  Meowgical — Testimonials (with Show More)
+  Combined format: stars + quote + verified badge + customer photo,
+  matching Wuffes' "Proof is in the Progress" card style. Stacks on
+  mobile, side-by-side grid on desktop. First N reviews show by
+  default; remaining reveal via optional "Show More" toggle.
+{% endcomment %}
+
+<section id="mg-testi2-{{ section.id }}" class="mg-testi2-section">
+  <div class="mgt2-wrap">
+
+    {% if section.settings.heading != blank %}
+      <h2 class="mgt2-heading">{{ section.settings.heading }}</h2>
+    {% endif %}
+
+    {% if section.settings.subheading != blank %}
+      <p class="mgt2-subheading">{{ section.settings.subheading }}</p>
+    {% endif %}
+
+    <div class="mgt2-list" data-mgt2-list style="--mgt2-columns: {{ section.settings.desktop_columns }};">
+      {% for block in section.blocks %}
+        <div
+          class="mgt2-card{% if forloop.index > section.settings.initial_visible_count %} mgt2-card--hidden{% endif %}"
+          data-mgt2-card
+          {{ block.shopify_attributes }}
+        >
+          <div class="mgt2-stars" aria-hidden="true">
+            {% for i in (1..5) %}
+              <svg viewBox="0 0 20 20" class="mgt2-star{% if i > block.settings.rating %} is-empty{% endif %}">
+                <path d="M10 1.5l2.6 5.6 6.1.7-4.5 4.2 1.2 6-5.4-3-5.4 3 1.2-6L1.3 7.8l6.1-.7z"/>
+              </svg>
+            {% endfor %}
+          </div>
+
+          {% if block.settings.title != blank %}
+            <h3 class="mgt2-title">{{ block.settings.title }}</h3>
+          {% endif %}
+
+          {% if block.settings.review_text != blank %}
+            <p class="mgt2-text">{{ block.settings.review_text }}</p>
+          {% endif %}
+
+          <div class="mgt2-author">
+            {% if block.settings.verified %}
+              <span class="mgt2-verified" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M9 12.5 11 14.5 15.5 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <circle cx="12" cy="12" r="9.5" stroke="currentColor" stroke-width="1.4"/>
+                </svg>
+              </span>
+            {% endif %}
+            <span>{{ block.settings.reviewer_name }}</span>
+          </div>
+
+          {% if block.settings.image != blank %}
+            <img
+              src="{{ block.settings.image | image_url: width: 200 }}"
+              alt=""
+              class="mgt2-photo"
+              loading="lazy"
+              width="80"
+              height="80"
+            >
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+
+    {% if section.settings.enable_show_more and section.blocks.size > section.settings.initial_visible_count %}
+      <button type="button" class="mgt2-show-more" data-mgt2-toggle>
+        {{ section.settings.show_more_text }}
+      </button>
+    {% elsif section.settings.enable_show_more %}
+      <p class="mgt2-hint">Add more than {{ section.settings.initial_visible_count }} review blocks to enable the Show More button.</p>
+    {% endif %}
+
+    {% if section.settings.button_text != blank %}
+      <div class="mgt2-cta">
+        <a href="{{ section.settings.button_link | default: '#' }}" class="mgt2-button">
+          {{ section.settings.button_text }}
+        </a>
+      </div>
+    {% endif %}
+
+  </div>
+</section>
+
+<style>
+  #mg-testi2-{{ section.id }} {
+    background: {{ section.settings.section_bg }};
+    padding: {{ section.settings.padding_top }}px 16px {{ section.settings.padding_bottom }}px;
+  }
+
+  #mg-testi2-{{ section.id }} * {
+    box-sizing: border-box;
+  }
+
+  #mg-testi2-{{ section.id }} .mgt2-wrap {
+    max-width: {{ section.settings.max_width }}px;
+    margin: 0 auto;
+    padding: 0 {{ section.settings.side_padding_mobile }}px;
+    text-align: center;
+  }
+
+  #mg-testi2-{{ section.id }} .mgt2-heading {
+    margin: 0;
+    color: {{ section.settings.heading_color }};
+    font-size: {{ section.settings.heading_size_mobile }}px;
+    line-height: 1.12;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+  }
+
+  #mg-testi2-{{ section.id }} .mgt2-subheading {
+    margin: {{ section.settings.subheading_gap }}px 0 0;
+    color: {{ section.settings.subheading_color }};
+    font-size: {{ section.settings.subheading_size_mobile }}px;
+    line-height: 1.5;
+  }
+
+  #mg-testi2-{{ section.id }} .mgt2-list {
+    display: flex;
+    flex-direction: column;
+    gap: {{ section.settings.card_gap }}px;
+    margin-top: {{ section.settings.list_gap }}px;
+  }
+
+  #mg-testi2-{{ section.id }} .mgt2-card--hidden {
+    display: none;
+  }
+
+  #mg-testi2-{{ section.id }} .mgt2-card {
+    background: {{ section.settings.card_bg }};
+    border: 1px solid {{ section.settings.border_color }};
+    border-radius: {{ section.settings.card_radius }}px;
+    padding: {{ section.settings.card_padding_mobile }}px 24px;
+  }
+
+  #mg-testi2-{{ section.id }} .mgt2-stars {
+    display: flex;
+    justify-content: center;
+    gap: 3px;
+    margin-bottom: 12px;
+  }
+
+  #mg-testi2-{{ section.id }} .mgt2-star {
+    width: {{ section.settings.star_size }}px;
+    height: {{ section.settings.star_size }}px;
+    fill: {{ section.settings.star_color }};
+  }
+
+  #mg-testi2-{{ section.id }} .mgt2-star.is-empty {
+    fill: {{ section.settings.star_empty_color }};
+  }
+
+  #mg-testi2-{{ section.id }} .mgt2-title {
+    margin: 0 0 10px;
+    color: {{ section.settings.title_color }};
+    font-size: {{ section.settings.title_size }}px;
+    font-weight: 800;
+  }
+
+  #mg-testi2-{{ section.id }} .mgt2-text {
+    margin: 0 0 16px;
+    color: {{ section.settings.text_color }};
+    font-size: {{ section.settings.review_text_size }}px;
+    line-height: 1.55;
+  }
+
+  #mg-testi2-{{ section.id }} .mgt2-author {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 18px;
+    color: {{ section.settings.author_color }};
+    font-size: 15px;
+    font-weight: 700;
+  }
+
+  #mg-testi2-{{ section.id }} .mgt2-verified {
+    display: inline-flex;
+    color: {{ section.settings.accent_color }};
+  }
+
+  #mg-testi2-{{ section.id }} .mgt2-verified svg {
+    width: 17px;
+    height: 17px;
+  }
+
+  #mg-testi2-{{ section.id }} .mgt2-photo {
+    width: {{ section.settings.photo_size }}px;
+    height: {{ section.settings.photo_size }}px;
+    border-radius: 999px;
+    object-fit: cover;
+    border: 2px solid {{ section.settings.card_bg }};
+    box-shadow: 0 0 0 1px {{ section.settings.border_color }};
+  }
+
+  #mg-testi2-{{ section.id }} .mgt2-hint {
+    margin-top: 16px;
+    color: {{ section.settings.subheading_color }};
+    font-size: 12px;
+    opacity: 0.7;
+  }
+
+  #mg-testi2-{{ section.id }} .mgt2-show-more {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 24px;
+    padding: 12px 28px;
+    border: 1.5px solid {{ section.settings.accent_color }};
+    border-radius: 999px;
+    background: transparent;
+    color: {{ section.settings.accent_color }};
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+
+  #mg-testi2-{{ section.id }} .mgt2-show-more:hover {
+    background: {{ section.settings.accent_color }};
+    color: #FFFFFF;
+  }
+
+  #mg-testi2-{{ section.id }} .mgt2-cta {
+    margin-top: 32px;
+  }
+
+  #mg-testi2-{{ section.id }} .mgt2-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 56px;
+    width: min(100%, 400px);
+    padding: 14px 32px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, {{ section.settings.button_gradient_1 }}, {{ section.settings.button_gradient_2 }});
+    border: 1px solid {{ section.settings.button_border_color }};
+    color: {{ section.settings.button_text_color }};
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    box-shadow: 0 10px 24px rgba(47, 126, 216, 0.24);
+    transition: transform 0.2s ease;
+  }
+
+  #mg-testi2-{{ section.id }} .mgt2-button:hover {
+    transform: translateY(-1px);
+  }
+
+  @media screen and (min-width: 750px) {
+    #mg-testi2-{{ section.id }} .mgt2-wrap {
+      max-width: {{ section.settings.desktop_max_width }}px;
+      padding: 0 {{ section.settings.side_padding_desktop }}px;
+    }
+
+    #mg-testi2-{{ section.id }} .mgt2-heading {
+      font-size: {{ section.settings.heading_size_desktop }}px;
+    }
+
+    #mg-testi2-{{ section.id }} .mgt2-subheading {
+      font-size: {{ section.settings.subheading_size_desktop }}px;
+    }
+
+    #mg-testi2-{{ section.id }} .mgt2-list {
+      display: grid;
+      grid-template-columns: repeat(var(--mgt2-columns), minmax(0, 1fr));
+      align-items: stretch;
+    }
+
+    #mg-testi2-{{ section.id }} .mgt2-card {
+      padding: {{ section.settings.card_padding_desktop }}px 32px;
+      display: flex;
+      flex-direction: column;
+    }
+  }
+</style>
+
+<script>
+  (() => {
+    const root = document.getElementById('mg-testi2-{{ section.id }}');
+    if (!root) return;
+
+    const toggle = root.querySelector('[data-mgt2-toggle]');
+    const list = root.querySelector('[data-mgt2-list]');
+    if (!toggle || !list) return;
+
+    let expanded = false;
+
+    toggle.addEventListener('click', () => {
+      expanded = !expanded;
+      const hiddenCards = list.querySelectorAll('.mgt2-card--hidden');
+      hiddenCards.forEach((card) => {
+        card.style.display = expanded ? '' : 'none';
+      });
+      toggle.textContent = expanded
+        ? {{ section.settings.show_less_text | json }}
+        : {{ section.settings.show_more_text | json }};
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Testimonials Extended",
+  "settings": [
+    { "type": "header", "content": "Heading" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "The Proof Is in the Purr" },
+    { "type": "text", "id": "subheading", "label": "Subheading", "default": "Trusted by thousands of cat parents just like you." },
+    { "type": "range", "id": "subheading_gap", "label": "Space between heading and subheading", "min": 4, "max": 30, "step": 1, "default": 10 },
+    { "type": "header", "content": "Typography" },
+    { "type": "range", "id": "heading_size_mobile", "label": "Heading size mobile", "min": 20, "max": 44, "step": 1, "default": 28 },
+    { "type": "range", "id": "heading_size_desktop", "label": "Heading size desktop", "min": 24, "max": 54, "step": 1, "default": 38 },
+    { "type": "range", "id": "subheading_size_mobile", "label": "Subheading size mobile", "min": 12, "max": 22, "step": 1, "default": 15 },
+    { "type": "range", "id": "subheading_size_desktop", "label": "Subheading size desktop", "min": 13, "max": 24, "step": 1, "default": 16 },
+    { "type": "range", "id": "title_size", "label": "Review title size", "min": 14, "max": 26, "step": 1, "default": 19 },
+    { "type": "range", "id": "review_text_size", "label": "Review text size", "min": 13, "max": 22, "step": 1, "default": 16 },
+    { "type": "range", "id": "star_size", "label": "Star size", "min": 14, "max": 28, "step": 1, "default": 20 },
+    { "type": "range", "id": "photo_size", "label": "Customer photo size", "min": 48, "max": 120, "step": 4, "default": 72 },
+    { "type": "header", "content": "Layout & Spacing" },
+    { "type": "range", "id": "max_width", "label": "Max width mobile", "min": 480, "max": 900, "step": 20, "default": 640 },
+    { "type": "range", "id": "desktop_max_width", "label": "Max width desktop", "min": 800, "max": 1400, "step": 20, "default": 1180 },
+    { "type": "range", "id": "desktop_columns", "label": "Desktop columns", "min": 2, "max": 4, "step": 1, "default": 3 },
+    { "type": "range", "id": "side_padding_mobile", "label": "Side padding mobile", "min": 8, "max": 40, "step": 2, "default": 20 },
+    { "type": "range", "id": "side_padding_desktop", "label": "Side padding desktop", "min": 0, "max": 60, "step": 4, "default": 0 },
+    { "type": "range", "id": "list_gap", "label": "Space above review list", "min": 16, "max": 60, "step": 2, "default": 32 },
+    { "type": "range", "id": "card_gap", "label": "Gap between cards", "min": 8, "max": 40, "step": 2, "default": 20 },
+    { "type": "range", "id": "card_radius", "label": "Card radius", "min": 0, "max": 36, "step": 2, "default": 18 },
+    { "type": "range", "id": "card_padding_mobile", "label": "Card padding mobile", "min": 16, "max": 44, "step": 2, "default": 28 },
+    { "type": "range", "id": "card_padding_desktop", "label": "Card padding desktop", "min": 20, "max": 56, "step": 2, "default": 32 },
+    { "type": "header", "content": "Show More" },
+    { "type": "range", "id": "initial_visible_count", "label": "Reviews visible before Show More", "min": 1, "max": 10, "step": 1, "default": 3 },
+    { "type": "checkbox", "id": "enable_show_more", "label": "Enable Show More button", "default": true },
+    { "type": "text", "id": "show_more_text", "label": "Show More button text", "default": "SHOW MORE" },
+    { "type": "text", "id": "show_less_text", "label": "Show Less button text (after expanded)", "default": "SHOW LESS" },
+    { "type": "header", "content": "CTA" },
+    { "type": "text", "id": "button_text", "label": "Button text", "default": "BUY NOW" },
+    { "type": "url", "id": "button_link", "label": "Button link" },
+    { "type": "color", "id": "button_gradient_1", "label": "Button gradient 1", "default": "#2748DC" },
+    { "type": "color", "id": "button_gradient_2", "label": "Button gradient 2", "default": "#6695DE" },
+    { "type": "color", "id": "button_border_color", "label": "Button border", "default": "#173FAE" },
+    { "type": "color", "id": "button_text_color", "label": "Button text color", "default": "#FFFFFF" },
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "section_bg", "label": "Section background", "default": "#F2F6FF" },
+    { "type": "color", "id": "heading_color", "label": "Heading", "default": "#111111" },
+    { "type": "color", "id": "subheading_color", "label": "Subheading", "default": "#4A4A4A" },
+    { "type": "color", "id": "card_bg", "label": "Card background", "default": "#FFFFFF" },
+    { "type": "color", "id": "border_color", "label": "Card border", "default": "#D9DFF4" },
+    { "type": "color", "id": "title_color", "label": "Review title", "default": "#111111" },
+    { "type": "color", "id": "text_color", "label": "Review text", "default": "#4A4A4A" },
+    { "type": "color", "id": "author_color", "label": "Author name", "default": "#111111" },
+    { "type": "color", "id": "star_color", "label": "Filled star", "default": "#2748DC" },
+    { "type": "color", "id": "star_empty_color", "label": "Empty star", "default": "#D9DFF4" },
+    { "type": "color", "id": "accent_color", "label": "Accent (verified, show more)", "default": "#2748DC" },
+    { "type": "header", "content": "Section Spacing" },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 20, "max": 140, "step": 4, "default": 64 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 20, "max": 140, "step": 4, "default": 64 }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        { "type": "range", "id": "rating", "label": "Star rating", "min": 1, "max": 5, "step": 1, "default": 5 },
+        { "type": "text", "id": "title", "label": "Review title", "default": "Amazing Product" },
+        { "type": "textarea", "id": "review_text", "label": "Review text", "default": "My cat is doing so much better since starting SuperTaurine." },
+        { "type": "text", "id": "reviewer_name", "label": "Reviewer name", "default": "Jamie T." },
+        { "type": "checkbox", "id": "verified", "label": "Show verified badge", "default": true },
+        { "type": "image_picker", "id": "image", "label": "Customer/cat photo" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonials Extended",
+      "blocks": [{ "type": "review" }, { "type": "review" }, { "type": "review" }, { "type": "review" }, { "type": "review" }]
+    }
+  ]
+}
+{% endschema %}

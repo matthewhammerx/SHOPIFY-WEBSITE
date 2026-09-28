@@ -1,0 +1,222 @@
+{% liquid
+  assign meow_has_qualifying_sub = false
+  for item in cart.items
+    if item.selling_plan_allocation != null and item.final_price > 0
+      assign meow_has_qualifying_sub = true
+      break
+    endif
+  endfor
+
+  assign meow_enabled = true
+  if block.settings.enable_block == false
+    assign meow_enabled = false
+  endif
+
+  assign meow_show = false
+  if meow_enabled
+    if cart != empty
+      assign meow_show = true
+    elsif block.settings.hide_when_empty == false
+      assign meow_show = true
+    endif
+  endif
+%}
+
+{%- if meow_show -%}
+  {% liquid
+    assign meow_currency = cart.currency.iso_code
+    assign meow_threshold_dollars = block.settings.fallback_threshold | default: 75
+    if meow_currency == 'USD'
+      assign meow_threshold_dollars = block.settings.usd_threshold | default: 75
+    elsif meow_currency == 'CAD'
+      assign meow_threshold_dollars = block.settings.cad_threshold | default: 100
+    endif
+    assign meow_threshold_cents = meow_threshold_dollars | times: 100
+
+    assign meow_reached = false
+    assign meow_progress = 0
+
+    if meow_has_qualifying_sub
+      assign meow_reached = true
+      assign meow_progress = 100
+    else
+      if meow_threshold_cents > 0
+        assign meow_progress = cart.items_subtotal_price | times: 100.0 | divided_by: meow_threshold_cents
+      endif
+      if meow_progress >= 100
+        assign meow_reached = true
+        assign meow_progress = 100
+      endif
+    endif
+    assign meow_progress = meow_progress | at_least: 0 | at_most: 100
+
+    assign meow_remaining_cents = meow_threshold_cents | minus: cart.items_subtotal_price
+    if meow_remaining_cents < 0
+      assign meow_remaining_cents = 0
+    endif
+  %}
+  {%- capture meow_remaining_money -%}{{ meow_remaining_cents | money_without_trailing_zeros }}{%- endcapture -%}
+
+  {%- if meow_reached -%}
+    {%- assign meow_highlight_text = block.settings.reached_highlight_text -%}
+    {%- if meow_highlight_text == blank -%}{%- assign meow_highlight_text = 'FREE SHIPPING!' -%}{%- endif -%}
+    {%- capture meow_highlight_html -%}<span class="meow-free-shipping__highlight">{{ meow_highlight_text }}</span>{%- endcapture -%}
+    {%- assign meow_message_template = block.settings.success_message -%}
+    {%- if meow_message_template == blank -%}{%- assign meow_message_template = "Congrats! You've unlocked [highlight]!" -%}{%- endif -%}
+    {%- assign meow_message = meow_message_template | replace: '[highlight]', meow_highlight_html -%}
+  {%- else -%}
+    {%- assign meow_highlight_text = block.settings.progress_highlight_text -%}
+    {%- if meow_highlight_text == blank -%}{%- assign meow_highlight_text = 'FREE SHIPPING!' -%}{%- endif -%}
+    {%- capture meow_highlight_html -%}<span class="meow-free-shipping__highlight">{{ meow_highlight_text }}</span>{%- endcapture -%}
+    {%- capture meow_amount_html -%}<span class="meow-free-shipping__amount">{{ meow_remaining_money }}</span>{%- endcapture -%}
+    {%- assign meow_message_template = block.settings.progress_message -%}
+    {%- if meow_message_template == blank -%}{%- assign meow_message_template = "You're [amount] away from [highlight]!" -%}{%- endif -%}
+    {%- assign meow_message = meow_message_template | replace: '[amount]', meow_amount_html | replace: '[highlight]', meow_highlight_html -%}
+  {%- endif -%}
+
+  {% liquid
+    if meow_reached
+      assign meow_gradient_enabled = block.settings.reached_enable_gradient
+      assign meow_gradient_start = block.settings.reached_gradient_start
+      assign meow_gradient_end = block.settings.reached_gradient_end
+      assign meow_gradient_angle = block.settings.reached_gradient_angle
+      assign meow_flat_fill = block.settings.reached_fill_color
+    else
+      assign meow_gradient_enabled = block.settings.not_reached_enable_gradient
+      assign meow_gradient_start = block.settings.not_reached_gradient_start
+      assign meow_gradient_end = block.settings.not_reached_gradient_end
+      assign meow_gradient_angle = block.settings.not_reached_gradient_angle
+      assign meow_flat_fill = block.settings.not_reached_fill_color
+    endif
+
+    if meow_gradient_start == blank
+      assign meow_gradient_start = '#2E8B57'
+    endif
+    if meow_gradient_end == blank
+      assign meow_gradient_end = '#1F7A3F'
+    endif
+    if meow_gradient_angle == blank
+      assign meow_gradient_angle = 90
+    endif
+    if meow_flat_fill == blank
+      assign meow_flat_fill = '#1F7A3F'
+    endif
+  %}
+
+  <style>
+    .meow-free-shipping {
+      display: block;
+      box-sizing: border-box;
+      width: calc(100% + 3rem);
+      margin-left: -1.5rem;
+      margin-right: -1.5rem;
+      padding-top: var(--meow-padding-top, 14px);
+      padding-bottom: var(--meow-padding-bottom, 14px);
+      background: var(--meow-bg, #F5F5F5);
+      color: var(--meow-text, #333333);
+      text-align: center;
+    }
+    .meow-free-shipping__inner {
+      box-sizing: border-box;
+      padding-left: var(--meow-inner-padding, 16px);
+      padding-right: var(--meow-inner-padding, 16px);
+    }
+    .meow-free-shipping__text {
+      margin: 0 0 8px;
+      font-size: var(--meow-message-size, 13px);
+      line-height: 1.3;
+      color: var(--meow-text, #333333);
+    }
+    .meow-free-shipping__amount {
+      color: var(--meow-amount-color, #DD1D1D);
+      font-weight: var(--meow-amount-weight, 700);
+    }
+    .meow-free-shipping__highlight {
+      color: var(--meow-highlight-color, #1F7A3F);
+      font-weight: var(--meow-highlight-weight, 700);
+    }
+  </style>
+  <div
+    class="meow-free-shipping{% if meow_reached %} meow-free-shipping--reached{% endif %}"
+    style="
+      --meow-padding-top: {{ block.settings.section_padding_top | default: 14 }}px;
+      --meow-padding-bottom: {{ block.settings.section_padding_bottom | default: 14 }}px;
+      --meow-bar-height: {{ block.settings.bar_height | default: 8 }}px;
+      --meow-bar-radius: {{ block.settings.bar_border_radius | default: 40 }}px;
+      --meow-message-size: {{ block.settings.message_font_size | default: 13 }}px;
+      --meow-inner-padding: {{ block.settings.inner_horizontal_padding | default: 16 }}px;
+      --meow-animation-duration: {{ block.settings.animation_duration | default: 400 }}ms;
+      {%- if meow_reached -%}
+        --meow-bg: {{ block.settings.reached_bg_color | default: '#EAF5EC' }};
+        --meow-text: {{ block.settings.reached_text_color | default: '#1F7A3F' }};
+        --meow-highlight-color: {{ block.settings.reached_highlight_color | default: '#1F7A3F' }};
+        --meow-highlight-weight: {{ block.settings.reached_highlight_weight | default: 700 }};
+      {%- else -%}
+        --meow-bg: {{ block.settings.not_reached_bg_color | default: '#F5F5F5' }};
+        --meow-text: {{ block.settings.not_reached_text_color | default: '#333333' }};
+        --meow-amount-color: {{ block.settings.not_reached_amount_color | default: '#DD1D1D' }};
+        --meow-amount-weight: {{ block.settings.not_reached_amount_weight | default: 700 }};
+        --meow-highlight-color: {{ block.settings.not_reached_highlight_color | default: '#1F7A3F' }};
+        --meow-highlight-weight: {{ block.settings.not_reached_highlight_weight | default: 700 }};
+      {%- endif -%}
+    "
+    {{ block.shopify_attributes }}
+  >
+    <div class="meow-free-shipping__inner">
+      <p class="meow-free-shipping__text">{{ meow_message }}</p>
+      <div
+        data-progress="{{ meow_progress }}"
+        style="
+          display: block !important;
+          width: 100% !important;
+          height: {{ block.settings.bar_height | default: 8 }}px !important;
+          min-height: {{ block.settings.bar_height | default: 8 }}px !important;
+          margin-top: 8px !important;
+          {% if meow_gradient_enabled %}
+            background: linear-gradient(
+              {{ meow_gradient_angle }}deg,
+              {{ meow_gradient_start }} 0%,
+              {{ meow_gradient_end }} {{ meow_progress }}%,
+              {% if meow_reached %}
+                {{ block.settings.reached_track_color | default: '#D6EAD9' }}
+              {% else %}
+                {{ block.settings.not_reached_track_color | default: '#E5E5E5' }}
+              {% endif %}
+              {{ meow_progress }}%,
+              {% if meow_reached %}
+                {{ block.settings.reached_track_color | default: '#D6EAD9' }}
+              {% else %}
+                {{ block.settings.not_reached_track_color | default: '#E5E5E5' }}
+              {% endif %}
+              100%
+            ) !important;
+          {% else %}
+            background: linear-gradient(
+              90deg,
+              {{ meow_flat_fill }} 0%,
+              {{ meow_flat_fill }} {{ meow_progress }}%,
+              {% if meow_reached %}
+                {{ block.settings.reached_track_color | default: '#D6EAD9' }}
+              {% else %}
+                {{ block.settings.not_reached_track_color | default: '#E5E5E5' }}
+              {% endif %}
+              {{ meow_progress }}%,
+              {% if meow_reached %}
+                {{ block.settings.reached_track_color | default: '#D6EAD9' }}
+              {% else %}
+                {{ block.settings.not_reached_track_color | default: '#E5E5E5' }}
+              {% endif %}
+              100%
+            ) !important;
+          {% endif %}
+          border-radius: {{ block.settings.bar_border_radius | default: 40 }}px !important;
+          opacity: 1 !important;
+          visibility: visible !important;
+          position: relative !important;
+          z-index: 10 !important;
+          box-sizing: border-box !important;
+        "
+      ></div>
+    </div>
+  </div>
+{%- endif -%}

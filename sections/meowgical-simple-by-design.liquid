@@ -1,0 +1,228 @@
+{% comment %}
+  Meowgical — Simple by Design
+  Split out from the combined "Edu + Trust" section so it can be
+  independently reordered/enabled separately from "Peace of Mind".
+{% endcomment %}
+
+<section id="mg-simple-{{ section.id }}" class="mg-simple-section">
+  <div class="mg-simple__inner">
+    <div class="mg-simple__card">
+
+      <div class="mg-simple__copy">
+        {% if section.settings.eyebrow != blank %}
+          <div class="mg-simple__eyebrow">{{ section.settings.eyebrow }}</div>
+        {% endif %}
+
+        <h2 class="mg-simple__headline">
+          {{ section.settings.heading_before }}
+          {% if section.settings.heading_highlight != blank %}
+            <span>{{ section.settings.heading_highlight }}</span>
+          {% endif %}
+        </h2>
+
+        <div class="mg-simple__body rte">
+          {{ section.settings.body_copy }}
+        </div>
+      </div>
+
+      <div class="mg-simple__media">
+        {% if section.settings.image != blank %}
+          {{
+            section.settings.image
+            | image_url: width: 1400
+            | image_tag:
+              class: 'mg-simple__image',
+              loading: 'lazy',
+              widths: '480, 720, 960, 1200, 1400',
+              sizes: '(min-width: 990px) 50vw, calc(100vw - 32px)',
+              alt: section.settings.image_alt
+          }}
+        {% else %}
+          <div class="mg-simple__placeholder">
+            Add your product or lifestyle image
+          </div>
+        {% endif %}
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  #mg-simple-{{ section.id }} {
+    --mg-bg: {{ section.settings.background_color }};
+    --mg-card: {{ section.settings.card_color }};
+    --mg-blue: {{ section.settings.primary_blue }};
+    --mg-blue-soft: {{ section.settings.soft_blue }};
+    --mg-heading: {{ section.settings.heading_color }};
+    --mg-text: {{ section.settings.text_color }};
+    --mg-border: {{ section.settings.border_color }};
+    background: var(--mg-bg);
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+  }
+
+  #mg-simple-{{ section.id }} * {
+    box-sizing: border-box;
+  }
+
+  #mg-simple-{{ section.id }} .mg-simple__inner {
+    width: min(1180px, calc(100% - 32px));
+    margin: 0 auto;
+  }
+
+  #mg-simple-{{ section.id }} .mg-simple__card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: stretch;
+    overflow: hidden;
+    border: 1px solid var(--mg-border);
+    border-radius: 28px;
+    background: var(--mg-card);
+    box-shadow: 0 18px 50px rgba(35, 72, 160, .08);
+  }
+
+  #mg-simple-{{ section.id }} .mg-simple__copy {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: clamp(34px, 5vw, 64px);
+  }
+
+  #mg-simple-{{ section.id }} .mg-simple__eyebrow {
+    align-self: flex-start;
+    padding: 9px 14px;
+    border-radius: 999px;
+    background: var(--mg-blue-soft);
+    color: var(--mg-blue);
+    font-size: 12px;
+    line-height: 1;
+    font-weight: 800;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+
+  #mg-simple-{{ section.id }} .mg-simple__headline {
+    margin: 18px 0 0;
+    color: var(--mg-heading);
+    font-size: clamp(34px, 4.3vw, 54px);
+    line-height: 1.06;
+    letter-spacing: -.035em;
+    font-weight: 800;
+  }
+
+  #mg-simple-{{ section.id }} .mg-simple__headline span {
+    color: var(--mg-blue);
+  }
+
+  #mg-simple-{{ section.id }} .mg-simple__body {
+    margin-top: 24px;
+    color: var(--mg-text);
+    font-size: 17px;
+    line-height: 1.72;
+  }
+
+  #mg-simple-{{ section.id }} .mg-simple__body p {
+    margin: 0 0 16px;
+  }
+
+  #mg-simple-{{ section.id }} .mg-simple__body p:last-child {
+    margin-bottom: 0;
+  }
+
+  #mg-simple-{{ section.id }} .mg-simple__body strong {
+    color: var(--mg-heading);
+  }
+
+  #mg-simple-{{ section.id }} .mg-simple__media {
+    min-height: 100%;
+  }
+
+  #mg-simple-{{ section.id }} .mg-simple__image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 560px;
+    object-fit: cover;
+  }
+
+  #mg-simple-{{ section.id }} .mg-simple__placeholder {
+    display: grid;
+    place-items: center;
+    min-height: 560px;
+    padding: 30px;
+    background: var(--mg-blue-soft);
+    color: var(--mg-blue);
+    font-weight: 700;
+    text-align: center;
+  }
+
+  @media (max-width: 989px) {
+    #mg-simple-{{ section.id }} .mg-simple__card {
+      grid-template-columns: 1fr;
+    }
+
+    #mg-simple-{{ section.id }} .mg-simple__media {
+      order: -1;
+    }
+
+    #mg-simple-{{ section.id }} .mg-simple__image,
+    #mg-simple-{{ section.id }} .mg-simple__placeholder {
+      min-height: 420px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    #mg-simple-{{ section.id }} {
+      padding-top: {{ section.settings.mobile_padding_top }}px;
+      padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
+    }
+
+    #mg-simple-{{ section.id }} .mg-simple__inner {
+      width: min(100% - 20px, 1180px);
+    }
+
+    #mg-simple-{{ section.id }} .mg-simple__card {
+      border-radius: 20px;
+    }
+
+    #mg-simple-{{ section.id }} .mg-simple__copy {
+      padding: 28px 22px 30px;
+    }
+
+    #mg-simple-{{ section.id }} .mg-simple__image,
+    #mg-simple-{{ section.id }} .mg-simple__placeholder {
+      min-height: 330px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Simple by Design",
+  "tag": "section",
+  "class": "section-meowgical-simple-by-design",
+  "settings": [
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "SIMPLE BY DESIGN" },
+    { "type": "text", "id": "heading_before", "label": "Heading", "default": "You watch your cat every day." },
+    { "type": "text", "id": "heading_highlight", "label": "Highlighted text", "default": "This is the one thing you still can't see." },
+    { "type": "richtext", "id": "body_copy", "label": "Body copy", "default": "<p>Taurine can't be produced by your cat's body — which means every meal either closes that gap, or leaves it open.</p><p>Even with a great diet, real feeding isn't perfectly consistent: bowls left half-finished, flavors switched up, treats mixed in. None of that means you've done anything wrong — it just means this one thing is impossible to confirm just by watching them, no matter how closely you look.</p><p><strong>A daily scoop of SuperTaurine closes that gap:</strong> pure, tested taurine, mixed into the food they already love.</p><p><strong>One scoop. One less thing to wonder about.</strong></p>" },
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "image_alt", "label": "Image alt text", "default": "Cat parent caring for their cat" },
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "background_color", "label": "Section background", "default": "#FFFFFF" },
+    { "type": "color", "id": "card_color", "label": "Card background", "default": "#FFFFFF" },
+    { "type": "color", "id": "soft_blue", "label": "Soft blue", "default": "#EEF5FF" },
+    { "type": "color", "id": "primary_blue", "label": "Primary blue", "default": "#4C90F2" },
+    { "type": "color", "id": "heading_color", "label": "Heading color", "default": "#1F1F1F" },
+    { "type": "color", "id": "text_color", "label": "Text color", "default": "#4A4A4A" },
+    { "type": "color", "id": "border_color", "label": "Border color", "default": "#E6E9EF" },
+    { "type": "header", "content": "Spacing" },
+    { "type": "range", "id": "padding_top", "label": "Desktop top padding", "min": 20, "max": 120, "step": 4, "unit": "px", "default": 64 },
+    { "type": "range", "id": "padding_bottom", "label": "Desktop bottom padding", "min": 20, "max": 120, "step": 4, "unit": "px", "default": 64 },
+    { "type": "range", "id": "mobile_padding_top", "label": "Mobile top padding", "min": 16, "max": 80, "step": 4, "unit": "px", "default": 36 },
+    { "type": "range", "id": "mobile_padding_bottom", "label": "Mobile bottom padding", "min": 16, "max": 80, "step": 4, "unit": "px", "default": 36 }
+  ],
+  "presets": [{ "name": "Simple by Design" }]
+}
+{% endschema %}

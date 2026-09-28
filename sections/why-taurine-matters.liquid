@@ -1,0 +1,1214 @@
+{% comment %}
+  Meowgical — Why Taurine Matters + Interactive Benefits
+{% endcomment %}
+
+<section
+  id="why-taurine-{{ section.id }}"
+  class="why-taurine"
+  style="
+    --wt-bg: {{ section.settings.background_color }};
+    --wt-panel-bg: {{ section.settings.panel_background }};
+    --wt-blue: {{ section.settings.accent_color }};
+    --wt-text: {{ section.settings.text_color }};
+    --wt-muted: {{ section.settings.muted_text_color }};
+    --wt-border: {{ section.settings.border_color }};
+    --wt-radius: {{ section.settings.media_radius }}px;
+    --wt-section-pad-top: {{ section.settings.padding_top }}px;
+    --wt-section-pad-bottom: {{ section.settings.padding_bottom }}px;
+  "
+>
+  <div class="why-taurine__inner page-width">
+    {% if section.settings.eyebrow != blank %}
+      <div class="why-taurine__eyebrow">{{ section.settings.eyebrow }}</div>
+    {% endif %}
+
+    <div class="why-taurine__heading-wrap">
+      {% if section.settings.kicker != blank %}
+        <p class="why-taurine__kicker{% if section.settings.kicker_uppercase %} is-uppercase{% endif %}">
+          {{ section.settings.kicker }}
+        </p>
+      {% endif %}
+
+      {% if section.settings.heading != blank %}
+        <h2 class="why-taurine__heading{% if section.settings.heading_uppercase %} is-uppercase{% endif %}">
+          {{ section.settings.heading }}
+        </h2>
+      {% endif %}
+
+      {% if section.settings.subheading != blank %}
+        <h3 class="why-taurine__subheading">{{ section.settings.subheading }}</h3>
+      {% endif %}
+
+      {% if section.settings.body_top != blank %}
+        <div class="why-taurine__intro rte">{{ section.settings.body_top }}</div>
+      {% endif %}
+
+      {% if section.settings.body_bottom != blank %}
+        <div class="why-taurine__intro why-taurine__intro--secondary rte">
+          {{ section.settings.body_bottom }}
+        </div>
+      {% endif %}
+    </div>
+
+    {% if section.blocks.size > 0 %}
+      <div class="why-taurine__interactive" data-wt-tabs>
+        <div class="why-taurine__media-stage">
+          {% for block in section.blocks %}
+            <div
+              class="why-taurine__media-panel{% if forloop.first %} is-active{% endif %}"
+              data-wt-media="{{ forloop.index0 }}"
+              {% unless forloop.first %}hidden{% endunless %}
+              {{ block.shopify_attributes }}
+            >
+              {% if block.settings.media_type == 'video' and block.settings.video != blank %}
+                {{
+                  block.settings.video
+                  | video_tag:
+                    class: 'why-taurine__video',
+                    autoplay: true,
+                    loop: true,
+                    muted: true,
+                    controls: false,
+                    playsinline: true,
+                    preload: 'metadata',
+                    image_size: '900x'
+                }}
+              {% elsif block.settings.image != blank %}
+                {{
+                  block.settings.image
+                  | image_url: width: 1200
+                  | image_tag:
+                    class: 'why-taurine__image',
+                    loading: 'lazy',
+                    widths: '360, 540, 720, 900, 1200',
+                    sizes: '(min-width: 990px) 560px, 92vw',
+                    alt: block.settings.image_alt
+                }}
+              {% else %}
+                <div class="why-taurine__placeholder">
+                  {{ 'image' | placeholder_svg_tag: 'why-taurine__placeholder-svg' }}
+                </div>
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+
+        <div class="why-taurine__tabs" role="tablist" aria-label="{{ section.settings.tabs_accessibility_label | escape }}">
+          {% for block in section.blocks %}
+            <button
+              type="button"
+              class="why-taurine__tab{% if forloop.first %} is-active{% endif %}"
+              role="tab"
+              aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+              aria-controls="wt-content-{{ section.id }}-{{ forloop.index0 }}"
+              data-wt-tab="{{ forloop.index0 }}"
+            >
+              <span class="why-taurine__tab-icon" aria-hidden="true">
+                {% case block.settings.icon %}
+                  {% when 'heart' %}
+                    <svg viewBox="0 0 24 24" fill="none">
+                      <path d="M12 21s-8-4.8-8-11.2A4.8 4.8 0 0 1 12 6.2a4.8 4.8 0 0 1 8 3.6C20 16.2 12 21 12 21Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+                      <path d="M6.8 12h3l1.3-2.6 1.8 5.2 1.4-2.6h2.9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  {% when 'vision' %}
+                    <svg viewBox="0 0 24 24" fill="none">
+                      <path d="M2.5 12s3.5-5.5 9.5-5.5 9.5 5.5 9.5 5.5-3.5 5.5-9.5 5.5S2.5 12 2.5 12Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+                      <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.8"/>
+                    </svg>
+                  {% when 'brain' %}
+                    <svg viewBox="0 0 24 24" fill="none">
+                      <path d="M9.2 4.3A3.1 3.1 0 0 0 4.7 7a3 3 0 0 0 .3 1.3A3.7 3.7 0 0 0 5.8 15a3.2 3.2 0 0 0 3.4 4.7V4.3Zm5.6 0A3.1 3.1 0 0 1 19.3 7a3 3 0 0 1-.3 1.3 3.7 3.7 0 0 1-.8 6.7 3.2 3.2 0 0 1-3.4 4.7V4.3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+                      <path d="M9.2 9.2H7.5M14.8 9.2h1.7M9.2 14.8H7.8M14.8 14.8h1.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                    </svg>
+                  {% when 'digestion' %}
+                    <svg viewBox="0 0 24 24" fill="none">
+                      <path d="M7.2 7.2 5.3 4.4 8.6 5.6M16.8 7.2l1.9-2.8-3.3 1.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path d="M6.8 8.2A6.9 6.9 0 0 0 5 12.9c0 4.1 3.1 7.1 7 7.1s7-3 7-7.1a6.9 6.9 0 0 0-1.8-4.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                      <path d="M9.1 11.1c.7-.8 1.5-1.2 2.5-1.2 1.7 0 3 1.1 3 2.6 0 1.1-.7 1.8-1.7 2.3-.8.4-1.2.9-1.2 1.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path d="M9 16.6h.01" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+                    </svg>
+                  {% when 'liver' %}
+                    <svg viewBox="0 0 24 24" fill="none">
+                      <path d="M4 11.2c0-3.7 3-6.7 6.7-6.7h1.1c2.5 0 4.8.9 6.6 2.5l1.1 1c.8.7.7 2-.2 2.6-1.5 1-3.4 1.5-5.2 1.5h-1.3c-1.5 0-2.8 1.2-2.8 2.8v1.4c0 1.8-1.4 3.2-3.2 3.2H6.1A2.1 2.1 0 0 1 4 17.4v-6.2Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+                      <path d="M13.8 12.1c0 2.2 1.1 3.7 3.2 4.6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                    </svg>
+                  {% else %}
+                    <svg viewBox="0 0 24 24" fill="none">
+                      <path d="M7.2 7.2 5.3 4.4 8.6 5.6M16.8 7.2l1.9-2.8-3.3 1.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path d="M6.8 8.2A6.9 6.9 0 0 0 5 12.9c0 4.1 3.1 7.1 7 7.1s7-3 7-7.1a6.9 6.9 0 0 0-1.8-4.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                      <path d="M9.1 11.1c.7-.8 1.5-1.2 2.5-1.2 1.7 0 3 1.1 3 2.6 0 1.1-.7 1.8-1.7 2.3-.8.4-1.2.9-1.2 1.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                {% endcase %}
+              </span>
+
+              <span>{{ block.settings.tab_label }}</span>
+            </button>
+          {% endfor %}
+        </div>
+
+        <div class="why-taurine__content-stage">
+          {% for block in section.blocks %}
+            <div
+              id="wt-content-{{ section.id }}-{{ forloop.index0 }}"
+              class="why-taurine__content{% if forloop.first %} is-active{% endif %}"
+              role="tabpanel"
+              data-wt-content="{{ forloop.index0 }}"
+              {% unless forloop.first %}hidden{% endunless %}
+            >
+              {% if block.settings.content_heading != blank %}
+                <h3 class="why-taurine__content-title">{{ block.settings.content_heading }}</h3>
+              {% endif %}
+
+              {% if block.settings.content_text != blank %}
+                <div class="why-taurine__content-copy rte">{{ block.settings.content_text }}</div>
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+
+    {% comment %} ===== BOTTOM CTA START ===== {% endcomment %}
+    {% if section.settings.button_text != blank %}
+      <div class="why-taurine__cta-wrap">
+        <a href="{{ section.settings.button_link | default: '#product-form' }}" class="why-taurine__cta">
+          {{ section.settings.button_text }}
+        </a>
+
+        {% if section.settings.guarantee_text != blank %}
+          <div class="why-taurine__guarantee">
+            {% if section.settings.guarantee_icon != blank %}
+              <img
+                src="{{ section.settings.guarantee_icon | image_url: width: 80 }}"
+                alt=""
+                class="why-taurine__guarantee-icon"
+                loading="lazy"
+                width="24"
+                height="24"
+              >
+            {% endif %}
+            <span>{{ section.settings.guarantee_text }}</span>
+          </div>
+        {% endif %}
+      </div>
+    {% endif %}
+    {% comment %} ===== BOTTOM CTA END ===== {% endcomment %}
+  </div>
+</section>
+
+<style>
+  #why-taurine-{{ section.id }} {
+    background:
+      radial-gradient(circle at 88% 18%, rgba(58,104,255,.08), transparent 22rem),
+      radial-gradient(circle at 8% 72%, rgba(58,104,255,.05), transparent 18rem),
+      var(--wt-bg);
+    padding-top: var(--wt-section-pad-top);
+    padding-bottom: var(--wt-section-pad-bottom);
+    color: var(--wt-text);
+    overflow: hidden;
+  }
+
+  #why-taurine-{{ section.id }} * {
+    box-sizing: border-box;
+  }
+
+  #why-taurine-{{ section.id }} .why-taurine__inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  #why-taurine-{{ section.id }} .why-taurine__heading-wrap {
+    max-width: 940px;
+    margin: 0 auto {{ section.settings.intro_bottom_spacing }}px;
+    text-align: center;
+  }
+
+  #why-taurine-{{ section.id }} .why-taurine__eyebrow {
+    width: fit-content;
+    margin: 0 auto 18px;
+    border-radius: 999px;
+    background: rgba(46,86,224,.10);
+    color: var(--wt-blue);
+    padding: 9px 16px;
+    font-size: 14px;
+    line-height: 1;
+    font-weight: 750;
+    letter-spacing: .02em;
+    text-transform: uppercase;
+  }
+
+  #why-taurine-{{ section.id }} .why-taurine__kicker {
+    margin: 0 0 2px;
+    font-size: clamp(34px,4.6vw,64px);
+    line-height: .98;
+    font-weight: 900;
+    letter-spacing: -.035em;
+    text-transform: none;
+  }
+
+  #why-taurine-{{ section.id }} .why-taurine__heading {
+    margin: 0;
+    color: var(--wt-blue);
+    font-size: clamp(42px,6vw,78px);
+    line-height: .95;
+    font-weight: 900;
+    letter-spacing: -.045em;
+    text-transform: none;
+  }
+
+  #why-taurine-{{ section.id }} .why-taurine__kicker.is-uppercase,
+  #why-taurine-{{ section.id }} .why-taurine__heading.is-uppercase {
+    text-transform: uppercase;
+  }
+
+  #why-taurine-{{ section.id }} .why-taurine__subheading {
+    margin: 32px 0 14px;
+    font-size: clamp(25px,2.4vw,38px);
+    line-height: 1.12;
+    font-weight: 800;
+    letter-spacing: -.02em;
+  }
+
+  #why-taurine-{{ section.id }} .why-taurine__intro {
+    max-width: 820px;
+    margin: 0 auto;
+    color: var(--wt-muted);
+    font-size: clamp(17px,1.6vw,22px);
+    line-height: 1.55;
+  }
+
+  #why-taurine-{{ section.id }} .why-taurine__intro--secondary {
+    margin-top: 14px;
+  }
+
+  #why-taurine-{{ section.id }} .why-taurine__intro p,
+  #why-taurine-{{ section.id }} .why-taurine__content-copy p {
+    margin: 0;
+  }
+
+  #why-taurine-{{ section.id }} .why-taurine__interactive {
+    max-width: {{ section.settings.interactive_max_width }}px;
+    margin: 0 auto;
+  }
+
+  #why-taurine-{{ section.id }} .why-taurine__media-stage {
+    position: relative;
+    width: min(100%, {{ section.settings.media_width }}px);
+    margin: 0 auto;
+    overflow: hidden;
+    border: {{ section.settings.media_border_width }}px solid var(--wt-border);
+    border-radius: var(--wt-radius);
+    background: var(--wt-panel-bg);
+    box-shadow: {{ section.settings.media_shadow }};
+  }
+
+  #why-taurine-{{ section.id }} .why-taurine__media-panel {
+    width: 100%;
+    aspect-ratio: {{ section.settings.media_ratio }};
+  }
+
+  #why-taurine-{{ section.id }} .why-taurine__media-panel[hidden],
+  #why-taurine-{{ section.id }} .why-taurine__content[hidden] {
+    display: none !important;
+  }
+
+  #why-taurine-{{ section.id }} .why-taurine__image,
+  #why-taurine-{{ section.id }} .why-taurine__video,
+  #why-taurine-{{ section.id }} .why-taurine__video video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: {{ section.settings.media_fit }};
+  }
+
+  #why-taurine-{{ section.id }} .why-taurine__placeholder,
+  #why-taurine-{{ section.id }} .why-taurine__placeholder-svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  #why-taurine-{{ section.id }} .why-taurine__tabs {
+    display: grid;
+    grid-template-columns: repeat({{ section.blocks.size }}, minmax(0,1fr));
+    gap: 12px;
+    margin-top: {{ section.settings.tabs_top_spacing }}px;
+  }
+
+  #why-taurine-{{ section.id }} .why-taurine__tab {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 48px;
+    padding: 10px 14px;
+    border: 1.5px solid var(--wt-blue);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--wt-text);
+    font: inherit;
+    font-size: {{ section.settings.tab_text_size }}px;
+    line-height: 1.1;
+    font-weight: 800;
+    cursor: pointer;
+    transition: background .2s ease, color .2s ease, transform .2s ease;
+  }
+
+  #why-taurine-{{ section.id }} .why-taurine__tab:hover {
+    transform: translateY(-1px);
+  }
+
+  #why-taurine-{{ section.id }} .why-taurine__tab.is-active {
+    background: var(--wt-blue);
+    color: #fff;
+  }
+
+  #why-taurine-{{ section.id }} .why-taurine__tab-icon {
+    display: inline-flex;
+    flex: 0 0 auto;
+  }
+
+  #why-taurine-{{ section.id }} .why-taurine__tab-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  #why-taurine-{{ section.id }} .why-taurine__content-stage {
+    margin-top: {{ section.settings.content_top_spacing }}px;
+  }
+
+  #why-taurine-{{ section.id }} .why-taurine__content {
+    padding: {{ section.settings.content_padding }}px;
+    border: 1px solid var(--wt-border);
+    border-radius: {{ section.settings.content_radius }}px;
+    background: var(--wt-panel-bg);
+  }
+
+  #why-taurine-{{ section.id }} .why-taurine__content-title {
+    margin: 0 0 12px;
+    color: var(--wt-text);
+    font-size: clamp(23px,2.2vw,32px);
+    line-height: 1.15;
+    font-weight: 850;
+    letter-spacing: -.025em;
+  }
+
+  #why-taurine-{{ section.id }} .why-taurine__content-copy {
+    color: var(--wt-muted);
+    font-size: clamp(17px,1.45vw,21px);
+    line-height: 1.55;
+  }
+
+
+  #why-taurine-{{ section.id }} .why-taurine__cta-wrap {
+    margin-top: {{ section.settings.cta_gap_mobile }}px;
+    text-align: center;
+  }
+
+  #why-taurine-{{ section.id }} .why-taurine__cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: min(100%, {{ section.settings.button_width_mobile }}px);
+    min-height: {{ section.settings.button_height_mobile }}px;
+    padding: 14px 28px;
+    border: {{ section.settings.button_border_width }}px solid {{ section.settings.button_border_color }};
+    border-radius: 999px;
+    {% if section.settings.button_use_gradient %}
+      background: linear-gradient(135deg, {{ section.settings.button_gradient_1 }}, {{ section.settings.button_gradient_2 }});
+    {% else %}
+      background: {{ section.settings.button_bg }};
+    {% endif %}
+    color: {{ section.settings.button_text_color }};
+    text-decoration: none;
+    font-size: {{ section.settings.button_text_size_mobile }}px;
+    line-height: 1;
+    font-weight: 900;
+    letter-spacing: .01em;
+    box-shadow: {{ section.settings.button_shadow }};
+    transition: transform .2s ease, box-shadow .2s ease;
+  }
+
+  #why-taurine-{{ section.id }} .why-taurine__cta:hover {
+    transform: translateY(-1px);
+  }
+
+  #why-taurine-{{ section.id }} .why-taurine__guarantee {
+    margin-top: {{ section.settings.guarantee_gap_mobile }}px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: {{ section.settings.guarantee_color }};
+    font-size: {{ section.settings.guarantee_size_mobile }}px;
+    line-height: 1.25;
+    font-weight: 600;
+  }
+
+  #why-taurine-{{ section.id }} .why-taurine__guarantee-icon {
+    flex: 0 0 auto;
+    width: {{ section.settings.guarantee_icon_size_mobile }}px;
+    height: {{ section.settings.guarantee_icon_size_mobile }}px;
+    object-fit: contain;
+  }
+
+  @media screen and (max-width: 749px) {
+    #why-taurine-{{ section.id }} {
+      padding-top: calc(var(--wt-section-pad-top) * .68);
+      padding-bottom: calc(var(--wt-section-pad-bottom) * .68);
+    }
+
+    #why-taurine-{{ section.id }} .why-taurine__inner {
+      padding: 0 16px;
+    }
+
+    #why-taurine-{{ section.id }} .why-taurine__heading-wrap {
+      margin-bottom: {{ section.settings.intro_bottom_spacing_mobile }}px;
+    }
+
+    #why-taurine-{{ section.id }} .why-taurine__kicker {
+      font-size: {{ section.settings.kicker_size_mobile }}px;
+      line-height: 1;
+    }
+
+    #why-taurine-{{ section.id }} .why-taurine__heading {
+      font-size: {{ section.settings.heading_size_mobile }}px;
+      line-height: .94;
+    }
+
+    #why-taurine-{{ section.id }} .why-taurine__subheading {
+      margin-top: 24px;
+      font-size: 26px;
+    }
+
+    #why-taurine-{{ section.id }} .why-taurine__intro {
+      font-size: 17px;
+    }
+
+    #why-taurine-{{ section.id }} .why-taurine__tabs {
+      grid-template-columns: repeat(2,minmax(0,1fr));
+      gap: 10px;
+    }
+
+    #why-taurine-{{ section.id }} .why-taurine__tab:last-child:nth-child(odd) {
+      grid-column: 1 / -1;
+    }
+
+    #why-taurine-{{ section.id }} .why-taurine__tab {
+      min-height: 44px;
+      padding: 9px 10px;
+      font-size: {{ section.settings.tab_text_size_mobile }}px;
+    }
+
+    #why-taurine-{{ section.id }} .why-taurine__content {
+      padding: {{ section.settings.content_padding_mobile }}px;
+    }
+  }
+
+  @media screen and (min-width: 768px) {
+    #why-taurine-{{ section.id }} .why-taurine__cta-wrap {
+      margin-top: {{ section.settings.cta_gap_desktop }}px;
+    }
+
+    #why-taurine-{{ section.id }} .why-taurine__cta {
+      width: min(100%, {{ section.settings.button_width_desktop }}px);
+      min-height: {{ section.settings.button_height_desktop }}px;
+      font-size: {{ section.settings.button_text_size_desktop }}px;
+    }
+
+    #why-taurine-{{ section.id }} .why-taurine__guarantee {
+      margin-top: {{ section.settings.guarantee_gap_desktop }}px;
+      font-size: {{ section.settings.guarantee_size_desktop }}px;
+    }
+
+    #why-taurine-{{ section.id }} .why-taurine__guarantee-icon {
+      width: {{ section.settings.guarantee_icon_size_desktop }}px;
+      height: {{ section.settings.guarantee_icon_size_desktop }}px;
+    }
+  }
+</style>
+
+<script>
+  (() => {
+    const section = document.getElementById('why-taurine-{{ section.id }}');
+    if (!section) return;
+
+    const root = section.querySelector('[data-wt-tabs]');
+    if (!root) return;
+
+    const tabs = [...root.querySelectorAll('[data-wt-tab]')];
+    const mediaPanels = [...root.querySelectorAll('[data-wt-media]')];
+    const contentPanels = [...root.querySelectorAll('[data-wt-content]')];
+
+    const activate = (index) => {
+      tabs.forEach((tab, tabIndex) => {
+        const active = tabIndex === index;
+        tab.classList.toggle('is-active', active);
+        tab.setAttribute('aria-selected', active ? 'true' : 'false');
+      });
+
+      mediaPanels.forEach((panel, panelIndex) => {
+        const active = panelIndex === index;
+        panel.classList.toggle('is-active', active);
+        panel.hidden = !active;
+
+        const video = panel.querySelector('video');
+        if (video) {
+          if (active) {
+            const playPromise = video.play();
+            if (playPromise && typeof playPromise.catch === 'function') {
+              playPromise.catch(() => {});
+            }
+          } else {
+            video.pause();
+          }
+        }
+      });
+
+      contentPanels.forEach((panel, panelIndex) => {
+        const active = panelIndex === index;
+        panel.classList.toggle('is-active', active);
+        panel.hidden = !active;
+      });
+    };
+
+    tabs.forEach((tab, index) => {
+      tab.addEventListener('click', () => activate(index));
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Why taurine interactive",
+  "tag": "section",
+  "class": "section-why-taurine",
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Main heading"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Essential for every cat"
+    },
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Heading line 1",
+      "default": "Why Taurine"
+    },
+    {
+      "type": "checkbox",
+      "id": "kicker_uppercase",
+      "label": "Make heading line 1 uppercase",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading line 2",
+      "default": "Matters for Cats"
+    },
+    {
+      "type": "checkbox",
+      "id": "heading_uppercase",
+      "label": "Make heading line 2 uppercase",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Taurine Is Not Just Another Wellness Trend"
+    },
+    {
+      "type": "richtext",
+      "id": "body_top",
+      "label": "Intro paragraph 1",
+      "default": "<p>Cats rely on taurine every day. Unlike many nutrients, it’s one they cannot produce in sufficient amounts on their own.</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "body_bottom",
+      "label": "Intro paragraph 2",
+      "default": "<p>Taurine is an essential amino acid involved in normal heart function, healthy vision, and many other important processes throughout a cat’s body. That’s why it has a unique place in feline nutrition.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Interactive layout"
+    },
+    {
+      "type": "text",
+      "id": "tabs_accessibility_label",
+      "label": "Tabs accessibility label",
+      "default": "How taurine supports cats"
+    },
+    {
+      "type": "range",
+      "id": "interactive_max_width",
+      "label": "Interactive area width",
+      "min": 600,
+      "max": 1200,
+      "step": 20,
+      "unit": "px",
+      "default": 900
+    },
+    {
+      "type": "range",
+      "id": "media_width",
+      "label": "Media width",
+      "min": 280,
+      "max": 760,
+      "step": 20,
+      "unit": "px",
+      "default": 560
+    },
+    {
+      "type": "select",
+      "id": "media_ratio",
+      "label": "Media shape",
+      "default": "1 / 1",
+      "options": [
+        { "value": "1 / 1", "label": "Square" },
+        { "value": "4 / 5", "label": "Portrait" },
+        { "value": "16 / 9", "label": "Landscape" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "media_fit",
+      "label": "Media fit",
+      "default": "cover",
+      "options": [
+        { "value": "cover", "label": "Cover" },
+        { "value": "contain", "label": "Contain" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "media_radius",
+      "label": "Media corner radius",
+      "min": 8,
+      "max": 36,
+      "step": 2,
+      "unit": "px",
+      "default": 22
+    },
+    {
+      "type": "range",
+      "id": "media_border_width",
+      "label": "Media border width",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "default": 1
+    },
+    {
+      "type": "text",
+      "id": "media_shadow",
+      "label": "Media shadow CSS",
+      "default": "0 16px 42px rgba(26,65,170,.10)"
+    },
+    {
+      "type": "range",
+      "id": "tabs_top_spacing",
+      "label": "Spacing above tabs",
+      "min": 10,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "content_top_spacing",
+      "label": "Spacing above tab text",
+      "min": 10,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 22
+    },
+    {
+      "type": "range",
+      "id": "content_padding",
+      "label": "Tab text padding desktop",
+      "min": 16,
+      "max": 52,
+      "step": 2,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "content_padding_mobile",
+      "label": "Tab text padding mobile",
+      "min": 14,
+      "max": 36,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "content_radius",
+      "label": "Tab text corner radius",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "header",
+      "content": "Bottom CTA — matches other sections"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "START NOW"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "image_picker",
+      "id": "guarantee_icon",
+      "label": "Guarantee icon"
+    },
+    {
+      "type": "text",
+      "id": "guarantee_text",
+      "label": "Guarantee text",
+      "default": "60-day money-back guarantee"
+    },
+    {
+      "type": "range",
+      "id": "cta_gap_mobile",
+      "label": "CTA gap mobile",
+      "min": 16,
+      "max": 54,
+      "step": 2,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "cta_gap_desktop",
+      "label": "CTA gap desktop",
+      "min": 20,
+      "max": 70,
+      "step": 2,
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "button_width_mobile",
+      "label": "Button width mobile",
+      "min": 220,
+      "max": 420,
+      "step": 10,
+      "default": 330
+    },
+    {
+      "type": "range",
+      "id": "button_width_desktop",
+      "label": "Button width desktop",
+      "min": 280,
+      "max": 720,
+      "step": 10,
+      "default": 520
+    },
+    {
+      "type": "range",
+      "id": "button_height_mobile",
+      "label": "Button height mobile",
+      "min": 48,
+      "max": 80,
+      "step": 2,
+      "default": 58
+    },
+    {
+      "type": "range",
+      "id": "button_height_desktop",
+      "label": "Button height desktop",
+      "min": 52,
+      "max": 88,
+      "step": 2,
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "button_text_size_mobile",
+      "label": "Button text mobile",
+      "min": 14,
+      "max": 24,
+      "step": 1,
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "button_text_size_desktop",
+      "label": "Button text desktop",
+      "min": 16,
+      "max": 28,
+      "step": 1,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "button_border_width",
+      "label": "Button border width",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "guarantee_gap_mobile",
+      "label": "Guarantee top spacing mobile",
+      "min": 4,
+      "max": 40,
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "guarantee_gap_desktop",
+      "label": "Guarantee top spacing desktop",
+      "min": 4,
+      "max": 50,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "guarantee_size_mobile",
+      "label": "Guarantee font size mobile",
+      "min": 10,
+      "max": 22,
+      "step": 1,
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "guarantee_size_desktop",
+      "label": "Guarantee font size desktop",
+      "min": 11,
+      "max": 24,
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "guarantee_icon_size_mobile",
+      "label": "Guarantee icon size mobile",
+      "min": 12,
+      "max": 36,
+      "step": 1,
+      "default": 19
+    },
+    {
+      "type": "range",
+      "id": "guarantee_icon_size_desktop",
+      "label": "Guarantee icon size desktop",
+      "min": 14,
+      "max": 42,
+      "step": 1,
+      "default": 21
+    },
+    {
+      "type": "checkbox",
+      "id": "button_use_gradient",
+      "label": "Use gradient button",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "button_gradient_1",
+      "label": "Gradient color 1",
+      "default": "#3E50DC"
+    },
+    {
+      "type": "color",
+      "id": "button_gradient_2",
+      "label": "Gradient color 2",
+      "default": "#6695DE"
+    },
+    {
+      "type": "color",
+      "id": "button_bg",
+      "label": "Solid button background",
+      "default": "#3E50DC"
+    },
+    {
+      "type": "color",
+      "id": "button_border_color",
+      "label": "Button border",
+      "default": "#173FAE"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "guarantee_color",
+      "label": "Guarantee text",
+      "default": "#6A78B8"
+    },
+    {
+      "type": "text",
+      "id": "button_shadow",
+      "label": "Button shadow CSS",
+      "default": "0 10px 24px rgba(47, 126, 216, 0.24)"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "kicker_size_mobile",
+      "label": "Heading line 1 mobile",
+      "min": 22,
+      "max": 44,
+      "step": 1,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Heading line 2 mobile",
+      "min": 28,
+      "max": 56,
+      "step": 1,
+      "unit": "px",
+      "default": 43
+    },
+    {
+      "type": "range",
+      "id": "tab_text_size",
+      "label": "Tab text desktop",
+      "min": 13,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "tab_text_size_mobile",
+      "label": "Tab text mobile",
+      "min": 12,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "intro_bottom_spacing",
+      "label": "Intro bottom spacing desktop",
+      "min": 20,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 42
+    },
+    {
+      "type": "range",
+      "id": "intro_bottom_spacing_mobile",
+      "label": "Intro bottom spacing mobile",
+      "min": 14,
+      "max": 70,
+      "step": 2,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top spacing",
+      "min": 20,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 88
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom spacing",
+      "min": 20,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 88
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#F2F6FF"
+    },
+    {
+      "type": "color",
+      "id": "panel_background",
+      "label": "Media and text background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent",
+      "default": "#3150D7"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Heading text",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "muted_text_color",
+      "label": "Body text",
+      "default": "#242424"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border",
+      "default": "#AFC0FF"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Interactive benefit",
+      "settings": [
+        {
+          "type": "select",
+          "id": "media_type",
+          "label": "Media type",
+          "default": "image",
+          "options": [
+            { "value": "image", "label": "Image" },
+            { "value": "video", "label": "Shopify video" }
+          ]
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "image_alt",
+          "label": "Image alt text",
+          "default": "Illustration showing how taurine supports cats"
+        },
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Shopify-hosted video"
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Tab icon",
+          "default": "heart",
+          "options": [
+            { "value": "heart", "label": "Heart" },
+            { "value": "vision", "label": "Vision" },
+            { "value": "brain", "label": "Nervous system" },
+            { "value": "digestion", "label": "Cat digestion" },
+            { "value": "liver", "label": "Liver & bile support" }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "tab_label",
+          "label": "Tab label",
+          "default": "Heart"
+        },
+        {
+          "type": "text",
+          "id": "content_heading",
+          "label": "Content heading",
+          "default": "Supports Healthy Heart Function"
+        },
+        {
+          "type": "richtext",
+          "id": "content_text",
+          "label": "Content text",
+          "default": "<p>Taurine supports normal heart muscle function and plays an essential role in everyday feline nutrition.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Why taurine interactive",
+      "blocks": [
+        {
+          "type": "benefit",
+          "settings": {
+            "icon": "heart",
+            "tab_label": "Heart",
+            "content_heading": "Supports Healthy Heart Function",
+            "content_text": "<p>Taurine supports normal heart muscle function and plays an essential role in everyday feline nutrition.</p>"
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "icon": "vision",
+            "tab_label": "Vision",
+            "content_heading": "Supports Healthy Vision",
+            "content_text": "<p>Taurine supports normal retinal function and helps maintain healthy eyesight throughout a cat’s life.</p>"
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "icon": "brain",
+            "tab_label": "Nervous System",
+            "content_heading": "Supports the Nervous System",
+            "content_text": "<p>Taurine contributes to normal nerve signaling and other important cellular processes throughout the body.</p>"
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "icon": "digestion",
+            "tab_label": "Digestion",
+            "content_heading": "Supports Digestion & Nutrient Absorption",
+            "content_text": "<p>Taurine helps form bile salts used to digest dietary fats and absorb fat-soluble nutrients, supporting normal digestion and helping your cat get more from every meal.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

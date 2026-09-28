@@ -1,0 +1,324 @@
+{% comment %}
+  Meowgical — Trust Marquee
+  Layout reference: Wuffes scrolling trust bar (checkmark + text, infinite loop).
+  Rebuilt as an editable Meowgical section — every color, icon, and the
+  scroll speed itself are all theme-editor controlled.
+{% endcomment %}
+
+<section id="mg-marquee-{{ section.id }}" class="mg-marquee">
+  <div class="mg-marquee__track" data-mg-marquee>
+    {% comment %} Render the block set twice back-to-back for a seamless loop {% endcomment %}
+    {% for i in (1..2) %}
+      <div class="mg-marquee__content">
+        {% for block in section.blocks %}
+          <div class="mg-marquee__item" {{ block.shopify_attributes }}>
+            {% if block.settings.icon != blank %}
+              <img
+                src="{{ block.settings.icon | image_url: width: 60 }}"
+                alt=""
+                class="mg-marquee__icon mg-marquee__icon--custom"
+                loading="lazy"
+                width="20"
+                height="20"
+              >
+            {% else %}
+              <span class="mg-marquee__icon mg-marquee__icon--check" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M5 12.5 9.2 17 19 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            {% endif %}
+            <p class="mg-marquee__text">{{ block.settings.text }}</p>
+          </div>
+        {% endfor %}
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+<style>
+  #mg-marquee-{{ section.id }} {
+    background: {{ section.settings.background_color }};
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+    overflow: hidden;
+  }
+
+  #mg-marquee-{{ section.id }} * {
+    box-sizing: border-box;
+  }
+
+  #mg-marquee-{{ section.id }} .mg-marquee__track {
+    display: flex;
+    width: max-content;
+    animation: mg-marquee-scroll-{{ section.id }} {{ section.settings.speed_seconds }}s linear infinite;
+  }
+
+  {% if section.settings.pause_on_hover %}
+    #mg-marquee-{{ section.id }} .mg-marquee__track:hover {
+      animation-play-state: paused;
+    }
+  {% endif %}
+
+  #mg-marquee-{{ section.id }} .mg-marquee__content {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  #mg-marquee-{{ section.id }} .mg-marquee__item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+    padding: 0 {{ section.settings.item_gap }}px;
+  }
+
+  #mg-marquee-{{ section.id }} .mg-marquee__icon {
+    flex: 0 0 auto;
+    width: {{ section.settings.icon_size }}px;
+    height: {{ section.settings.icon_size }}px;
+  }
+
+  #mg-marquee-{{ section.id }} .mg-marquee__icon--custom {
+    object-fit: contain;
+  }
+
+  #mg-marquee-{{ section.id }} .mg-marquee__icon--check {
+    display: grid;
+    place-items: center;
+    color: {{ section.settings.icon_color }};
+    {% if section.settings.show_icon_background %}
+      border-radius: 999px;
+      background: {{ section.settings.icon_bg_color }};
+      padding: 4px;
+    {% endif %}
+  }
+
+  #mg-marquee-{{ section.id }} .mg-marquee__icon--check svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  #mg-marquee-{{ section.id }} .mg-marquee__text {
+    margin: 0;
+    white-space: nowrap;
+    color: {{ section.settings.text_color }};
+    font-size: {{ section.settings.text_size_mobile }}px;
+    line-height: 1;
+    font-weight: {{ section.settings.text_weight }};
+    letter-spacing: .01em;
+    {% if section.settings.uppercase_text %}
+      text-transform: uppercase;
+    {% endif %}
+  }
+
+  @keyframes mg-marquee-scroll-{{ section.id }} {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  @media screen and (min-width: 768px) {
+    #mg-marquee-{{ section.id }} .mg-marquee__text {
+      font-size: {{ section.settings.text_size_desktop }}px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #mg-marquee-{{ section.id }} .mg-marquee__track {
+      animation: none;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Meowgical Trust Marquee",
+  "tag": "section",
+  "class": "section-meowgical-trust-marquee",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#12204A"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Checkmark icon color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_icon_background",
+      "label": "Show circle background behind checkmark",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "icon_bg_color",
+      "label": "Checkmark background (if enabled above)",
+      "default": "#2748DC"
+    },
+
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "text_size_mobile",
+      "label": "Text size mobile",
+      "min": 10,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "text_size_desktop",
+      "label": "Text size desktop",
+      "min": 11,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "select",
+      "id": "text_weight",
+      "label": "Text weight",
+      "default": "700",
+      "options": [
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi-bold" },
+        { "value": "700", "label": "Bold" },
+        { "value": "800", "label": "Extra bold" }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "uppercase_text",
+      "label": "Uppercase text",
+      "default": false
+    },
+
+    {
+      "type": "header",
+      "content": "Icon"
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "label": "Icon size",
+      "min": 16,
+      "max": 36,
+      "step": 1,
+      "unit": "px",
+      "default": 22
+    },
+    {
+      "type": "paragraph",
+      "content": "Each item below can optionally use a custom uploaded icon instead of the default checkmark."
+    },
+
+    {
+      "type": "header",
+      "content": "Motion"
+    },
+    {
+      "type": "range",
+      "id": "speed_seconds",
+      "label": "Scroll speed (seconds per loop)",
+      "min": 8,
+      "max": 60,
+      "step": 1,
+      "unit": "s",
+      "default": 22
+    },
+    {
+      "type": "checkbox",
+      "id": "pause_on_hover",
+      "label": "Pause on hover",
+      "default": true
+    },
+
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "item_gap",
+      "label": "Space between items",
+      "min": 12,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 10
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Trust item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Backed by science"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Custom icon (optional — overrides default checkmark)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Meowgical Trust Marquee",
+      "blocks": [
+        { "type": "item", "settings": { "text": "Made in USA*" } },
+        { "type": "item", "settings": { "text": "Backed by science" } },
+        { "type": "item", "settings": { "text": "Vet formulated" } },
+        { "type": "item", "settings": { "text": "Subscribe & save up to 25% off" } },
+        { "type": "item", "settings": { "text": "Hand-selected ingredients" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

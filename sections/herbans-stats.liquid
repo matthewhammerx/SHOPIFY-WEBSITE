@@ -1,0 +1,783 @@
+<section
+  class="herbans-stats-{{ section.id }}"
+  style="
+    --hb-bg: {{ section.settings.background_color }};
+    --hb-card: {{ section.settings.card_color }};
+    --hb-yellow: {{ section.settings.accent_color }};
+    --hb-text: {{ section.settings.text_color }};
+    --hb-badge-text: {{ section.settings.badge_text_color }};
+    --hb-note: {{ section.settings.note_color }};
+  "
+>
+  <div class="hb-stats-outer">
+    <div class="hb-stats-card">
+
+      {% if section.settings.badge_text != blank %}
+        <div class="hb-stats-badge">
+          {{ section.settings.badge_text }}
+        </div>
+      {% endif %}
+
+      <div class="hb-stats-grid">
+        {% for block in section.blocks %}
+          <div class="hb-stat" {{ block.shopify_attributes }}>
+
+            {% if block.settings.show_squiggle %}
+              <svg class="hb-squiggle" width="160" height="10" viewBox="0 0 160 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4 6C32 3 55 5 78 5C101 5 123 3 156 5" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
+              </svg>
+            {% endif %}
+
+            <div class="hb-stat-number">
+              <span>{{ block.settings.number }}</span>
+              {% if block.settings.suffix != blank %}
+                <small>{{ block.settings.suffix }}</small>
+              {% endif %}
+            </div>
+
+            {% if block.settings.text != blank %}
+              <p>{{ block.settings.text }}</p>
+            {% endif %}
+
+          </div>
+        {% endfor %}
+      </div>
+
+      {% if section.settings.note_text != blank %}
+        <p class="hb-stats-note">
+          {{ section.settings.note_text }}
+        </p>
+      {% endif %}
+
+    </div>
+  </div>
+</section>
+
+<style>
+  .herbans-stats-{{ section.id }} {
+    background: var(--hb-bg);
+    padding: {{ section.settings.section_padding_top }}px 20px {{ section.settings.section_padding_bottom }}px;
+  }
+
+  .herbans-stats-{{ section.id }} .hb-stats-outer {
+    max-width: {{ section.settings.max_width }}px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+  }
+
+  .herbans-stats-{{ section.id }} .hb-stats-card {
+    position: relative;
+    width: 100%;
+    background: var(--hb-card);
+    border-radius: {{ section.settings.card_radius }}px;
+    padding: {{ section.settings.card_padding_top }}px {{ section.settings.card_padding_side }}px {{ section.settings.card_padding_bottom }}px;
+    box-shadow: {% if section.settings.show_shadow %}2px 4px 24px rgba(0, 0, 0, 0.25){% else %}none{% endif %};
+  }
+
+  .herbans-stats-{{ section.id }} .hb-stats-badge {
+    position: absolute;
+    top: -17px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--hb-yellow);
+    color: var(--hb-badge-text);
+    border-radius: 999px;
+    padding: 8px 20px 7px;
+    white-space: nowrap;
+    z-index: 2;
+    font-size: {{ section.settings.badge_size }}px;
+    font-weight: {{ section.settings.badge_weight }};
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+
+  .herbans-stats-{{ section.id }} .hb-stats-grid {
+    display: grid;
+    grid-template-columns: repeat({{ section.settings.columns_desktop }}, 1fr);
+    column-gap: {{ section.settings.column_gap }}px;
+    row-gap: {{ section.settings.row_gap }}px;
+  }
+
+  .herbans-stats-{{ section.id }} .hb-stat {
+    display: flex;
+    flex-direction: column;
+    gap: {{ section.settings.stat_gap }}px;
+  }
+
+  .herbans-stats-{{ section.id }} .hb-squiggle {
+    width: {{ section.settings.squiggle_width }}px;
+    height: auto;
+    color: var(--hb-yellow);
+    margin-bottom: 2px;
+  }
+
+  .herbans-stats-{{ section.id }} .hb-stat-number {
+    color: var(--hb-text);
+    display: flex;
+    align-items: flex-end;
+    gap: 5px;
+    line-height: 1.05;
+    letter-spacing: -0.05em;
+    font-weight: {{ section.settings.number_weight }};
+  }
+
+  .herbans-stats-{{ section.id }} .hb-stat-number span {
+    font-size: {{ section.settings.number_size }}px;
+    line-height: 1;
+    font-weight: {{ section.settings.number_weight }};
+  }
+
+  .herbans-stats-{{ section.id }} .hb-stat-number small {
+    font-size: {{ section.settings.suffix_size }}px;
+    line-height: 1;
+    font-weight: {{ section.settings.number_weight }};
+    margin-bottom: 5px;
+  }
+
+  .herbans-stats-{{ section.id }} .hb-stat p {
+    color: var(--hb-text);
+    font-size: {{ section.settings.text_size }}px;
+    line-height: {{ section.settings.text_line_height | divided_by: 100.0 }};
+    font-weight: {{ section.settings.text_weight }};
+    margin: 0;
+    max-width: {{ section.settings.text_max_width }}px;
+    letter-spacing: -0.02em;
+  }
+
+  .herbans-stats-{{ section.id }} .hb-stats-note {
+    color: var(--hb-note);
+    text-align: center;
+    font-size: {{ section.settings.note_size }}px;
+    line-height: {{ section.settings.note_line_height | divided_by: 100.0 }};
+    font-weight: {{ section.settings.note_weight }};
+    margin: {{ section.settings.note_margin_top }}px 0 0;
+    letter-spacing: -0.03em;
+  }
+
+  @media screen and (max-width: 768px) {
+    .herbans-stats-{{ section.id }} {
+      padding: {{ section.settings.mobile_section_padding_top }}px 16px {{ section.settings.mobile_section_padding_bottom }}px;
+    }
+
+    .herbans-stats-{{ section.id }} .hb-stats-card {
+      border-radius: {{ section.settings.mobile_card_radius }}px;
+      padding: {{ section.settings.mobile_card_padding_top }}px {{ section.settings.mobile_card_padding_side }}px {{ section.settings.mobile_card_padding_bottom }}px;
+    }
+
+    .herbans-stats-{{ section.id }} .hb-stats-grid {
+      grid-template-columns: repeat({{ section.settings.columns_mobile }}, 1fr);
+      column-gap: {{ section.settings.mobile_column_gap }}px;
+      row-gap: {{ section.settings.mobile_row_gap }}px;
+    }
+
+    .herbans-stats-{{ section.id }} .hb-stats-badge {
+      font-size: {{ section.settings.mobile_badge_size }}px;
+      padding: 7px 14px 6px;
+    }
+
+    .herbans-stats-{{ section.id }} .hb-stat {
+      gap: {{ section.settings.mobile_stat_gap }}px;
+    }
+
+    .herbans-stats-{{ section.id }} .hb-squiggle {
+      width: {{ section.settings.mobile_squiggle_width }}px;
+    }
+
+    .herbans-stats-{{ section.id }} .hb-stat-number span {
+      font-size: {{ section.settings.mobile_number_size }}px;
+    }
+
+    .herbans-stats-{{ section.id }} .hb-stat-number small {
+      font-size: {{ section.settings.mobile_suffix_size }}px;
+      margin-bottom: 3px;
+    }
+
+    .herbans-stats-{{ section.id }} .hb-stat p {
+      font-size: {{ section.settings.mobile_text_size }}px;
+      max-width: {{ section.settings.mobile_text_max_width }}px;
+    }
+
+    .herbans-stats-{{ section.id }} .hb-stats-note {
+      font-size: {{ section.settings.mobile_note_size }}px;
+      margin-top: {{ section.settings.mobile_note_margin_top }}px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Herbans Stats",
+  "tag": "section",
+  "class": "herbans-stats-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge text",
+      "default": "REAL HAIR SUPPORT FACTS"
+    },
+    {
+      "type": "textarea",
+      "id": "note_text",
+      "label": "Bottom note",
+      "default": "*Based on a clinical study using pumpkin seed oil over 24 weeks. Results may vary."
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Section background",
+      "default": "#F8F1E8"
+    },
+    {
+      "type": "color",
+      "id": "card_color",
+      "label": "Card background",
+      "default": "#B86542"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Badge and squiggle color",
+      "default": "#F8C32E"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Main text color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "badge_text_color",
+      "label": "Badge text color",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "note_color",
+      "label": "Note text color",
+      "default": "#FFF3EA"
+    },
+    {
+      "type": "header",
+      "content": "Desktop layout"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Max width",
+      "min": 700,
+      "max": 1500,
+      "step": 20,
+      "default": 1280
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "Columns desktop",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "column_gap",
+      "label": "Column gap desktop",
+      "min": 10,
+      "max": 90,
+      "step": 2,
+      "default": 42
+    },
+    {
+      "type": "range",
+      "id": "row_gap",
+      "label": "Row gap desktop",
+      "min": 10,
+      "max": 80,
+      "step": 2,
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "stat_gap",
+      "label": "Gap inside each stat",
+      "min": 4,
+      "max": 30,
+      "step": 2,
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Card roundness",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "default": 18
+    },
+    {
+      "type": "checkbox",
+      "id": "show_shadow",
+      "label": "Show card shadow",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "card_padding_top",
+      "label": "Card top padding",
+      "min": 20,
+      "max": 100,
+      "step": 4,
+      "default": 52
+    },
+    {
+      "type": "range",
+      "id": "card_padding_bottom",
+      "label": "Card bottom padding",
+      "min": 20,
+      "max": 100,
+      "step": 4,
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "card_padding_side",
+      "label": "Card side padding",
+      "min": 16,
+      "max": 90,
+      "step": 2,
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "section_padding_top",
+      "label": "Section top padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 44
+    },
+    {
+      "type": "range",
+      "id": "section_padding_bottom",
+      "label": "Section bottom padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 44
+    },
+    {
+      "type": "header",
+      "content": "Desktop text sizes"
+    },
+    {
+      "type": "range",
+      "id": "number_size",
+      "label": "Number size",
+      "min": 36,
+      "max": 110,
+      "step": 2,
+      "default": 62
+    },
+    {
+      "type": "range",
+      "id": "suffix_size",
+      "label": "Suffix size",
+      "min": 16,
+      "max": 70,
+      "step": 2,
+      "default": 38
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "label": "Stat text size",
+      "min": 12,
+      "max": 28,
+      "step": 1,
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "badge_size",
+      "label": "Badge text size",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "note_size",
+      "label": "Note text size",
+      "min": 10,
+      "max": 22,
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "squiggle_width",
+      "label": "Squiggle width",
+      "min": 40,
+      "max": 120,
+      "step": 2,
+      "default": 80
+    },
+    {
+      "type": "header",
+      "content": "Font boldness"
+    },
+    {
+      "type": "select",
+      "id": "number_weight",
+      "label": "Number boldness",
+      "default": "500",
+      "options": [
+        { "value": "300", "label": "Light" },
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi bold" },
+        { "value": "700", "label": "Bold" },
+        { "value": "800", "label": "Extra bold" },
+        { "value": "900", "label": "Black" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "text_weight",
+      "label": "Stat text boldness",
+      "default": "500",
+      "options": [
+        { "value": "300", "label": "Light" },
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi bold" },
+        { "value": "700", "label": "Bold" },
+        { "value": "800", "label": "Extra bold" },
+        { "value": "900", "label": "Black" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "badge_weight",
+      "label": "Badge boldness",
+      "default": "700",
+      "options": [
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi bold" },
+        { "value": "700", "label": "Bold" },
+        { "value": "800", "label": "Extra bold" },
+        { "value": "900", "label": "Black" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "note_weight",
+      "label": "Note boldness",
+      "default": "400",
+      "options": [
+        { "value": "300", "label": "Light" },
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi bold" },
+        { "value": "700", "label": "Bold" }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Text spacing"
+    },
+    {
+      "type": "range",
+      "id": "text_max_width",
+      "label": "Stat text max width",
+      "min": 120,
+      "max": 320,
+      "step": 10,
+      "default": 220
+    },
+    {
+      "type": "range",
+      "id": "text_line_height",
+      "label": "Stat text line height",
+      "min": 100,
+      "max": 180,
+      "step": 5,
+      "default": 140
+    },
+    {
+      "type": "range",
+      "id": "note_line_height",
+      "label": "Note line height",
+      "min": 100,
+      "max": 180,
+      "step": 5,
+      "default": 135
+    },
+    {
+      "type": "range",
+      "id": "note_margin_top",
+      "label": "Note top spacing",
+      "min": 0,
+      "max": 70,
+      "step": 2,
+      "default": 26
+    },
+    {
+      "type": "header",
+      "content": "Mobile layout"
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "Columns mobile",
+      "default": "2",
+      "options": [
+        { "value": "1", "label": "1 column" },
+        { "value": "2", "label": "2 columns" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "mobile_column_gap",
+      "label": "Mobile column gap",
+      "min": 10,
+      "max": 60,
+      "step": 2,
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "mobile_row_gap",
+      "label": "Mobile row gap",
+      "min": 10,
+      "max": 70,
+      "step": 2,
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "mobile_stat_gap",
+      "label": "Mobile gap inside stat",
+      "min": 4,
+      "max": 30,
+      "step": 2,
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "mobile_card_radius",
+      "label": "Mobile card roundness",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "mobile_card_padding_top",
+      "label": "Mobile card top padding",
+      "min": 20,
+      "max": 90,
+      "step": 2,
+      "default": 44
+    },
+    {
+      "type": "range",
+      "id": "mobile_card_padding_bottom",
+      "label": "Mobile card bottom padding",
+      "min": 16,
+      "max": 80,
+      "step": 2,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "mobile_card_padding_side",
+      "label": "Mobile card side padding",
+      "min": 12,
+      "max": 50,
+      "step": 2,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "mobile_section_padding_top",
+      "label": "Mobile section top padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "mobile_section_padding_bottom",
+      "label": "Mobile section bottom padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "default": 36
+    },
+    {
+      "type": "header",
+      "content": "Mobile text sizes"
+    },
+    {
+      "type": "range",
+      "id": "mobile_number_size",
+      "label": "Mobile number size",
+      "min": 28,
+      "max": 80,
+      "step": 2,
+      "default": 42
+    },
+    {
+      "type": "range",
+      "id": "mobile_suffix_size",
+      "label": "Mobile suffix size",
+      "min": 14,
+      "max": 44,
+      "step": 1,
+      "default": 25
+    },
+    {
+      "type": "range",
+      "id": "mobile_text_size",
+      "label": "Mobile stat text size",
+      "min": 11,
+      "max": 22,
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "mobile_badge_size",
+      "label": "Mobile badge text size",
+      "min": 9,
+      "max": 18,
+      "step": 1,
+      "default": 11
+    },
+    {
+      "type": "range",
+      "id": "mobile_note_size",
+      "label": "Mobile note text size",
+      "min": 9,
+      "max": 18,
+      "step": 1,
+      "default": 11
+    },
+    {
+      "type": "range",
+      "id": "mobile_squiggle_width",
+      "label": "Mobile squiggle width",
+      "min": 35,
+      "max": 100,
+      "step": 1,
+      "default": 68
+    },
+    {
+      "type": "range",
+      "id": "mobile_text_max_width",
+      "label": "Mobile stat text max width",
+      "min": 100,
+      "max": 260,
+      "step": 10,
+      "default": 150
+    },
+    {
+      "type": "range",
+      "id": "mobile_note_margin_top",
+      "label": "Mobile note top spacing",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "default": 22
+    }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Stat",
+      "settings": [
+        {
+          "type": "text",
+          "id": "number",
+          "label": "Number",
+          "default": "40"
+        },
+        {
+          "type": "text",
+          "id": "suffix",
+          "label": "Suffix",
+          "default": "%"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text",
+          "default": "increase in hair count in a 24-week pumpkin seed oil study*"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_squiggle",
+          "label": "Show squiggle",
+          "default": true
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Herbans Stats",
+      "blocks": [
+        {
+          "type": "stat",
+          "settings": {
+            "number": "40",
+            "suffix": "%",
+            "text": "increase in hair count in a 24-week pumpkin seed oil study*",
+            "show_squiggle": true
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "number": "3,300",
+            "suffix": "mg",
+            "text": "Pumpkin Seed Oil + Saw Palmetto in every daily serving",
+            "show_squiggle": true
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "number": "2",
+            "suffix": "",
+            "text": "targeted ingredients for thinning-prone hair",
+            "show_squiggle": true
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "number": "100",
+            "suffix": "",
+            "text": "daily servings per bottle to help you stay consistent",
+            "show_squiggle": true
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

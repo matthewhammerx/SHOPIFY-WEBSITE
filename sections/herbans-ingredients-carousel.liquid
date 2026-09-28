@@ -1,0 +1,1041 @@
+{% comment %}
+  herbans-ingredients-carousel
+  Desktop: text on top, buttons on the right, carousel underneath.
+  Mobile: carousel has no side padding and shows 1.5 cards.
+{% endcomment %}
+
+<section id="herbans-ingredients-carousel-{{ section.id }}" class="hic-section">
+  <div class="hic-container">
+    <div class="hic-layout">
+      <div class="hic-header-row">
+      <div class="hic-copy">
+        {% if section.settings.eyebrow != blank %}
+          <div class="hic-eyebrow">{{ section.settings.eyebrow }}</div>
+        {% endif %}
+
+        {% if section.settings.heading != blank %}
+          <div class="hic-heading rte">{{ section.settings.heading }}</div>
+        {% endif %}
+
+        {% if section.settings.subheading != blank %}
+          <div class="hic-subheading rte">{{ section.settings.subheading }}</div>
+        {% endif %}
+      </div>
+
+        {% if section.settings.button_1_label != blank or section.settings.button_2_label != blank %}
+          <div class="hic-buttons hic-buttons-header">
+            {% if section.settings.button_1_label != blank %}
+              <a href="{{ section.settings.button_1_link | default: '#' }}" class="hic-btn hic-btn-primary">
+                {{ section.settings.button_1_label }}
+              </a>
+            {% endif %}
+
+            {% if section.settings.button_2_label != blank %}
+              <a href="{{ section.settings.button_2_link | default: '#' }}" class="hic-btn hic-btn-secondary">
+                {{ section.settings.button_2_label }}
+              </a>
+            {% endif %}
+          </div>
+        {% endif %}
+
+      </div>
+
+      <div class="hic-media-side">
+        <div class="hic-carousel-shell">
+          <div class="hic-carousel" data-hic-carousel>
+            {% for block in section.blocks %}
+              <article class="hic-card" {{ block.shopify_attributes }}>
+                <div class="hic-card-inner">
+                  <div class="hic-media">
+                    {% if block.settings.image != blank %}
+                      <img
+                        class="hic-main-img"
+                        src="{{ block.settings.image | image_url: width: 1200 }}"
+                        alt="{{ block.settings.image_alt | escape }}"
+                        loading="lazy"
+                        width="{{ block.settings.image.width }}"
+                        height="{{ block.settings.image.height }}"
+                      >
+                      <div class="hic-blur-mask" aria-hidden="true">
+                        <img
+                          class="hic-blur-img"
+                          src="{{ block.settings.image | image_url: width: 1200 }}"
+                          alt=""
+                          loading="lazy"
+                          width="{{ block.settings.image.width }}"
+                          height="{{ block.settings.image.height }}"
+                        >
+                      </div>
+                    {% else %}
+                      <div class="hic-placeholder">
+                        <span>{{ block.settings.ingredient_name | default: 'Ingredient' }}</span>
+                      </div>
+                    {% endif %}
+
+                    <div class="hic-top-fade"></div>
+                    <div class="hic-bottom-panel"></div>
+
+                    {% if block.settings.ingredient_name != blank %}
+                      <div class="hic-ingredient">{{ block.settings.ingredient_name }}</div>
+                    {% endif %}
+
+                    {% if block.settings.badge != blank %}
+                      <div class="hic-badge">{{ block.settings.badge }}</div>
+                    {% endif %}
+
+                    <div class="hic-content">
+                      {% if block.settings.title != blank %}
+                        <h3>{{ block.settings.title }}</h3>
+                      {% endif %}
+
+                      {% if block.settings.text != blank %}
+                        <p>{{ block.settings.text }}</p>
+                      {% endif %}
+                    </div>
+                  </div>
+                </div>
+              </article>
+            {% endfor %}
+          </div>
+        </div>
+
+        {% if section.settings.show_arrows %}
+          <div class="hic-arrows">
+            <button type="button" class="hic-arrow" data-hic-prev aria-label="Previous slide">&#8592;</button>
+            <button type="button" class="hic-arrow" data-hic-next aria-label="Next slide">&#8594;</button>
+          </div>
+        {% endif %}
+
+        {% if section.settings.button_1_label != blank or section.settings.button_2_label != blank %}
+          <div class="hic-buttons hic-buttons-below">
+            {% if section.settings.button_1_label != blank %}
+              <a href="{{ section.settings.button_1_link | default: '#' }}" class="hic-btn hic-btn-primary">
+                {{ section.settings.button_1_label }}
+              </a>
+            {% endif %}
+
+            {% if section.settings.button_2_label != blank %}
+              <a href="{{ section.settings.button_2_link | default: '#' }}" class="hic-btn hic-btn-secondary">
+                {{ section.settings.button_2_label }}
+              </a>
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% assign hic_panel_alpha = section.settings.panel_opacity | divided_by: 100.0 %}
+<style>
+  {% unless section.settings.show_on_mobile %}
+    @media screen and (max-width: 767px) {
+      #herbans-ingredients-carousel-{{ section.id }} {
+        display: none !important;
+      }
+    }
+  {% endunless %}
+
+  {% unless section.settings.show_on_desktop %}
+    @media screen and (min-width: 768px) {
+      #herbans-ingredients-carousel-{{ section.id }} {
+        display: none !important;
+      }
+    }
+  {% endunless %}
+
+  #herbans-ingredients-carousel-{{ section.id }} {
+    background: {{ section.settings.section_bg }};
+    padding: {{ section.settings.padding_top_mobile }}px 0 {{ section.settings.padding_bottom_mobile }}px;
+    overflow: hidden;
+  }
+
+  #herbans-ingredients-carousel-{{ section.id }} * {
+    box-sizing: border-box;
+  }
+
+  #herbans-ingredients-carousel-{{ section.id }} .hic-container {
+    max-width: {{ section.settings.max_width }}px;
+    margin: 0 auto;
+    padding: 0;
+  }
+
+  #herbans-ingredients-carousel-{{ section.id }} .hic-layout {
+    display: flex;
+    flex-direction: column;
+    gap: {{ section.settings.column_gap_mobile }}px;
+  }
+
+  #herbans-ingredients-carousel-{{ section.id }} .hic-header-row {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding: 0 {{ section.settings.side_padding_mobile }}px;
+  }
+
+  #herbans-ingredients-carousel-{{ section.id }} .hic-copy {
+    text-align: {{ section.settings.mobile_text_align }};
+    color: {{ section.settings.heading_color }};
+  }
+
+  #herbans-ingredients-carousel-{{ section.id }} .hic-eyebrow {
+    margin: 0 0 12px;
+    color: {{ section.settings.eyebrow_color }};
+    font-size: {{ section.settings.eyebrow_size_mobile }}px;
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  #herbans-ingredients-carousel-{{ section.id }} .hic-heading,
+  #herbans-ingredients-carousel-{{ section.id }} .hic-heading p {
+    margin: 0;
+    color: {{ section.settings.heading_color }};
+    font-size: {{ section.settings.heading_size_mobile }}px;
+    line-height: {{ section.settings.heading_line_height_mobile }}px;
+    font-weight: {{ section.settings.heading_weight }};
+    letter-spacing: {{ section.settings.heading_letter_spacing }}px;
+  }
+
+  #herbans-ingredients-carousel-{{ section.id }} .hic-heading strong,
+  #herbans-ingredients-carousel-{{ section.id }} .hic-heading b {
+    color: {{ section.settings.heading_accent_color }};
+    font-weight: inherit;
+  }
+
+  #herbans-ingredients-carousel-{{ section.id }} .hic-heading em,
+  #herbans-ingredients-carousel-{{ section.id }} .hic-heading i {
+    color: {{ section.settings.heading_accent_color }};
+    font-style: italic;
+    font-family: Georgia, serif;
+  }
+
+  #herbans-ingredients-carousel-{{ section.id }} .hic-subheading,
+  #herbans-ingredients-carousel-{{ section.id }} .hic-subheading p {
+    margin: 14px 0 0;
+    color: {{ section.settings.subheading_color }};
+    font-size: {{ section.settings.subheading_size_mobile }}px;
+    line-height: {{ section.settings.subheading_line_height_mobile }}px;
+    font-weight: {{ section.settings.subheading_weight }};
+    max-width: 100%;
+  }
+
+  #herbans-ingredients-carousel-{{ section.id }} .hic-media-side {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  #herbans-ingredients-carousel-{{ section.id }} .hic-carousel-shell {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  #herbans-ingredients-carousel-{{ section.id }} .hic-carousel {
+    --hic-gap: {{ section.settings.card_gap_mobile }}px;
+    display: flex;
+    gap: var(--hic-gap);
+    width: 100%;
+    overflow: visible;
+    scroll-snap-type: none;
+    scroll-behavior: auto;
+    -webkit-overflow-scrolling: auto;
+    padding-bottom: 8px;
+    will-change: transform;
+    transform: translate3d(0, 0, 0);
+  }
+
+  #herbans-ingredients-carousel-{{ section.id }} .hic-carousel::-webkit-scrollbar {
+    display: none;
+  }
+
+  #herbans-ingredients-carousel-{{ section.id }} .hic-card {
+    flex: 0 0 calc((100% - (var(--hic-gap) * 0.5)) / 1.5);
+    min-width: 0;
+    scroll-snap-align: none;
+  }
+
+  #herbans-ingredients-carousel-{{ section.id }} .hic-card[data-hic-clone="true"] {
+    pointer-events: none;
+  }
+
+  #herbans-ingredients-carousel-{{ section.id }} .hic-card-inner {
+    position: relative;
+  }
+
+  #herbans-ingredients-carousel-{{ section.id }} .hic-media {
+    position: relative;
+    width: 100%;
+    aspect-ratio: {{ section.settings.card_ratio }};
+    border-radius: {{ section.settings.card_radius }}px;
+    overflow: hidden;
+    background: {{ section.settings.card_bg }};
+    border: {{ section.settings.card_border_width }}px solid {{ section.settings.card_border_color }};
+    box-shadow: {{ section.settings.card_shadow }};
+    isolation: isolate;
+  }
+
+  /* Real top image overlay. This is placed directly on the card/image layer so it always shows. */
+  #herbans-ingredients-carousel-{{ section.id }} .hic-media::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 52%;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.92) 0%,
+      rgba(0, 0, 0, 0.72) 18%,
+      rgba(0, 0, 0, 0.46) 42%,
+      rgba(0, 0, 0, 0.18) 70%,
+      rgba(0, 0, 0, 0) 100%
+    ) !important;
+    opacity: {{ section.settings.top_overlay_opacity | divided_by: 100.0 }} !important;
+    pointer-events: none;
+    z-index: 5;
+  }
+
+
+  #herbans-ingredients-carousel-{{ section.id }} .hic-media .hic-main-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: {{ section.settings.image_fit }};
+    object-position: center;
+    pointer-events: none;
+    z-index: 0;
+    transform: scale({{ section.settings.image_zoom | divided_by: 100.0 }});
+  }
+
+  /* REAL bottom blur layer.
+     The blur is made visible by a duplicated image underneath the gray panel,
+     oversized so the blur has room to spread without creating side halos. */
+  #herbans-ingredients-carousel-{{ section.id }} .hic-blur-mask {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    overflow: hidden;
+    pointer-events: none;
+    border-radius: inherit;
+    clip-path: inset(calc(100% - {{ section.settings.bottom_panel_height_mobile }}%) 0 0 0);
+    -webkit-clip-path: inset(calc(100% - {{ section.settings.bottom_panel_height_mobile }}%) 0 0 0);
+    transform: translateZ(0);
+  }
+
+  #herbans-ingredients-carousel-{{ section.id }} .hic-blur-mask .hic-blur-img {
+    position: absolute;
+    inset: -72px;
+    width: calc(100% + 144px);
+    height: calc(100% + 144px);
+    max-width: none;
+    display: block;
+    object-fit: {{ section.settings.image_fit }};
+    object-position: center;
+    opacity: 1;
+    filter: blur({{ section.settings.panel_blur_mobile | times: 2 }}px);
+    -webkit-filter: blur({{ section.settings.panel_blur_mobile | times: 2 }}px);
+    transform: scale({{ section.settings.image_zoom | plus: 14 | divided_by: 100.0 }});
+    transform-origin: center;
+    pointer-events: none;
+    backface-visibility: hidden;
+  }
+
+  #herbans-ingredients-carousel-{{ section.id }} .hic-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    text-align: center;
+    background: linear-gradient(135deg, {{ section.settings.placeholder_bg_1 }}, {{ section.settings.placeholder_bg_2 }});
+    color: {{ section.settings.placeholder_text_color }};
+    font-weight: 900;
+    font-size: 22px;
+    line-height: 1.1;
+  }
+
+  #herbans-ingredients-carousel-{{ section.id }} .hic-top-fade {
+    display: none !important;
+  }
+
+  #herbans-ingredients-carousel-{{ section.id }} .hic-bottom-panel {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: {{ section.settings.bottom_panel_height_mobile }}%;
+    /* Tint panel + native glass blur. The duplicate blurred image below is the main blur,
+       this native blur makes the effect stronger where the browser supports it. */
+    background: {{ section.settings.panel_rgb | color_modify: 'alpha', hic_panel_alpha }};
+    backdrop-filter: blur({{ section.settings.panel_blur_mobile }}px) saturate(1.05);
+    -webkit-backdrop-filter: blur({{ section.settings.panel_blur_mobile }}px) saturate(1.05);
+    box-shadow: 0 -18px 44px rgba(0, 0, 0, 0.16);
+    z-index: 2;
+    pointer-events: none;
+    transform: translateZ(0);
+  }
+
+  #herbans-ingredients-carousel-{{ section.id }} .hic-bottom-panel::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0.10) 100%);
+    pointer-events: none;
+  }
+
+  #herbans-ingredients-carousel-{{ section.id }} .hic-ingredient {
+    position: absolute;
+    top: {{ section.settings.top_label_top_mobile }}px;
+    left: {{ section.settings.top_label_side_mobile }}px;
+    right: {{ section.settings.top_label_side_mobile }}px;
+    max-width: calc(100% - 130px);
+    z-index: 10;
+    color: {{ section.settings.top_label_color }};
+    font-size: {{ section.settings.top_label_size_mobile }}px;
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    word-break: break-word;
+  }
+
+  #herbans-ingredients-carousel-{{ section.id }} .hic-content {
+    position: absolute;
+    left: {{ section.settings.card_content_side_mobile }}px;
+    right: {{ section.settings.card_content_side_mobile }}px;
+    top: calc(100% - {{ section.settings.bottom_panel_height_mobile }}% + {{ section.settings.card_content_bottom_mobile }}px);
+    bottom: auto;
+    z-index: 6;
+    color: {{ section.settings.card_text_color }};
+  }
+
+  #herbans-ingredients-carousel-{{ section.id }} .hic-badge {
+    position: absolute;
+    top: {{ section.settings.top_label_top_mobile }}px;
+    right: {{ section.settings.top_label_side_mobile }}px;
+    z-index: 11;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 7px 11px;
+    border-radius: 999px;
+    background: {{ section.settings.badge_bg }};
+    color: {{ section.settings.badge_color }};
+    font-size: {{ section.settings.badge_size_mobile }}px;
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    box-shadow: 0 6px 18px rgba(0,0,0,.14);
+  }
+
+  #herbans-ingredients-carousel-{{ section.id }} .hic-content h3 {
+    margin: 0 0 10px;
+    color: {{ section.settings.card_title_color }};
+    font-size: {{ section.settings.card_title_size_mobile }}px;
+    line-height: {{ section.settings.card_title_line_height_mobile }}px;
+    font-weight: 900;
+    letter-spacing: -0.03em;
+  }
+
+  #herbans-ingredients-carousel-{{ section.id }} .hic-content p {
+    margin: 0;
+    color: {{ section.settings.card_text_color }};
+    font-size: {{ section.settings.card_text_size_mobile }}px;
+    line-height: {{ section.settings.card_text_line_height_mobile }}px;
+    font-weight: {{ section.settings.card_text_weight }};
+  }
+
+  #herbans-ingredients-carousel-{{ section.id }} .hic-arrows {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 16px;
+  }
+
+  #herbans-ingredients-carousel-{{ section.id }} .hic-arrow {
+    width: 42px;
+    height: 42px;
+    border-radius: 999px;
+    border: 1px solid {{ section.settings.arrow_border_color }};
+    background: {{ section.settings.arrow_bg }};
+    color: {{ section.settings.arrow_color }};
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 900;
+    line-height: 1;
+  }
+
+  #herbans-ingredients-carousel-{{ section.id }} .hic-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    gap: {{ section.settings.button_gap }}px;
+    margin-top: {{ section.settings.buttons_top_mobile }}px;
+    padding: 0 {{ section.settings.side_padding_mobile }}px;
+  }
+
+  #herbans-ingredients-carousel-{{ section.id }} .hic-buttons-header {
+    display: none;
+  }
+
+  #herbans-ingredients-carousel-{{ section.id }} .hic-buttons-below {
+    display: flex;
+  }
+
+  #herbans-ingredients-carousel-{{ section.id }} .hic-btn {
+    width: 100%;
+    min-width: {{ section.settings.button_min_width }}px;
+    min-height: {{ section.settings.button_height }}px;
+    padding: 12px 22px;
+    border-radius: {{ section.settings.button_radius }}px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    text-decoration: none;
+    font-size: {{ section.settings.button_font_size }}px;
+    font-weight: 900;
+    line-height: 1;
+    transition: transform .2s ease, opacity .2s ease;
+  }
+
+  #herbans-ingredients-carousel-{{ section.id }} .hic-btn:hover {
+    transform: translateY(-1px);
+    opacity: .92;
+  }
+
+  #herbans-ingredients-carousel-{{ section.id }} .hic-btn-primary {
+    background: {{ section.settings.button_1_bg }};
+    color: {{ section.settings.button_1_color }};
+    border: 1px solid {{ section.settings.button_1_border }};
+  }
+
+  #herbans-ingredients-carousel-{{ section.id }} .hic-btn-secondary {
+    background: {{ section.settings.button_2_bg }};
+    color: {{ section.settings.button_2_color }};
+    border: 1px solid {{ section.settings.button_2_border }};
+  }
+
+  @media screen and (min-width: 768px) {
+    #herbans-ingredients-carousel-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_desktop }}px;
+      padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
+    }
+
+    #herbans-ingredients-carousel-{{ section.id }} .hic-container {
+      max-width: none;
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    #herbans-ingredients-carousel-{{ section.id }} .hic-layout {
+      display: flex;
+      flex-direction: column;
+      gap: {{ section.settings.column_gap_desktop }}px;
+    }
+
+    #herbans-ingredients-carousel-{{ section.id }} .hic-header-row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+      padding-left: {{ section.settings.side_padding_desktop }}px;
+      padding-right: {{ section.settings.side_padding_desktop }}px;
+    }
+
+    #herbans-ingredients-carousel-{{ section.id }} .hic-copy {
+      text-align: {{ section.settings.desktop_text_align }};
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    #herbans-ingredients-carousel-{{ section.id }} .hic-eyebrow {
+      font-size: {{ section.settings.eyebrow_size_desktop }}px;
+    }
+
+    #herbans-ingredients-carousel-{{ section.id }} .hic-heading,
+    #herbans-ingredients-carousel-{{ section.id }} .hic-heading p {
+      font-size: {{ section.settings.heading_size_desktop }}px;
+      line-height: {{ section.settings.heading_line_height_desktop }}px;
+    }
+
+    #herbans-ingredients-carousel-{{ section.id }} .hic-subheading,
+    #herbans-ingredients-carousel-{{ section.id }} .hic-subheading p {
+      font-size: {{ section.settings.subheading_size_desktop }}px;
+      line-height: {{ section.settings.subheading_line_height_desktop }}px;
+      max-width: {{ section.settings.subheading_width }}px;
+    }
+
+    #herbans-ingredients-carousel-{{ section.id }} .hic-carousel {
+      --hic-gap: {{ section.settings.card_gap_desktop }}px;
+    }
+
+    #herbans-ingredients-carousel-{{ section.id }} .hic-card {
+      flex: 0 0 calc((100% - (var(--hic-gap) * 3.25)) / 4.25);
+    }
+
+    #herbans-ingredients-carousel-{{ section.id }} .hic-blur-mask {
+      clip-path: inset(calc(100% - {{ section.settings.bottom_panel_height_desktop }}%) 0 0 0);
+      -webkit-clip-path: inset(calc(100% - {{ section.settings.bottom_panel_height_desktop }}%) 0 0 0);
+    }
+
+    #herbans-ingredients-carousel-{{ section.id }} .hic-blur-mask .hic-blur-img {
+      filter: blur({{ section.settings.panel_blur_desktop | times: 2 }}px);
+      -webkit-filter: blur({{ section.settings.panel_blur_desktop | times: 2 }}px);
+    }
+
+    #herbans-ingredients-carousel-{{ section.id }} .hic-top-fade {
+      height: calc(100% - {{ section.settings.bottom_panel_height_desktop }}%);
+    }
+
+    #herbans-ingredients-carousel-{{ section.id }} .hic-bottom-panel {
+      height: {{ section.settings.bottom_panel_height_desktop }}%;
+      backdrop-filter: blur({{ section.settings.panel_blur_desktop }}px) saturate(1.05);
+      -webkit-backdrop-filter: blur({{ section.settings.panel_blur_desktop }}px) saturate(1.05);
+    }
+
+    #herbans-ingredients-carousel-{{ section.id }} .hic-ingredient {
+      top: {{ section.settings.top_label_top_desktop }}px;
+      left: {{ section.settings.top_label_side_desktop }}px;
+      right: {{ section.settings.top_label_side_desktop }}px;
+      font-size: {{ section.settings.top_label_size_desktop }}px;
+    }
+
+    #herbans-ingredients-carousel-{{ section.id }} .hic-content {
+      left: {{ section.settings.card_content_side_desktop }}px;
+      right: {{ section.settings.card_content_side_desktop }}px;
+      top: calc(100% - {{ section.settings.bottom_panel_height_desktop }}% + {{ section.settings.card_content_bottom_desktop }}px);
+      bottom: auto;
+    }
+
+    #herbans-ingredients-carousel-{{ section.id }} .hic-badge {
+      top: {{ section.settings.top_label_top_desktop }}px;
+      right: {{ section.settings.top_label_side_desktop }}px;
+      font-size: {{ section.settings.badge_size_desktop }}px;
+    }
+
+    #herbans-ingredients-carousel-{{ section.id }} .hic-content h3 {
+      font-size: {{ section.settings.card_title_size_desktop }}px;
+      line-height: {{ section.settings.card_title_line_height_desktop }}px;
+    }
+
+    #herbans-ingredients-carousel-{{ section.id }} .hic-content p {
+      font-size: {{ section.settings.card_text_size_desktop }}px;
+      line-height: {{ section.settings.card_text_line_height_desktop }}px;
+    }
+
+    #herbans-ingredients-carousel-{{ section.id }} .hic-buttons-header {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+      flex: 0 0 auto;
+      margin-top: 0;
+      padding: 0;
+    }
+
+    #herbans-ingredients-carousel-{{ section.id }} .hic-buttons-below {
+      display: none;
+    }
+
+    #herbans-ingredients-carousel-{{ section.id }} .hic-btn {
+      width: auto;
+    }
+  }
+</style>
+
+<script>
+  (function() {
+    function initCarousel() {
+      var section = document.getElementById('herbans-ingredients-carousel-{{ section.id }}');
+      if (!section) return;
+
+      var shell = section.querySelector('.hic-carousel-shell');
+      var carousel = section.querySelector('[data-hic-carousel]');
+      var prev = section.querySelector('[data-hic-prev]');
+      var next = section.querySelector('[data-hic-next]');
+      if (!shell || !carousel) return;
+
+      if (carousel.dataset.initialized === 'true') return;
+      carousel.dataset.initialized = 'true';
+
+      var originalCards = Array.prototype.slice.call(carousel.querySelectorAll('.hic-card'));
+      var originalCount = originalCards.length;
+      var offset = 0;
+      var rafId = null;
+      var lastTime = null;
+      var isPaused = false;
+      var resizeTimer = null;
+      var autoplaySeconds = {{ section.settings.autoplay_speed | default: 4 }};
+      var autoplayEnabled = {% if section.settings.enable_autoplay %}true{% else %}false{% endif %};
+
+      function cleanClone(clone) {
+        clone.setAttribute('aria-hidden', 'true');
+        clone.setAttribute('data-hic-clone', 'true');
+        clone.removeAttribute('id');
+
+        Array.prototype.slice.call(clone.attributes).forEach(function(attr) {
+          if (attr.name.indexOf('data-shopify') === 0 || attr.name === 'shopify_attributes') {
+            clone.removeAttribute(attr.name);
+          }
+        });
+      }
+
+      function buildLoop() {
+        if (carousel.dataset.loopCloned === 'true' || originalCount < 2) return;
+
+        // Add enough duplicate cards so the track can loop forever without a visible reset.
+        for (var round = 0; round < 3; round++) {
+          originalCards.forEach(function(card) {
+            var clone = card.cloneNode(true);
+            cleanClone(clone);
+            carousel.appendChild(clone);
+          });
+        }
+
+        carousel.dataset.loopCloned = 'true';
+      }
+
+      function getGap() {
+        var styles = window.getComputedStyle(carousel);
+        return parseFloat(styles.columnGap || styles.gap || 0) || 0;
+      }
+
+      function getStep() {
+        var firstCard = carousel.querySelector('.hic-card');
+        if (!firstCard) return 320;
+        return firstCard.getBoundingClientRect().width + getGap();
+      }
+
+      function getLoopWidth() {
+        if (originalCount < 2) return 0;
+        return getStep() * originalCount;
+      }
+
+      function normalizeOffset() {
+        var loopWidth = getLoopWidth();
+        if (!loopWidth) return;
+
+        while (Math.abs(offset) >= loopWidth) {
+          offset += loopWidth;
+        }
+
+        while (offset > 0) {
+          offset -= loopWidth;
+        }
+      }
+
+      function applyTransform() {
+        carousel.style.transform = 'translate3d(' + offset + 'px, 0, 0)';
+      }
+
+      function animate(time) {
+        if (!lastTime) lastTime = time;
+        var delta = time - lastTime;
+        lastTime = time;
+
+        if (autoplayEnabled && !isPaused && originalCount > 1) {
+          var step = getStep();
+          var speed = step / (autoplaySeconds * 1000); // one card every autoplaySeconds
+          offset -= speed * delta;
+          normalizeOffset();
+          applyTransform();
+        }
+
+        rafId = window.requestAnimationFrame(animate);
+      }
+
+      function nudge(direction) {
+        if (originalCount < 2) return;
+
+        var step = getStep();
+        var loopWidth = getLoopWidth();
+        isPaused = true;
+
+        // If moving backward from the first visual card, jump to the identical cloned set first.
+        // This makes the arrow feel infinite instead of snapping back.
+        if (direction < 0 && loopWidth && offset + step > 0) {
+          carousel.style.transition = 'none';
+          offset -= loopWidth;
+          applyTransform();
+          carousel.offsetHeight; // force the browser to apply the invisible reset
+        }
+
+        carousel.style.transition = 'transform 420ms ease';
+        offset -= step * direction;
+        normalizeOffset();
+        applyTransform();
+
+        window.setTimeout(function() {
+          carousel.style.transition = 'none';
+          isPaused = false;
+          lastTime = null;
+        }, 430);
+      }
+
+      buildLoop();
+      carousel.style.transition = 'none';
+      applyTransform();
+
+      if (prev) {
+        prev.addEventListener('click', function() {
+          nudge(-1);
+        });
+      }
+
+      if (next) {
+        next.addEventListener('click', function() {
+          nudge(1);
+        });
+      }
+
+      // Keep the carousel moving continuously, but pause when the customer touches it.
+      carousel.addEventListener('touchstart', function() {
+        isPaused = true;
+      }, { passive: true });
+
+      carousel.addEventListener('touchend', function() {
+        isPaused = false;
+        lastTime = null;
+      }, { passive: true });
+
+      window.addEventListener('resize', function() {
+        window.clearTimeout(resizeTimer);
+        resizeTimer = window.setTimeout(function() {
+          normalizeOffset();
+          applyTransform();
+          lastTime = null;
+        }, 150);
+      });
+
+      rafId = window.requestAnimationFrame(animate);
+
+      document.addEventListener('shopify:section:unload', function(event) {
+        if (!event || !event.target || !event.target.contains(section)) return;
+        if (rafId) window.cancelAnimationFrame(rafId);
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', initCarousel);
+    document.addEventListener('shopify:section:load', initCarousel);
+    initCarousel();
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Herbans Ingredients",
+  "settings": [
+    { "type": "header", "content": "Visibility" },
+    { "type": "checkbox", "id": "show_on_desktop", "label": "Show on desktop", "default": true },
+    { "type": "checkbox", "id": "show_on_mobile", "label": "Show on mobile", "default": true },
+
+    { "type": "header", "content": "Header" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "FORMULA SPOTLIGHT" },
+    { "type": "richtext", "id": "heading", "label": "Heading", "default": "<p>Quality botanicals designed for <strong>daily hair support</strong></p>" },
+    { "type": "richtext", "id": "subheading", "label": "Subheading", "default": "<p>Herbans combines targeted plant-based ingredients to support fuller-looking hair, scalp wellness, and daily comfort from within.</p>" },
+
+    { "type": "header", "content": "Buttons" },
+    { "type": "text", "id": "button_1_label", "label": "Button 1 label", "default": "View Ingredients" },
+    { "type": "url", "id": "button_1_link", "label": "Button 1 link" },
+    { "type": "text", "id": "button_2_label", "label": "Button 2 label", "default": "Supplement Facts" },
+    { "type": "url", "id": "button_2_link", "label": "Button 2 link" },
+    { "type": "range", "id": "buttons_top_mobile", "label": "Buttons top spacing mobile", "min": 0, "max": 80, "step": 2, "default": 20 },
+    { "type": "range", "id": "buttons_top_desktop", "label": "Buttons top spacing desktop", "min": 0, "max": 100, "step": 2, "default": 24 },
+    { "type": "range", "id": "button_gap", "label": "Button gap", "min": 6, "max": 30, "step": 2, "default": 12 },
+    { "type": "range", "id": "button_height", "label": "Button height", "min": 36, "max": 70, "step": 2, "default": 44 },
+    { "type": "range", "id": "button_min_width", "label": "Button min width", "min": 110, "max": 260, "step": 10, "default": 170 },
+    { "type": "range", "id": "button_radius", "label": "Button radius", "min": 0, "max": 40, "step": 1, "default": 24 },
+    { "type": "range", "id": "button_font_size", "label": "Button font size", "min": 11, "max": 20, "step": 1, "default": 14 },
+
+    { "type": "header", "content": "Layout" },
+    { "type": "range", "id": "desktop_left_column", "label": "Desktop left column width", "min": 3, "max": 8, "step": 1, "default": 4 },
+    { "type": "range", "id": "desktop_right_column", "label": "Desktop right column width", "min": 5, "max": 10, "step": 1, "default": 8 },
+    { "type": "range", "id": "column_gap_mobile", "label": "Column gap mobile", "min": 16, "max": 60, "step": 2, "default": 24 },
+    { "type": "range", "id": "column_gap_desktop", "label": "Column gap desktop", "min": 24, "max": 100, "step": 2, "default": 44 },
+
+    { "type": "header", "content": "Carousel" },
+    { "type": "checkbox", "id": "show_arrows", "label": "Show arrows", "default": true },
+    { "type": "checkbox", "id": "enable_autoplay", "label": "Enable autoplay", "default": true },
+    { "type": "range", "id": "autoplay_speed", "label": "Autoplay speed (seconds)", "min": 2, "max": 10, "step": 1, "default": 4 },
+    { "type": "paragraph", "content": "Mobile shows 1.5 cards. Desktop shows a wide scrolling row like the reference." },
+    { "type": "range", "id": "card_gap_mobile", "label": "Card gap mobile", "min": 8, "max": 28, "step": 2, "default": 14 },
+    { "type": "range", "id": "card_gap_desktop", "label": "Card gap desktop", "min": 10, "max": 40, "step": 2, "default": 20 },
+    { "type": "text", "id": "card_ratio", "label": "Card ratio", "default": "5 / 7" },
+    { "type": "select", "id": "image_fit", "label": "Image fit", "options": [
+      { "value": "cover", "label": "Cover" },
+      { "value": "contain", "label": "Contain" }
+    ], "default": "cover" },
+    { "type": "range", "id": "image_zoom", "label": "Image zoom", "min": 100, "max": 140, "step": 1, "default": 100 },
+    { "type": "range", "id": "card_radius", "label": "Card radius", "min": 0, "max": 36, "step": 1, "default": 22 },
+    { "type": "range", "id": "card_border_width", "label": "Card border width", "min": 0, "max": 4, "step": 1, "default": 0 },
+    { "type": "text", "id": "card_shadow", "label": "Card shadow CSS", "default": "0 16px 36px rgba(0,0,0,0.18)" },
+
+    { "type": "header", "content": "Blur panel" },
+    { "type": "range", "id": "top_overlay_opacity", "label": "Top black image overlay opacity", "min": 0, "max": 100, "step": 5, "default": 100 },
+    { "type": "range", "id": "bottom_panel_height_mobile", "label": "Bottom panel height mobile (%)", "min": 30, "max": 70, "step": 1, "default": 50 },
+    { "type": "range", "id": "bottom_panel_height_desktop", "label": "Bottom panel height desktop (%)", "min": 30, "max": 70, "step": 1, "default": 50 },
+    { "type": "range", "id": "panel_blur_mobile", "label": "Panel blur mobile", "min": 0, "max": 60, "step": 1, "default": 26 },
+    { "type": "range", "id": "panel_blur_desktop", "label": "Panel blur desktop", "min": 0, "max": 60, "step": 1, "default": 26 },
+    { "type": "range", "id": "panel_opacity", "label": "Panel opacity", "min": 0, "max": 100, "step": 5, "default": 55 },
+    { "type": "color", "id": "panel_rgb", "label": "Panel tint color", "default": "#6A6660" },
+
+    { "type": "header", "content": "Spacing" },
+    { "type": "range", "id": "max_width", "label": "Max width", "min": 900, "max": 1700, "step": 20, "default": 1400 },
+    { "type": "range", "id": "padding_top_mobile", "label": "Padding top mobile", "min": 0, "max": 140, "step": 4, "default": 56 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Padding bottom mobile", "min": 0, "max": 140, "step": 4, "default": 56 },
+    { "type": "range", "id": "padding_top_desktop", "label": "Padding top desktop", "min": 0, "max": 180, "step": 4, "default": 80 },
+    { "type": "range", "id": "padding_bottom_desktop", "label": "Padding bottom desktop", "min": 0, "max": 180, "step": 4, "default": 80 },
+    { "type": "range", "id": "side_padding_mobile", "label": "Side padding mobile", "min": 0, "max": 30, "step": 2, "default": 16 },
+    { "type": "range", "id": "side_padding_desktop", "label": "Side padding desktop", "min": 0, "max": 80, "step": 4, "default": 40 },
+
+    { "type": "header", "content": "Typography" },
+    { "type": "select", "id": "mobile_text_align", "label": "Mobile text align", "options": [
+      { "value": "left", "label": "Left" },
+      { "value": "center", "label": "Center" }
+    ], "default": "left" },
+    { "type": "select", "id": "desktop_text_align", "label": "Desktop text align", "options": [
+      { "value": "left", "label": "Left" },
+      { "value": "center", "label": "Center" }
+    ], "default": "left" },
+    { "type": "range", "id": "eyebrow_size_mobile", "label": "Eyebrow size mobile", "min": 9, "max": 18, "step": 1, "default": 11 },
+    { "type": "range", "id": "eyebrow_size_desktop", "label": "Eyebrow size desktop", "min": 9, "max": 20, "step": 1, "default": 12 },
+    { "type": "range", "id": "heading_size_mobile", "label": "Heading size mobile", "min": 24, "max": 56, "step": 1, "default": 36 },
+    { "type": "range", "id": "heading_line_height_mobile", "label": "Heading line height mobile", "min": 26, "max": 64, "step": 1, "default": 38 },
+    { "type": "range", "id": "heading_size_desktop", "label": "Heading size desktop", "min": 28, "max": 90, "step": 1, "default": 54 },
+    { "type": "range", "id": "heading_line_height_desktop", "label": "Heading line height desktop", "min": 30, "max": 96, "step": 1, "default": 58 },
+    { "type": "select", "id": "heading_weight", "label": "Heading weight", "options": [
+      { "value": "600", "label": "Semi bold" },
+      { "value": "700", "label": "Bold" },
+      { "value": "800", "label": "Extra bold" },
+      { "value": "900", "label": "Black" }
+    ], "default": "800" },
+    { "type": "range", "id": "heading_letter_spacing", "label": "Heading letter spacing", "min": -4, "max": 3, "step": 1, "default": -2 },
+    { "type": "range", "id": "subheading_width", "label": "Subheading max width", "min": 260, "max": 800, "step": 20, "default": 520 },
+    { "type": "range", "id": "subheading_size_mobile", "label": "Subheading size mobile", "min": 13, "max": 22, "step": 1, "default": 16 },
+    { "type": "range", "id": "subheading_line_height_mobile", "label": "Subheading line height mobile", "min": 18, "max": 32, "step": 1, "default": 23 },
+    { "type": "range", "id": "subheading_size_desktop", "label": "Subheading size desktop", "min": 13, "max": 24, "step": 1, "default": 18 },
+    { "type": "range", "id": "subheading_line_height_desktop", "label": "Subheading line height desktop", "min": 18, "max": 34, "step": 1, "default": 26 },
+    { "type": "select", "id": "subheading_weight", "label": "Subheading weight", "options": [
+      { "value": "400", "label": "Regular" },
+      { "value": "500", "label": "Medium" },
+      { "value": "600", "label": "Semi bold" }
+    ], "default": "500" },
+
+    { "type": "header", "content": "Card text" },
+    { "type": "range", "id": "top_label_top_mobile", "label": "Top label top mobile", "min": 10, "max": 50, "step": 1, "default": 18 },
+    { "type": "range", "id": "top_label_side_mobile", "label": "Top label side mobile", "min": 10, "max": 40, "step": 1, "default": 18 },
+    { "type": "range", "id": "top_label_size_mobile", "label": "Top label size mobile", "min": 9, "max": 18, "step": 1, "default": 10 },
+    { "type": "range", "id": "top_label_top_desktop", "label": "Top label top desktop", "min": 10, "max": 60, "step": 1, "default": 20 },
+    { "type": "range", "id": "top_label_side_desktop", "label": "Top label side desktop", "min": 10, "max": 50, "step": 1, "default": 20 },
+    { "type": "range", "id": "top_label_size_desktop", "label": "Top label size desktop", "min": 9, "max": 18, "step": 1, "default": 11 },
+    { "type": "range", "id": "card_content_side_mobile", "label": "Card content side mobile", "min": 12, "max": 40, "step": 1, "default": 18 },
+    { "type": "range", "id": "card_content_bottom_mobile", "label": "Card content bottom mobile", "min": 12, "max": 40, "step": 1, "default": 18 },
+    { "type": "range", "id": "card_content_side_desktop", "label": "Card content side desktop", "min": 12, "max": 44, "step": 1, "default": 20 },
+    { "type": "range", "id": "card_content_bottom_desktop", "label": "Card content bottom desktop", "min": 12, "max": 44, "step": 1, "default": 20 },
+    { "type": "range", "id": "badge_size_mobile", "label": "Badge size mobile", "min": 9, "max": 16, "step": 1, "default": 10 },
+    { "type": "range", "id": "badge_size_desktop", "label": "Badge size desktop", "min": 9, "max": 16, "step": 1, "default": 10 },
+    { "type": "range", "id": "card_title_size_mobile", "label": "Card title size mobile", "min": 16, "max": 30, "step": 1, "default": 20 },
+    { "type": "range", "id": "card_title_line_height_mobile", "label": "Card title line height mobile", "min": 18, "max": 36, "step": 1, "default": 23 },
+    { "type": "range", "id": "card_title_size_desktop", "label": "Card title size desktop", "min": 16, "max": 34, "step": 1, "default": 24 },
+    { "type": "range", "id": "card_title_line_height_desktop", "label": "Card title line height desktop", "min": 18, "max": 40, "step": 1, "default": 27 },
+    { "type": "range", "id": "card_text_size_mobile", "label": "Card text size mobile", "min": 11, "max": 18, "step": 1, "default": 14 },
+    { "type": "range", "id": "card_text_line_height_mobile", "label": "Card text line height mobile", "min": 15, "max": 28, "step": 1, "default": 20 },
+    { "type": "range", "id": "card_text_size_desktop", "label": "Card text size desktop", "min": 11, "max": 20, "step": 1, "default": 15 },
+    { "type": "range", "id": "card_text_line_height_desktop", "label": "Card text line height desktop", "min": 15, "max": 28, "step": 1, "default": 21 },
+    { "type": "select", "id": "card_text_weight", "label": "Card text weight", "options": [
+      { "value": "400", "label": "Regular" },
+      { "value": "500", "label": "Medium" },
+      { "value": "600", "label": "Semi bold" }
+    ], "default": "500" },
+
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "section_bg", "label": "Section background", "default": "#0C4B4B" },
+    { "type": "color", "id": "eyebrow_color", "label": "Eyebrow color", "default": "#F5CC6A" },
+    { "type": "color", "id": "heading_color", "label": "Heading color", "default": "#F6F3EF" },
+    { "type": "color", "id": "heading_accent_color", "label": "Heading bold/accent color", "default": "#F5CC6A" },
+    { "type": "color", "id": "subheading_color", "label": "Subheading color", "default": "#E7EFEA" },
+    { "type": "color", "id": "card_bg", "label": "Card background", "default": "#DCA78A" },
+    { "type": "color", "id": "card_border_color", "label": "Card border", "default": "#DCA78A" },
+    { "type": "color", "id": "top_label_color", "label": "Top label color", "default": "#FFFFFF" },
+    { "type": "color", "id": "card_title_color", "label": "Card title color", "default": "#FFFFFF" },
+    { "type": "color", "id": "card_text_color", "label": "Card text color", "default": "#FFF8F4" },
+    { "type": "color", "id": "badge_bg", "label": "Badge background", "default": "#F5CC6A" },
+    { "type": "color", "id": "badge_color", "label": "Badge text color", "default": "#111111" },
+    { "type": "color", "id": "button_1_bg", "label": "Button 1 background", "default": "#FFFFFF" },
+    { "type": "color", "id": "button_1_color", "label": "Button 1 text", "default": "#123F3D" },
+    { "type": "color", "id": "button_1_border", "label": "Button 1 border", "default": "#FFFFFF" },
+    { "type": "color_background", "id": "button_2_bg", "label": "Button 2 background", "default": "transparent" },
+    { "type": "color", "id": "button_2_color", "label": "Button 2 text", "default": "#FFFFFF" },
+    { "type": "color", "id": "button_2_border", "label": "Button 2 border", "default": "#FFFFFF" },
+    { "type": "color", "id": "arrow_bg", "label": "Arrow background", "default": "#FFFFFF" },
+    { "type": "color", "id": "arrow_color", "label": "Arrow color", "default": "#0C4B4B" },
+    { "type": "color", "id": "arrow_border_color", "label": "Arrow border", "default": "#FFFFFF" },
+    { "type": "color", "id": "placeholder_bg_1", "label": "Placeholder bg 1", "default": "#F7E6DA" },
+    { "type": "color", "id": "placeholder_bg_2", "label": "Placeholder bg 2", "default": "#D58764" },
+    { "type": "color", "id": "placeholder_text_color", "label": "Placeholder text color", "default": "#103B38" }
+  ],
+  "blocks": [
+    {
+      "type": "carousel_card",
+      "name": "Carousel card",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Card image" },
+        { "type": "text", "id": "image_alt", "label": "Image alt text", "default": "Herbans ingredient" },
+        { "type": "text", "id": "ingredient_name", "label": "Top ingredient name", "default": "PUMPKIN SEED OIL" },
+        { "type": "text", "id": "badge", "label": "Badge", "default": "3,000MG" },
+        { "type": "text", "id": "title", "label": "Card title", "default": "Plant-based hair support" },
+        { "type": "textarea", "id": "text", "label": "Card text", "default": "Supports fuller-looking hair, scalp wellness, and daily comfort from within." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Herbans Ingredients",
+      "blocks": [
+        {
+          "type": "carousel_card",
+          "settings": {
+            "ingredient_name": "PUMPKIN SEED OIL",
+            "badge": "3,000MG",
+            "title": "Plant-based hair support",
+            "text": "Supports fuller-looking hair, scalp wellness, and daily comfort from within."
+          }
+        },
+        {
+          "type": "carousel_card",
+          "settings": {
+            "ingredient_name": "SAW PALMETTO",
+            "badge": "300MG",
+            "title": "DHT pathway support",
+            "text": "A targeted botanical used to support normal DHT pathways and healthy hair wellness."
+          }
+        },
+        {
+          "type": "carousel_card",
+          "settings": {
+            "ingredient_name": "SOFTGEL FORMAT",
+            "badge": "DAILY",
+            "title": "No messy routine",
+            "text": "No oils, sprays, or complicated steps. Just easy daily softgels."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

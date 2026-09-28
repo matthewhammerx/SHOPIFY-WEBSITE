@@ -1,0 +1,441 @@
+<style>
+  .article-hero {
+    background: var(--wf-bg);
+    color: var(--wf-ink);
+  }
+
+  .article-hero__inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: var(--wf-padding, 32px) 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  .article-hero__media {
+    width: 100%;
+    aspect-ratio: var(--wf-image-ratio, 4 / 3);
+    overflow: hidden;
+    border-radius: var(--wf-image-radius, 0px);
+  }
+  .article-hero__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: var(--wf-image-position, 50% 50%);
+    display: block;
+  }
+  .article-hero__media--placeholder svg {
+    width: 100%;
+    height: 100%;
+  }
+  .article-hero__media--desktop {
+    display: none;
+  }
+
+  .article-hero__title {
+    margin: 0;
+    font-family: var(--wf-heading-font, inherit);
+    font-size: var(--wf-title-size-mobile, 26px);
+    line-height: 1.2;
+    font-weight: 800;
+    color: var(--wf-heading);
+    text-wrap: balance;
+  }
+
+  .article-hero__byline {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .article-hero__avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+  .article-hero__author {
+    font-family: var(--wf-body-font, inherit);
+    font-weight: 700;
+    font-size: calc(var(--wf-body-size, 17px) - 1px);
+    color: var(--wf-ink);
+  }
+  .article-hero__date {
+    font-family: var(--wf-body-font, inherit);
+    font-size: calc(var(--wf-body-size, 17px) - 3px);
+    color: var(--wf-muted);
+    margin-top: 2px;
+  }
+
+  .article-hero__desc {
+    font-family: var(--wf-body-font, inherit);
+    max-width: 60ch;
+    font-size: var(--wf-body-size, 17px);
+    line-height: 1.55;
+    color: var(--wf-ink);
+  }
+  .article-hero__desc p {
+    margin: 0;
+  }
+  .article-hero__desc strong {
+    color: var(--wf-heading);
+  }
+
+  .article-hero__text {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  @media (min-width: 860px) {
+    .article-hero__inner {
+      flex-direction: var(--wf-image-direction, row);
+      align-items: center;
+      gap: 56px;
+      padding: var(--wf-padding, 56px) 40px;
+    }
+    .article-hero__media--mobile {
+      display: none;
+    }
+    .article-hero__media--desktop {
+      display: block;
+      flex: 0 0 var(--wf-image-width, 50%);
+    }
+    .article-hero__text {
+      flex: 1 1 0%;
+    }
+    .article-hero__title {
+      font-size: var(--wf-title-size-desktop, 40px);
+    }
+  }
+</style>
+
+{%- case section.settings.image_ratio -%}
+  {%- when 'square' -%}
+    {%- assign image_ratio = '1 / 1' -%}
+  {%- when 'portrait' -%}
+    {%- assign image_ratio = '4 / 5' -%}
+  {%- when 'wide' -%}
+    {%- assign image_ratio = '16 / 9' -%}
+  {%- when 'original' -%}
+    {%- if section.settings.image != blank -%}
+      {%- assign image_ratio = section.settings.image.aspect_ratio | append: ' / 1' -%}
+    {%- else -%}
+      {%- assign image_ratio = '4 / 3' -%}
+    {%- endif -%}
+  {%- else -%}
+    {%- assign image_ratio = '4 / 3' -%}
+{%- endcase -%}
+
+{%- if section.settings.image_position == 'left' -%}
+  {%- assign image_direction = 'row-reverse' -%}
+{%- else -%}
+  {%- assign image_direction = 'row' -%}
+{%- endif -%}
+
+{%- if section.settings.image != blank and section.settings.image.presentation.focal_point -%}
+  {%- assign focal_point = section.settings.image.presentation.focal_point.x | append: '% ' | append: section.settings.image.presentation.focal_point.y | append: '%' -%}
+{%- else -%}
+  {%- assign focal_point = '50% 50%' -%}
+{%- endif -%}
+
+{%- unless section.settings.match_theme_fonts -%}
+  {%- assign heading_font = section.settings.heading_font -%}
+  {%- assign body_font = section.settings.body_font -%}
+  <style>
+    {{ heading_font | font_face: font_display: 'swap' }}
+    {{ body_font | font_face: font_display: 'swap' }}
+  </style>
+{%- endunless -%}
+
+<section class="article-hero" style="
+  --wf-bg: {{ section.settings.bg_color }};
+  --wf-ink: {{ section.settings.text_color }};
+  --wf-heading: {{ section.settings.heading_color }};
+  --wf-muted: {{ section.settings.muted_color }};
+  --wf-padding: {{ section.settings.section_padding }}px;
+  --wf-title-size-mobile: {{ section.settings.heading_size_mobile }}px;
+  --wf-title-size-desktop: {{ section.settings.heading_size_desktop }}px;
+  --wf-body-size: {{ section.settings.body_size }}px;
+  --wf-image-ratio: {{ image_ratio }};
+  --wf-image-direction: {{ image_direction }};
+  --wf-image-position: {{ focal_point }};
+  --wf-image-radius: {{ section.settings.image_radius }}px;
+  --wf-image-width: {{ section.settings.image_width }}%;
+  {%- unless section.settings.match_theme_fonts -%}
+  --wf-heading-font: {{ section.settings.heading_font.family }}, {{ section.settings.heading_font.fallback_families }};
+  --wf-body-font: {{ section.settings.body_font.family }}, {{ section.settings.body_font.fallback_families }};
+  {%- endunless -%}
+">
+  <div class="article-hero__inner">
+
+    {%- if section.settings.image != blank -%}
+      <picture class="article-hero__media article-hero__media--mobile">
+        <source srcset="{{ section.settings.image | image_url: width: 820 }}" media="(max-width: 640px)">
+        <source srcset="{{ section.settings.image | image_url: width: 1024 }}" media="(min-width: 641px)">
+        <img
+          src="{{ section.settings.image | image_url: width: 1024 }}"
+          alt="{{ section.settings.image.alt | default: section.settings.heading | escape }}"
+          loading="eager"
+          width="{{ section.settings.image.width }}"
+          height="{{ section.settings.image.height }}"
+          style="object-position: {{ focal_point }};"
+        >
+      </picture>
+    {%- else -%}
+      <div class="article-hero__media article-hero__media--mobile article-hero__media--placeholder">
+        {{ 'image' | placeholder_svg_tag: 'article-hero__placeholder-svg' }}
+      </div>
+    {%- endif -%}
+
+    <div class="article-hero__text">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="article-hero__title">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+
+      {%- if section.settings.author_name != blank or section.settings.author_image != blank -%}
+        <div class="article-hero__byline">
+          {%- if section.settings.author_image != blank -%}
+            <img
+              class="article-hero__avatar"
+              src="{{ section.settings.author_image | image_url: width: 88 }}"
+              alt="{{ section.settings.author_name | escape }}"
+              loading="eager"
+              width="44"
+              height="44"
+            >
+          {%- endif -%}
+          <div>
+            {%- if section.settings.author_name != blank -%}
+              <div class="article-hero__author">{{ section.settings.author_name }}</div>
+            {%- endif -%}
+            {%- if section.settings.updated_date != blank -%}
+              <div class="article-hero__date">{{ section.settings.updated_date }}</div>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.description != blank -%}
+        <div class="article-hero__desc">{{ section.settings.description }}</div>
+      {%- endif -%}
+    </div>
+
+    {%- if section.settings.image != blank -%}
+      <picture class="article-hero__media article-hero__media--desktop">
+        <source srcset="{{ section.settings.image | image_url: width: 1800 }}" media="(min-width: 1025px)">
+        <source srcset="{{ section.settings.image | image_url: width: 1024 }}" media="(min-width: 861px) and (max-width: 1024px)">
+        <img
+          src="{{ section.settings.image | image_url: width: 1800 }}"
+          alt="{{ section.settings.image.alt | default: section.settings.heading | escape }}"
+          loading="eager"
+          width="{{ section.settings.image.width }}"
+          height="{{ section.settings.image.height }}"
+          style="object-position: {{ focal_point }};"
+        >
+      </picture>
+    {%- endif -%}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Article hero",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "5 Reasons Why Your Dog Needs This Hip & Joint Supplement"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Hero image"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Wuffes Advanced Hip & Joint is formulated with 8 clinically-backed ingredients. It helps your dog stay active and comfortable by supporting cartilage repair, joint lubrication, and inflammation reduction.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Author"
+    },
+    {
+      "type": "image_picker",
+      "id": "author_image",
+      "label": "Author photo"
+    },
+    {
+      "type": "text",
+      "id": "author_name",
+      "label": "Author name",
+      "default": "By Dr Valerie Henley, DVM"
+    },
+    {
+      "type": "text",
+      "id": "updated_date",
+      "label": "Updated date",
+      "default": "Updated on 3/2026"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "checkbox",
+      "id": "match_theme_fonts",
+      "label": "Use theme fonts",
+      "default": true,
+      "info": "Turn off to pick custom fonts for this section below."
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Heading font",
+      "default": "assistant_n7",
+      "info": "Only used when \"Use theme fonts\" is off"
+    },
+    {
+      "type": "font_picker",
+      "id": "body_font",
+      "label": "Body font",
+      "default": "assistant_n4",
+      "info": "Only used when \"Use theme fonts\" is off"
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Heading size (mobile)",
+      "min": 18,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 26
+    },
+    {
+      "type": "range",
+      "id": "heading_size_desktop",
+      "label": "Heading size (desktop)",
+      "min": 24,
+      "max": 64,
+      "step": 1,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "body_size",
+      "label": "Body text size",
+      "min": 13,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "default": 17
+    },
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Image position (desktop)",
+      "options": [
+        { "value": "right", "label": "Right" },
+        { "value": "left", "label": "Left" }
+      ],
+      "default": "right"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Image shape",
+      "options": [
+        { "value": "square", "label": "Square" },
+        { "value": "portrait", "label": "Vertical (portrait)" },
+        { "value": "landscape", "label": "Horizontal (landscape)" },
+        { "value": "wide", "label": "Wide" },
+        { "value": "original", "label": "Original image proportions" }
+      ],
+      "default": "landscape"
+    },
+    {
+      "type": "range",
+      "id": "image_radius",
+      "label": "Image corner radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "image_width",
+      "label": "Image width (desktop)",
+      "min": 30,
+      "max": 70,
+      "step": 1,
+      "unit": "%",
+      "default": 50
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "section_padding",
+      "label": "Vertical padding",
+      "min": 16,
+      "max": 96,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background",
+      "default": "#F2E8D6"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading",
+      "default": "#1E3D2C"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Body text",
+      "default": "#1A1A17"
+    },
+    {
+      "type": "color",
+      "id": "muted_color",
+      "label": "Muted text (date)",
+      "default": "#5C5B53"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Article hero"
+    }
+  ]
+}
+{% endschema %}

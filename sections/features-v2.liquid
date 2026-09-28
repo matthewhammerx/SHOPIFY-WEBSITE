@@ -1,0 +1,1186 @@
+{% comment %}
+  Features V2
+  Grüns-style center image + surrounding feature benefits
+{% endcomment %}
+
+<section id="features-v2-{{ section.id }}" class="features-v2">
+  <style>
+    #features-v2-{{ section.id }} {
+      --fv2-bg: {{ section.settings.section_bg }};
+      --fv2-text: {{ section.settings.text_color }};
+      --fv2-heading: {{ section.settings.heading_color }};
+      --fv2-accent: {{ section.settings.accent_color }};
+      --fv2-card-bg: {{ section.settings.card_bg }};
+      --fv2-card-border: {{ section.settings.card_border_color }};
+      --fv2-icon-bg: {{ section.settings.icon_bg }};
+      --fv2-shadow: rgba(0, 0, 0, 0.08);
+
+      background: var(--fv2-bg);
+      color: var(--fv2-text);
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+      overflow: hidden;
+      font-family: inherit;
+    }
+
+    #features-v2-{{ section.id }} * {
+      box-sizing: border-box;
+    }
+
+    #features-v2-{{ section.id }} .fv2-wrapper {
+      max-width: {{ section.settings.max_width }}px;
+      margin: 0 auto;
+      padding: 0 {{ section.settings.mobile_side_padding }}px;
+    }
+
+    #features-v2-{{ section.id }} .fv2-header {
+      text-align: center;
+      max-width: {{ section.settings.header_max_width }}px;
+      margin: 0 auto {{ section.settings.header_bottom_margin_mobile }}px;
+    }
+
+    #features-v2-{{ section.id }} .fv2-eyebrow {
+      margin: 0 0 10px;
+      color: var(--fv2-accent);
+      font-size: {{ section.settings.eyebrow_size_mobile }}px;
+      line-height: 1.2;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    #features-v2-{{ section.id }} .fv2-heading {
+      margin: 0;
+      color: var(--fv2-heading);
+      font-size: {{ section.settings.heading_size_mobile }}px;
+      line-height: {{ section.settings.heading_line_height | divided_by: 100.0 }};
+      letter-spacing: -0.045em;
+      font-weight: {{ section.settings.heading_weight }};
+    }
+
+    #features-v2-{{ section.id }} .fv2-heading p {
+      margin: 0;
+      font: inherit;
+      color: inherit;
+    }
+
+    #features-v2-{{ section.id }} .fv2-heading strong,
+    #features-v2-{{ section.id }} .fv2-heading b {
+      color: var(--fv2-accent);
+      font-weight: inherit;
+    }
+
+    #features-v2-{{ section.id }} .fv2-description {
+      margin: {{ section.settings.description_top_margin }}px auto 0;
+      max-width: {{ section.settings.description_max_width }}px;
+      color: var(--fv2-text);
+      font-size: {{ section.settings.description_size_mobile }}px;
+      line-height: 1.6;
+      font-weight: {{ section.settings.description_weight }};
+      opacity: {{ section.settings.description_opacity | divided_by: 100.0 }};
+    }
+
+    #features-v2-{{ section.id }} .fv2-description p {
+      margin: 0;
+    }
+
+    #features-v2-{{ section.id }} .fv2-stage {
+      position: relative;
+      max-width: {{ section.settings.stage_max_width }}px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    #features-v2-{{ section.id }} .fv2-image-wrap {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: {{ section.settings.main_image_size_mobile }}px;
+      margin: 0 auto {{ section.settings.mobile_image_bottom_gap }}px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #features-v2-{{ section.id }} .fv2-main-image {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: contain;
+      object-position: {{ section.settings.image_position_x }}% {{ section.settings.image_position_y }}%;
+      filter: drop-shadow(0 {{ section.settings.image_shadow_y }}px {{ section.settings.image_shadow_blur }}px rgba(0,0,0,{{ section.settings.image_shadow_opacity | divided_by: 100.0 }}));
+    }
+
+    #features-v2-{{ section.id }} .fv2-placeholder {
+      width: 100%;
+      opacity: 0.35;
+    }
+
+    #features-v2-{{ section.id }} .fv2-features {
+      list-style: none;
+      padding: 0;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat({{ section.settings.mobile_columns }}, minmax(0, 1fr));
+      gap: {{ section.settings.mobile_feature_gap }}px;
+      max-width: {{ section.settings.mobile_features_max_width }}px;
+      text-align: {{ section.settings.mobile_text_align }};
+    }
+
+    #features-v2-{{ section.id }} .fv2-feature {
+      position: relative;
+      background: var(--fv2-card-bg);
+      border: {{ section.settings.card_border_width }}px solid var(--fv2-card-border);
+      border-radius: {{ section.settings.card_radius }}px;
+      padding: {{ section.settings.card_padding_mobile }}px;
+      box-shadow: {% if section.settings.show_card_shadow %}0 10px 28px var(--fv2-shadow){% else %}none{% endif %};
+    }
+
+    #features-v2-{{ section.id }} .fv2-icon {
+      width: {{ section.settings.icon_size_mobile }}px;
+      height: {{ section.settings.icon_size_mobile }}px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: {% if section.settings.mobile_text_align == 'center' %}0 auto {{ section.settings.icon_bottom_gap }}px{% else %}0 0 {{ section.settings.icon_bottom_gap }}px{% endif %};
+      border-radius: 999px;
+      background: {% if section.settings.show_icon_circle %}var(--fv2-icon-bg){% else %}transparent{% endif %};
+      padding: {% if section.settings.show_icon_circle %}{{ section.settings.icon_padding }}px{% else %}0{% endif %};
+    }
+
+    #features-v2-{{ section.id }} .fv2-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    #features-v2-{{ section.id }} .fv2-icon-placeholder {
+      width: 100%;
+      height: 100%;
+      border-radius: 999px;
+      background: var(--fv2-accent);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: {{ section.settings.icon_placeholder_size }}px;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    #features-v2-{{ section.id }} .fv2-feature-title {
+      margin: 0 0 {{ section.settings.title_bottom_gap }}px;
+      color: var(--fv2-accent);
+      font-size: {{ section.settings.feature_title_size_mobile }}px;
+      line-height: 1.15;
+      letter-spacing: -0.04em;
+      font-weight: {{ section.settings.feature_title_weight }};
+    }
+
+    #features-v2-{{ section.id }} .fv2-feature-text {
+      margin: 0;
+      color: var(--fv2-text);
+      font-size: {{ section.settings.feature_text_size_mobile }}px;
+      line-height: {{ section.settings.feature_text_line_height | divided_by: 100.0 }};
+      font-weight: {{ section.settings.feature_text_weight }};
+      opacity: {{ section.settings.feature_text_opacity | divided_by: 100.0 }};
+    }
+
+    #features-v2-{{ section.id }} .fv2-feature-text p {
+      margin: 0;
+    }
+
+    #features-v2-{{ section.id }} .fv2-feature-text strong,
+    #features-v2-{{ section.id }} .fv2-feature-text b {
+      font-weight: 850;
+    }
+
+    @media screen and (min-width: 768px) {
+      #features-v2-{{ section.id }} {
+        padding-top: {{ section.settings.padding_top_desktop }}px;
+        padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
+      }
+
+      #features-v2-{{ section.id }} .fv2-wrapper {
+        padding: 0 {{ section.settings.desktop_side_padding }}px;
+      }
+
+      #features-v2-{{ section.id }} .fv2-header {
+        margin-bottom: {{ section.settings.header_bottom_margin_desktop }}px;
+      }
+
+      #features-v2-{{ section.id }} .fv2-eyebrow {
+        font-size: {{ section.settings.eyebrow_size_desktop }}px;
+      }
+
+      #features-v2-{{ section.id }} .fv2-heading {
+        font-size: {{ section.settings.heading_size_desktop }}px;
+      }
+
+      #features-v2-{{ section.id }} .fv2-description {
+        font-size: {{ section.settings.description_size_desktop }}px;
+      }
+
+      #features-v2-{{ section.id }} .fv2-stage {
+        min-height: {{ section.settings.stage_min_height_desktop }}px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      #features-v2-{{ section.id }} .fv2-image-wrap {
+        max-width: {{ section.settings.main_image_size_desktop }}px;
+        margin-bottom: 0;
+      }
+
+      {% if section.settings.desktop_layout == 'around' %}
+        #features-v2-{{ section.id }} .fv2-features {
+          position: absolute;
+          inset: 0;
+          max-width: none;
+          display: block;
+          pointer-events: none;
+        }
+
+        #features-v2-{{ section.id }} .fv2-feature {
+          position: absolute;
+          left: var(--feature-x);
+          top: var(--feature-y);
+          transform: translate(-50%, -50%);
+          width: {{ section.settings.desktop_feature_width }}px;
+          pointer-events: auto;
+          text-align: {{ section.settings.desktop_text_align }};
+        }
+      {% else %}
+        #features-v2-{{ section.id }} .fv2-stage {
+          flex-direction: column;
+          gap: 36px;
+        }
+
+        #features-v2-{{ section.id }} .fv2-features {
+          display: grid;
+          grid-template-columns: repeat({{ section.settings.desktop_columns }}, minmax(0, 1fr));
+          gap: {{ section.settings.desktop_feature_gap }}px;
+          max-width: {{ section.settings.desktop_features_max_width }}px;
+          text-align: {{ section.settings.desktop_text_align }};
+        }
+      {% endif %}
+
+      #features-v2-{{ section.id }} .fv2-feature {
+        padding: {{ section.settings.card_padding_desktop }}px;
+      }
+
+      #features-v2-{{ section.id }} .fv2-icon {
+        width: {{ section.settings.icon_size_desktop }}px;
+        height: {{ section.settings.icon_size_desktop }}px;
+        margin: {% if section.settings.desktop_text_align == 'center' %}0 auto {{ section.settings.icon_bottom_gap }}px{% else %}0 0 {{ section.settings.icon_bottom_gap }}px{% endif %};
+      }
+
+      #features-v2-{{ section.id }} .fv2-feature-title {
+        font-size: {{ section.settings.feature_title_size_desktop }}px;
+      }
+
+      #features-v2-{{ section.id }} .fv2-feature-text {
+        font-size: {{ section.settings.feature_text_size_desktop }}px;
+      }
+    }
+  </style>
+
+  <div class="fv2-wrapper">
+    <div class="fv2-header">
+      {% if section.settings.eyebrow != blank %}
+        <p class="fv2-eyebrow">{{ section.settings.eyebrow }}</p>
+      {% endif %}
+
+      {% if section.settings.heading != blank %}
+        <div class="fv2-heading">{{ section.settings.heading }}</div>
+      {% endif %}
+
+      {% if section.settings.description != blank %}
+        <div class="fv2-description">{{ section.settings.description }}</div>
+      {% endif %}
+    </div>
+
+    <div class="fv2-stage">
+      <div class="fv2-image-wrap">
+        {% if section.settings.main_image != blank %}
+          {{
+            section.settings.main_image
+            | image_url: width: 1000
+            | image_tag:
+              class: 'fv2-main-image',
+              loading: 'lazy',
+              alt: section.settings.main_image.alt
+          }}
+        {% else %}
+          <div class="fv2-placeholder">
+            {{ 'product-1' | placeholder_svg_tag }}
+          </div>
+        {% endif %}
+      </div>
+
+      {% if section.blocks.size > 0 %}
+        <ul class="fv2-features">
+          {% for block in section.blocks %}
+            {% if block.type == 'feature' %}
+              <li
+                class="fv2-feature"
+                style="--feature-x: {{ block.settings.desktop_x }}%; --feature-y: {{ block.settings.desktop_y }}%;"
+                {{ block.shopify_attributes }}
+              >
+                <div class="fv2-icon">
+                  {% if block.settings.icon != blank %}
+                    {{
+                      block.settings.icon
+                      | image_url: width: 120
+                      | image_tag:
+                        loading: 'lazy',
+                        alt: block.settings.title
+                    }}
+                  {% else %}
+                    <span class="fv2-icon-placeholder">✓</span>
+                  {% endif %}
+                </div>
+
+                {% if block.settings.title != blank %}
+                  <h3 class="fv2-feature-title">{{ block.settings.title }}</h3>
+                {% endif %}
+
+                {% if block.settings.text != blank %}
+                  <div class="fv2-feature-text">{{ block.settings.text }}</div>
+                {% endif %}
+              </li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Features V2",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Header content"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Plant-Based Hair Support"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "<p>Transform Your <strong>Hair Health</strong></p>"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Herbans combines pumpkin seed oil and saw palmetto to support scalp wellness, healthy hair growth, and normal DHT pathways from within.</p>"
+    },
+    {
+      "type": "range",
+      "id": "header_max_width",
+      "label": "Header max width",
+      "min": 400,
+      "max": 1000,
+      "step": 20,
+      "default": 760
+    },
+    {
+      "type": "range",
+      "id": "header_bottom_margin_desktop",
+      "label": "Header bottom margin desktop",
+      "min": 10,
+      "max": 90,
+      "step": 2,
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "header_bottom_margin_mobile",
+      "label": "Header bottom margin mobile",
+      "min": 10,
+      "max": 70,
+      "step": 2,
+      "default": 28
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Max width",
+      "min": 900,
+      "max": 1600,
+      "step": 20,
+      "default": 1240
+    },
+    {
+      "type": "select",
+      "id": "desktop_layout",
+      "label": "Desktop layout",
+      "default": "around",
+      "options": [
+        {
+          "value": "around",
+          "label": "Features around image"
+        },
+        {
+          "value": "grid",
+          "label": "Grid below image"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "stage_max_width",
+      "label": "Stage max width",
+      "min": 700,
+      "max": 1400,
+      "step": 20,
+      "default": 1120
+    },
+    {
+      "type": "range",
+      "id": "stage_min_height_desktop",
+      "label": "Desktop stage minimum height",
+      "min": 320,
+      "max": 760,
+      "step": 20,
+      "default": 500
+    },
+    {
+      "type": "range",
+      "id": "desktop_feature_width",
+      "label": "Desktop feature card width",
+      "min": 160,
+      "max": 340,
+      "step": 10,
+      "default": 240
+    },
+    {
+      "type": "range",
+      "id": "desktop_features_max_width",
+      "label": "Desktop grid max width",
+      "min": 700,
+      "max": 1300,
+      "step": 20,
+      "default": 1000
+    },
+    {
+      "type": "range",
+      "id": "mobile_features_max_width",
+      "label": "Mobile features max width",
+      "min": 280,
+      "max": 600,
+      "step": 10,
+      "default": 430
+    },
+    {
+      "type": "select",
+      "id": "desktop_columns",
+      "label": "Desktop grid columns",
+      "default": "4",
+      "options": [
+        {
+          "value": "2",
+          "label": "2"
+        },
+        {
+          "value": "3",
+          "label": "3"
+        },
+        {
+          "value": "4",
+          "label": "4"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "mobile_columns",
+      "label": "Mobile columns",
+      "default": "2",
+      "options": [
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "desktop_feature_gap",
+      "label": "Desktop feature gap",
+      "min": 8,
+      "max": 50,
+      "step": 2,
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "mobile_feature_gap",
+      "label": "Mobile feature gap",
+      "min": 8,
+      "max": 34,
+      "step": 1,
+      "default": 12
+    },
+    {
+      "type": "select",
+      "id": "desktop_text_align",
+      "label": "Desktop feature text align",
+      "default": "center",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "mobile_text_align",
+      "label": "Mobile feature text align",
+      "default": "left",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Desktop top padding",
+      "min": 0,
+      "max": 140,
+      "step": 4,
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Desktop bottom padding",
+      "min": 0,
+      "max": 140,
+      "step": 4,
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Mobile top padding",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "default": 44
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Mobile bottom padding",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "default": 44
+    },
+    {
+      "type": "range",
+      "id": "desktop_side_padding",
+      "label": "Desktop side padding",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "mobile_side_padding",
+      "label": "Mobile side padding",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "default": 18
+    },
+    {
+      "type": "header",
+      "content": "Main image"
+    },
+    {
+      "type": "image_picker",
+      "id": "main_image",
+      "label": "Center image"
+    },
+    {
+      "type": "range",
+      "id": "main_image_size_desktop",
+      "label": "Desktop image width",
+      "min": 180,
+      "max": 600,
+      "step": 10,
+      "default": 360
+    },
+    {
+      "type": "range",
+      "id": "main_image_size_mobile",
+      "label": "Mobile image width",
+      "min": 160,
+      "max": 420,
+      "step": 10,
+      "default": 240
+    },
+    {
+      "type": "range",
+      "id": "mobile_image_bottom_gap",
+      "label": "Mobile image bottom gap",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "default": 22
+    },
+    {
+      "type": "range",
+      "id": "image_position_x",
+      "label": "Image position X",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "image_position_y",
+      "label": "Image position Y",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "image_shadow_y",
+      "label": "Image shadow vertical",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "image_shadow_blur",
+      "label": "Image shadow blur",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "image_shadow_opacity",
+      "label": "Image shadow opacity",
+      "min": 0,
+      "max": 60,
+      "step": 5,
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Feature card style"
+    },
+    {
+      "type": "range",
+      "id": "card_padding_desktop",
+      "label": "Desktop card padding",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "card_padding_mobile",
+      "label": "Mobile card padding",
+      "min": 0,
+      "max": 34,
+      "step": 2,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Card radius",
+      "min": 0,
+      "max": 34,
+      "step": 2,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "card_border_width",
+      "label": "Card border width",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "show_card_shadow",
+      "label": "Show card shadow",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Icons"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_icon_circle",
+      "label": "Show white icon circle",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "icon_size_desktop",
+      "label": "Desktop icon size",
+      "min": 28,
+      "max": 90,
+      "step": 2,
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "icon_size_mobile",
+      "label": "Mobile icon size",
+      "min": 26,
+      "max": 80,
+      "step": 2,
+      "default": 44
+    },
+    {
+      "type": "range",
+      "id": "icon_padding",
+      "label": "Icon circle padding",
+      "min": 0,
+      "max": 18,
+      "step": 1,
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "icon_bottom_gap",
+      "label": "Icon bottom gap",
+      "min": 4,
+      "max": 26,
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "icon_placeholder_size",
+      "label": "Placeholder check size",
+      "min": 12,
+      "max": 32,
+      "step": 1,
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "eyebrow_size_desktop",
+      "label": "Desktop eyebrow size",
+      "min": 10,
+      "max": 22,
+      "step": 1,
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "eyebrow_size_mobile",
+      "label": "Mobile eyebrow size",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "heading_size_desktop",
+      "label": "Desktop heading size",
+      "min": 28,
+      "max": 78,
+      "step": 2,
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Mobile heading size",
+      "min": 24,
+      "max": 54,
+      "step": 1,
+      "default": 34
+    },
+    {
+      "type": "range",
+      "id": "heading_line_height",
+      "label": "Heading line height %",
+      "min": 85,
+      "max": 130,
+      "step": 1,
+      "default": 105
+    },
+    {
+      "type": "select",
+      "id": "heading_weight",
+      "label": "Heading weight",
+      "default": "800",
+      "options": [
+        {
+          "value": "700",
+          "label": "Bold"
+        },
+        {
+          "value": "800",
+          "label": "Extra bold"
+        },
+        {
+          "value": "900",
+          "label": "Black"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "description_top_margin",
+      "label": "Description top margin",
+      "min": 4,
+      "max": 34,
+      "step": 1,
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "description_max_width",
+      "label": "Description max width",
+      "min": 360,
+      "max": 900,
+      "step": 20,
+      "default": 640
+    },
+    {
+      "type": "range",
+      "id": "description_size_desktop",
+      "label": "Desktop description size",
+      "min": 14,
+      "max": 26,
+      "step": 1,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "description_size_mobile",
+      "label": "Mobile description size",
+      "min": 13,
+      "max": 22,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "select",
+      "id": "description_weight",
+      "label": "Description weight",
+      "default": "400",
+      "options": [
+        {
+          "value": "400",
+          "label": "Regular"
+        },
+        {
+          "value": "500",
+          "label": "Medium"
+        },
+        {
+          "value": "600",
+          "label": "Semi bold"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "description_opacity",
+      "label": "Description opacity",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "feature_title_size_desktop",
+      "label": "Desktop feature title size",
+      "min": 16,
+      "max": 34,
+      "step": 1,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "feature_title_size_mobile",
+      "label": "Mobile feature title size",
+      "min": 15,
+      "max": 28,
+      "step": 1,
+      "default": 20
+    },
+    {
+      "type": "select",
+      "id": "feature_title_weight",
+      "label": "Feature title weight",
+      "default": "700",
+      "options": [
+        {
+          "value": "600",
+          "label": "Semi bold"
+        },
+        {
+          "value": "700",
+          "label": "Bold"
+        },
+        {
+          "value": "800",
+          "label": "Extra bold"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "title_bottom_gap",
+      "label": "Feature title bottom gap",
+      "min": 2,
+      "max": 20,
+      "step": 1,
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "feature_text_size_desktop",
+      "label": "Desktop feature text size",
+      "min": 12,
+      "max": 22,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "feature_text_size_mobile",
+      "label": "Mobile feature text size",
+      "min": 11,
+      "max": 20,
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "feature_text_line_height",
+      "label": "Feature text line height %",
+      "min": 110,
+      "max": 180,
+      "step": 5,
+      "default": 140
+    },
+    {
+      "type": "select",
+      "id": "feature_text_weight",
+      "label": "Feature text weight",
+      "default": "400",
+      "options": [
+        {
+          "value": "400",
+          "label": "Regular"
+        },
+        {
+          "value": "500",
+          "label": "Medium"
+        },
+        {
+          "value": "600",
+          "label": "Semi bold"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "feature_text_opacity",
+      "label": "Feature text opacity",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "default": 100
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "section_bg",
+      "label": "Section background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent color",
+      "default": "#00624A"
+    },
+    {
+      "type": "color",
+      "id": "card_bg",
+      "label": "Feature card background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Feature card border",
+      "default": "#EAEAEA"
+    },
+    {
+      "type": "color",
+      "id": "icon_bg",
+      "label": "Icon circle background",
+      "default": "#FFFFFF"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Healthy Hair Growth"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Supports stronger, fuller-looking hair from within.</p>"
+        },
+        {
+          "type": "range",
+          "id": "desktop_x",
+          "label": "Desktop X position",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "default": 20
+        },
+        {
+          "type": "range",
+          "id": "desktop_y",
+          "label": "Desktop Y position",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "default": 30
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Features V2",
+      "blocks": [
+        {
+          "type": "feature",
+          "settings": {
+            "title": "Healthy Hair Growth",
+            "text": "<p>Supports stronger, fuller-looking hair from within.</p>",
+            "desktop_x": 17,
+            "desktop_y": 28
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "title": "Less Shedding",
+            "text": "<p>Helps support reduced shedding and a healthier daily hair routine.</p>",
+            "desktop_x": 83,
+            "desktop_y": 28
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "title": "Scalp Wellness",
+            "text": "<p>Supports the foundation for healthier-looking hair at the scalp level.</p>",
+            "desktop_x": 17,
+            "desktop_y": 72
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "title": "DHT Pathway Support",
+            "text": "<p>Pumpkin seed oil and saw palmetto support normal DHT pathways.</p>",
+            "desktop_x": 83,
+            "desktop_y": 72
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

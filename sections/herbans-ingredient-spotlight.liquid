@@ -1,0 +1,1114 @@
+{% comment %}
+  Herbans Ingredient Spotlight - Compact Editable Version
+{% endcomment %}
+
+<section id="herbans-ingredients-{{ section.id }}" class="herbans-ingredients">
+  <div class="hi-wrap">
+
+    <div class="hi-header">
+      {% if section.settings.top_text != blank %}
+        <div class="hi-top-text">{{ section.settings.top_text }}</div>
+      {% endif %}
+
+      {% if section.settings.heading != blank %}
+        <div class="hi-heading">{{ section.settings.heading }}</div>
+      {% endif %}
+
+      {% if section.settings.text != blank %}
+        <div class="hi-text">{{ section.settings.text }}</div>
+      {% endif %}
+    </div>
+
+    <div class="hi-grid">
+      {% for block in section.blocks %}
+        <div
+          class="hi-card"
+          style="--ingredient-title-color: {{ block.settings.title_color }};"
+          {{ block.shopify_attributes }}
+        >
+          {% if block.settings.sticker_image != blank %}
+            <div class="hi-sticker hi-sticker-{{ block.settings.sticker_position }}">
+              <img
+                src="{{ block.settings.sticker_image | image_url: width: 500 }}"
+                alt="{{ block.settings.title | escape }}"
+                loading="lazy"
+              >
+            </div>
+          {% endif %}
+
+          <div class="hi-content">
+            {% if block.settings.title != blank %}
+              <h3>{{ block.settings.title }}</h3>
+            {% endif %}
+
+            {% if block.settings.description != blank %}
+              <div class="hi-description">{{ block.settings.description }}</div>
+            {% endif %}
+
+            <ul class="hi-benefits">
+              {% if block.settings.benefit_1 != blank %}
+                <li>{{ block.settings.benefit_1 }}</li>
+              {% endif %}
+              {% if block.settings.benefit_2 != blank %}
+                <li>{{ block.settings.benefit_2 }}</li>
+              {% endif %}
+              {% if block.settings.benefit_3 != blank %}
+                <li>{{ block.settings.benefit_3 }}</li>
+              {% endif %}
+            </ul>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    {% if section.settings.button_text != blank %}
+      <div class="hi-button-wrap">
+        <a href="{{ section.settings.button_link }}" class="hi-button">
+          {{ section.settings.button_text }}
+        </a>
+
+        {% if section.settings.guarantee_text != blank %}
+          <div class="hi-guarantee">
+            {% if section.settings.guarantee_icon != blank %}
+              <img
+                src="{{ section.settings.guarantee_icon | image_url: width: 80 }}"
+                alt="Guarantee"
+                class="hi-guarantee-icon"
+                loading="lazy"
+              >
+            {% endif %}
+
+            <span class="hi-guarantee-text">
+              {{ section.settings.guarantee_text }}
+            </span>
+          </div>
+        {% endif %}
+      </div>
+    {% endif %}
+
+  </div>
+</section>
+
+<style>
+  #herbans-ingredients-{{ section.id }} {
+    background: {{ section.settings.section_bg }};
+    padding: {{ section.settings.padding_top_mobile }}px {{ section.settings.padding_side_mobile }}px {{ section.settings.padding_bottom_mobile }}px;
+    overflow: hidden;
+  }
+
+  #herbans-ingredients-{{ section.id }} * {
+    box-sizing: border-box;
+  }
+
+  #herbans-ingredients-{{ section.id }} .hi-wrap {
+    max-width: {{ section.settings.max_width }}px;
+    margin: 0 auto;
+  }
+
+  #herbans-ingredients-{{ section.id }} .hi-header {
+    text-align: center;
+    max-width: 820px;
+    margin: 0 auto {{ section.settings.header_gap_mobile }}px;
+  }
+
+  #herbans-ingredients-{{ section.id }} .hi-top-text {
+    color: {{ section.settings.top_text_color }};
+    font-size: {{ section.settings.top_text_size_mobile }}px;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  #herbans-ingredients-{{ section.id }} .hi-heading,
+  #herbans-ingredients-{{ section.id }} .hi-heading p {
+    margin: 0;
+    color: {{ section.settings.heading_color }};
+    font-size: {{ section.settings.heading_size_mobile }}px;
+    line-height: 0.95;
+    font-weight: 900;
+    letter-spacing: -0.045em;
+  }
+
+  #herbans-ingredients-{{ section.id }} .hi-heading strong {
+    color: {{ section.settings.heading_accent }};
+    font-weight: inherit;
+  }
+
+  #herbans-ingredients-{{ section.id }} .hi-text {
+    margin-top: 16px;
+    color: {{ section.settings.text_color }};
+    font-size: {{ section.settings.text_size_mobile }}px;
+    line-height: 1.5;
+    font-weight: 500;
+  }
+
+  #herbans-ingredients-{{ section.id }} .hi-text p,
+  #herbans-ingredients-{{ section.id }} .hi-description p {
+    margin: 0;
+  }
+
+  #herbans-ingredients-{{ section.id }} .hi-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: {{ section.settings.card_gap_mobile }}px;
+  }
+
+  #herbans-ingredients-{{ section.id }} .hi-card {
+    position: relative;
+    background: {{ section.settings.card_bg }};
+    border: {{ section.settings.card_border_width }}px solid {{ section.settings.card_border_color }};
+    border-radius: {{ section.settings.card_radius }}px;
+    box-shadow: {{ section.settings.card_shadow }};
+    padding: {{ section.settings.card_padding_mobile }}px;
+    min-height: 0;
+    overflow: visible;
+  }
+
+  #herbans-ingredients-{{ section.id }} .hi-content {
+    max-width: 620px;
+  }
+
+  #herbans-ingredients-{{ section.id }} .hi-sticker {
+    position: absolute;
+    width: {{ section.settings.sticker_size_mobile }}px;
+    height: {{ section.settings.sticker_size_mobile }}px;
+    top: {{ section.settings.sticker_top_mobile }}px;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  #herbans-ingredients-{{ section.id }} .hi-sticker-top-left {
+    left: {{ section.settings.sticker_side_mobile }}px;
+  }
+
+  #herbans-ingredients-{{ section.id }} .hi-sticker-top-right {
+    right: {{ section.settings.sticker_side_mobile }}px;
+  }
+
+  #herbans-ingredients-{{ section.id }} .hi-sticker img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    filter: drop-shadow(0 8px 10px rgba(0,0,0,0.12));
+  }
+
+  #herbans-ingredients-{{ section.id }} h3 {
+    margin: 0 0 12px;
+    color: var(--ingredient-title-color);
+    font-size: {{ section.settings.card_title_size_mobile }}px;
+    line-height: 1;
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    padding-right: 85px;
+  }
+
+  #herbans-ingredients-{{ section.id }} .hi-description {
+    color: {{ section.settings.card_text_color }};
+    font-size: {{ section.settings.card_text_size_mobile }}px;
+    line-height: 1.42;
+    font-weight: 500;
+    margin-bottom: 18px;
+    padding-right: 10px;
+  }
+
+  #herbans-ingredients-{{ section.id }} .hi-benefits {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  #herbans-ingredients-{{ section.id }} .hi-benefits li {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    color: {{ section.settings.benefit_color }};
+    font-size: {{ section.settings.benefit_size_mobile }}px;
+    line-height: 1.2;
+    font-weight: 900;
+    margin: 9px 0;
+  }
+
+  #herbans-ingredients-{{ section.id }} .hi-benefits li:before {
+    content: "✓";
+    color: {{ section.settings.check_color }};
+    font-weight: 900;
+    flex: 0 0 auto;
+  }
+
+  #herbans-ingredients-{{ section.id }} .hi-button-wrap {
+    text-align: center;
+    margin-top: {{ section.settings.button_gap_mobile }}px;
+  }
+
+  #herbans-ingredients-{{ section.id }} .hi-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    {% if section.settings.button_use_gradient %}
+      background: linear-gradient(
+        135deg,
+        {{ section.settings.button_gradient_1 }},
+        {{ section.settings.button_gradient_2 }}
+      );
+      border: {{ section.settings.button_border_width }}px solid {{ section.settings.button_gradient_1 }};
+    {% else %}
+      background: {{ section.settings.button_bg }};
+      border: {{ section.settings.button_border_width }}px solid {{ section.settings.button_bg }};
+    {% endif %}
+
+    color: {{ section.settings.button_text_color }};
+    text-decoration: none;
+    border-radius: 999px;
+    padding: 15px 40px;
+    min-width: {{ section.settings.button_width_mobile }}px;
+    font-size: {{ section.settings.button_size_mobile }}px;
+    font-weight: 900;
+    box-shadow: {{ section.settings.button_shadow }};
+    transition: all .25s ease;
+  }
+
+  #herbans-ingredients-{{ section.id }} .hi-button:hover {
+    background: transparent;
+
+    {% if section.settings.button_use_gradient %}
+      color: {{ section.settings.button_gradient_1 }};
+      border-color: {{ section.settings.button_gradient_1 }};
+    {% else %}
+      color: {{ section.settings.button_bg }};
+      border-color: {{ section.settings.button_bg }};
+    {% endif %}
+
+    transform: translateY(-1px);
+  }
+
+  #herbans-ingredients-{{ section.id }} .hi-guarantee {
+    margin-top: {{ section.settings.guarantee_gap_mobile }}px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  #herbans-ingredients-{{ section.id }} .hi-guarantee-icon {
+    width: {{ section.settings.guarantee_icon_size_mobile }}px;
+    height: {{ section.settings.guarantee_icon_size_mobile }}px;
+    object-fit: contain;
+    display: block;
+  }
+
+  #herbans-ingredients-{{ section.id }} .hi-guarantee-text {
+    color: {{ section.settings.guarantee_text_color }};
+    font-size: {{ section.settings.guarantee_font_size_mobile }}px;
+    line-height: 1.2;
+    font-weight: {{ section.settings.guarantee_font_weight }};
+    letter-spacing: {{ section.settings.guarantee_letter_spacing | divided_by: 100.0 }}em;
+  }
+
+  @media screen and (min-width: 768px) {
+    #herbans-ingredients-{{ section.id }} {
+      padding: {{ section.settings.padding_top_desktop }}px {{ section.settings.padding_side_desktop }}px {{ section.settings.padding_bottom_desktop }}px;
+    }
+
+    #herbans-ingredients-{{ section.id }} .hi-header {
+      margin-bottom: {{ section.settings.header_gap_desktop }}px;
+    }
+
+    #herbans-ingredients-{{ section.id }} .hi-top-text {
+      font-size: {{ section.settings.top_text_size_desktop }}px;
+      margin-bottom: 18px;
+    }
+
+    #herbans-ingredients-{{ section.id }} .hi-heading,
+    #herbans-ingredients-{{ section.id }} .hi-heading p {
+      font-size: {{ section.settings.heading_size_desktop }}px;
+    }
+
+    #herbans-ingredients-{{ section.id }} .hi-text {
+      font-size: {{ section.settings.text_size_desktop }}px;
+      margin-top: 22px;
+    }
+
+    #herbans-ingredients-{{ section.id }} .hi-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: {{ section.settings.card_gap_desktop }}px;
+    }
+
+    #herbans-ingredients-{{ section.id }} .hi-card {
+      padding: {{ section.settings.card_padding_desktop }}px;
+      min-height: 0;
+    }
+
+    #herbans-ingredients-{{ section.id }} .hi-sticker {
+      width: {{ section.settings.sticker_size_desktop }}px;
+      height: {{ section.settings.sticker_size_desktop }}px;
+      top: {{ section.settings.sticker_top_desktop }}px;
+    }
+
+    #herbans-ingredients-{{ section.id }} .hi-sticker-top-left {
+      left: {{ section.settings.sticker_side_desktop }}px;
+    }
+
+    #herbans-ingredients-{{ section.id }} .hi-sticker-top-right {
+      right: {{ section.settings.sticker_side_desktop }}px;
+    }
+
+    #herbans-ingredients-{{ section.id }} h3 {
+      font-size: {{ section.settings.card_title_size_desktop }}px;
+      padding-right: 120px;
+      margin-bottom: 14px;
+    }
+
+    #herbans-ingredients-{{ section.id }} .hi-description {
+      font-size: {{ section.settings.card_text_size_desktop }}px;
+      margin-bottom: 22px;
+    }
+
+    #herbans-ingredients-{{ section.id }} .hi-benefits li {
+      font-size: {{ section.settings.benefit_size_desktop }}px;
+      margin: 10px 0;
+    }
+
+    #herbans-ingredients-{{ section.id }} .hi-button-wrap {
+      margin-top: {{ section.settings.button_gap_desktop }}px;
+    }
+
+    #herbans-ingredients-{{ section.id }} .hi-button {
+      min-width: {{ section.settings.button_width_desktop }}px;
+      font-size: {{ section.settings.button_size_desktop }}px;
+      padding: 17px 48px;
+    }
+
+    #herbans-ingredients-{{ section.id }} .hi-guarantee {
+      margin-top: {{ section.settings.guarantee_gap_desktop }}px;
+    }
+
+    #herbans-ingredients-{{ section.id }} .hi-guarantee-icon {
+      width: {{ section.settings.guarantee_icon_size_desktop }}px;
+      height: {{ section.settings.guarantee_icon_size_desktop }}px;
+    }
+
+    #herbans-ingredients-{{ section.id }} .hi-guarantee-text {
+      font-size: {{ section.settings.guarantee_font_size_desktop }}px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Herbans Ingredients V8",
+  "settings": [
+    {
+      "type": "text",
+      "id": "top_text",
+      "label": "Top text",
+      "default": "INGREDIENT SPOTLIGHT"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "<p>The Science Behind Our <strong>2 Key Ingredients</strong></p>"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Herbans combines Pumpkin Seed Oil and Saw Palmetto to support healthier-looking hair, scalp wellness, and normal DHT pathways from within.*</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Try Herbans Today"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+
+    {
+      "type": "header",
+      "content": "Main sizing"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Max width",
+      "min": 900,
+      "max": 1500,
+      "step": 20,
+      "default": 1180
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Heading size mobile",
+      "min": 26,
+      "max": 54,
+      "step": 1,
+      "default": 38
+    },
+    {
+      "type": "range",
+      "id": "heading_size_desktop",
+      "label": "Heading size desktop",
+      "min": 40,
+      "max": 86,
+      "step": 1,
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "text_size_mobile",
+      "label": "Intro text size mobile",
+      "min": 13,
+      "max": 24,
+      "step": 1,
+      "default": 17
+    },
+    {
+      "type": "range",
+      "id": "text_size_desktop",
+      "label": "Intro text size desktop",
+      "min": 15,
+      "max": 28,
+      "step": 1,
+      "default": 21
+    },
+    {
+      "type": "range",
+      "id": "top_text_size_mobile",
+      "label": "Top text size mobile",
+      "min": 9,
+      "max": 22,
+      "step": 1,
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "top_text_size_desktop",
+      "label": "Top text size desktop",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "default": 13
+    },
+
+    {
+      "type": "header",
+      "content": "Card sizing"
+    },
+    {
+      "type": "range",
+      "id": "card_title_size_mobile",
+      "label": "Card title size mobile",
+      "min": 24,
+      "max": 46,
+      "step": 1,
+      "default": 34
+    },
+    {
+      "type": "range",
+      "id": "card_title_size_desktop",
+      "label": "Card title size desktop",
+      "min": 30,
+      "max": 58,
+      "step": 1,
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "card_text_size_mobile",
+      "label": "Card text size mobile",
+      "min": 13,
+      "max": 22,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "card_text_size_desktop",
+      "label": "Card text size desktop",
+      "min": 15,
+      "max": 26,
+      "step": 1,
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "benefit_size_mobile",
+      "label": "Benefit text mobile",
+      "min": 13,
+      "max": 22,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "benefit_size_desktop",
+      "label": "Benefit text desktop",
+      "min": 15,
+      "max": 26,
+      "step": 1,
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "card_padding_mobile",
+      "label": "Card padding mobile",
+      "min": 18,
+      "max": 60,
+      "step": 2,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "card_padding_desktop",
+      "label": "Card padding desktop",
+      "min": 24,
+      "max": 80,
+      "step": 2,
+      "default": 38
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Card corner radius",
+      "min": 12,
+      "max": 40,
+      "step": 1,
+      "default": 26
+    },
+    {
+      "type": "range",
+      "id": "card_border_width",
+      "label": "Card border width",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "default": 1
+    },
+
+    {
+      "type": "header",
+      "content": "Sticker"
+    },
+    {
+      "type": "range",
+      "id": "sticker_size_mobile",
+      "label": "Sticker size mobile",
+      "min": 50,
+      "max": 160,
+      "step": 5,
+      "default": 90
+    },
+    {
+      "type": "range",
+      "id": "sticker_size_desktop",
+      "label": "Sticker size desktop",
+      "min": 70,
+      "max": 200,
+      "step": 5,
+      "default": 115
+    },
+    {
+      "type": "range",
+      "id": "sticker_top_mobile",
+      "label": "Sticker top mobile",
+      "min": -60,
+      "max": 60,
+      "step": 2,
+      "default": -30
+    },
+    {
+      "type": "range",
+      "id": "sticker_top_desktop",
+      "label": "Sticker top desktop",
+      "min": -80,
+      "max": 80,
+      "step": 2,
+      "default": -36
+    },
+    {
+      "type": "range",
+      "id": "sticker_side_mobile",
+      "label": "Sticker side mobile",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "default": 22
+    },
+    {
+      "type": "range",
+      "id": "sticker_side_desktop",
+      "label": "Sticker side desktop",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "default": 32
+    },
+
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Top padding mobile",
+      "min": 20,
+      "max": 140,
+      "step": 4,
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Bottom padding mobile",
+      "min": 20,
+      "max": 140,
+      "step": 4,
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "padding_side_mobile",
+      "label": "Side padding mobile",
+      "min": 10,
+      "max": 30,
+      "step": 2,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Top padding desktop",
+      "min": 40,
+      "max": 180,
+      "step": 4,
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Bottom padding desktop",
+      "min": 40,
+      "max": 180,
+      "step": 4,
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_side_desktop",
+      "label": "Side padding desktop",
+      "min": 20,
+      "max": 80,
+      "step": 4,
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "header_gap_mobile",
+      "label": "Header bottom gap mobile",
+      "min": 24,
+      "max": 90,
+      "step": 2,
+      "default": 42
+    },
+    {
+      "type": "range",
+      "id": "header_gap_desktop",
+      "label": "Header bottom gap desktop",
+      "min": 30,
+      "max": 110,
+      "step": 2,
+      "default": 54
+    },
+    {
+      "type": "range",
+      "id": "card_gap_mobile",
+      "label": "Card gap mobile",
+      "min": 16,
+      "max": 50,
+      "step": 2,
+      "default": 22
+    },
+    {
+      "type": "range",
+      "id": "card_gap_desktop",
+      "label": "Card gap desktop",
+      "min": 20,
+      "max": 70,
+      "step": 2,
+      "default": 34
+    },
+    {
+      "type": "range",
+      "id": "button_gap_mobile",
+      "label": "Button gap mobile",
+      "min": 20,
+      "max": 80,
+      "step": 2,
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "button_gap_desktop",
+      "label": "Button gap desktop",
+      "min": 24,
+      "max": 100,
+      "step": 2,
+      "default": 44
+    },
+
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "range",
+      "id": "button_width_mobile",
+      "label": "Button min width mobile",
+      "min": 160,
+      "max": 380,
+      "step": 10,
+      "default": 260
+    },
+    {
+      "type": "range",
+      "id": "button_width_desktop",
+      "label": "Button min width desktop",
+      "min": 160,
+      "max": 700,
+      "step": 10,
+      "default": 560
+    },
+    {
+      "type": "range",
+      "id": "button_size_mobile",
+      "label": "Button text mobile",
+      "min": 13,
+      "max": 28,
+      "step": 1,
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "button_size_desktop",
+      "label": "Button text desktop",
+      "min": 14,
+      "max": 36,
+      "step": 1,
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "button_border_width",
+      "label": "Button border width",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "checkbox",
+      "id": "button_use_gradient",
+      "label": "Use gradient button",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "button_gradient_1",
+      "label": "Gradient color 1",
+      "default": "#D76F3D"
+    },
+    {
+      "type": "color",
+      "id": "button_gradient_2",
+      "label": "Gradient color 2",
+      "default": "#F5A55A"
+    },
+
+    {
+      "type": "header",
+      "content": "Guarantee"
+    },
+    {
+      "type": "image_picker",
+      "id": "guarantee_icon",
+      "label": "Guarantee icon"
+    },
+    {
+      "type": "text",
+      "id": "guarantee_text",
+      "label": "Guarantee text",
+      "default": "30-day money-back guarantee"
+    },
+    {
+      "type": "range",
+      "id": "guarantee_font_size_mobile",
+      "label": "Guarantee font size mobile",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "guarantee_font_size_desktop",
+      "label": "Guarantee font size desktop",
+      "min": 12,
+      "max": 30,
+      "step": 1,
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "guarantee_icon_size_mobile",
+      "label": "Guarantee icon size mobile",
+      "min": 12,
+      "max": 40,
+      "step": 1,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "guarantee_icon_size_desktop",
+      "label": "Guarantee icon size desktop",
+      "min": 14,
+      "max": 50,
+      "step": 1,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "guarantee_gap_mobile",
+      "label": "Guarantee top gap mobile",
+      "min": 4,
+      "max": 40,
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "guarantee_gap_desktop",
+      "label": "Guarantee top gap desktop",
+      "min": 4,
+      "max": 50,
+      "step": 1,
+      "default": 18
+    },
+    {
+      "type": "select",
+      "id": "guarantee_font_weight",
+      "label": "Guarantee font weight",
+      "options": [
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi-bold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "500"
+    },
+    {
+      "type": "range",
+      "id": "guarantee_letter_spacing",
+      "label": "Guarantee letter spacing",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "default": 2
+    },
+
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "section_bg",
+      "label": "Section background",
+      "default": "#F8F2E8"
+    },
+    {
+      "type": "color",
+      "id": "top_text_color",
+      "label": "Top text",
+      "default": "#D76F3D"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "heading_accent",
+      "label": "Heading accent",
+      "default": "#D76F3D"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Intro text",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "card_bg",
+      "label": "Card background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Card border",
+      "default": "#E5DED5"
+    },
+    {
+      "type": "color",
+      "id": "card_text_color",
+      "label": "Card text",
+      "default": "#222222"
+    },
+    {
+      "type": "color",
+      "id": "benefit_color",
+      "label": "Benefit text",
+      "default": "#222222"
+    },
+    {
+      "type": "color",
+      "id": "check_color",
+      "label": "Checkmark",
+      "default": "#D76F3D"
+    },
+    {
+      "type": "color",
+      "id": "button_bg",
+      "label": "Button solid background",
+      "default": "#0B4D3A"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "guarantee_text_color",
+      "label": "Guarantee text color",
+      "default": "#0B4D3A"
+    },
+    {
+      "type": "text",
+      "id": "card_shadow",
+      "label": "Card shadow CSS",
+      "default": "0 14px 35px rgba(0,0,0,0.06)"
+    },
+    {
+      "type": "text",
+      "id": "button_shadow",
+      "label": "Button shadow CSS",
+      "default": "none"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "ingredient",
+      "name": "Ingredient",
+      "limit": 2,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "sticker_image",
+          "label": "Sticker image"
+        },
+        {
+          "type": "select",
+          "id": "sticker_position",
+          "label": "Sticker position",
+          "options": [
+            { "value": "top-left", "label": "Top left" },
+            { "value": "top-right", "label": "Top right" }
+          ],
+          "default": "top-right"
+        },
+        {
+          "type": "color",
+          "id": "title_color",
+          "label": "Ingredient title color",
+          "default": "#D76F3D"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Ingredient title",
+          "default": "Pumpkin Seed Oil"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Description",
+          "default": "<p>Rich in naturally occurring phytosterols, fatty acids, and antioxidants that help support scalp wellness and healthier-looking hair.</p>"
+        },
+        {
+          "type": "text",
+          "id": "benefit_1",
+          "label": "Benefit 1",
+          "default": "Supports healthy DHT balance"
+        },
+        {
+          "type": "text",
+          "id": "benefit_2",
+          "label": "Benefit 2",
+          "default": "Supports scalp wellness"
+        },
+        {
+          "type": "text",
+          "id": "benefit_3",
+          "label": "Benefit 3",
+          "default": "Supports fuller-looking hair"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Herbans Ingredients V8",
+      "blocks": [
+        {
+          "type": "ingredient",
+          "settings": {
+            "title": "Pumpkin Seed Oil",
+            "title_color": "#D76F3D",
+            "description": "<p>Rich in naturally occurring phytosterols, fatty acids, and antioxidants that help support scalp wellness and healthier-looking hair.</p>",
+            "benefit_1": "Supports healthy DHT balance",
+            "benefit_2": "Supports scalp wellness",
+            "benefit_3": "Supports fuller-looking hair",
+            "sticker_position": "top-right"
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "title": "Saw Palmetto",
+            "title_color": "#5E7D45",
+            "description": "<p>A botanical traditionally used to support healthy hair wellness and normal hormone pathways linked to hair health.</p>",
+            "benefit_1": "Supports healthy DHT pathways",
+            "benefit_2": "Supports daily hair wellness",
+            "benefit_3": "Supports stronger-looking hair",
+            "sticker_position": "top-right"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,1217 @@
+{% comment %}
+  Meowgical Comparison Table
+  Layout reference: Wuffes comparison table — the highlighted product
+  image floats above ONLY the brand's own column; competitor columns
+  get plain text headers. Rebuilt in the Meowgical blue brand system.
+{% endcomment %}
+
+<section id="mg-compare-{{ section.id }}" class="mg-compare-section">
+  <div class="mgc-wrap">
+
+    {% if section.settings.show_intro %}
+      <div class="mgc-intro">
+        {% if section.settings.eyebrow != blank %}
+          <div class="mgc-eyebrow">{{ section.settings.eyebrow }}</div>
+        {% endif %}
+
+        {% if section.settings.heading != blank %}
+          <div class="mgc-heading">{{ section.settings.heading }}</div>
+        {% endif %}
+
+        {% if section.settings.text != blank %}
+          <div class="mgc-text">{{ section.settings.text }}</div>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    <div class="mgc-table-area">
+      <div class="mgc-scroll">
+        <div class="mgc-table">
+
+          {% if section.settings.product_image != blank and section.settings.highlight_column == false %}
+            <img
+              class="mgc-product-img"
+              src="{{ section.settings.product_image | image_url: width: 600 }}"
+              alt="{{ section.settings.product_image_alt | escape }}"
+              loading="lazy"
+            >
+          {% endif %}
+
+          <div class="mgc-card">
+
+            <div class="mgc-grid mgc-header">
+              <div class="mgc-feature-head"></div>
+
+              <div class="mgc-head-cell mgc-brand-head">
+                {% if section.settings.product_image == blank or section.settings.highlight_column %}
+                  <span>{{ section.settings.brand_label }}</span>
+                {% endif %}
+              </div>
+
+              <div class="mgc-head-cell mgc-comp-1-head">
+                <span>{{ section.settings.competitor_1_label }}</span>
+              </div>
+
+              <div class="mgc-head-cell mgc-comp-2-head">
+                <span>{{ section.settings.competitor_2_label }}</span>
+              </div>
+            </div>
+
+            {% for block in section.blocks %}
+              <div class="mgc-grid mgc-row" {{ block.shopify_attributes }}>
+                <div class="mgc-feature">
+                  {{ block.settings.row_label }}
+                </div>
+
+                <div class="mgc-cell mgc-brand-cell">
+                  {% if block.settings.brand_value == 'check' %}
+                    <span class="mgc-icon mgc-check">
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M5 12.5l4.2 4.2L19 7" />
+                      </svg>
+                    </span>
+                  {% elsif block.settings.brand_value == 'x' %}
+                    <span class="mgc-icon mgc-x">×</span>
+                  {% else %}
+                    <span class="mgc-value-text">{{ block.settings.brand_text }}</span>
+                  {% endif %}
+                </div>
+
+                <div class="mgc-cell mgc-comp-1-cell">
+                  {% if block.settings.competitor_1_value == 'check' %}
+                    <span class="mgc-icon mgc-check">
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M5 12.5l4.2 4.2L19 7" />
+                      </svg>
+                    </span>
+                  {% elsif block.settings.competitor_1_value == 'x' %}
+                    <span class="mgc-icon mgc-x">×</span>
+                  {% elsif block.settings.competitor_1_value == 'unknown' %}
+                    <span class="mgc-value-text mgc-unknown">?</span>
+                  {% else %}
+                    <span class="mgc-value-text">{{ block.settings.competitor_1_text }}</span>
+                  {% endif %}
+                </div>
+
+                <div class="mgc-cell mgc-comp-2-cell">
+                  {% if block.settings.competitor_2_value == 'check' %}
+                    <span class="mgc-icon mgc-check">
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M5 12.5l4.2 4.2L19 7" />
+                      </svg>
+                    </span>
+                  {% elsif block.settings.competitor_2_value == 'x' %}
+                    <span class="mgc-icon mgc-x">×</span>
+                  {% elsif block.settings.competitor_2_value == 'unknown' %}
+                    <span class="mgc-value-text mgc-unknown">?</span>
+                  {% else %}
+                    <span class="mgc-value-text">{{ block.settings.competitor_2_text }}</span>
+                  {% endif %}
+                </div>
+              </div>
+            {% endfor %}
+
+          </div>
+        </div>
+      </div>
+
+      {% if section.settings.footnote != blank %}
+        <div class="mgc-footnote">{{ section.settings.footnote }}</div>
+      {% endif %}
+    </div>
+
+  </div>
+</section>
+
+<style>
+  #mg-compare-{{ section.id }} {
+    background: {{ section.settings.section_bg }};
+    padding: {{ section.settings.padding_top_mobile }}px {{ section.settings.padding_side_mobile }}px {{ section.settings.padding_bottom_mobile }}px;
+    overflow: visible;
+  }
+
+  #mg-compare-{{ section.id }} * {
+    box-sizing: border-box;
+  }
+
+  #mg-compare-{{ section.id }} .mgc-wrap {
+    max-width: {{ section.settings.max_width }}px;
+    margin: 0 auto;
+  }
+
+  #mg-compare-{{ section.id }} .mgc-intro {
+    text-align: center;
+    margin: 0 auto 28px;
+    max-width: 390px;
+  }
+
+  #mg-compare-{{ section.id }} .mgc-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: {{ section.settings.eyebrow_bg }};
+    color: {{ section.settings.eyebrow_color }};
+    border-radius: 999px;
+    padding: 8px 15px;
+    font-size: {{ section.settings.eyebrow_size_mobile }}px;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  #mg-compare-{{ section.id }} .mgc-heading,
+  #mg-compare-{{ section.id }} .mgc-heading p {
+    margin: 0;
+    color: {{ section.settings.heading_color }};
+    font-size: {{ section.settings.heading_size_mobile }}px;
+    line-height: 1.05;
+    font-weight: 900;
+    letter-spacing: -0.04em;
+  }
+
+  #mg-compare-{{ section.id }} .mgc-heading strong {
+    color: {{ section.settings.heading_accent }};
+    font-weight: inherit;
+  }
+
+  #mg-compare-{{ section.id }} .mgc-text {
+    margin-top: 14px;
+    color: {{ section.settings.text_color }};
+    font-size: {{ section.settings.body_size_mobile }}px;
+    line-height: 1.55;
+    font-weight: 500;
+  }
+
+  #mg-compare-{{ section.id }} .mgc-text p,
+  #mg-compare-{{ section.id }} .mgc-footnote p {
+    margin: 0;
+  }
+
+  #mg-compare-{{ section.id }} .mgc-scroll {
+    width: 100%;
+    overflow-x: visible;
+    {% if section.settings.product_image != blank and section.settings.highlight_column == false %}
+      padding-top: 58px;
+    {% else %}
+      padding-top: 8px;
+    {% endif %}
+  }
+
+  #mg-compare-{{ section.id }} .mgc-table {
+    position: relative;
+    width: 100%;
+    max-width: 430px;
+    margin: 0 auto;
+    overflow: visible;
+  }
+
+  #mg-compare-{{ section.id }} .mgc-card {
+    width: 100%;
+    background: {{ section.settings.table_bg }};
+    border-radius: {{ section.settings.table_radius }}px;
+    overflow: visible;
+    box-shadow: {{ section.settings.table_shadow }};
+    border: {{ section.settings.table_border_width }}px solid {{ section.settings.table_border_color }};
+  }
+
+  #mg-compare-{{ section.id }} .mgc-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 0.62fr 0.86fr 1.02fr;
+    align-items: stretch;
+  }
+
+  #mg-compare-{{ section.id }} .mgc-head-cell,
+  #mg-compare-{{ section.id }} .mgc-feature-head,
+  #mg-compare-{{ section.id }} .mgc-cell,
+  #mg-compare-{{ section.id }} .mgc-feature {
+    height: 100%;
+  }
+
+  #mg-compare-{{ section.id }} .mgc-header {
+    background: {{ section.settings.header_bg }};
+    color: {{ section.settings.header_text }};
+    border-top-left-radius: {{ section.settings.table_radius }}px;
+    border-top-right-radius: {{ section.settings.table_radius }}px;
+  }
+
+  #mg-compare-{{ section.id }} .mgc-feature-head,
+  #mg-compare-{{ section.id }} .mgc-head-cell {
+    min-height: {{ section.settings.header_height_mobile }}px;
+  }
+
+  #mg-compare-{{ section.id }} .mgc-feature-head {
+    grid-column: 1;
+  }
+
+  #mg-compare-{{ section.id }} .mgc-brand-head {
+    grid-column: 2;
+  }
+
+  #mg-compare-{{ section.id }} .mgc-comp-1-head {
+    grid-column: 3;
+  }
+
+  #mg-compare-{{ section.id }} .mgc-comp-2-head {
+    grid-column: 4;
+  }
+
+  #mg-compare-{{ section.id }} .mgc-head-cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 12px 6px;
+    font-size: {{ section.settings.header_label_size_mobile }}px;
+    line-height: 1.05;
+    font-weight: 900;
+    letter-spacing: 0.02em;
+    color: {{ section.settings.header_text }};
+  }
+
+  #mg-compare-{{ section.id }} .mgc-head-cell span {
+    display: block;
+    width: 100%;
+    max-width: 84px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  #mg-compare-{{ section.id }} .mgc-brand-head span {
+    color: {% if section.settings.highlight_column %}{{ section.settings.column_text_color }}{% else %}{{ section.settings.brand_label_color }}{% endif %};
+  }
+
+  {% if section.settings.highlight_column %}
+    #mg-compare-{{ section.id }} .mgc-brand-head,
+    #mg-compare-{{ section.id }} .mgc-brand-cell {
+      background: {{ section.settings.column_bg_color }};
+    }
+
+    #mg-compare-{{ section.id }} .mgc-header .mgc-brand-head {
+      border-top-left-radius: {{ section.settings.table_radius }}px;
+      border-top-right-radius: {{ section.settings.table_radius }}px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.22);
+    }
+
+    #mg-compare-{{ section.id }} .mgc-row:last-child .mgc-brand-cell {
+      border-bottom-left-radius: {{ section.settings.table_radius }}px;
+      border-bottom-right-radius: {{ section.settings.table_radius }}px;
+    }
+
+    #mg-compare-{{ section.id }} .mgc-brand-cell .mgc-value-text {
+      color: {{ section.settings.column_text_color }};
+    }
+
+    #mg-compare-{{ section.id }} .mgc-brand-cell .mgc-check {
+      background: {{ section.settings.column_text_color }};
+    }
+
+    #mg-compare-{{ section.id }} .mgc-brand-cell .mgc-check path {
+      stroke: {{ section.settings.column_bg_color }};
+    }
+
+    #mg-compare-{{ section.id }} .mgc-brand-cell .mgc-x {
+      background: transparent;
+      border-color: {{ section.settings.column_text_color }};
+      color: {{ section.settings.column_text_color }};
+    }
+
+    /* Close the seams between rows so the highlighted column reads as
+       one continuous pill instead of stacked segments with visible
+       divider lines cutting through it. */
+    #mg-compare-{{ section.id }} .mgc-row .mgc-brand-cell {
+      position: relative;
+      margin-top: -1px;
+      z-index: 1;
+    }
+
+    /* Protrude the highlighted column above the header and below the
+       last row as a distinct floating pill (larger radius + shadow
+       than the table itself), matching the Grüns reference. */
+    #mg-compare-{{ section.id }} .mgc-header .mgc-brand-head {
+      margin-top: -22px;
+      padding-top: calc(12px + 22px);
+      border-top-left-radius: {{ section.settings.pill_radius }}px;
+      border-top-right-radius: {{ section.settings.pill_radius }}px;
+      box-shadow: 0 10px 24px rgba(24, 45, 110, 0.28);
+      position: relative;
+      z-index: 2;
+    }
+
+    #mg-compare-{{ section.id }} .mgc-row:last-child .mgc-brand-cell {
+      margin-bottom: -22px;
+      padding-bottom: calc(14px + 22px);
+      border-bottom-left-radius: {{ section.settings.pill_radius }}px;
+      border-bottom-right-radius: {{ section.settings.pill_radius }}px;
+      box-shadow: 0 10px 24px rgba(24, 45, 110, 0.28);
+    }
+  {% endif %}
+
+  #mg-compare-{{ section.id }} .mgc-product-img {
+    position: absolute;
+    left: 38.7%;
+    top: -48px;
+    transform: translateX(-50%);
+    width: {{ section.settings.product_image_width_mobile }}px;
+    height: auto;
+    display: block;
+    z-index: 10;
+    pointer-events: none;
+    filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.18));
+  }
+
+  #mg-compare-{{ section.id }} .mgc-row {
+    background: {{ section.settings.row_bg }};
+    border-top: 1px solid {{ section.settings.row_border }};
+  }
+
+  #mg-compare-{{ section.id }} .mgc-row:last-child {
+    border-bottom-left-radius: {{ section.settings.table_radius }}px;
+    border-bottom-right-radius: {{ section.settings.table_radius }}px;
+  }
+
+  #mg-compare-{{ section.id }} .mgc-feature {
+    padding: 20px 8px 20px 18px;
+    color: {{ section.settings.feature_color }};
+    font-size: {{ section.settings.row_label_size_mobile }}px;
+    line-height: 1.2;
+    font-weight: 900;
+    letter-spacing: 0.01em;
+    text-align: left;
+    /* Prevent hyphens (e.g. "Third-Party") from being treated as
+       line-break points, which caused awkward 3-line wraps. */
+    word-break: keep-all;
+    -webkit-hyphens: none;
+    hyphens: none;
+  }
+
+  #mg-compare-{{ section.id }} .mgc-cell {
+    min-height: {{ section.settings.row_height_mobile }}px;
+    padding: 14px 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  #mg-compare-{{ section.id }} .mgc-icon {
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    max-width: 24px;
+    min-height: 24px;
+    max-height: 24px;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 24px;
+    padding: 0;
+  }
+
+  #mg-compare-{{ section.id }} .mgc-check {
+    background: {{ section.settings.check_bg }};
+  }
+
+  #mg-compare-{{ section.id }} .mgc-check svg {
+    width: 14px;
+    height: 14px;
+    fill: none;
+  }
+
+  #mg-compare-{{ section.id }} .mgc-check path {
+    stroke: {{ section.settings.check_color }};
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  #mg-compare-{{ section.id }} .mgc-x {
+    background: {{ section.settings.x_bg }};
+    border: 1px solid {{ section.settings.x_border }};
+    color: {{ section.settings.x_color }};
+    font-size: 19px;
+    font-weight: 400;
+    line-height: 1;
+  }
+
+  #mg-compare-{{ section.id }} .mgc-value-text {
+    display: block;
+    width: 100%;
+    max-width: 82px;
+    margin: 0 auto;
+    color: {{ section.settings.cell_text_color }};
+    font-size: {{ section.settings.cell_text_size_mobile }}px;
+    line-height: 1.12;
+    font-weight: 900;
+    text-align: center;
+    word-break: normal;
+    overflow-wrap: normal;
+    hyphens: none;
+  }
+
+  #mg-compare-{{ section.id }} .mgc-value-text.mgc-unknown {
+    color: {{ section.settings.unknown_color }};
+    font-weight: 700;
+  }
+
+  #mg-compare-{{ section.id }} .mgc-footnote {
+    max-width: 430px;
+    margin: 10px auto 0;
+    color: {{ section.settings.footnote_color }};
+    font-size: {{ section.settings.footnote_size_mobile }}px;
+    line-height: 1.35;
+    text-align: center;
+    opacity: 0.75;
+  }
+
+  @media screen and (min-width: 768px) {
+    #mg-compare-{{ section.id }} {
+      padding: {{ section.settings.padding_top_desktop }}px {{ section.settings.padding_side_desktop }}px {{ section.settings.padding_bottom_desktop }}px;
+    }
+
+    #mg-compare-{{ section.id }} .mgc-wrap {
+      display: block;
+    }
+
+    #mg-compare-{{ section.id }} .mgc-intro {
+      max-width: 560px;
+      margin: 0 auto 36px;
+      padding-top: 0;
+      text-align: center;
+    }
+
+    #mg-compare-{{ section.id }} .mgc-eyebrow {
+      font-size: {{ section.settings.eyebrow_size_desktop }}px;
+    }
+
+    #mg-compare-{{ section.id }} .mgc-heading,
+    #mg-compare-{{ section.id }} .mgc-heading p {
+      font-size: {{ section.settings.heading_size_desktop }}px;
+    }
+
+    #mg-compare-{{ section.id }} .mgc-text {
+      font-size: {{ section.settings.body_size_desktop }}px;
+      line-height: 1.45;
+    }
+
+    #mg-compare-{{ section.id }} .mgc-scroll {
+      {% if section.settings.product_image != blank and section.settings.highlight_column == false %}
+        padding-top: 92px;
+      {% else %}
+        padding-top: 8px;
+      {% endif %}
+    }
+
+    #mg-compare-{{ section.id }} .mgc-table {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    #mg-compare-{{ section.id }} .mgc-grid {
+      grid-template-columns: 1.35fr 1fr 1fr 1fr;
+    }
+
+    #mg-compare-{{ section.id }} .mgc-feature-head,
+    #mg-compare-{{ section.id }} .mgc-head-cell {
+      min-height: {{ section.settings.header_height_desktop }}px;
+    }
+
+    #mg-compare-{{ section.id }} .mgc-head-cell {
+      font-size: {{ section.settings.header_label_size_desktop }}px;
+      padding: 16px 12px;
+    }
+
+    #mg-compare-{{ section.id }} .mgc-head-cell span {
+      max-width: 124px;
+    }
+
+    #mg-compare-{{ section.id }} .mgc-product-img {
+      left: 42.4%;
+      top: -72px;
+      width: {{ section.settings.product_image_width_desktop }}px;
+    }
+
+    #mg-compare-{{ section.id }} .mgc-feature {
+      padding: 20px 26px;
+      font-size: {{ section.settings.row_label_size_desktop }}px;
+    }
+
+    #mg-compare-{{ section.id }} .mgc-cell {
+      min-height: {{ section.settings.row_height_desktop }}px;
+      padding: 18px 12px;
+    }
+
+    #mg-compare-{{ section.id }} .mgc-icon {
+      width: 32px;
+      height: 32px;
+      min-width: 32px;
+      max-width: 32px;
+      min-height: 32px;
+      max-height: 32px;
+      flex: 0 0 32px;
+    }
+
+    #mg-compare-{{ section.id }} .mgc-check svg {
+      width: 19px;
+      height: 19px;
+    }
+
+    #mg-compare-{{ section.id }} .mgc-x {
+      font-size: 26px;
+    }
+
+    #mg-compare-{{ section.id }} .mgc-value-text {
+      max-width: 120px;
+      font-size: {{ section.settings.cell_text_size_desktop }}px;
+    }
+
+    #mg-compare-{{ section.id }} .mgc-footnote {
+      max-width: none;
+      font-size: {{ section.settings.footnote_size_desktop }}px;
+      text-align: right;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Meowgical Compare Table",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_intro",
+      "label": "Show intro",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "WHY SUPERTAURINE"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "<p><strong>SuperTaurine</strong> vs. Generic Taurine</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Most taurine products are a guess. SuperTaurine is measured, tested, and made specifically for cats.</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "footnote",
+      "label": "Footnote",
+      "default": "<p>*Comparison based on publicly available product information as of 2026.</p>"
+    },
+    {
+      "type": "text",
+      "id": "brand_label",
+      "label": "Brand label if no image",
+      "default": "SuperTaurine"
+    },
+    {
+      "type": "text",
+      "id": "competitor_1_label",
+      "label": "Competitor 1 label",
+      "default": "Generic Taurine Powder"
+    },
+    {
+      "type": "text",
+      "id": "competitor_2_label",
+      "label": "Competitor 2 label",
+      "default": "Cheap Multi-Ingredient Blend"
+    },
+    {
+      "type": "image_picker",
+      "id": "product_image",
+      "label": "Product image above brand column"
+    },
+    {
+      "type": "text",
+      "id": "product_image_alt",
+      "label": "Product image alt text",
+      "default": "SuperTaurine tub"
+    },
+    {
+      "type": "header",
+      "content": "Text sizes"
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Heading size mobile",
+      "min": 20,
+      "max": 46,
+      "step": 1,
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "heading_size_desktop",
+      "label": "Heading size desktop",
+      "min": 28,
+      "max": 70,
+      "step": 1,
+      "default": 44
+    },
+    {
+      "type": "range",
+      "id": "body_size_mobile",
+      "label": "Body text size mobile",
+      "min": 12,
+      "max": 22,
+      "step": 1,
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "body_size_desktop",
+      "label": "Body text size desktop",
+      "min": 14,
+      "max": 26,
+      "step": 1,
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "eyebrow_size_mobile",
+      "label": "Eyebrow size mobile",
+      "min": 9,
+      "max": 18,
+      "step": 1,
+      "default": 11
+    },
+    {
+      "type": "range",
+      "id": "eyebrow_size_desktop",
+      "label": "Eyebrow size desktop",
+      "min": 9,
+      "max": 20,
+      "step": 1,
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "header_label_size_mobile",
+      "label": "Column label size mobile",
+      "min": 9,
+      "max": 20,
+      "step": 1,
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "header_label_size_desktop",
+      "label": "Column label size desktop",
+      "min": 11,
+      "max": 24,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "row_label_size_mobile",
+      "label": "Row label size mobile",
+      "min": 11,
+      "max": 22,
+      "step": 1,
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "row_label_size_desktop",
+      "label": "Row label size desktop",
+      "min": 13,
+      "max": 26,
+      "step": 1,
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "cell_text_size_mobile",
+      "label": "Cell text size mobile",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "cell_text_size_desktop",
+      "label": "Cell text size desktop",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "footnote_size_mobile",
+      "label": "Footnote size mobile",
+      "min": 8,
+      "max": 16,
+      "step": 1,
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "footnote_size_desktop",
+      "label": "Footnote size desktop",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Product image sizes"
+    },
+    {
+      "type": "range",
+      "id": "product_image_width_mobile",
+      "label": "Product image width mobile",
+      "min": 40,
+      "max": 160,
+      "step": 5,
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "product_image_width_desktop",
+      "label": "Product image width desktop",
+      "min": 50,
+      "max": 220,
+      "step": 5,
+      "default": 115
+    },
+    {
+      "type": "header",
+      "content": "Table sizes"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Max width",
+      "min": 900,
+      "max": 1600,
+      "step": 20,
+      "default": 1280
+    },
+    {
+      "type": "range",
+      "id": "header_height_mobile",
+      "label": "Header height mobile",
+      "min": 54,
+      "max": 110,
+      "step": 2,
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "header_height_desktop",
+      "label": "Header height desktop",
+      "min": 54,
+      "max": 130,
+      "step": 2,
+      "default": 74
+    },
+    {
+      "type": "range",
+      "id": "row_height_mobile",
+      "label": "Row height mobile",
+      "min": 54,
+      "max": 120,
+      "step": 2,
+      "default": 76
+    },
+    {
+      "type": "range",
+      "id": "row_height_desktop",
+      "label": "Row height desktop",
+      "min": 54,
+      "max": 130,
+      "step": 2,
+      "default": 74
+    },
+    {
+      "type": "range",
+      "id": "table_radius",
+      "label": "Table corner radius",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "pill_radius",
+      "label": "Highlighted column pill radius",
+      "info": "Kept larger than the table radius so it reads as its own floating capsule, like the Grüns reference.",
+      "min": 12,
+      "max": 48,
+      "step": 2,
+      "default": 28
+    },
+    {
+      "type": "text",
+      "id": "table_shadow",
+      "label": "Table shadow CSS",
+      "default": "0 16px 42px rgba(24, 45, 110, 0.10)"
+    },
+    {
+      "type": "range",
+      "id": "table_border_width",
+      "label": "Table border width",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "default": 1
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Top padding mobile",
+      "min": 0,
+      "max": 140,
+      "step": 4,
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Bottom padding mobile",
+      "min": 0,
+      "max": 140,
+      "step": 4,
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_side_mobile",
+      "label": "Side padding mobile",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Top padding desktop",
+      "min": 0,
+      "max": 180,
+      "step": 4,
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Bottom padding desktop",
+      "min": 0,
+      "max": 180,
+      "step": 4,
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding_side_desktop",
+      "label": "Side padding desktop",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "checkbox",
+      "id": "highlight_column",
+      "label": "Shade the brand column in a solid color (like Grüns)",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "column_bg_color",
+      "label": "Brand column background",
+      "default": "#2748DC"
+    },
+    {
+      "type": "color",
+      "id": "column_text_color",
+      "label": "Brand column text/icons",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "section_bg",
+      "label": "Section background",
+      "default": "#F2F6FF"
+    },
+    {
+      "type": "color",
+      "id": "table_bg",
+      "label": "Table background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "table_border_color",
+      "label": "Table border color",
+      "default": "#D9DFF4"
+    },
+    {
+      "type": "color",
+      "id": "header_bg",
+      "label": "Header background",
+      "default": "#12204A"
+    },
+    {
+      "type": "color",
+      "id": "header_text",
+      "label": "Header text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "row_bg",
+      "label": "Row background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "row_border",
+      "label": "Row border",
+      "default": "#E6E9EF"
+    },
+    {
+      "type": "color",
+      "id": "feature_color",
+      "label": "Feature text",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "cell_text_color",
+      "label": "Cell text",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "unknown_color",
+      "label": "Unknown (\"?\") text color",
+      "default": "#9AA3BF"
+    },
+    {
+      "type": "color",
+      "id": "check_bg",
+      "label": "Check background",
+      "default": "#2748DC"
+    },
+    {
+      "type": "color",
+      "id": "check_color",
+      "label": "Check color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "x_bg",
+      "label": "X background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "x_border",
+      "label": "X border",
+      "default": "#D9DFF4"
+    },
+    {
+      "type": "color",
+      "id": "x_color",
+      "label": "X color",
+      "default": "#9AA3BF"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "heading_accent",
+      "label": "Heading accent",
+      "default": "#2748DC"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#4A4A4A"
+    },
+    {
+      "type": "color",
+      "id": "eyebrow_bg",
+      "label": "Eyebrow background",
+      "default": "#DDE5FF"
+    },
+    {
+      "type": "color",
+      "id": "eyebrow_color",
+      "label": "Eyebrow text",
+      "default": "#173FAE"
+    },
+    {
+      "type": "color",
+      "id": "brand_label_color",
+      "label": "Brand fallback label color",
+      "default": "#6695DE"
+    },
+    {
+      "type": "color",
+      "id": "footnote_color",
+      "label": "Footnote",
+      "default": "#697084"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "comparison_row",
+      "name": "Row",
+      "settings": [
+        {
+          "type": "text",
+          "id": "row_label",
+          "label": "Row label",
+          "default": "Purity"
+        },
+        {
+          "type": "select",
+          "id": "brand_value",
+          "label": "Brand value",
+          "options": [
+            { "value": "check", "label": "Check" },
+            { "value": "x", "label": "X" },
+            { "value": "text", "label": "Text" }
+          ],
+          "default": "text"
+        },
+        {
+          "type": "text",
+          "id": "brand_text",
+          "label": "Brand text",
+          "default": "99%+"
+        },
+        {
+          "type": "select",
+          "id": "competitor_1_value",
+          "label": "Competitor 1 value",
+          "options": [
+            { "value": "check", "label": "Check" },
+            { "value": "x", "label": "X" },
+            { "value": "unknown", "label": "Unknown (?)" },
+            { "value": "text", "label": "Text" }
+          ],
+          "default": "unknown"
+        },
+        {
+          "type": "text",
+          "id": "competitor_1_text",
+          "label": "Competitor 1 text"
+        },
+        {
+          "type": "select",
+          "id": "competitor_2_value",
+          "label": "Competitor 2 value",
+          "options": [
+            { "value": "check", "label": "Check" },
+            { "value": "x", "label": "X" },
+            { "value": "unknown", "label": "Unknown (?)" },
+            { "value": "text", "label": "Text" }
+          ],
+          "default": "unknown"
+        },
+        {
+          "type": "text",
+          "id": "competitor_2_text",
+          "label": "Competitor 2 text"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Meowgical Compare Table",
+      "blocks": [
+        {
+          "type": "comparison_row",
+          "settings": {
+            "row_label": "Purity",
+            "brand_value": "text",
+            "brand_text": "99%+",
+            "competitor_1_value": "unknown",
+            "competitor_2_value": "unknown"
+          }
+        },
+        {
+          "type": "comparison_row",
+          "settings": {
+            "row_label": "Third-Party Tested",
+            "brand_value": "check",
+            "competitor_1_value": "unknown",
+            "competitor_2_value": "unknown"
+          }
+        },
+        {
+          "type": "comparison_row",
+          "settings": {
+            "row_label": "Verified Purity",
+            "brand_value": "check",
+            "competitor_1_value": "unknown",
+            "competitor_2_value": "x"
+          }
+        },
+        {
+          "type": "comparison_row",
+          "settings": {
+            "row_label": "No Artificial Colors",
+            "brand_value": "check",
+            "competitor_1_value": "unknown",
+            "competitor_2_value": "x"
+          }
+        },
+        {
+          "type": "comparison_row",
+          "settings": {
+            "row_label": "No Artificial Flavors",
+            "brand_value": "check",
+            "competitor_1_value": "unknown",
+            "competitor_2_value": "x"
+          }
+        },
+        {
+          "type": "comparison_row",
+          "settings": {
+            "row_label": "Made for Cats",
+            "brand_value": "check",
+            "competitor_1_value": "unknown",
+            "competitor_2_value": "x"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

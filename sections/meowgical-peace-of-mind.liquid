@@ -1,0 +1,413 @@
+{% comment %}
+  Meowgical — Peace of Mind
+  Split out from the combined "Edu + Trust" section so it can be
+  independently reordered/enabled separately from "Simple by Design".
+{% endcomment %}
+
+<section id="mg-peace-{{ section.id }}" class="mg-peace-section">
+  <div class="mg-peace__inner">
+    <div class="mg-peace__card">
+
+      <div class="mg-peace__media">
+        {% if section.settings.image != blank %}
+          {{
+            section.settings.image
+            | image_url: width: 1400
+            | image_tag:
+              class: 'mg-peace__image',
+              loading: 'lazy',
+              widths: '480, 720, 960, 1200, 1400',
+              sizes: '(min-width: 990px) 50vw, calc(100vw - 32px)',
+              alt: section.settings.image_alt
+          }}
+        {% else %}
+          <div class="mg-peace__placeholder">
+            Add your lifestyle image
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="mg-peace__content">
+        <h2 class="mg-peace__heading mg-peace__heading--{{ section.settings.mobile_heading_alignment }}">
+          {% if section.settings.peace_highlight != blank %}
+            <span>{{ section.settings.peace_highlight }}</span>
+          {% endif %}
+          {{ section.settings.peace_heading }}
+        </h2>
+
+        <div class="mg-peace__checks">
+          {% for block in section.blocks %}
+            {% if block.type == 'check' %}
+              <div class="mg-peace__check" {{ block.shopify_attributes }}>
+                <div class="mg-peace__check-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M5 12.5 9.2 17 19 7"/>
+                  </svg>
+                </div>
+                <div class="mg-peace__check-copy">
+                  <strong>{{ block.settings.title }}</strong>
+                  <span>{{ block.settings.text }}</span>
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+
+        {% if section.settings.button_text != blank %}
+          <a href="{{ section.settings.button_link | default: '#MainProduct' }}" class="mg-peace__button">
+            {{ section.settings.button_text }}
+          </a>
+        {% endif %}
+
+        {% if section.settings.guarantee_heading != blank %}
+          <div class="mg-peace__guarantee">
+            {% if section.settings.guarantee_icon != blank %}
+              <img
+                src="{{ section.settings.guarantee_icon | image_url: width: 100 }}"
+                alt=""
+                class="mg-peace__guarantee-icon"
+                loading="lazy"
+                width="{{ section.settings.guarantee_icon_size_mobile }}"
+                height="{{ section.settings.guarantee_icon_size_mobile }}"
+              >
+            {% endif %}
+            <span>{{ section.settings.guarantee_heading }}</span>
+          </div>
+        {% endif %}
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  #mg-peace-{{ section.id }} {
+    --mg-bg: {{ section.settings.background_color }};
+    --mg-card: {{ section.settings.card_color }};
+    --mg-blue: {{ section.settings.primary_blue }};
+    --mg-heading: {{ section.settings.heading_color }};
+    --mg-text: {{ section.settings.text_color }};
+    --mg-border: {{ section.settings.border_color }};
+    --mg-button-text: {{ section.settings.button_text_color }};
+    background: var(--mg-bg);
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+  }
+
+  #mg-peace-{{ section.id }} * {
+    box-sizing: border-box;
+  }
+
+  #mg-peace-{{ section.id }} .mg-peace__inner {
+    width: min(1180px, calc(100% - 32px));
+    margin: 0 auto;
+  }
+
+  #mg-peace-{{ section.id }} .mg-peace__card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: stretch;
+    overflow: hidden;
+    border: 1px solid var(--mg-border);
+    border-radius: 28px;
+    background: var(--mg-card);
+    box-shadow: 0 18px 50px rgba(35, 72, 160, .08);
+  }
+
+  #mg-peace-{{ section.id }} .mg-peace__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: clamp(34px, 5vw, 64px);
+  }
+
+  #mg-peace-{{ section.id }} .mg-peace__heading {
+    margin: 0;
+    color: var(--mg-heading);
+    font-size: clamp(34px, 4.3vw, 54px);
+    line-height: 1.06;
+    letter-spacing: -.035em;
+    font-weight: 800;
+  }
+
+  #mg-peace-{{ section.id }} .mg-peace__heading span {
+    color: var(--mg-blue);
+    display: inline;
+  }
+
+  #mg-peace-{{ section.id }} .mg-peace__checks {
+    display: grid;
+    gap: 18px;
+    margin-top: 30px;
+  }
+
+  #mg-peace-{{ section.id }} .mg-peace__check {
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    gap: 14px;
+    align-items: start;
+  }
+
+  #mg-peace-{{ section.id }} .mg-peace__check-icon {
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    margin-top: 2px;
+    border-radius: 999px;
+    background: var(--mg-blue);
+    color: white;
+  }
+
+  #mg-peace-{{ section.id }} .mg-peace__check-icon svg {
+    width: 16px;
+    height: 16px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  #mg-peace-{{ section.id }} .mg-peace__check-copy {
+    color: var(--mg-text);
+    font-size: 17px;
+    line-height: 1.5;
+  }
+
+  #mg-peace-{{ section.id }} .mg-peace__check-copy strong {
+    color: var(--mg-heading);
+  }
+
+  #mg-peace-{{ section.id }} .mg-peace__check-copy span {
+    margin-left: 4px;
+  }
+
+  #mg-peace-{{ section.id }} .mg-peace__media {
+    min-height: 100%;
+  }
+
+  #mg-peace-{{ section.id }} .mg-peace__image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 560px;
+    object-fit: cover;
+  }
+
+  #mg-peace-{{ section.id }} .mg-peace__placeholder {
+    display: grid;
+    place-items: center;
+    min-height: 560px;
+    padding: 30px;
+    background: {{ section.settings.soft_blue }};
+    color: var(--mg-blue);
+    font-weight: 700;
+    text-align: center;
+  }
+
+  #mg-peace-{{ section.id }} .mg-peace__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: min(100%, {{ section.settings.button_width_desktop }}px);
+    min-height: {{ section.settings.button_height_desktop }}px;
+    margin: {{ section.settings.button_gap_desktop }}px auto 0;
+    padding: 14px 28px;
+    border: {{ section.settings.button_border_width }}px solid {{ section.settings.button_border_color }};
+    border-radius: {{ section.settings.button_radius }}px;
+    {% if section.settings.button_use_gradient %}
+      background: linear-gradient(
+        {{ section.settings.button_gradient_angle }}deg,
+        {{ section.settings.button_gradient_1 }},
+        {{ section.settings.button_gradient_2 }}
+      );
+    {% else %}
+      background: {{ section.settings.button_bg }};
+    {% endif %}
+    box-shadow: {{ section.settings.button_shadow }};
+    color: {{ section.settings.button_text_color }};
+    font-size: {{ section.settings.button_text_size_desktop }}px;
+    line-height: 1;
+    font-weight: {{ section.settings.button_font_weight }};
+    letter-spacing: calc({{ section.settings.button_letter_spacing }} / 100 * 1em);
+    text-align: center;
+    text-decoration: none;
+    transition: transform .2s ease, box-shadow .2s ease;
+  }
+
+  #mg-peace-{{ section.id }} .mg-peace__button:hover {
+    transform: translateY(-1px);
+  }
+
+  #mg-peace-{{ section.id }} .mg-peace__guarantee {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: {{ section.settings.guarantee_icon_gap }}px;
+    width: min(100%, {{ section.settings.button_width_desktop }}px);
+    margin: {{ section.settings.guarantee_gap_desktop }}px auto 0;
+    color: {{ section.settings.guarantee_color }};
+    font-size: {{ section.settings.guarantee_size_desktop }}px;
+    line-height: 1.25;
+    font-weight: {{ section.settings.guarantee_weight }};
+    text-align: center;
+  }
+
+  #mg-peace-{{ section.id }} .mg-peace__guarantee-icon {
+    flex: 0 0 auto;
+    width: {{ section.settings.guarantee_icon_size_desktop }}px;
+    height: {{ section.settings.guarantee_icon_size_desktop }}px;
+    object-fit: contain;
+  }
+
+  @media (max-width: 989px) {
+    #mg-peace-{{ section.id }} .mg-peace__card {
+      grid-template-columns: 1fr;
+    }
+
+    #mg-peace-{{ section.id }} .mg-peace__media {
+      order: -1;
+    }
+
+    #mg-peace-{{ section.id }} .mg-peace__image,
+    #mg-peace-{{ section.id }} .mg-peace__placeholder {
+      min-height: 420px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    #mg-peace-{{ section.id }} {
+      padding-top: {{ section.settings.mobile_padding_top }}px;
+      padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
+    }
+
+    #mg-peace-{{ section.id }} .mg-peace__inner {
+      width: min(100% - 20px, 1180px);
+    }
+
+    #mg-peace-{{ section.id }} .mg-peace__card {
+      border-radius: 20px;
+    }
+
+    #mg-peace-{{ section.id }} .mg-peace__content {
+      padding: 28px 22px 30px;
+    }
+
+    #mg-peace-{{ section.id }} .mg-peace__image,
+    #mg-peace-{{ section.id }} .mg-peace__placeholder {
+      min-height: 330px;
+    }
+
+    #mg-peace-{{ section.id }} .mg-peace__heading--center {
+      text-align: center;
+    }
+
+    #mg-peace-{{ section.id }} .mg-peace__heading--left {
+      text-align: left;
+    }
+
+    #mg-peace-{{ section.id }} .mg-peace__button {
+      width: min(100%, {{ section.settings.button_width_mobile }}px);
+      min-height: {{ section.settings.button_height_mobile }}px;
+      margin-top: {{ section.settings.button_gap_mobile }}px;
+      font-size: {{ section.settings.button_text_size_mobile }}px;
+    }
+
+    #mg-peace-{{ section.id }} .mg-peace__guarantee {
+      width: min(100%, {{ section.settings.button_width_mobile }}px);
+      margin-top: {{ section.settings.guarantee_gap_mobile }}px;
+      font-size: {{ section.settings.guarantee_size_mobile }}px;
+    }
+
+    #mg-peace-{{ section.id }} .mg-peace__guarantee-icon {
+      width: {{ section.settings.guarantee_icon_size_mobile }}px;
+      height: {{ section.settings.guarantee_icon_size_mobile }}px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Peace of Mind",
+  "tag": "section",
+  "class": "section-meowgical-peace-of-mind",
+  "settings": [
+    { "type": "header", "content": "Content" },
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "image_alt", "label": "Image alt text", "default": "Cat parent with cat and SuperTaurine" },
+    { "type": "text", "id": "peace_highlight", "label": "Highlighted heading text", "default": "Peace of Mind" },
+    { "type": "text", "id": "peace_heading", "label": "Heading", "default": " for Every Type of Cat Parent" },
+    { "type": "select", "id": "mobile_heading_alignment", "label": "Mobile heading alignment", "default": "center", "options": [ { "value": "left", "label": "Left" }, { "value": "center", "label": "Center" } ] },
+    { "type": "header", "content": "CTA" },
+    { "type": "text", "id": "button_text", "label": "Button text", "default": "START NOW" },
+    { "type": "url", "id": "button_link", "label": "Button link" },
+    { "type": "checkbox", "id": "button_use_gradient", "label": "Use gradient button", "default": true },
+    { "type": "color", "id": "button_gradient_1", "label": "Button gradient color 1", "default": "#3E50DC" },
+    { "type": "color", "id": "button_gradient_2", "label": "Button gradient color 2", "default": "#6695DE" },
+    { "type": "range", "id": "button_gradient_angle", "label": "Gradient angle", "min": 0, "max": 180, "step": 5, "unit": "deg", "default": 135 },
+    { "type": "color", "id": "button_bg", "label": "Solid button background", "default": "#3E50DC" },
+    { "type": "color", "id": "button_border_color", "label": "Button border color", "default": "#173FAE" },
+    { "type": "range", "id": "button_border_width", "label": "Button border width", "min": 0, "max": 4, "step": 1, "unit": "px", "default": 1 },
+    { "type": "range", "id": "button_radius", "label": "Button radius", "min": 10, "max": 100, "step": 1, "unit": "px", "default": 100 },
+    { "type": "range", "id": "button_width_mobile", "label": "Button width mobile", "min": 220, "max": 420, "step": 10, "unit": "px", "default": 330 },
+    { "type": "range", "id": "button_width_desktop", "label": "Button width desktop", "min": 280, "max": 720, "step": 10, "unit": "px", "default": 520 },
+    { "type": "range", "id": "button_height_mobile", "label": "Button height mobile", "min": 48, "max": 80, "step": 2, "unit": "px", "default": 58 },
+    { "type": "range", "id": "button_height_desktop", "label": "Button height desktop", "min": 52, "max": 88, "step": 2, "unit": "px", "default": 64 },
+    { "type": "range", "id": "button_text_size_mobile", "label": "Button text size mobile", "min": 14, "max": 24, "step": 1, "unit": "px", "default": 18 },
+    { "type": "range", "id": "button_text_size_desktop", "label": "Button text size desktop", "min": 16, "max": 28, "step": 1, "unit": "px", "default": 20 },
+    { "type": "select", "id": "button_font_weight", "label": "Button font weight", "default": "900", "options": [ { "value": "600", "label": "Semi-bold" }, { "value": "700", "label": "Bold" }, { "value": "800", "label": "Extra bold" }, { "value": "900", "label": "Black" } ] },
+    { "type": "range", "id": "button_letter_spacing", "label": "Button letter spacing", "min": 0, "max": 8, "step": 1, "unit": "%", "default": 1 },
+    { "type": "range", "id": "button_gap_mobile", "label": "Button top spacing mobile", "min": 8, "max": 50, "step": 2, "unit": "px", "default": 24 },
+    { "type": "range", "id": "button_gap_desktop", "label": "Button top spacing desktop", "min": 8, "max": 60, "step": 2, "unit": "px", "default": 32 },
+    { "type": "text", "id": "button_shadow", "label": "Button shadow CSS", "default": "0 10px 24px rgba(47, 126, 216, 0.24)" },
+    { "type": "header", "content": "Guarantee" },
+    { "type": "image_picker", "id": "guarantee_icon", "label": "Guarantee icon" },
+    { "type": "text", "id": "guarantee_heading", "label": "Guarantee text", "default": "60-day money-back guarantee" },
+    { "type": "color", "id": "guarantee_color", "label": "Guarantee text color", "default": "#6A78B8" },
+    { "type": "select", "id": "guarantee_weight", "label": "Guarantee font weight", "default": "600", "options": [ { "value": "500", "label": "Medium" }, { "value": "600", "label": "Semi-bold" }, { "value": "700", "label": "Bold" } ] },
+    { "type": "range", "id": "guarantee_size_mobile", "label": "Guarantee font size mobile", "min": 10, "max": 22, "step": 1, "unit": "px", "default": 13 },
+    { "type": "range", "id": "guarantee_size_desktop", "label": "Guarantee font size desktop", "min": 11, "max": 24, "step": 1, "unit": "px", "default": 14 },
+    { "type": "range", "id": "guarantee_icon_size_mobile", "label": "Guarantee icon size mobile", "min": 12, "max": 36, "step": 1, "unit": "px", "default": 19 },
+    { "type": "range", "id": "guarantee_icon_size_desktop", "label": "Guarantee icon size desktop", "min": 14, "max": 42, "step": 1, "unit": "px", "default": 21 },
+    { "type": "range", "id": "guarantee_icon_gap", "label": "Guarantee icon gap", "min": 2, "max": 20, "step": 1, "unit": "px", "default": 8 },
+    { "type": "range", "id": "guarantee_gap_mobile", "label": "Guarantee top spacing mobile", "min": 4, "max": 40, "step": 1, "unit": "px", "default": 14 },
+    { "type": "range", "id": "guarantee_gap_desktop", "label": "Guarantee top spacing desktop", "min": 4, "max": 50, "step": 1, "unit": "px", "default": 16 },
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "background_color", "label": "Section background", "default": "#FFFFFF" },
+    { "type": "color", "id": "card_color", "label": "Card background", "default": "#FFFFFF" },
+    { "type": "color", "id": "soft_blue", "label": "Soft blue", "default": "#EEF5FF" },
+    { "type": "color", "id": "primary_blue", "label": "Primary blue", "default": "#4C90F2" },
+    { "type": "color", "id": "heading_color", "label": "Heading color", "default": "#1F1F1F" },
+    { "type": "color", "id": "text_color", "label": "Text color", "default": "#4A4A4A" },
+    { "type": "color", "id": "border_color", "label": "Border color", "default": "#E6E9EF" },
+    { "type": "color", "id": "button_text_color", "label": "Button text color", "default": "#FFFFFF" },
+    { "type": "header", "content": "Spacing" },
+    { "type": "range", "id": "padding_top", "label": "Desktop top padding", "min": 20, "max": 120, "step": 4, "unit": "px", "default": 64 },
+    { "type": "range", "id": "padding_bottom", "label": "Desktop bottom padding", "min": 20, "max": 120, "step": 4, "unit": "px", "default": 64 },
+    { "type": "range", "id": "mobile_padding_top", "label": "Mobile top padding", "min": 16, "max": 80, "step": 4, "unit": "px", "default": 36 },
+    { "type": "range", "id": "mobile_padding_bottom", "label": "Mobile bottom padding", "min": 16, "max": 80, "step": 4, "unit": "px", "default": 36 }
+  ],
+  "blocks": [
+    {
+      "type": "check",
+      "name": "Peace of mind point",
+      "limit": 4,
+      "settings": [
+        { "type": "text", "id": "title", "label": "Bold lead-in", "default": "If you feed commercial food:" },
+        { "type": "text", "id": "text", "label": "Supporting text", "default": "Add a simple daily layer of consistency." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Peace of Mind",
+      "blocks": [
+        { "type": "check", "settings": { "title": "If you feed commercial food:", "text": "Add a consistent daily habit, beyond what's left in the bowl." } },
+        { "type": "check", "settings": { "title": "If you cook or feed raw:", "text": "Keep daily support simple, without extra prep." } },
+        { "type": "check", "settings": { "title": "If you've read the label more than once:", "text": "Feel sure about what you're adding, every day." } },
+        { "type": "check", "settings": { "title": "If you just want to do right by your cat:", "text": "One scoop says it all." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

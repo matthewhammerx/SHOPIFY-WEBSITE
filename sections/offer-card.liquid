@@ -1,0 +1,589 @@
+<style>
+  .oc-feature {
+    background: var(--oc-outer-bg);
+  }
+
+  .oc-feature__inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: var(--oc-padding, 40px) 24px;
+  }
+
+  .oc-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .oc-ribbon {
+    position: relative;
+    z-index: 3;
+    margin-bottom: -20px;
+    white-space: nowrap;
+    background: var(--oc-ribbon-bg, #bfe94a);
+    color: var(--oc-ribbon-text, #14210e);
+    font-weight: 800;
+    font-size: 13px;
+    padding: 10px 20px;
+    border-radius: 999px;
+    max-width: calc(100% - 32px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .oc-card {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    background: var(--oc-card-bg, #fff);
+    border-radius: var(--oc-card-radius, 20px);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .oc-image-box {
+    position: relative;
+    background: var(--oc-image-bg, #eee);
+    border-radius: var(--oc-image-radius, 12px);
+    padding: 24px;
+  }
+  .oc-image-box img {
+    width: 100%;
+    display: block;
+  }
+  .oc-badge {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    background: var(--oc-badge-bg, #fff);
+    color: var(--oc-badge-text, #1a1a17);
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.02em;
+  }
+
+  .oc-content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .oc-rating {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .oc-stars {
+    display: flex;
+    gap: 2px;
+  }
+  .oc-stars svg {
+    width: 16px;
+    height: 16px;
+    color: var(--oc-star, #8bc34a);
+  }
+  .oc-rating__label {
+    font-size: 14px;
+    color: var(--oc-text, #1a1a17);
+  }
+
+  .oc-title {
+    margin: 0;
+    font-size: 24px;
+    line-height: 1.2;
+    font-weight: 800;
+    color: var(--oc-heading, #1a1a17);
+    text-wrap: balance;
+  }
+
+  .oc-features {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .oc-feature-row,
+  .oc-trust-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .oc-feature-icon {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--oc-icon-bg, #1e3d2c);
+    color: var(--oc-icon-color, #fff);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .oc-feature-icon svg {
+    width: 11px;
+    height: 11px;
+  }
+  .oc-feature-icon img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  .oc-feature-text,
+  .oc-trust-text {
+    font-size: 14px;
+    color: var(--oc-text, #1a1a17);
+  }
+
+  .oc-button {
+    background: var(--oc-button-bg, #bfe94a);
+    color: var(--oc-button-text, #14210e);
+    border: 2px solid var(--oc-button-border, transparent);
+    border-radius: 999px;
+    padding: 16px 28px;
+    font-weight: 800;
+    font-size: 14px;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    text-transform: uppercase;
+    display: block;
+    text-align: center;
+    cursor: pointer;
+  }
+  .oc-button:focus-visible {
+    outline: 2px solid var(--oc-button-border, var(--oc-button-bg));
+    outline-offset: 3px;
+  }
+
+  .oc-trust {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .oc-trust-icon {
+    flex-shrink: 0;
+    width: 14px;
+    height: 14px;
+    color: var(--oc-trust-icon, #1a1a17);
+  }
+  .oc-trust-icon svg {
+    width: 100%;
+    height: 100%;
+  }
+  .oc-trust-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  @media (min-width: 860px) {
+    .oc-card {
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 40px;
+      padding: 40px;
+    }
+    .oc-image-box {
+      flex: 0 0 var(--oc-image-width, 42%);
+    }
+    .oc-content {
+      flex: 1 1 0%;
+    }
+    .oc-title {
+      font-size: 28px;
+    }
+  }
+</style>
+
+<section class="oc-feature" style="
+  --oc-outer-bg: {{ section.settings.outer_bg }};
+  --oc-card-bg: {{ section.settings.card_bg }};
+  --oc-card-radius: {{ section.settings.card_radius }}px;
+  --oc-image-bg: {{ section.settings.image_bg }};
+  --oc-image-radius: {{ section.settings.image_radius }}px;
+  --oc-image-width: {{ section.settings.image_width }}%;
+  --oc-badge-bg: {{ section.settings.badge_bg }};
+  --oc-badge-text: {{ section.settings.badge_text_color }};
+  --oc-heading: {{ section.settings.heading_color }};
+  --oc-text: {{ section.settings.text_color }};
+  --oc-star: {{ section.settings.star_color }};
+  --oc-icon-bg: {{ section.settings.icon_bg }};
+  --oc-icon-color: {{ section.settings.icon_color }};
+  --oc-trust-icon: {{ section.settings.trust_icon_color }};
+  --oc-button-bg: {{ section.settings.button_bg }};
+  --oc-button-text: {{ section.settings.button_text }};
+  --oc-button-border: {{ section.settings.button_border }};
+  --oc-ribbon-bg: {{ section.settings.ribbon_bg }};
+  --oc-ribbon-text: {{ section.settings.ribbon_text_color }};
+  --oc-padding: {{ section.settings.section_padding }}px;
+">
+  <div class="oc-feature__inner">
+    <div class="oc-wrap">
+
+      {%- if section.settings.ribbon_text != blank -%}
+        <div class="oc-ribbon">{{ section.settings.ribbon_text }}</div>
+      {%- endif -%}
+
+      <div class="oc-card">
+
+        <div class="oc-image-box">
+          {%- if section.settings.badge_text != blank -%}
+            <span class="oc-badge">{{ section.settings.badge_text }}</span>
+          {%- endif -%}
+          {%- if section.settings.image != blank -%}
+            <img
+              src="{{ section.settings.image | image_url: width: 800 }}"
+              alt="{{ section.settings.image.alt | default: section.settings.heading | escape }}"
+              loading="eager"
+              width="{{ section.settings.image.width }}"
+              height="{{ section.settings.image.height }}"
+            >
+          {%- else -%}
+            {{ 'product' | placeholder_svg_tag: 'oc-placeholder-svg' }}
+          {%- endif -%}
+        </div>
+
+        <div class="oc-content">
+          {%- if section.settings.rating > 0 or section.settings.rating_label != blank -%}
+            <div class="oc-rating">
+              {%- if section.settings.rating > 0 -%}
+                <div class="oc-stars" role="img" aria-label="{{ section.settings.rating }} out of 5 stars">
+                  {%- for i in (1..section.settings.rating) -%}
+                    <svg viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M10 1.5l2.59 5.24 5.78.84-4.18 4.08.99 5.76L10 14.77l-5.18 2.65.99-5.76-4.18-4.08 5.78-.84L10 1.5z"/></svg>
+                  {%- endfor -%}
+                </div>
+              {%- endif -%}
+              {%- if section.settings.rating_label != blank -%}
+                <span class="oc-rating__label">{{ section.settings.rating_label }}</span>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+
+          {%- if section.settings.heading != blank -%}
+            <h2 class="oc-title">{{ section.settings.heading }}</h2>
+          {%- endif -%}
+
+          {%- assign feature_blocks = section.blocks | where: 'type', 'feature' -%}
+          {%- if feature_blocks.size > 0 -%}
+            <div class="oc-features">
+              {%- for block in feature_blocks -%}
+                <div class="oc-feature-row" {{ block.shopify_attributes }}>
+                  <span class="oc-feature-icon">
+                    {%- if block.settings.icon != blank -%}
+                      <img src="{{ block.settings.icon | image_url: width: 40 }}" alt="" loading="lazy">
+                    {%- else -%}
+                      <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 8.5l3 3 7-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    {%- endif -%}
+                  </span>
+                  <span class="oc-feature-text">{{ block.settings.text }}</span>
+                </div>
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+
+          {%- if section.settings.button_label != blank -%}
+            {%- if section.settings.button_link != blank -%}
+              <a href="{{ section.settings.button_link }}" class="oc-button">{{ section.settings.button_label }}</a>
+            {%- else -%}
+              <span class="oc-button">{{ section.settings.button_label }}</span>
+            {%- endif -%}
+          {%- endif -%}
+
+          {%- assign trust_blocks = section.blocks | where: 'type', 'trust' -%}
+          {%- if trust_blocks.size > 0 -%}
+            <div class="oc-trust">
+              {%- for block in trust_blocks -%}
+                <div class="oc-trust-row" {{ block.shopify_attributes }}>
+                  <span class="oc-trust-icon">
+                    {%- if block.settings.icon != blank -%}
+                      <img src="{{ block.settings.icon | image_url: width: 80 }}" alt="">
+                    {%- else -%}
+                      <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 8.5l3 3 7-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    {%- endif -%}
+                  </span>
+                  <span class="oc-trust-text">{{ block.settings.text }}</span>
+                </div>
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Offer card",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Ribbon"
+    },
+    {
+      "type": "text",
+      "id": "ribbon_text",
+      "label": "Ribbon text",
+      "default": "🐾 4th JULY SALE — 50% OFF (LIMITED TIME!)"
+    },
+    {
+      "type": "header",
+      "content": "Product"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Product image"
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Corner badge text",
+      "default": "BEST-SELLER"
+    },
+    {
+      "type": "header",
+      "content": "Rating"
+    },
+    {
+      "type": "range",
+      "id": "rating",
+      "label": "Star rating",
+      "min": 0,
+      "max": 5,
+      "step": 1,
+      "default": 5
+    },
+    {
+      "type": "text",
+      "id": "rating_label",
+      "label": "Rating label",
+      "default": "Over 750,000 Dogs Helped"
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Wuffes Advanced Hip & Joint Supplement for Dogs"
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Try risk-free with 50% off →"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "image_width",
+      "label": "Image width (desktop)",
+      "min": 30,
+      "max": 60,
+      "step": 1,
+      "unit": "%",
+      "default": 42
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Card corner radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "image_radius",
+      "label": "Image box corner radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "section_padding",
+      "label": "Vertical padding",
+      "min": 16,
+      "max": 96,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "outer_bg",
+      "label": "Outer background",
+      "default": "#1E3D2C"
+    },
+    {
+      "type": "color",
+      "id": "card_bg",
+      "label": "Card background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "image_bg",
+      "label": "Image box background",
+      "default": "#EFEFEF"
+    },
+    {
+      "type": "color",
+      "id": "badge_bg",
+      "label": "Corner badge background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "badge_text_color",
+      "label": "Corner badge text",
+      "default": "#1A1A17"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading",
+      "default": "#1A1A17"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Body text",
+      "default": "#1A1A17"
+    },
+    {
+      "type": "color",
+      "id": "star_color",
+      "label": "Star color",
+      "default": "#8BC34A"
+    },
+    {
+      "type": "color",
+      "id": "icon_bg",
+      "label": "Feature icon background",
+      "default": "#1E3D2C"
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Feature icon mark",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "trust_icon_color",
+      "label": "Trust bullet icon",
+      "default": "#1A1A17"
+    },
+    {
+      "type": "color",
+      "id": "button_bg",
+      "label": "Button background",
+      "default": "#BFE94A"
+    },
+    {
+      "type": "color",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "#14210E"
+    },
+    {
+      "type": "color",
+      "id": "button_border",
+      "label": "Button border",
+      "default": "#14210E"
+    },
+    {
+      "type": "color",
+      "id": "ribbon_bg",
+      "label": "Ribbon background",
+      "default": "#BFE94A"
+    },
+    {
+      "type": "color",
+      "id": "ribbon_text_color",
+      "label": "Ribbon text",
+      "default": "#14210E"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature bullet",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon",
+          "info": "Optional. A checkmark is used if left empty."
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Feature text"
+        }
+      ]
+    },
+    {
+      "type": "trust",
+      "name": "Trust bullet",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon",
+          "info": "Optional. A checkmark is used if left empty."
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Trust text"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Offer card",
+      "blocks": [
+        { "type": "feature", "settings": { "text": "Formulated for dogs of all ages and sizes" } },
+        { "type": "feature", "settings": { "text": "Targets the root causes of joint discomfort" } },
+        { "type": "feature", "settings": { "text": "90% of dogs love the taste" } },
+        { "type": "trust", "settings": { "text": "Better Mobility in 90 Days or Your Money Back" } },
+        { "type": "trust", "settings": { "text": "FREE and FAST SHIPPING" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

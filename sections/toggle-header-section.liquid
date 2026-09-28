@@ -1,0 +1,32 @@
+{% if section.settings.hide_header %}
+  <style>
+    #shopify-section-header,
+    .shopify-section-header,
+    .shopify-section--header,
+    sticky-header,
+    header.header,
+    header.site-header,
+    [id*="__header"] {
+      display: none !important;
+    }
+  </style>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Toggle header section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "hide_header",
+      "label": "Hide header",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Toggle header section"
+    }
+  ]
+}
+{% endschema %}

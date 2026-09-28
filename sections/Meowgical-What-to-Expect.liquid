@@ -1,0 +1,1007 @@
+{% comment %}
+  Meowgical - What to Expect
+  Wuffes-inspired information structure with a softer Meowgical card design.
+{% endcomment %}
+
+<section id="meowgical-expect-{{ section.id }}" class="meowgical-expect">
+  <div class="mwe-wrap">
+
+    <div class="mwe-header">
+      {% if section.settings.top_text != blank %}
+        <div class="mwe-top-text">{{ section.settings.top_text }}</div>
+      {% endif %}
+
+      {% if section.settings.heading != blank %}
+        <div class="mwe-heading">{{ section.settings.heading }}</div>
+      {% endif %}
+
+      {% if section.settings.text != blank %}
+        <div class="mwe-intro">{{ section.settings.text }}</div>
+      {% endif %}
+    </div>
+
+    <div class="mwe-panel">
+      <div class="mwe-grid">
+        {% for block in section.blocks %}
+          <article
+            class="mwe-card"
+            style="
+              --mwe-card-bg: {{ block.settings.card_bg }};
+              --mwe-title-color: {{ block.settings.title_color }};
+            "
+            {{ block.shopify_attributes }}
+          >
+            <div class="mwe-card-head">
+              <div class="mwe-icon-wrap">
+                {% if block.settings.icon != blank %}
+                  <img
+                    src="{{ block.settings.icon | image_url: width: 180 }}"
+                    alt=""
+                    class="mwe-icon"
+                    loading="lazy"
+                    width="90"
+                    height="90"
+                  >
+                {% else %}
+                  <span class="mwe-icon-fallback">{{ forloop.index }}</span>
+                {% endif %}
+              </div>
+
+              {% if block.settings.title != blank %}
+                <h3>{{ block.settings.title }}</h3>
+              {% endif %}
+            </div>
+
+            {% if block.settings.description != blank %}
+              <div class="mwe-description">{{ block.settings.description }}</div>
+            {% endif %}
+          </article>
+        {% endfor %}
+      </div>
+
+      {% if section.settings.expectation_note != blank %}
+        <div class="mwe-note">
+          {% if section.settings.note_icon != blank %}
+            <img
+              src="{{ section.settings.note_icon | image_url: width: 60 }}"
+              alt=""
+              class="mwe-note-icon"
+              loading="lazy"
+              width="24"
+              height="24"
+            >
+          {% endif %}
+          <div class="mwe-note-text">{{ section.settings.expectation_note }}</div>
+        </div>
+      {% endif %}
+    </div>
+
+  </div>
+</section>
+
+<style>
+  #meowgical-expect-{{ section.id }} {
+    background: {{ section.settings.section_bg }};
+    padding:
+      {{ section.settings.padding_top_mobile }}px
+      {{ section.settings.padding_side_mobile }}px
+      {{ section.settings.padding_bottom_mobile }}px;
+    overflow: hidden;
+  }
+
+  #meowgical-expect-{{ section.id }} * {
+    box-sizing: border-box;
+  }
+
+  #meowgical-expect-{{ section.id }} .mwe-wrap {
+    max-width: {{ section.settings.max_width }}px;
+    margin: 0 auto;
+  }
+
+  #meowgical-expect-{{ section.id }} .mwe-header {
+    width: 100%;
+    max-width: 760px;
+    margin: 0 auto {{ section.settings.header_gap_mobile }}px;
+    padding: 0 6px;
+    text-align: center;
+  }
+
+  #meowgical-expect-{{ section.id }} .mwe-top-text {
+    margin-bottom: 12px;
+    color: {{ section.settings.top_text_color }};
+    font-size: {{ section.settings.top_text_size_mobile }}px;
+    line-height: 1.1;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  #meowgical-expect-{{ section.id }} .mwe-heading,
+  #meowgical-expect-{{ section.id }} .mwe-heading p {
+    margin: 0;
+    color: {{ section.settings.heading_color }};
+    font-size: {{ section.settings.heading_size_mobile }}px;
+    line-height: 1;
+    font-weight: 900;
+    letter-spacing: -0.045em;
+  }
+
+  #meowgical-expect-{{ section.id }} .mwe-heading strong {
+    color: {{ section.settings.heading_accent }};
+    font-weight: inherit;
+  }
+
+  #meowgical-expect-{{ section.id }} .mwe-intro {
+    width: min(100%, 320px);
+    margin: 16px auto 0;
+    color: {{ section.settings.text_color }};
+    font-size: {{ section.settings.text_size_mobile }}px;
+    line-height: 1.5;
+    font-weight: 500;
+    text-wrap: pretty;
+  }
+
+  #meowgical-expect-{{ section.id }} .mwe-intro p,
+  #meowgical-expect-{{ section.id }} .mwe-description p,
+  #meowgical-expect-{{ section.id }} .mwe-note-text p {
+    margin: 0;
+  }
+
+  #meowgical-expect-{{ section.id }} .mwe-panel {
+    background: {{ section.settings.panel_bg }};
+    border: {{ section.settings.panel_border_width }}px solid {{ section.settings.panel_border_color }};
+    border-radius: {{ section.settings.panel_radius }}px;
+    padding: {{ section.settings.panel_padding_mobile }}px;
+    box-shadow: {{ section.settings.panel_shadow }};
+  }
+
+  #meowgical-expect-{{ section.id }} .mwe-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: {{ section.settings.card_gap_mobile }}px;
+  }
+
+  #meowgical-expect-{{ section.id }} .mwe-card {
+    min-width: 0;
+    padding: {{ section.settings.card_padding_mobile }}px;
+    background: var(--mwe-card-bg);
+    border: {{ section.settings.card_border_width }}px solid {{ section.settings.card_border_color }};
+    border-radius: {{ section.settings.card_radius }}px;
+    box-shadow: {{ section.settings.card_shadow }};
+  }
+
+  #meowgical-expect-{{ section.id }} .mwe-card-head {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    min-width: 0;
+  }
+
+  #meowgical-expect-{{ section.id }} .mwe-icon-wrap {
+    flex: 0 0 auto;
+    width: {{ section.settings.icon_box_mobile }}px;
+    height: {{ section.settings.icon_box_mobile }}px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: {{ section.settings.icon_bg }};
+    border: {{ section.settings.icon_border_width }}px solid {{ section.settings.icon_border_color }};
+    border-radius: {{ section.settings.icon_radius }}px;
+  }
+
+  #meowgical-expect-{{ section.id }} .mwe-icon {
+    display: block;
+    width: {{ section.settings.icon_size_mobile }}px;
+    height: {{ section.settings.icon_size_mobile }}px;
+    object-fit: contain;
+  }
+
+  #meowgical-expect-{{ section.id }} .mwe-icon-fallback {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: {{ section.settings.icon_size_mobile }}px;
+    height: {{ section.settings.icon_size_mobile }}px;
+    border-radius: 999px;
+    background: {{ section.settings.fallback_icon_bg }};
+    color: {{ section.settings.fallback_icon_color }};
+    font-size: {{ section.settings.fallback_icon_size_mobile }}px;
+    line-height: 1;
+    font-weight: 900;
+  }
+
+  #meowgical-expect-{{ section.id }} h3 {
+    min-width: 0;
+    margin: 0;
+    color: var(--mwe-title-color);
+    font-size: {{ section.settings.card_title_size_mobile }}px;
+    line-height: 1.05;
+    font-weight: 900;
+    letter-spacing: -0.035em;
+  }
+
+  #meowgical-expect-{{ section.id }} .mwe-description {
+    margin-top: 14px;
+    color: {{ section.settings.card_text_color }};
+    font-size: {{ section.settings.card_text_size_mobile }}px;
+    line-height: 1.42;
+    font-weight: 500;
+    text-wrap: pretty;
+  }
+
+  #meowgical-expect-{{ section.id }} .mwe-note {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 9px;
+    width: calc(100% - 28px);
+    max-width: 310px;
+    margin: {{ section.settings.note_gap_mobile }}px auto 0;
+    padding: {{ section.settings.note_padding_top_mobile }}px 8px 0;
+    border-top: 1px solid {{ section.settings.note_border_color }};
+    text-align: center;
+  }
+
+  #meowgical-expect-{{ section.id }} .mwe-note-icon {
+    flex: 0 0 auto;
+    width: {{ section.settings.note_icon_size_mobile }}px;
+    height: {{ section.settings.note_icon_size_mobile }}px;
+    object-fit: contain;
+    margin-top: 1px;
+  }
+
+  #meowgical-expect-{{ section.id }} .mwe-note-text {
+    color: {{ section.settings.note_text_color }};
+    font-size: {{ section.settings.note_text_size_mobile }}px;
+    line-height: 1.45;
+    font-weight: 500;
+  }
+
+  @media screen and (min-width: 768px) {
+    #meowgical-expect-{{ section.id }} {
+      padding:
+        {{ section.settings.padding_top_desktop }}px
+        {{ section.settings.padding_side_desktop }}px
+        {{ section.settings.padding_bottom_desktop }}px;
+    }
+
+    #meowgical-expect-{{ section.id }} .mwe-header {
+      margin-bottom: {{ section.settings.header_gap_desktop }}px;
+    }
+
+    #meowgical-expect-{{ section.id }} .mwe-top-text {
+      margin-bottom: 14px;
+      font-size: {{ section.settings.top_text_size_desktop }}px;
+    }
+
+    #meowgical-expect-{{ section.id }} .mwe-heading,
+    #meowgical-expect-{{ section.id }} .mwe-heading p {
+      font-size: {{ section.settings.heading_size_desktop }}px;
+    }
+
+    #meowgical-expect-{{ section.id }} .mwe-intro {
+      width: min(100%, 680px);
+      margin-top: 20px;
+      font-size: {{ section.settings.text_size_desktop }}px;
+    }
+
+    #meowgical-expect-{{ section.id }} .mwe-panel {
+      padding: {{ section.settings.panel_padding_desktop }}px;
+    }
+
+    #meowgical-expect-{{ section.id }} .mwe-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: {{ section.settings.card_gap_desktop }}px;
+    }
+
+    #meowgical-expect-{{ section.id }} .mwe-card {
+      padding: {{ section.settings.card_padding_desktop }}px;
+      min-height: {{ section.settings.card_min_height_desktop }}px;
+    }
+
+    #meowgical-expect-{{ section.id }} .mwe-card-head {
+      gap: 16px;
+    }
+
+    #meowgical-expect-{{ section.id }} .mwe-icon-wrap {
+      width: {{ section.settings.icon_box_desktop }}px;
+      height: {{ section.settings.icon_box_desktop }}px;
+    }
+
+    #meowgical-expect-{{ section.id }} .mwe-icon {
+      width: {{ section.settings.icon_size_desktop }}px;
+      height: {{ section.settings.icon_size_desktop }}px;
+    }
+
+    #meowgical-expect-{{ section.id }} .mwe-icon-fallback {
+      width: {{ section.settings.icon_size_desktop }}px;
+      height: {{ section.settings.icon_size_desktop }}px;
+      font-size: {{ section.settings.fallback_icon_size_desktop }}px;
+    }
+
+    #meowgical-expect-{{ section.id }} h3 {
+      font-size: {{ section.settings.card_title_size_desktop }}px;
+    }
+
+    #meowgical-expect-{{ section.id }} .mwe-description {
+      margin-top: 18px;
+      font-size: {{ section.settings.card_text_size_desktop }}px;
+    }
+
+    #meowgical-expect-{{ section.id }} .mwe-note {
+      width: calc(100% - 80px);
+      max-width: 760px;
+      margin-top: {{ section.settings.note_gap_desktop }}px;
+      padding: {{ section.settings.note_padding_top_desktop }}px 18px 0;
+    }
+
+    #meowgical-expect-{{ section.id }} .mwe-note-icon {
+      width: {{ section.settings.note_icon_size_desktop }}px;
+      height: {{ section.settings.note_icon_size_desktop }}px;
+    }
+
+    #meowgical-expect-{{ section.id }} .mwe-note-text {
+      font-size: {{ section.settings.note_text_size_desktop }}px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Meowgical What to Expect",
+  "settings": [
+    {
+      "type": "text",
+      "id": "top_text",
+      "label": "Top text",
+      "default": "WHAT TO EXPECT"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "<p>What to Expect With <strong>SuperTaurine</strong></p>"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Intro text",
+      "default": "<p>A simple daily routine designed to make taurine support clear, consistent, and easy to maintain.</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "expectation_note",
+      "label": "Expectation note",
+      "default": "<p>SuperTaurine is daily nutritional support, not a stimulant or medication. Some cats may not show an immediate visible change.</p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "note_icon",
+      "label": "Bottom note icon"
+    },
+
+    {
+      "type": "header",
+      "content": "Main sizing"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Max width",
+      "min": 900,
+      "max": 1500,
+      "step": 20,
+      "default": 1180
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Heading size mobile",
+      "min": 26,
+      "max": 52,
+      "step": 1,
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "heading_size_desktop",
+      "label": "Heading size desktop",
+      "min": 40,
+      "max": 78,
+      "step": 1,
+      "default": 58
+    },
+    {
+      "type": "range",
+      "id": "text_size_mobile",
+      "label": "Intro text size mobile",
+      "min": 13,
+      "max": 24,
+      "step": 1,
+      "default": 17
+    },
+    {
+      "type": "range",
+      "id": "text_size_desktop",
+      "label": "Intro text size desktop",
+      "min": 15,
+      "max": 28,
+      "step": 1,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "top_text_size_mobile",
+      "label": "Top text size mobile",
+      "min": 9,
+      "max": 20,
+      "step": 1,
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "top_text_size_desktop",
+      "label": "Top text size desktop",
+      "min": 10,
+      "max": 22,
+      "step": 1,
+      "default": 13
+    },
+
+    {
+      "type": "header",
+      "content": "Outer panel"
+    },
+    {
+      "type": "range",
+      "id": "panel_padding_mobile",
+      "label": "Panel padding mobile",
+      "min": 12,
+      "max": 50,
+      "step": 2,
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "panel_padding_desktop",
+      "label": "Panel padding desktop",
+      "min": 18,
+      "max": 70,
+      "step": 2,
+      "default": 26
+    },
+    {
+      "type": "range",
+      "id": "panel_radius",
+      "label": "Panel corner radius",
+      "min": 12,
+      "max": 42,
+      "step": 1,
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "panel_border_width",
+      "label": "Panel border width",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "default": 1
+    },
+
+    {
+      "type": "header",
+      "content": "Cards"
+    },
+    {
+      "type": "range",
+      "id": "card_title_size_mobile",
+      "label": "Card title size mobile",
+      "min": 18,
+      "max": 34,
+      "step": 1,
+      "default": 23
+    },
+    {
+      "type": "range",
+      "id": "card_title_size_desktop",
+      "label": "Card title size desktop",
+      "min": 20,
+      "max": 38,
+      "step": 1,
+      "default": 27
+    },
+    {
+      "type": "range",
+      "id": "card_text_size_mobile",
+      "label": "Card text size mobile",
+      "min": 13,
+      "max": 22,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "card_text_size_desktop",
+      "label": "Card text size desktop",
+      "min": 14,
+      "max": 24,
+      "step": 1,
+      "default": 17
+    },
+    {
+      "type": "range",
+      "id": "card_padding_mobile",
+      "label": "Card padding mobile",
+      "min": 16,
+      "max": 44,
+      "step": 2,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "card_padding_desktop",
+      "label": "Card padding desktop",
+      "min": 20,
+      "max": 58,
+      "step": 2,
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Card corner radius",
+      "min": 12,
+      "max": 34,
+      "step": 1,
+      "default": 22
+    },
+    {
+      "type": "range",
+      "id": "card_border_width",
+      "label": "Card border width",
+      "min": 0,
+      "max": 3,
+      "step": 1,
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "card_min_height_desktop",
+      "label": "Card minimum height desktop",
+      "min": 180,
+      "max": 420,
+      "step": 10,
+      "default": 230
+    },
+
+    {
+      "type": "header",
+      "content": "Icons"
+    },
+    {
+      "type": "range",
+      "id": "icon_box_mobile",
+      "label": "Icon box mobile",
+      "min": 42,
+      "max": 90,
+      "step": 2,
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "icon_box_desktop",
+      "label": "Icon box desktop",
+      "min": 50,
+      "max": 110,
+      "step": 2,
+      "default": 58
+    },
+    {
+      "type": "range",
+      "id": "icon_size_mobile",
+      "label": "Icon size mobile",
+      "min": 22,
+      "max": 64,
+      "step": 2,
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "icon_size_desktop",
+      "label": "Icon size desktop",
+      "min": 26,
+      "max": 76,
+      "step": 2,
+      "default": 34
+    },
+    {
+      "type": "range",
+      "id": "icon_radius",
+      "label": "Icon box corner radius",
+      "min": 8,
+      "max": 30,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "icon_border_width",
+      "label": "Icon border width",
+      "min": 0,
+      "max": 3,
+      "step": 1,
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "fallback_icon_size_mobile",
+      "label": "Fallback number size mobile",
+      "min": 12,
+      "max": 30,
+      "step": 1,
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "fallback_icon_size_desktop",
+      "label": "Fallback number size desktop",
+      "min": 14,
+      "max": 34,
+      "step": 1,
+      "default": 21
+    },
+
+    {
+      "type": "header",
+      "content": "Note"
+    },
+    {
+      "type": "range",
+      "id": "note_text_size_mobile",
+      "label": "Note text mobile",
+      "min": 11,
+      "max": 20,
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "note_text_size_desktop",
+      "label": "Note text desktop",
+      "min": 12,
+      "max": 22,
+      "step": 1,
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "note_icon_size_mobile",
+      "label": "Note icon size mobile",
+      "min": 12,
+      "max": 36,
+      "step": 1,
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "note_icon_size_desktop",
+      "label": "Note icon size desktop",
+      "min": 14,
+      "max": 42,
+      "step": 1,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "note_gap_mobile",
+      "label": "Note top gap mobile",
+      "min": 14,
+      "max": 50,
+      "step": 2,
+      "default": 22
+    },
+    {
+      "type": "range",
+      "id": "note_gap_desktop",
+      "label": "Note top gap desktop",
+      "min": 18,
+      "max": 70,
+      "step": 2,
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "note_padding_top_mobile",
+      "label": "Note top padding mobile",
+      "min": 10,
+      "max": 40,
+      "step": 2,
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "note_padding_top_desktop",
+      "label": "Note top padding desktop",
+      "min": 12,
+      "max": 50,
+      "step": 2,
+      "default": 22
+    },
+
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Top padding mobile",
+      "min": 20,
+      "max": 140,
+      "step": 4,
+      "default": 52
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Bottom padding mobile",
+      "min": 20,
+      "max": 140,
+      "step": 4,
+      "default": 52
+    },
+    {
+      "type": "range",
+      "id": "padding_side_mobile",
+      "label": "Side padding mobile",
+      "min": 10,
+      "max": 30,
+      "step": 2,
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Top padding desktop",
+      "min": 40,
+      "max": 180,
+      "step": 4,
+      "default": 76
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Bottom padding desktop",
+      "min": 40,
+      "max": 180,
+      "step": 4,
+      "default": 76
+    },
+    {
+      "type": "range",
+      "id": "padding_side_desktop",
+      "label": "Side padding desktop",
+      "min": 20,
+      "max": 80,
+      "step": 4,
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "header_gap_mobile",
+      "label": "Header bottom gap mobile",
+      "min": 22,
+      "max": 80,
+      "step": 2,
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "header_gap_desktop",
+      "label": "Header bottom gap desktop",
+      "min": 28,
+      "max": 100,
+      "step": 2,
+      "default": 44
+    },
+    {
+      "type": "range",
+      "id": "card_gap_mobile",
+      "label": "Card gap mobile",
+      "min": 10,
+      "max": 40,
+      "step": 2,
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "card_gap_desktop",
+      "label": "Card gap desktop",
+      "min": 14,
+      "max": 50,
+      "step": 2,
+      "default": 20
+    },
+
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "section_bg",
+      "label": "Section background",
+      "default": "#F7F7FB"
+    },
+    {
+      "type": "color",
+      "id": "top_text_color",
+      "label": "Top text",
+      "default": "#3456D1"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading",
+      "default": "#101010"
+    },
+    {
+      "type": "color",
+      "id": "heading_accent",
+      "label": "Heading accent",
+      "default": "#3456D1"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Intro text",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "panel_bg",
+      "label": "Outer panel background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "panel_border_color",
+      "label": "Outer panel border",
+      "default": "#D9DFF4"
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Card border",
+      "default": "#D9DFF4"
+    },
+    {
+      "type": "color",
+      "id": "card_text_color",
+      "label": "Card text",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "icon_bg",
+      "label": "Icon box background",
+      "default": "#EEF2FF"
+    },
+    {
+      "type": "color",
+      "id": "icon_border_color",
+      "label": "Icon box border",
+      "default": "#C9D4FA"
+    },
+    {
+      "type": "color",
+      "id": "fallback_icon_bg",
+      "label": "Fallback number background",
+      "default": "#3456D1"
+    },
+    {
+      "type": "color",
+      "id": "fallback_icon_color",
+      "label": "Fallback number text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "note_text_color",
+      "label": "Bottom note text",
+      "default": "#5B6275"
+    },
+    {
+      "type": "color",
+      "id": "note_border_color",
+      "label": "Bottom note divider",
+      "default": "#E2E6F3"
+    },
+    {
+      "type": "text",
+      "id": "panel_shadow",
+      "label": "Outer panel shadow CSS",
+      "default": "0 16px 42px rgba(24, 45, 110, 0.07)"
+    },
+    {
+      "type": "text",
+      "id": "card_shadow",
+      "label": "Card shadow CSS",
+      "default": "0 8px 24px rgba(24, 45, 110, 0.05)"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "expectation",
+      "name": "Expectation card",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon"
+        },
+        {
+          "type": "color",
+          "id": "card_bg",
+          "label": "Card background",
+          "default": "#F8FAFF"
+        },
+        {
+          "type": "color",
+          "id": "title_color",
+          "label": "Title color",
+          "default": "#173FAE"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Easy From the First Scoop"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Description",
+          "default": "<p>Mix the measured serving into your cat’s regular food. No pills, complicated preparation, or complete food change.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Meowgical What to Expect",
+      "blocks": [
+        {
+          "type": "expectation",
+          "settings": {
+            "title": "Easy From the First Scoop",
+            "description": "<p>Mix the measured serving into your cat’s regular food. No pills, complicated preparation, or complete food change.</p>",
+            "card_bg": "#F8FAFF",
+            "title_color": "#173FAE"
+          }
+        },
+        {
+          "type": "expectation",
+          "settings": {
+            "title": "Made for Daily Consistency",
+            "description": "<p>A precise taurine top-up designed to fit naturally into your existing feeding routine.</p>",
+            "card_bg": "#F8FAFF",
+            "title_color": "#173FAE"
+          }
+        },
+        {
+          "type": "expectation",
+          "settings": {
+            "title": "Foundational Nutritional Support",
+            "description": "<p>Supports normal heart function, vision, and essential feline nutrition through one simple daily routine.</p>",
+            "card_bg": "#F8FAFF",
+            "title_color": "#173FAE"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

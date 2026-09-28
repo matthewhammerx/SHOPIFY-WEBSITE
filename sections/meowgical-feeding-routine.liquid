@@ -1,0 +1,927 @@
+
+<section id="mg-combined-{{ section.id }}" class="mg-combined">
+  <div class="mg-combined__inner">
+
+    <div class="mg-combined__top">
+      <div class="mg-combined__copy">
+        {% if section.settings.eyebrow != blank %}
+          <div class="mg-combined__eyebrow">{{ section.settings.eyebrow }}</div>
+        {% endif %}
+
+        <h2 class="mg-combined__headline">
+          {{ section.settings.heading_before }}
+          {% if section.settings.heading_highlight != blank %}
+            <span>{{ section.settings.heading_highlight }}</span>
+          {% endif %}
+        </h2>
+
+        <div class="mg-combined__body rte">
+          {{ section.settings.body_copy }}
+        </div>
+      </div>
+
+      <div class="mg-combined__media">
+        {% if section.settings.top_image != blank %}
+          {{
+            section.settings.top_image
+            | image_url: width: 1400
+            | image_tag:
+              class: 'mg-combined__image',
+              loading: 'lazy',
+              widths: '480, 720, 960, 1200, 1400',
+              sizes: '(min-width: 990px) 50vw, calc(100vw - 32px)',
+              alt: section.settings.top_image_alt
+          }}
+        {% else %}
+          <div class="mg-combined__placeholder">
+            Add your product or lifestyle image
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="mg-combined__bottom">
+      <div class="mg-combined__bottom-media">
+        {% if section.settings.bottom_image != blank %}
+          {{
+            section.settings.bottom_image
+            | image_url: width: 1400
+            | image_tag:
+              class: 'mg-combined__image',
+              loading: 'lazy',
+              widths: '480, 720, 960, 1200, 1400',
+              sizes: '(min-width: 990px) 50vw, calc(100vw - 32px)',
+              alt: section.settings.bottom_image_alt
+          }}
+        {% else %}
+          <div class="mg-combined__placeholder">
+            Add your second lifestyle image
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="mg-combined__peace">
+        <h2 class="mg-combined__peace-heading mg-combined__peace-heading--{{ section.settings.mobile_heading_alignment }}">
+          {% if section.settings.peace_highlight != blank %}
+            <span>{{ section.settings.peace_highlight }}</span>
+          {% endif %}
+          {{ section.settings.peace_heading }}
+        </h2>
+
+        <div class="mg-combined__checks">
+          {% for block in section.blocks %}
+            {% if block.type == 'check' %}
+              <div class="mg-combined__check" {{ block.shopify_attributes }}>
+                <div class="mg-combined__check-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M5 12.5 9.2 17 19 7"/>
+                  </svg>
+                </div>
+                <div class="mg-combined__check-copy">
+                  <strong>{{ block.settings.title }}</strong>
+                  <span>{{ block.settings.text }}</span>
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+
+        {% if section.settings.button_text != blank %}
+          <a href="{{ section.settings.button_link | default: '#MainProduct' }}" class="mg-combined__button">
+            {{ section.settings.button_text }}
+          </a>
+        {% endif %}
+
+        {% if section.settings.guarantee_heading != blank %}
+          <div class="mg-combined__guarantee">
+            {% if section.settings.guarantee_icon != blank %}
+              <img
+                src="{{ section.settings.guarantee_icon | image_url: width: 100 }}"
+                alt=""
+                class="mg-combined__guarantee-icon"
+                loading="lazy"
+                width="{{ section.settings.guarantee_icon_size_mobile }}"
+                height="{{ section.settings.guarantee_icon_size_mobile }}"
+              >
+            {% endif %}
+            <span>{{ section.settings.guarantee_heading }}</span>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  #mg-combined-{{ section.id }} {
+    --mg-bg: {{ section.settings.background_color }};
+    --mg-card: {{ section.settings.card_color }};
+    --mg-blue: {{ section.settings.primary_blue }};
+    --mg-blue-soft: {{ section.settings.soft_blue }};
+    --mg-heading: {{ section.settings.heading_color }};
+    --mg-text: {{ section.settings.text_color }};
+    --mg-border: {{ section.settings.border_color }};
+    --mg-button-text: {{ section.settings.button_text_color }};
+    background: var(--mg-bg);
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+  }
+
+  #mg-combined-{{ section.id }} * {
+    box-sizing: border-box;
+  }
+
+  #mg-combined-{{ section.id }} .mg-combined__inner {
+    width: min(1180px, calc(100% - 32px));
+    margin: 0 auto;
+  }
+
+  #mg-combined-{{ section.id }} .mg-combined__top,
+  #mg-combined-{{ section.id }} .mg-combined__bottom {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: stretch;
+    overflow: hidden;
+    border: 1px solid var(--mg-border);
+    border-radius: 28px;
+    background: var(--mg-card);
+    box-shadow: 0 18px 50px rgba(35, 72, 160, .08);
+  }
+
+  #mg-combined-{{ section.id }} .mg-combined__bottom {
+    margin-top: 28px;
+  }
+
+  #mg-combined-{{ section.id }} .mg-combined__copy,
+  #mg-combined-{{ section.id }} .mg-combined__peace {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: clamp(34px, 5vw, 64px);
+  }
+
+  #mg-combined-{{ section.id }} .mg-combined__eyebrow {
+    align-self: flex-start;
+    padding: 9px 14px;
+    border-radius: 999px;
+    background: var(--mg-blue-soft);
+    color: var(--mg-blue);
+    font-size: 12px;
+    line-height: 1;
+    font-weight: 800;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+
+  #mg-combined-{{ section.id }} .mg-combined__headline,
+  #mg-combined-{{ section.id }} .mg-combined__peace-heading {
+    margin: 18px 0 0;
+    color: var(--mg-heading);
+    font-size: clamp(34px, 4.3vw, 54px);
+    line-height: 1.06;
+    letter-spacing: -.035em;
+    font-weight: 800;
+  }
+
+  #mg-combined-{{ section.id }} .mg-combined__headline span,
+  #mg-combined-{{ section.id }} .mg-combined__peace-heading span {
+    color: var(--mg-blue);
+  }
+
+  #mg-combined-{{ section.id }} .mg-combined__peace-heading span {
+    display: inline;
+  }
+
+  #mg-combined-{{ section.id }} .mg-combined__body {
+    margin-top: 24px;
+    color: var(--mg-text);
+    font-size: 17px;
+    line-height: 1.72;
+  }
+
+  #mg-combined-{{ section.id }} .mg-combined__body p {
+    margin: 0 0 16px;
+  }
+
+  #mg-combined-{{ section.id }} .mg-combined__body p:last-child {
+    margin-bottom: 0;
+  }
+
+  #mg-combined-{{ section.id }} .mg-combined__body strong {
+    color: var(--mg-heading);
+  }
+
+  #mg-combined-{{ section.id }} .mg-combined__media,
+  #mg-combined-{{ section.id }} .mg-combined__bottom-media {
+    min-height: 100%;
+  }
+
+  #mg-combined-{{ section.id }} .mg-combined__image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 560px;
+    object-fit: cover;
+  }
+
+  #mg-combined-{{ section.id }} .mg-combined__placeholder {
+    display: grid;
+    place-items: center;
+    min-height: 560px;
+    padding: 30px;
+    background: var(--mg-blue-soft);
+    color: var(--mg-blue);
+    font-weight: 700;
+    text-align: center;
+  }
+
+  #mg-combined-{{ section.id }} .mg-combined__checks {
+    display: grid;
+    gap: 18px;
+    margin-top: 30px;
+  }
+
+  #mg-combined-{{ section.id }} .mg-combined__check {
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    gap: 14px;
+    align-items: start;
+  }
+
+  #mg-combined-{{ section.id }} .mg-combined__check-icon {
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    margin-top: 2px;
+    border-radius: 999px;
+    background: var(--mg-blue);
+    color: white;
+  }
+
+  #mg-combined-{{ section.id }} .mg-combined__check-icon svg {
+    width: 16px;
+    height: 16px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  #mg-combined-{{ section.id }} .mg-combined__check-copy {
+    color: var(--mg-text);
+    font-size: 17px;
+    line-height: 1.5;
+  }
+
+  #mg-combined-{{ section.id }} .mg-combined__check-copy strong {
+    color: var(--mg-heading);
+  }
+
+  #mg-combined-{{ section.id }} .mg-combined__check-copy span {
+    margin-left: 4px;
+  }
+
+  #mg-combined-{{ section.id }} .mg-combined__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: min(100%, {{ section.settings.button_width_desktop }}px);
+    min-height: {{ section.settings.button_height_desktop }}px;
+    margin: {{ section.settings.button_gap_desktop }}px auto 0;
+    padding: 14px 28px;
+    border: {{ section.settings.button_border_width }}px solid {{ section.settings.button_border_color }};
+    border-radius: {{ section.settings.button_radius }}px;
+    {% if section.settings.button_use_gradient %}
+      background: linear-gradient(
+        {{ section.settings.button_gradient_angle }}deg,
+        {{ section.settings.button_gradient_1 }},
+        {{ section.settings.button_gradient_2 }}
+      );
+    {% else %}
+      background: {{ section.settings.button_bg }};
+    {% endif %}
+    box-shadow: {{ section.settings.button_shadow }};
+    color: {{ section.settings.button_text_color }};
+    font-size: {{ section.settings.button_text_size_desktop }}px;
+    line-height: 1;
+    font-weight: {{ section.settings.button_font_weight }};
+    letter-spacing: calc({{ section.settings.button_letter_spacing }} / 100 * 1em);
+    text-align: center;
+    text-decoration: none;
+    transition: transform .2s ease, box-shadow .2s ease;
+  }
+
+  #mg-combined-{{ section.id }} .mg-combined__button:hover {
+    transform: translateY(-1px);
+  }
+
+  #mg-combined-{{ section.id }} .mg-combined__guarantee {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: {{ section.settings.guarantee_icon_gap }}px;
+    width: min(100%, {{ section.settings.button_width_desktop }}px);
+    margin: {{ section.settings.guarantee_gap_desktop }}px auto 0;
+    color: {{ section.settings.guarantee_color }};
+    font-size: {{ section.settings.guarantee_size_desktop }}px;
+    line-height: 1.25;
+    font-weight: {{ section.settings.guarantee_weight }};
+    text-align: center;
+  }
+
+  #mg-combined-{{ section.id }} .mg-combined__guarantee-icon {
+    flex: 0 0 auto;
+    width: {{ section.settings.guarantee_icon_size_desktop }}px;
+    height: {{ section.settings.guarantee_icon_size_desktop }}px;
+    object-fit: contain;
+  }
+
+  @media (max-width: 989px) {
+    #mg-combined-{{ section.id }} .mg-combined__top,
+    #mg-combined-{{ section.id }} .mg-combined__bottom {
+      grid-template-columns: 1fr;
+    }
+
+    #mg-combined-{{ section.id }} .mg-combined__top .mg-combined__media {
+      order: -1;
+    }
+
+    #mg-combined-{{ section.id }} .mg-combined__bottom .mg-combined__bottom-media {
+      order: -1;
+    }
+
+    #mg-combined-{{ section.id }} .mg-combined__image,
+    #mg-combined-{{ section.id }} .mg-combined__placeholder {
+      min-height: 420px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    #mg-combined-{{ section.id }} {
+      padding-top: {{ section.settings.mobile_padding_top }}px;
+      padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
+    }
+
+    #mg-combined-{{ section.id }} .mg-combined__inner {
+      width: min(100% - 20px, 1180px);
+    }
+
+    #mg-combined-{{ section.id }} .mg-combined__top,
+    #mg-combined-{{ section.id }} .mg-combined__bottom {
+      border-radius: 20px;
+    }
+
+    #mg-combined-{{ section.id }} .mg-combined__copy,
+    #mg-combined-{{ section.id }} .mg-combined__peace {
+      padding: 28px 22px 30px;
+    }
+
+    #mg-combined-{{ section.id }} .mg-combined__image,
+    #mg-combined-{{ section.id }} .mg-combined__placeholder {
+      min-height: 330px;
+    }
+
+    #mg-combined-{{ section.id }} .mg-combined__peace-heading--center {
+      text-align: center;
+    }
+
+    #mg-combined-{{ section.id }} .mg-combined__peace-heading--left {
+      text-align: left;
+    }
+
+    #mg-combined-{{ section.id }} .mg-combined__button {
+      width: min(100%, {{ section.settings.button_width_mobile }}px);
+      min-height: {{ section.settings.button_height_mobile }}px;
+      margin-top: {{ section.settings.button_gap_mobile }}px;
+      font-size: {{ section.settings.button_text_size_mobile }}px;
+    }
+
+    #mg-combined-{{ section.id }} .mg-combined__guarantee {
+      width: min(100%, {{ section.settings.button_width_mobile }}px);
+      margin-top: {{ section.settings.guarantee_gap_mobile }}px;
+      font-size: {{ section.settings.guarantee_size_mobile }}px;
+    }
+
+    #mg-combined-{{ section.id }} .mg-combined__guarantee-icon {
+      width: {{ section.settings.guarantee_icon_size_mobile }}px;
+      height: {{ section.settings.guarantee_icon_size_mobile }}px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Meowgical Edu + Trust",
+  "tag": "section",
+  "class": "section-meowgical-education-trust",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Top education block"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Top label",
+      "default": "Daily taurine support for cats"
+    },
+    {
+      "type": "text",
+      "id": "heading_before",
+      "label": "Heading",
+      "default": "Help protect the health they depend on—"
+    },
+    {
+      "type": "text",
+      "id": "heading_highlight",
+      "label": "Highlighted text",
+      "default": "with one simple scoop a day."
+    },
+    {
+      "type": "richtext",
+      "id": "body_copy",
+      "label": "Education copy",
+      "default": "<p>Cats rely on taurine for normal heart function, vision and everyday vitality.</p><p>Even with a complete diet, real-life feeding habits can make consistency harder than it looks. Meals get left behind, appetites change and treats sometimes replace part of dinner.</p><p><strong>SuperTaurine makes daily support simple:</strong> one measured scoop mixed into the food they already love.</p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "top_image",
+      "label": "Top image"
+    },
+    {
+      "type": "text",
+      "id": "top_image_alt",
+      "label": "Top image alt text",
+      "default": "SuperTaurine tub and scoop"
+    },
+    {
+      "type": "header",
+      "content": "Bottom reassurance block"
+    },
+    {
+      "type": "image_picker",
+      "id": "bottom_image",
+      "label": "Bottom image"
+    },
+    {
+      "type": "text",
+      "id": "bottom_image_alt",
+      "label": "Bottom image alt text",
+      "default": "Cat parent with cat and SuperTaurine"
+    },
+    {
+      "type": "text",
+      "id": "peace_highlight",
+      "label": "Highlighted heading text",
+      "default": "Peace of Mind"
+    },
+    {
+      "type": "text",
+      "id": "peace_heading",
+      "label": "Heading",
+      "default": " for Every Type of Cat Parent"
+    },
+    {
+      "type": "select",
+      "id": "mobile_heading_alignment",
+      "label": "Mobile heading alignment",
+      "default": "center",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "PROTECT MY CAT TODAY"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "checkbox",
+      "id": "button_use_gradient",
+      "label": "Use gradient button",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "button_gradient_1",
+      "label": "Button gradient color 1",
+      "default": "#3E50DC"
+    },
+    {
+      "type": "color",
+      "id": "button_gradient_2",
+      "label": "Button gradient color 2",
+      "default": "#6695DE"
+    },
+    {
+      "type": "range",
+      "id": "button_gradient_angle",
+      "label": "Gradient angle",
+      "min": 0,
+      "max": 180,
+      "step": 5,
+      "unit": "deg",
+      "default": 135
+    },
+    {
+      "type": "color",
+      "id": "button_bg",
+      "label": "Solid button background",
+      "default": "#3E50DC"
+    },
+    {
+      "type": "color",
+      "id": "button_border_color",
+      "label": "Button border color",
+      "default": "#173FAE"
+    },
+    {
+      "type": "range",
+      "id": "button_border_width",
+      "label": "Button border width",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "button_radius",
+      "label": "Button radius",
+      "min": 10,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "button_width_mobile",
+      "label": "Button width mobile",
+      "min": 220,
+      "max": 420,
+      "step": 10,
+      "unit": "px",
+      "default": 330
+    },
+    {
+      "type": "range",
+      "id": "button_width_desktop",
+      "label": "Button width desktop",
+      "min": 280,
+      "max": 720,
+      "step": 10,
+      "unit": "px",
+      "default": 520
+    },
+    {
+      "type": "range",
+      "id": "button_height_mobile",
+      "label": "Button height mobile",
+      "min": 48,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 58
+    },
+    {
+      "type": "range",
+      "id": "button_height_desktop",
+      "label": "Button height desktop",
+      "min": 52,
+      "max": 88,
+      "step": 2,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "button_text_size_mobile",
+      "label": "Button text size mobile",
+      "min": 14,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "button_text_size_desktop",
+      "label": "Button text size desktop",
+      "min": 16,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "select",
+      "id": "button_font_weight",
+      "label": "Button font weight",
+      "default": "900",
+      "options": [
+        { "value": "600", "label": "Semi-bold" },
+        { "value": "700", "label": "Bold" },
+        { "value": "800", "label": "Extra bold" },
+        { "value": "900", "label": "Black" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "button_letter_spacing",
+      "label": "Button letter spacing",
+      "min": 0,
+      "max": 8,
+      "step": 1,
+      "unit": "%",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "button_gap_mobile",
+      "label": "Button top spacing mobile",
+      "min": 8,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "button_gap_desktop",
+      "label": "Button top spacing desktop",
+      "min": 8,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "text",
+      "id": "button_shadow",
+      "label": "Button shadow CSS",
+      "default": "0 10px 24px rgba(47, 126, 216, 0.24)"
+    },
+    {
+      "type": "image_picker",
+      "id": "guarantee_icon",
+      "label": "Guarantee icon"
+    },
+    {
+      "type": "text",
+      "id": "guarantee_heading",
+      "label": "Guarantee text",
+      "default": "60-day risk-free guarantee"
+    },
+    {
+      "type": "color",
+      "id": "guarantee_color",
+      "label": "Guarantee text color",
+      "default": "#6A78B8"
+    },
+    {
+      "type": "select",
+      "id": "guarantee_weight",
+      "label": "Guarantee font weight",
+      "default": "600",
+      "options": [
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi-bold" },
+        { "value": "700", "label": "Bold" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "guarantee_size_mobile",
+      "label": "Guarantee font size mobile",
+      "min": 10,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "guarantee_size_desktop",
+      "label": "Guarantee font size desktop",
+      "min": 11,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "guarantee_icon_size_mobile",
+      "label": "Guarantee icon size mobile",
+      "min": 12,
+      "max": 36,
+      "step": 1,
+      "unit": "px",
+      "default": 19
+    },
+    {
+      "type": "range",
+      "id": "guarantee_icon_size_desktop",
+      "label": "Guarantee icon size desktop",
+      "min": 14,
+      "max": 42,
+      "step": 1,
+      "unit": "px",
+      "default": 21
+    },
+    {
+      "type": "range",
+      "id": "guarantee_icon_gap",
+      "label": "Guarantee icon gap",
+      "min": 2,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "guarantee_gap_mobile",
+      "label": "Guarantee top spacing mobile",
+      "min": 4,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "guarantee_gap_desktop",
+      "label": "Guarantee top spacing desktop",
+      "min": 4,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Section background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "card_color",
+      "label": "Card background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "soft_blue",
+      "label": "Soft blue",
+      "default": "#EEF5FF"
+    },
+    {
+      "type": "color",
+      "id": "primary_blue",
+      "label": "Primary blue",
+      "default": "#4C90F2"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#1F1F1F"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#4A4A4A"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border color",
+      "default": "#E6E9EF"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Desktop top padding",
+      "min": 20,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Desktop bottom padding",
+      "min": 20,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "label": "Mobile top padding",
+      "min": 16,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "label": "Mobile bottom padding",
+      "min": 16,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "type": "check",
+      "name": "Peace of mind point",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Bold lead-in",
+          "default": "If you feed commercial food:"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Supporting text",
+          "default": "Add a simple daily layer of consistency."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Meowgical Education + Trust",
+      "blocks": [
+        {
+          "type": "check",
+          "settings": {
+            "title": "If you home-cook or feed raw:",
+            "text": "Keep daily taurine support simple and measured."
+          }
+        },
+        {
+          "type": "check",
+          "settings": {
+            "title": "If you use commercial food:",
+            "text": "Add a consistent daily routine beyond what is left in the bowl."
+          }
+        },
+        {
+          "type": "check",
+          "settings": {
+            "title": "If you worry about complete labels:",
+            "text": "Feel more confident about what you are serving each day."
+          }
+        },
+        {
+          "type": "check",
+          "settings": {
+            "title": "If you care deeply:",
+            "text": "Choose one simple habit you can actually stay consistent with."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

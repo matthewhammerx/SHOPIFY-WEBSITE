@@ -1,0 +1,639 @@
+{% comment %}
+  Meowgical — Split Hero (dark card + image)
+  Layout reference: Wuffes "media with text" hero
+  (dark card, headline + copy + primary/secondary buttons, image on the side).
+  Rebuilt from scratch as an editable Meowgical section using brand tokens.
+{% endcomment %}
+
+<section id="mg-split-hero-{{ section.id }}" class="mg-split-hero">
+  <div class="mg-split-hero__wrap">
+
+    <div class="mg-split-hero__card">
+      {% if section.settings.eyebrow != blank %}
+        <div class="mg-split-hero__eyebrow">{{ section.settings.eyebrow }}</div>
+      {% endif %}
+
+      {% if section.settings.heading != blank %}
+        <h2 class="mg-split-hero__heading">{{ section.settings.heading }}</h2>
+      {% endif %}
+
+      {% if section.settings.text != blank %}
+        <div class="mg-split-hero__text rte">{{ section.settings.text }}</div>
+      {% endif %}
+
+      <div class="mg-split-hero__buttons">
+        {% if section.settings.button_text != blank %}
+          <a href="{{ section.settings.button_link | default: '#' }}" class="mg-split-hero__btn mg-split-hero__btn--primary">
+            {{ section.settings.button_text }}
+          </a>
+        {% endif %}
+
+        {% if section.settings.show_second and section.settings.button2_text != blank %}
+          <a href="{{ section.settings.button2_link | default: '#' }}" class="mg-split-hero__btn mg-split-hero__btn--secondary">
+            {{ section.settings.button2_text }}
+          </a>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="mg-split-hero__media">
+      {% if section.settings.image != blank %}
+        {{
+          section.settings.image
+          | image_url: width: 1600
+          | image_tag:
+            class: 'mg-split-hero__image',
+            loading: 'lazy',
+            widths: '480, 720, 960, 1200, 1600',
+            sizes: '(min-width: 990px) 50vw, 100vw',
+            alt: section.settings.image_alt
+        }}
+      {% else %}
+        <div class="mg-split-hero__placeholder">Add an image</div>
+      {% endif %}
+    </div>
+
+  </div>
+</section>
+
+<style>
+  #mg-split-hero-{{ section.id }} {
+    --mg-card-bg: {{ section.settings.card_bg }};
+    --mg-card-text: {{ section.settings.card_text_color }};
+    --mg-card-muted: {{ section.settings.card_muted_color }};
+    --mg-accent: {{ section.settings.accent_color }};
+    --mg-radius: {{ section.settings.card_radius }}px;
+
+    background: {{ section.settings.section_bg }};
+    padding: {{ section.settings.padding_top_mobile }}px 16px {{ section.settings.padding_bottom_mobile }}px;
+  }
+
+  #mg-split-hero-{{ section.id }} * {
+    box-sizing: border-box;
+  }
+
+  #mg-split-hero-{{ section.id }} .mg-split-hero__wrap {
+    max-width: {{ section.settings.max_width }}px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  #mg-split-hero-{{ section.id }} .mg-split-hero__card {
+    background: var(--mg-card-bg);
+    color: var(--mg-card-text);
+    border-radius: var(--mg-radius);
+    padding: 40px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  #mg-split-hero-{{ section.id }} .mg-split-hero__eyebrow {
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, .12);
+    color: var(--mg-card-text);
+    font-size: 12px;
+    line-height: 1;
+    font-weight: 800;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+  }
+
+  #mg-split-hero-{{ section.id }} .mg-split-hero__heading {
+    margin: 0;
+    color: var(--mg-card-text);
+    font-size: {{ section.settings.heading_size_mobile }}px;
+    line-height: 1.05;
+    font-weight: 800;
+    letter-spacing: -.02em;
+  }
+
+  #mg-split-hero-{{ section.id }} .mg-split-hero__text {
+    margin: 0;
+    max-width: 480px;
+    color: var(--mg-card-muted);
+    font-size: {{ section.settings.text_size_mobile }}px;
+    line-height: 1.5;
+    font-weight: 500;
+  }
+
+  #mg-split-hero-{{ section.id }} .mg-split-hero__text p {
+    margin: 0;
+  }
+
+  #mg-split-hero-{{ section.id }} .mg-split-hero__buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    width: 100%;
+  }
+
+  #mg-split-hero-{{ section.id }} .mg-split-hero__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: {{ section.settings.button_max_width }}px;
+    min-height: {{ section.settings.button_height }}px;
+    padding: 14px 28px;
+    border-radius: {{ section.settings.button_radius }}px;
+    font-size: {{ section.settings.button_text_size }}px;
+    font-weight: 800;
+    line-height: 1;
+    text-decoration: none;
+    text-align: center;
+    transition: transform .2s ease, filter .2s ease;
+  }
+
+  #mg-split-hero-{{ section.id }} .mg-split-hero__btn:hover {
+    transform: translateY(-1px);
+  }
+
+  #mg-split-hero-{{ section.id }} .mg-split-hero__btn--primary {
+    border: {{ section.settings.button_border_width }}px solid {{ section.settings.button_border_color }};
+    {% if section.settings.button_use_gradient %}
+      background: linear-gradient(
+        {{ section.settings.button_gradient_angle }}deg,
+        {{ section.settings.button_gradient_1 }},
+        {{ section.settings.button_gradient_2 }}
+      );
+    {% else %}
+      background: {{ section.settings.button_bg }};
+    {% endif %}
+    color: {{ section.settings.button_text_color }};
+    box-shadow: {{ section.settings.button_shadow }};
+  }
+
+  #mg-split-hero-{{ section.id }} .mg-split-hero__btn--secondary {
+    background: transparent;
+    border: {{ section.settings.button2_border_width }}px solid {{ section.settings.button2_border_color }};
+    color: {{ section.settings.button2_text_color }};
+  }
+
+  #mg-split-hero-{{ section.id }} .mg-split-hero__btn--secondary:hover {
+    border-color: {{ section.settings.button2_border_hover_color }};
+  }
+
+  #mg-split-hero-{{ section.id }} .mg-split-hero__media {
+    border-radius: var(--mg-radius);
+    overflow: hidden;
+  }
+
+  #mg-split-hero-{{ section.id }} .mg-split-hero__image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 320px;
+    object-fit: cover;
+  }
+
+  #mg-split-hero-{{ section.id }} .mg-split-hero__placeholder {
+    display: grid;
+    place-items: center;
+    min-height: 320px;
+    background: var(--mg-card-bg);
+    color: var(--mg-card-text);
+    border-radius: var(--mg-radius);
+    font-weight: 700;
+  }
+
+  @media screen and (min-width: 990px) {
+    #mg-split-hero-{{ section.id }} {
+      padding: {{ section.settings.padding_top_desktop }}px 40px {{ section.settings.padding_bottom_desktop }}px;
+    }
+
+    #mg-split-hero-{{ section.id }} .mg-split-hero__wrap {
+      flex-direction: row;
+      align-items: stretch;
+      gap: {{ section.settings.column_gap }}px;
+    }
+
+    #mg-split-hero-{{ section.id }} .mg-split-hero__card,
+    #mg-split-hero-{{ section.id }} .mg-split-hero__media {
+      flex: 1 1 50%;
+      min-height: {{ section.settings.min_height_desktop }}px;
+    }
+
+    #mg-split-hero-{{ section.id }} .mg-split-hero__card {
+      padding: 52px 64px;
+    }
+
+    #mg-split-hero-{{ section.id }} .mg-split-hero__heading {
+      font-size: {{ section.settings.heading_size_desktop }}px;
+    }
+
+    #mg-split-hero-{{ section.id }} .mg-split-hero__text {
+      font-size: {{ section.settings.text_size_desktop }}px;
+    }
+
+    #mg-split-hero-{{ section.id }} .mg-split-hero__buttons {
+      flex-direction: row;
+      align-items: center;
+    }
+
+    #mg-split-hero-{{ section.id }} .mg-split-hero__btn {
+      width: auto;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Meowgical Split Hero",
+  "tag": "section",
+  "class": "section-meowgical-split-hero",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Daily Support, Backed by Science"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Description",
+      "default": "<p>Vet-informed, taurine-first formulas made to support your cat's everyday wellbeing.</p>"
+    },
+
+    {
+      "type": "header",
+      "content": "Primary Button"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "SHOP NOW"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "checkbox",
+      "id": "button_use_gradient",
+      "label": "Use gradient button",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "button_gradient_1",
+      "label": "Gradient color 1",
+      "default": "#2748DC"
+    },
+    {
+      "type": "color",
+      "id": "button_gradient_2",
+      "label": "Gradient color 2",
+      "default": "#6695DE"
+    },
+    {
+      "type": "range",
+      "id": "button_gradient_angle",
+      "label": "Gradient angle",
+      "min": 0,
+      "max": 180,
+      "step": 5,
+      "unit": "deg",
+      "default": 135
+    },
+    {
+      "type": "color",
+      "id": "button_bg",
+      "label": "Solid button background (if gradient off)",
+      "default": "#2748DC"
+    },
+    {
+      "type": "color",
+      "id": "button_border_color",
+      "label": "Button border",
+      "default": "#173FAE"
+    },
+    {
+      "type": "range",
+      "id": "button_border_width",
+      "label": "Button border width",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "default": 1
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "text",
+      "id": "button_shadow",
+      "label": "Button shadow CSS",
+      "default": "0 10px 24px rgba(47, 126, 216, 0.24)"
+    },
+
+    {
+      "type": "header",
+      "content": "Secondary Button"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_second",
+      "label": "Show secondary button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "button2_text",
+      "label": "Button text",
+      "default": "SHOP ALL"
+    },
+    {
+      "type": "url",
+      "id": "button2_link",
+      "label": "Button link"
+    },
+    {
+      "type": "color",
+      "id": "button2_border_color",
+      "label": "Border color",
+      "default": "#6695DE"
+    },
+    {
+      "type": "color",
+      "id": "button2_border_hover_color",
+      "label": "Border color (hover)",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "button2_border_width",
+      "label": "Border width",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "default": 1
+    },
+    {
+      "type": "color",
+      "id": "button2_text_color",
+      "label": "Text color",
+      "default": "#FFFFFF"
+    },
+
+    {
+      "type": "header",
+      "content": "Shared Button Sizing"
+    },
+    {
+      "type": "range",
+      "id": "button_max_width",
+      "label": "Button max width",
+      "min": 180,
+      "max": 420,
+      "step": 10,
+      "unit": "px",
+      "default": 300
+    },
+    {
+      "type": "range",
+      "id": "button_height",
+      "label": "Button height",
+      "min": 44,
+      "max": 76,
+      "step": 2,
+      "unit": "px",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "button_text_size",
+      "label": "Button text size",
+      "min": 13,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "button_radius",
+      "label": "Button radius",
+      "min": 8,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 100
+    },
+
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "Image alt text",
+      "default": "Meowgical product lifestyle image"
+    },
+
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "section_bg",
+      "label": "Section background",
+      "default": "#F4EFE7"
+    },
+    {
+      "type": "color",
+      "id": "card_bg",
+      "label": "Card background",
+      "default": "#12204A"
+    },
+    {
+      "type": "color",
+      "id": "card_text_color",
+      "label": "Card heading text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "card_muted_color",
+      "label": "Card body text",
+      "default": "#D7DEF5"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent (brand blue)",
+      "default": "#2748DC"
+    },
+
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Max width",
+      "min": 900,
+      "max": 1500,
+      "step": 20,
+      "unit": "px",
+      "default": 1280
+    },
+    {
+      "type": "range",
+      "id": "column_gap",
+      "label": "Column gap (desktop)",
+      "min": 0,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "min_height_desktop",
+      "label": "Minimum height (desktop)",
+      "min": 320,
+      "max": 640,
+      "step": 10,
+      "unit": "px",
+      "default": 500
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Corner radius",
+      "min": 0,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Heading size mobile",
+      "min": 26,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "default": 34
+    },
+    {
+      "type": "range",
+      "id": "heading_size_desktop",
+      "label": "Heading size desktop",
+      "min": 32,
+      "max": 64,
+      "step": 1,
+      "unit": "px",
+      "default": 46
+    },
+    {
+      "type": "range",
+      "id": "text_size_mobile",
+      "label": "Body text size mobile",
+      "min": 14,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "text_size_desktop",
+      "label": "Body text size desktop",
+      "min": 15,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+
+    {
+      "type": "header",
+      "content": "Section Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Top padding mobile",
+      "min": 16,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Bottom padding mobile",
+      "min": 16,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Top padding desktop",
+      "min": 20,
+      "max": 140,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Bottom padding desktop",
+      "min": 20,
+      "max": 140,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    }
+  ],
+  "presets": [
+    {
+      "name": "Meowgical Split Hero"
+    }
+  ]
+}
+{% endschema %}

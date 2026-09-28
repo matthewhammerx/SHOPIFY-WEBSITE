@@ -1,0 +1,586 @@
+<template id="sale-bar-template-{{ section.id }}">
+  <div id="sale-bar-mounted-{{ section.id }}" class="sale-bar-{{ section.id }}-wrapper">
+    <style>
+      .sale-bar-{{ section.id }}-wrapper {
+        width: 100%;
+        background: {{ section.settings.background_color }};
+        position: relative;
+        z-index: 5;
+        box-sizing: border-box;
+        padding-top: {{ section.settings.padding_top_mobile }}px;
+        padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+      }
+
+      .sale-bar-{{ section.id }} {
+        width: 100%;
+        max-width: {% if section.settings.full_width %}100%{% else %}{{ section.settings.max_width }}px{% endif %};
+        margin: 0 auto;
+        padding-left: {{ section.settings.side_padding_mobile }}px;
+        padding-right: {{ section.settings.side_padding_mobile }}px;
+        box-sizing: border-box;
+        text-align: center;
+        position: relative;
+      }
+
+      .sale-bar-{{ section.id }}__link,
+      .sale-bar-{{ section.id }}__content {
+        color: {{ section.settings.text_color }};
+        text-decoration: none;
+        display: block;
+        width: 100%;
+      }
+
+      .sale-bar-{{ section.id }}__top {
+        margin: 0;
+        padding: 0;
+        font-size: {{ section.settings.top_font_size_mobile }}px;
+        line-height: {{ section.settings.top_line_height | divided_by: 100.0 }};
+        font-weight: {{ section.settings.top_font_weight }};
+        letter-spacing: {{ section.settings.letter_spacing }}px;
+        color: {{ section.settings.text_color }};
+      }
+
+      .sale-bar-{{ section.id }}__bottom {
+        margin: {{ section.settings.line_spacing }}px 0 0;
+        padding: 0;
+        font-size: {{ section.settings.bottom_font_size_mobile }}px;
+        line-height: {{ section.settings.bottom_line_height | divided_by: 100.0 }};
+        font-weight: {{ section.settings.bottom_font_weight }};
+        letter-spacing: {{ section.settings.letter_spacing }}px;
+        color: {{ section.settings.text_color }};
+      }
+
+      .sale-bar-{{ section.id }}__highlight {
+        color: {{ section.settings.highlight_color }};
+        font-weight: {{ section.settings.highlight_font_weight }};
+      }
+
+      .sale-bar-{{ section.id }}__close {
+        position: absolute;
+        top: 50%;
+        right: 8px;
+        transform: translateY(-50%);
+        border: none;
+        background: transparent;
+        color: {{ section.settings.close_color }};
+        cursor: pointer;
+        padding: 5px;
+        line-height: 1;
+        font-size: 18px;
+        z-index: 2;
+      }
+
+      {% if section.settings.enable_hover_underline %}
+        .sale-bar-{{ section.id }}__link:hover {
+          text-decoration: underline;
+        }
+      {% endif %}
+
+      body.drawer-open .sale-bar-{{ section.id }}-wrapper,
+      body.cart-drawer-open .sale-bar-{{ section.id }}-wrapper,
+      body.js-drawer-open .sale-bar-{{ section.id }}-wrapper,
+      body.overflow-hidden .sale-bar-{{ section.id }}-wrapper,
+      body.menu-opening .sale-bar-{{ section.id }}-wrapper {
+        display: none !important;
+      }
+
+      @media screen and (min-width: 750px) {
+        .sale-bar-{{ section.id }}-wrapper {
+          padding-top: {{ section.settings.padding_top_desktop }}px;
+          padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
+        }
+
+        .sale-bar-{{ section.id }} {
+          padding-left: {{ section.settings.side_padding_desktop }}px;
+          padding-right: {{ section.settings.side_padding_desktop }}px;
+        }
+
+        .sale-bar-{{ section.id }}__top {
+          font-size: {{ section.settings.top_font_size_desktop }}px;
+        }
+
+        .sale-bar-{{ section.id }}__bottom {
+          font-size: {{ section.settings.bottom_font_size_desktop }}px;
+        }
+
+        .sale-bar-{{ section.id }}__close {
+          right: 14px;
+          font-size: 20px;
+        }
+      }
+    </style>
+
+    <div class="sale-bar-{{ section.id }}">
+      {% if section.settings.link != blank %}
+        <a href="{{ section.settings.link }}" class="sale-bar-{{ section.id }}__link">
+      {% else %}
+        <div class="sale-bar-{{ section.id }}__content">
+      {% endif %}
+
+        {% if section.settings.top_text != blank %}
+          <p class="sale-bar-{{ section.id }}__top">
+            {{ section.settings.top_text }}
+          </p>
+        {% endif %}
+
+        {% if section.settings.highlight_text != blank or section.settings.bottom_text != blank %}
+          <p class="sale-bar-{{ section.id }}__bottom">
+            {% if section.settings.highlight_text != blank %}
+              <span class="sale-bar-{{ section.id }}__highlight">
+                {{ section.settings.highlight_text }}
+              </span>
+            {% endif %}
+            {% if section.settings.bottom_text != blank %}
+              {{ section.settings.bottom_text }}
+            {% endif %}
+          </p>
+        {% endif %}
+
+      {% if section.settings.link != blank %}
+        </a>
+      {% else %}
+        </div>
+      {% endif %}
+
+      {% if section.settings.use_close_button %}
+        <button type="button" class="sale-bar-{{ section.id }}__close" data-sale-bar-close aria-label="Close sale bar">
+          ×
+        </button>
+      {% endif %}
+    </div>
+  </div>
+</template>
+
+<div id="sale-bar-default-target-{{ section.id }}"></div>
+
+<script>
+  (function () {
+    function isCartOpen() {
+      var cartSelectors = [
+        'cart-drawer[open]',
+        'cart-drawer.active',
+        'cart-drawer.is-open',
+        '.cart-drawer.active',
+        '.cart-drawer.is-open',
+        '.cart-drawer.drawer--is-open',
+        '.drawer.active',
+        '.drawer.is-open',
+        '.drawer.drawer--is-open',
+        '#CartDrawer.active',
+        '#CartDrawer.is-open',
+        '#CartDrawer.drawer--is-open',
+        '[data-cart-drawer].active',
+        '[data-cart-drawer].is-open',
+        '[data-drawer="cart"].active',
+        '[data-drawer="cart"].is-open'
+      ];
+
+      return cartSelectors.some(function (selector) {
+        return document.querySelector(selector);
+      });
+    }
+
+    function updateSaleBarVisibility() {
+      var saleBar = document.getElementById('sale-bar-mounted-{{ section.id }}');
+      if (!saleBar) return;
+
+      if (isCartOpen()) {
+        saleBar.style.display = 'none';
+      } else {
+        saleBar.style.display = '';
+      }
+    }
+
+    function mountSaleBar() {
+      var existing = document.getElementById('sale-bar-mounted-{{ section.id }}');
+      if (existing) {
+        existing.remove();
+      }
+
+      var targetSelector = {{ section.settings.target_selector | json }};
+      var target = null;
+
+      if (targetSelector && targetSelector.trim() !== '') {
+        try {
+          target = document.querySelector(targetSelector);
+        } catch (error) {
+          target = null;
+        }
+      }
+
+      if (!target) {
+        target = document.getElementById('sale-bar-default-target-{{ section.id }}');
+      }
+
+      var template = document.getElementById('sale-bar-template-{{ section.id }}');
+
+      if (!target || !template || !template.content || !template.content.firstElementChild) {
+        return;
+      }
+
+      var clone = template.content.firstElementChild.cloneNode(true);
+      target.insertAdjacentElement('beforebegin', clone);
+
+      var closeButton = clone.querySelector('[data-sale-bar-close]');
+      if (closeButton) {
+        closeButton.addEventListener('click', function () {
+          clone.style.display = 'none';
+        });
+      }
+
+      updateSaleBarVisibility();
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', mountSaleBar);
+    } else {
+      mountSaleBar();
+    }
+
+    document.addEventListener('click', function () {
+      setTimeout(updateSaleBarVisibility, 50);
+      setTimeout(updateSaleBarVisibility, 300);
+      setTimeout(updateSaleBarVisibility, 800);
+    });
+
+    document.addEventListener('cart:open', updateSaleBarVisibility);
+    document.addEventListener('cart:close', updateSaleBarVisibility);
+    document.addEventListener('drawer:open', updateSaleBarVisibility);
+    document.addEventListener('drawer:close', updateSaleBarVisibility);
+    document.addEventListener('theme:cart:open', updateSaleBarVisibility);
+    document.addEventListener('theme:cart:close', updateSaleBarVisibility);
+
+    var observer = new MutationObserver(function () {
+      updateSaleBarVisibility();
+    });
+
+    observer.observe(document.body, {
+      attributes: true,
+      childList: true,
+      subtree: true,
+      attributeFilter: ['class', 'style', 'open']
+    });
+
+    if (window.Shopify && Shopify.designMode) {
+      document.addEventListener('shopify:section:load', function (event) {
+        if (event.detail.sectionId === '{{ section.id }}') {
+          setTimeout(mountSaleBar, 50);
+        }
+      });
+
+      document.addEventListener('shopify:section:unload', function (event) {
+        if (event.detail.sectionId === '{{ section.id }}') {
+          var existing = document.getElementById('sale-bar-mounted-{{ section.id }}');
+          if (existing) {
+            existing.remove();
+          }
+        }
+      });
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Sale Bar",
+  "presets": [
+    {
+      "category": "Custom",
+      "name": "Sale Bar"
+    }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "Placement"
+    },
+    {
+      "type": "text",
+      "id": "target_selector",
+      "label": "CSS selector for target element",
+      "default": ".header, .pageheader, .section-header, #announcement, .toolbar, .header__wrapper, .onboarding-header",
+      "info": "The sale bar will be inserted above this target. Leave blank to display where you drag the section."
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Full width content",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Content max width",
+      "min": 300,
+      "max": 1600,
+      "step": 50,
+      "unit": "px",
+      "default": 1200
+    },
+    {
+      "type": "checkbox",
+      "id": "use_close_button",
+      "label": "Show close button",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Text"
+    },
+    {
+      "type": "text",
+      "id": "top_text",
+      "label": "Top line text",
+      "default": "Limited Time Sale:"
+    },
+    {
+      "type": "text",
+      "id": "highlight_text",
+      "label": "Highlighted text",
+      "default": "Save 52% + free shipping"
+    },
+    {
+      "type": "text",
+      "id": "bottom_text",
+      "label": "Text after highlight",
+      "default": " on your first order"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Optional link"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#00572c"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Normal text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "highlight_color",
+      "label": "Highlighted text color",
+      "default": "#ffcc2f"
+    },
+    {
+      "type": "color",
+      "id": "close_color",
+      "label": "Close button color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Desktop typography"
+    },
+    {
+      "type": "range",
+      "id": "top_font_size_desktop",
+      "label": "Top text size desktop",
+      "min": 8,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "bottom_font_size_desktop",
+      "label": "Bottom text size desktop",
+      "min": 8,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "header",
+      "content": "Mobile typography"
+    },
+    {
+      "type": "range",
+      "id": "top_font_size_mobile",
+      "label": "Top text size mobile",
+      "min": 8,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "bottom_font_size_mobile",
+      "label": "Bottom text size mobile",
+      "min": 8,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Font weight"
+    },
+    {
+      "type": "select",
+      "id": "top_font_weight",
+      "label": "Top text weight",
+      "default": "700",
+      "options": [
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi-bold" },
+        { "value": "700", "label": "Bold" },
+        { "value": "800", "label": "Extra bold" },
+        { "value": "900", "label": "Black" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "bottom_font_weight",
+      "label": "Bottom normal text weight",
+      "default": "400",
+      "options": [
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi-bold" },
+        { "value": "700", "label": "Bold" },
+        { "value": "800", "label": "Extra bold" },
+        { "value": "900", "label": "Black" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "highlight_font_weight",
+      "label": "Highlighted text weight",
+      "default": "800",
+      "options": [
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi-bold" },
+        { "value": "700", "label": "Bold" },
+        { "value": "800", "label": "Extra bold" },
+        { "value": "900", "label": "Black" }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "line_spacing",
+      "label": "Space between lines",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "letter_spacing",
+      "label": "Letter spacing",
+      "min": 0,
+      "max": 5,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "top_line_height",
+      "label": "Top line height",
+      "min": 80,
+      "max": 180,
+      "step": 5,
+      "unit": "%",
+      "default": 110
+    },
+    {
+      "type": "range",
+      "id": "bottom_line_height",
+      "label": "Bottom line height",
+      "min": 80,
+      "max": 180,
+      "step": 5,
+      "unit": "%",
+      "default": 110
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Top padding desktop",
+      "min": 0,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Bottom padding desktop",
+      "min": 0,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Top padding mobile",
+      "min": 0,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Bottom padding mobile",
+      "min": 0,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "side_padding_desktop",
+      "label": "Side padding desktop",
+      "min": 0,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "side_padding_mobile",
+      "label": "Side padding mobile",
+      "min": 0,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_hover_underline",
+      "label": "Underline on hover",
+      "default": false
+    }
+  ]
+}
+{% endschema %}

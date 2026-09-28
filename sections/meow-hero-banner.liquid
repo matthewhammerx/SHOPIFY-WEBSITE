@@ -1,0 +1,687 @@
+{% comment %}
+  Meowgical hero banner - eyebrow/stars, heading, lead text, CTA button,
+  button subtext, trust badges, and a responsive image.
+  Usage: add as a section via Theme Editor (Add section > Meow Hero Banner).
+{% endcomment %}
+
+<section
+  class="meow-hero"
+  style="
+    --meow-hero-bg: {{ section.settings.bg_color | default: '#FFFFFF' }};
+    --meow-hero-eyebrow-color: {{ section.settings.eyebrow_color | default: '#1F7A3F' }};
+    --meow-hero-star-color: {{ section.settings.star_color | default: '#1F7A3F' }};
+    --meow-hero-heading-color: {{ section.settings.heading_color | default: '#111111' }};
+    --meow-hero-body-color: {{ section.settings.body_color | default: '#555555' }};
+    --meow-hero-button-bg: {{ section.settings.button_bg_color | default: '#2E8B3D' }};
+    --meow-hero-button-text: {{ section.settings.button_text_color | default: '#FFFFFF' }};
+    --meow-hero-button-hover-bg: {{ section.settings.button_hover_bg_color | default: '#256E31' }};
+    --meow-hero-button-radius: {{ section.settings.button_radius | default: 40 }}px;
+    {%- if section.settings.button_shadow_enabled -%}
+      --meow-hero-button-shadow: 0 {{ section.settings.button_shadow_y | default: 8 }}px {{ section.settings.button_shadow_blur | default: 20 }}px color-mix(in srgb, {{ section.settings.button_shadow_color | default: '#000000' }} {{ section.settings.button_shadow_opacity | default: 25 }}%, transparent);
+    {%- else -%}
+      --meow-hero-button-shadow: none;
+    {%- endif -%}
+    --meow-hero-badge-bg: {{ section.settings.badge_bg_color | default: '#FFFFFF' }};
+    --meow-hero-badge-border: {{ section.settings.badge_border_color | default: '#DADADA' }};
+    --meow-hero-badge-text: {{ section.settings.badge_text_color | default: '#333333' }};
+    --meow-hero-badge-check-color: {{ section.settings.badge_check_color | default: '#2E8B3D' }};
+    --meow-hero-eyebrow-size: {{ section.settings.eyebrow_font_size | default: 13 }}px;
+    --meow-hero-heading-size: {{ section.settings.heading_font_size | default: 30 }}px;
+    --meow-hero-heading-size-desktop: {{ section.settings.heading_font_size_desktop | default: 40 }}px;
+    --meow-hero-lead-size: {{ section.settings.lead_font_size | default: 16 }}px;
+    --meow-hero-button-size: {{ section.settings.button_font_size | default: 16 }}px;
+    --meow-hero-button-subtext-size: {{ section.settings.button_subtext_font_size | default: 13 }}px;
+    --meow-hero-badge-size: {{ section.settings.badge_font_size | default: 12 }}px;
+    --meow-hero-image-radius: {{ section.settings.image_radius | default: 16 }}px;
+    --meow-hero-padding-top: {{ section.settings.padding_top | default: 48 }}px;
+    --meow-hero-padding-bottom: {{ section.settings.padding_bottom | default: 48 }}px;
+    --meow-hero-content-max-width: {{ section.settings.content_max_width | default: 1200 }}px;
+    --meow-hero-column-gap: {{ section.settings.column_gap | default: 60 }}px;
+  "
+>
+  <div class="meow-hero__wrap">
+    <div class="meow-hero__row{% if section.settings.image_position == 'left' %} meow-hero__row--image-left{% endif %}">
+      <div class="meow-hero__copy">
+        {%- if section.settings.show_stars or section.settings.eyebrow_text != blank -%}
+          <p class="meow-hero__eyebrow">
+            {%- if section.settings.show_stars -%}
+              <span class="meow-hero__stars" aria-hidden="true">
+                {%- for i in (1..5) -%}
+                  <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.2 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.3-4.2 5.9-.9L12 3.5z"/></svg>
+                {%- endfor -%}
+              </span>
+            {%- endif -%}
+            {%- if section.settings.eyebrow_text != blank -%}
+              <span>{{ section.settings.eyebrow_text }}</span>
+            {%- endif -%}
+          </p>
+        {%- endif -%}
+
+        {%- if section.settings.heading != blank -%}
+          <h1 class="meow-hero__heading">{{ section.settings.heading }}</h1>
+        {%- endif -%}
+
+        {%- if section.settings.lead_text != blank -%}
+          <div class="meow-hero__lead">{{ section.settings.lead_text }}</div>
+        {%- endif -%}
+
+        {%- if section.settings.button_text != blank or section.settings.button_subtext != blank -%}
+          <div class="meow-hero__cta">
+            {%- if section.settings.button_text != blank -%}
+              <a class="meow-hero__button" href="{{ section.settings.button_link | default: '#' }}">
+                {{ section.settings.button_text }}
+                {%- if section.settings.show_button_arrow -%}
+                  <span class="meow-hero__button-arrow" aria-hidden="true">&rarr;</span>
+                {%- endif -%}
+              </a>
+            {%- endif -%}
+
+            {%- if section.settings.button_subtext != blank -%}
+              <p class="meow-hero__button-subtext">{{ section.settings.button_subtext }}</p>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
+        {%- if section.blocks.size > 0 -%}
+          <div class="meow-hero__badges">
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'badge' -%}
+                <span class="meow-hero__badge" {{ block.shopify_attributes }}>
+                  {%- if block.settings.show_check -%}
+                    <svg class="meow-hero__badge-check" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                      <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/>
+                      <path d="M8 12.5l2.5 2.5 5-5.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  {%- endif -%}
+                  {{ block.settings.text }}
+                </span>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- if section.settings.image != blank -%}
+        <div class="meow-hero__media">
+          <img
+            src="{{ section.settings.image | image_url: width: 1500 }}"
+            srcset="
+              {{ section.settings.image | image_url: width: 400 }} 400w,
+              {{ section.settings.image | image_url: width: 800 }} 800w,
+              {{ section.settings.image | image_url: width: 1200 }} 1200w,
+              {{ section.settings.image | image_url: width: 1500 }} 1500w
+            "
+            sizes="(min-width: 750px) 50vw, 100vw"
+            alt="{{ section.settings.image.alt | default: section.settings.heading | escape }}"
+            width="{{ section.settings.image.width }}"
+            height="{{ section.settings.image.height }}"
+            loading="eager"
+          >
+        </div>
+      {%- else -%}
+        <div class="meow-hero__media meow-hero__media--placeholder">
+          {{ 'image' | placeholder_svg_tag: 'meow-hero__placeholder-svg' }}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+<style>
+  .meow-hero {
+    background: var(--meow-hero-bg, #FFFFFF);
+    padding-top: var(--meow-hero-padding-top, 48px);
+    padding-bottom: var(--meow-hero-padding-bottom, 48px);
+  }
+  .meow-hero__wrap {
+    max-width: var(--meow-hero-content-max-width, 1200px);
+    margin: 0 auto;
+    padding: 0 20px;
+    box-sizing: border-box;
+  }
+  .meow-hero__row {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: 28px;
+  }
+  @media screen and (min-width: 750px) {
+    .meow-hero__row {
+      flex-direction: row;
+      align-items: center;
+      gap: var(--meow-hero-column-gap, 60px);
+    }
+    .meow-hero__row--image-left {
+      flex-direction: row-reverse;
+    }
+    .meow-hero__copy,
+    .meow-hero__media {
+      flex: 1 1 50%;
+      min-width: 0;
+    }
+  }
+  .meow-hero__media {
+    width: 100%;
+  }
+  .meow-hero__media img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: var(--meow-hero-image-radius, 16px);
+    object-fit: cover;
+  }
+  .meow-hero__media--placeholder {
+    background: #F3F3F3;
+    border-radius: var(--meow-hero-image-radius, 16px);
+    aspect-ratio: 4 / 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .meow-hero__placeholder-svg {
+    width: 40%;
+    height: 40%;
+    opacity: 0.5;
+  }
+  .meow-hero__copy {
+    width: 100%;
+    text-align: left;
+    box-sizing: border-box;
+  }
+  .meow-hero__eyebrow {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 6px;
+    margin: 0 0 12px;
+    font-size: var(--meow-hero-eyebrow-size, 13px);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--meow-hero-eyebrow-color, #1F7A3F);
+  }
+  .meow-hero__stars {
+    display: inline-flex;
+    gap: 2px;
+    color: var(--meow-hero-star-color, #1F7A3F);
+    flex-shrink: 0;
+  }
+  .meow-hero__stars svg {
+    width: 14px;
+    height: 14px;
+  }
+  .meow-hero__heading {
+    margin: 0 0 16px;
+    font-size: var(--meow-hero-heading-size, 30px);
+    line-height: 1.15;
+    font-weight: 800;
+    color: var(--meow-hero-heading-color, #111111);
+  }
+  @media screen and (min-width: 750px) {
+    .meow-hero__heading {
+      font-size: var(--meow-hero-heading-size-desktop, 40px);
+    }
+  }
+  .meow-hero__lead {
+    margin: 0 0 24px;
+    font-size: var(--meow-hero-lead-size, 16px);
+    line-height: 1.5;
+    color: var(--meow-hero-body-color, #555555);
+  }
+  .meow-hero__lead p {
+    margin: 0;
+  }
+  .meow-hero__cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  @media screen and (min-width: 750px) {
+    .meow-hero__cta {
+      width: fit-content;
+      align-items: center;
+    }
+  }
+  .meow-hero__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 16px 28px;
+    border-radius: var(--meow-hero-button-radius, 999px);
+    background: var(--meow-hero-button-bg, #2E8B3D);
+    color: var(--meow-hero-button-text, #FFFFFF);
+    font-size: var(--meow-hero-button-size, 16px);
+    font-weight: 700;
+    text-decoration: none;
+    box-sizing: border-box;
+    box-shadow: var(--meow-hero-button-shadow, none);
+    transition: background-color 0.2s ease;
+  }
+  .meow-hero__button:hover {
+    background: var(--meow-hero-button-hover-bg, #256E31);
+    color: var(--meow-hero-button-text, #FFFFFF);
+  }
+  @media screen and (min-width: 750px) {
+    .meow-hero__button {
+      width: auto;
+    }
+  }
+  .meow-hero__button-arrow {
+    font-size: 18px;
+    line-height: 1;
+  }
+  .meow-hero__button-subtext {
+    margin: 12px 0 0;
+    font-size: var(--meow-hero-button-subtext-size, 13px);
+    color: var(--meow-hero-body-color, #666666);
+    text-align: center;
+    max-width: 100%;
+  }
+  .meow-hero__badges {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  .meow-hero__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 999px;
+    border: 1px solid var(--meow-hero-badge-border, #DADADA);
+    background: var(--meow-hero-badge-bg, #FFFFFF);
+    color: var(--meow-hero-badge-text, #333333);
+    font-size: var(--meow-hero-badge-size, 12px);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+  }
+  .meow-hero__badge-check {
+    width: 14px;
+    height: 14px;
+    color: var(--meow-hero-badge-check-color, #2E8B3D);
+    flex-shrink: 0;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Meow Hero Banner",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Standalone hero banner with its own unique classes/CSS - safe to add anywhere without touching other sections."
+    },
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Desktop image position",
+      "options": [
+        { "value": "right", "label": "Right" },
+        { "value": "left", "label": "Left" }
+      ],
+      "default": "right"
+    },
+    {
+      "type": "header",
+      "content": "Eyebrow"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_stars",
+      "label": "Show star rating icons",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "eyebrow_text",
+      "label": "Eyebrow text",
+      "default": "Loved by 1,000+ Cat Parents"
+    },
+    {
+      "type": "header",
+      "content": "Heading & text"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "5 Reasons Your Senior Cat Needs SuperTaurine"
+    },
+    {
+      "type": "richtext",
+      "id": "lead_text",
+      "label": "Lead paragraph",
+      "default": "<p>A daily supplement for cats - supporting heart health, joints, energy, and overall wellbeing. One capsule, four benefits.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Try SuperTaurine 25% Off"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_button_arrow",
+      "label": "Show arrow on button",
+      "default": true
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "text",
+      "id": "button_subtext",
+      "label": "Text below button",
+      "default": "60-Day Money-Back Guarantee &middot; Free Shipping"
+    },
+    {
+      "type": "checkbox",
+      "id": "button_shadow_enabled",
+      "label": "Enable button drop shadow",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "button_shadow_color",
+      "label": "Shadow color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "button_shadow_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Shadow opacity",
+      "default": 25
+    },
+    {
+      "type": "range",
+      "id": "button_shadow_blur",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Shadow blur",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "button_shadow_y",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Shadow vertical offset",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "eyebrow_font_size",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Eyebrow text size",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "heading_font_size",
+      "min": 20,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Heading size (mobile)",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "heading_font_size_desktop",
+      "min": 24,
+      "max": 64,
+      "step": 1,
+      "unit": "px",
+      "label": "Heading size (desktop)",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "lead_font_size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Lead paragraph size",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "button_font_size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Button text size",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "button_subtext_font_size",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Button subtext size",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "badge_font_size",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Badge text size",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Section background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "eyebrow_color",
+      "label": "Eyebrow text color",
+      "default": "#1F7A3F"
+    },
+    {
+      "type": "color",
+      "id": "star_color",
+      "label": "Star icon color",
+      "default": "#1F7A3F"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "body_color",
+      "label": "Body text color",
+      "default": "#555555"
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color",
+      "label": "Button background",
+      "default": "#2E8B3D"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_bg_color",
+      "label": "Button hover background",
+      "default": "#256E31"
+    },
+    {
+      "type": "color",
+      "id": "badge_bg_color",
+      "label": "Badge background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "badge_border_color",
+      "label": "Badge border",
+      "default": "#DADADA"
+    },
+    {
+      "type": "color",
+      "id": "badge_text_color",
+      "label": "Badge text",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "badge_check_color",
+      "label": "Badge checkmark",
+      "default": "#2E8B3D"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "content_max_width",
+      "min": 960,
+      "max": 1400,
+      "step": 20,
+      "unit": "px",
+      "label": "Content max width",
+      "default": 1200
+    },
+    {
+      "type": "range",
+      "id": "column_gap",
+      "min": 20,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Gap between text and image (desktop)",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "button_radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Button corner radius",
+      "info": "Values near the max already render as a full pill shape on this button's height.",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "image_radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Image corner radius",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "badge",
+      "name": "Trust badge",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_check",
+          "label": "Show checkmark icon",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Badge text",
+          "default": "Human-Grade"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Meow Hero Banner",
+      "blocks": [
+        { "type": "badge", "settings": { "text": "Human-Grade" } },
+        { "type": "badge", "settings": { "text": "Third-Party Tested" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

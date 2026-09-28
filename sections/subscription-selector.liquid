@@ -1,0 +1,1355 @@
+{% comment %}
+  Custom Subscription Selector - Two Visible Boxes Version
+{% endcomment %}
+
+<section id="sub-selector-{{ section.id }}" class="mh-sub-selector">
+  <style>
+    #sub-selector-{{ section.id }} {
+      --mh-bg: {{ section.settings.section_bg }};
+      --mh-card-bg: {{ section.settings.card_bg }};
+      --mh-card-selected-bg: {{ section.settings.selected_card_bg }};
+      --mh-border: {{ section.settings.card_border }};
+      --mh-selected-border: {{ section.settings.selected_border }};
+      --mh-text: {{ section.settings.text_color }};
+      --mh-muted: {{ section.settings.muted_text_color }};
+      --mh-price: {{ section.settings.price_color }};
+      --mh-compare: {{ section.settings.compare_price_color }};
+      --mh-eyebrow-bg: {{ section.settings.eyebrow_bg }};
+      --mh-eyebrow-text: {{ section.settings.eyebrow_text }};
+      --mh-radio: {{ section.settings.radio_color }};
+      --mh-radio-selected: {{ section.settings.radio_selected_color }};
+      --mh-button-bg: {{ section.settings.button_bg }};
+      --mh-button-text: {{ section.settings.button_text_color }};
+      --mh-link: {{ section.settings.link_color }};
+      --mh-strike: {{ section.settings.strike_color }};
+      --mh-gift-bg: {{ section.settings.gift_box_bg }};
+
+      background: var(--mh-bg);
+      padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+      font-family: inherit;
+    }
+
+    #sub-selector-{{ section.id }} * {
+      box-sizing: border-box;
+    }
+
+    #sub-selector-{{ section.id }} .mh-sub-inner {
+      width: 100%;
+      max-width: {{ section.settings.max_width }}px;
+      margin: 0 auto;
+      padding: 0 18px;
+    }
+
+    #sub-selector-{{ section.id }} .mh-sub-heading {
+      margin: 0 0 14px;
+      color: var(--mh-text);
+      font-size: {{ section.settings.heading_size }}px;
+      line-height: 1.1;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      text-align: {{ section.settings.text_alignment }};
+    }
+
+    #sub-selector-{{ section.id }} .mh-card-list {
+      display: flex;
+      flex-direction: column;
+      gap: {{ section.settings.card_gap }}px;
+    }
+
+    #sub-selector-{{ section.id }} .mh-plan-card {
+      width: 100%;
+      border: 1.5px solid var(--mh-border);
+      background: var(--mh-card-bg);
+      border-radius: {{ section.settings.card_radius }}px;
+      overflow: hidden;
+      color: var(--mh-text);
+      cursor: pointer;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+    }
+
+    #sub-selector-{{ section.id }} .mh-plan-card.is-selected {
+      border-color: var(--mh-selected-border);
+      background: var(--mh-card-selected-bg);
+      box-shadow: 0 8px 22px rgba(0,0,0,0.08);
+    }
+
+    #sub-selector-{{ section.id }} .mh-plan-card:not(.is-selected) {
+      opacity: {{ section.settings.unselected_opacity | divided_by: 100.0 }};
+    }
+
+    #sub-selector-{{ section.id }} .mh-eyebrow {
+      width: 100%;
+      padding: 8px 10px;
+      text-align: center;
+      background: var(--mh-eyebrow-bg);
+      color: var(--mh-eyebrow-text);
+      font-size: 12px;
+      line-height: 1.1;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
+    #sub-selector-{{ section.id }} .mh-plan-main {
+      width: 100%;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 18px;
+    }
+
+    #sub-selector-{{ section.id }} .mh-radio {
+      width: 22px;
+      height: 22px;
+      border: 1.7px solid var(--mh-radio);
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 2px;
+      position: relative;
+      background: transparent;
+    }
+
+    #sub-selector-{{ section.id }} .mh-plan-card.is-selected .mh-radio {
+      border-color: var(--mh-radio-selected);
+    }
+
+    #sub-selector-{{ section.id }} .mh-plan-card.is-selected .mh-radio::after {
+      content: "";
+      width: 12px;
+      height: 12px;
+      background: var(--mh-radio-selected);
+      border-radius: 50%;
+      position: absolute;
+      inset: 50% auto auto 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    #sub-selector-{{ section.id }} .mh-plan-copy {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex: 1;
+      min-width: 0;
+    }
+
+    #sub-selector-{{ section.id }} .mh-plan-title {
+      color: var(--mh-text);
+      font-size: 21px;
+      line-height: 1.1;
+      font-weight: 800;
+      letter-spacing: 0.01em;
+    }
+
+    #sub-selector-{{ section.id }} .mh-plan-note {
+      color: var(--mh-text);
+      font-size: 13px;
+      line-height: 1.15;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    #sub-selector-{{ section.id }} .mh-price-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      text-align: right;
+      gap: 4px;
+      margin-left: auto;
+      flex-shrink: 0;
+    }
+
+    #sub-selector-{{ section.id }} .mh-price-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    #sub-selector-{{ section.id }} .mh-price {
+      color: var(--mh-price);
+      font-size: 20px;
+      line-height: 1;
+      font-weight: 500;
+    }
+
+    #sub-selector-{{ section.id }} .mh-compare {
+      color: var(--mh-compare);
+      font-size: 20px;
+      line-height: 1;
+      font-weight: 500;
+      text-decoration: line-through;
+      text-decoration-thickness: 1.5px;
+    }
+
+    #sub-selector-{{ section.id }} .mh-sub-link {
+      display: inline-block;
+      margin: 12px 18px 0;
+      color: var(--mh-link);
+      font-size: 17px;
+      line-height: 1.2;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    #sub-selector-{{ section.id }} .mh-benefits-content {
+      padding: 4px 18px 18px 40px;
+    }
+
+    #sub-selector-{{ section.id }} .mh-benefits-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    #sub-selector-{{ section.id }} .mh-benefit {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--mh-text);
+      font-size: 17px;
+      line-height: 1.2;
+      font-weight: 500;
+    }
+
+    #sub-selector-{{ section.id }} .mh-benefit.is-crossed span:last-child {
+      text-decoration: line-through;
+      text-decoration-thickness: 1.5px;
+      text-decoration-color: var(--mh-strike);
+      opacity: 0.9;
+    }
+
+    #sub-selector-{{ section.id }} .mh-icon {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1.5px solid currentColor;
+      color: var(--mh-text);
+      background: transparent;
+    }
+
+    #sub-selector-{{ section.id }} .mh-icon svg {
+      width: 12px;
+      height: 12px;
+      display: block;
+    }
+
+    #sub-selector-{{ section.id }} .mh-gift-box {
+      margin: 22px 18px 20px 40px;
+      background: var(--mh-gift-bg);
+      border-radius: {{ section.settings.gift_box_radius }}px;
+      padding: 26px 26px 28px;
+    }
+
+    #sub-selector-{{ section.id }} .mh-gift-heading {
+      margin: 0 0 22px;
+      color: var(--mh-text);
+      font-size: 22px;
+      line-height: 1.1;
+      font-weight: 500;
+    }
+
+    #sub-selector-{{ section.id }} .mh-gift-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    #sub-selector-{{ section.id }} .mh-gift-item {
+      text-align: center;
+      cursor: pointer;
+    }
+
+    #sub-selector-{{ section.id }} .mh-gift-image-wrap {
+      width: 100%;
+      aspect-ratio: 1 / 1.35;
+      border-radius: 12px;
+      background: {{ section.settings.gift_image_bg }};
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1.5px solid transparent;
+      transition: border-color 0.2s ease;
+    }
+
+    #sub-selector-{{ section.id }} .mh-gift-item.is-selected .mh-gift-image-wrap {
+      border-color: var(--mh-selected-border);
+    }
+
+    #sub-selector-{{ section.id }} .mh-gift-image {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    #sub-selector-{{ section.id }} .mh-gift-name {
+      display: block;
+      margin-top: 14px;
+      color: var(--mh-text);
+      font-size: 18px;
+      line-height: 1.05;
+      font-weight: 500;
+    }
+
+    #sub-selector-{{ section.id }} .mh-gift-price {
+      display: block;
+      margin-top: 8px;
+      color: var(--mh-compare);
+      font-size: 17px;
+      line-height: 1;
+      text-decoration: line-through;
+    }
+
+    #sub-selector-{{ section.id }} .mh-atc {
+      width: 100%;
+      margin-top: {{ section.settings.button_margin_top }}px;
+      min-height: 62px;
+      border: none;
+      border-radius: 999px;
+      background: var(--mh-button-bg);
+      color: var(--mh-button-text);
+      font-size: 20px;
+      line-height: 1;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      cursor: pointer;
+      transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+      text-align: center;
+      padding: 0 24px;
+    }
+
+    #sub-selector-{{ section.id }} .mh-atc:hover {
+      transform: translateY(-2px);
+      opacity: 0.96;
+      box-shadow: 0 12px 24px rgba(0,0,0,0.16);
+    }
+
+    #sub-selector-{{ section.id }} .mh-atc[disabled] {
+      opacity: 0.55;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    #sub-selector-{{ section.id }} .mh-refill-note {
+      margin: 22px 0 0;
+      color: var(--mh-text);
+      font-size: 17px;
+      line-height: 1.35;
+      text-align: center;
+    }
+
+    #sub-selector-{{ section.id }} .mh-trust-row {
+      margin-top: 24px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 22px;
+      flex-wrap: wrap;
+    }
+
+    #sub-selector-{{ section.id }} .mh-trust-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      color: var(--mh-text);
+      font-size: 12px;
+      line-height: 1;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    #sub-selector-{{ section.id }} .mh-trust-check {
+      width: 18px;
+      height: 18px;
+      border: 1.5px solid var(--mh-text);
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    #sub-selector-{{ section.id }} .mh-trust-check svg {
+      width: 12px;
+      height: 12px;
+    }
+
+    #sub-selector-{{ section.id }} .mh-message {
+      display: none;
+      margin-top: 10px;
+      font-size: 13px;
+      line-height: 1.4;
+      color: var(--mh-text);
+      text-align: center;
+    }
+
+    #sub-selector-{{ section.id }} .mh-message.is-visible {
+      display: block;
+    }
+
+    @media screen and (max-width: 749px) {
+      #sub-selector-{{ section.id }} .mh-sub-inner {
+        padding: 0 16px;
+      }
+
+      #sub-selector-{{ section.id }} .mh-plan-main {
+        padding: 14px;
+        gap: 10px;
+      }
+
+      #sub-selector-{{ section.id }} .mh-plan-title,
+      #sub-selector-{{ section.id }} .mh-price,
+      #sub-selector-{{ section.id }} .mh-compare {
+        font-size: 17px;
+      }
+
+      #sub-selector-{{ section.id }} .mh-plan-note {
+        font-size: 11px;
+      }
+
+      #sub-selector-{{ section.id }} .mh-benefit {
+        font-size: 14px;
+      }
+
+      #sub-selector-{{ section.id }} .mh-benefits-content {
+        padding-left: 38px;
+      }
+
+      #sub-selector-{{ section.id }} .mh-gift-box {
+        margin: 18px 14px 18px 38px;
+        padding: 20px 16px 22px;
+      }
+
+      #sub-selector-{{ section.id }} .mh-gift-heading {
+        font-size: 18px;
+        margin-bottom: 16px;
+      }
+
+      #sub-selector-{{ section.id }} .mh-gift-grid {
+        gap: 10px;
+      }
+
+      #sub-selector-{{ section.id }} .mh-gift-name {
+        font-size: 13px;
+      }
+
+      #sub-selector-{{ section.id }} .mh-gift-price {
+        font-size: 13px;
+      }
+
+      #sub-selector-{{ section.id }} .mh-atc {
+        min-height: 58px;
+        font-size: 18px;
+      }
+
+      #sub-selector-{{ section.id }} .mh-refill-note {
+        font-size: 15px;
+      }
+
+      #sub-selector-{{ section.id }} .mh-trust-row {
+        gap: 14px;
+      }
+
+      #sub-selector-{{ section.id }} .mh-trust-item {
+        font-size: 11px;
+      }
+    }
+  </style>
+
+  {% assign selected_product = product %}
+  {% if section.settings.product != blank %}
+    {% assign selected_product = section.settings.product %}
+  {% endif %}
+
+  {% assign selected_variant = selected_product.selected_or_first_available_variant %}
+  {% assign auto_selling_plan = blank %}
+
+  {% if selected_product.selling_plan_groups.size > 0 %}
+    {% assign auto_selling_plan = selected_product.selling_plan_groups.first.selling_plans.first.id %}
+  {% endif %}
+
+  {% assign subscribe_selling_plan_id = section.settings.subscribe_selling_plan_id | default: auto_selling_plan %}
+
+  <div
+    class="mh-sub-inner"
+    data-sub-selector-root
+    data-variant-id="{% if selected_variant %}{{ selected_variant.id }}{% endif %}"
+    data-subscribe-selling-plan="{{ subscribe_selling_plan_id }}"
+    data-current-mode="{{ section.settings.default_selected_plan }}"
+  >
+    {% if section.settings.heading != blank %}
+      <h2 class="mh-sub-heading">{{ section.settings.heading }}</h2>
+    {% endif %}
+
+    <div class="mh-card-list">
+      <div
+        class="mh-plan-card {% if section.settings.default_selected_plan == 'subscribe' %}is-selected{% endif %}"
+        data-plan-card
+        data-plan-type="subscribe"
+      >
+        {% if section.settings.subscribe_eyebrow != blank %}
+          <div class="mh-eyebrow">{{ section.settings.subscribe_eyebrow }}</div>
+        {% endif %}
+
+        <div class="mh-plan-main">
+          <span class="mh-radio" aria-hidden="true"></span>
+
+          <div class="mh-plan-copy">
+            <span class="mh-plan-title">{{ section.settings.subscribe_title }}</span>
+            <span class="mh-plan-note">{{ section.settings.subscribe_note }}</span>
+          </div>
+
+          <div class="mh-price-wrap">
+            <div class="mh-price-row">
+              <span class="mh-price">{{ section.settings.subscribe_price }}</span>
+              {% if section.settings.subscribe_compare_price != blank %}
+                <span class="mh-compare">{{ section.settings.subscribe_compare_price }}</span>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+        {% if section.settings.subscribe_link_text != blank %}
+          <span class="mh-sub-link">{{ section.settings.subscribe_link_text }}</span>
+        {% endif %}
+
+        {% if section.settings.show_gift_box %}
+          <div class="mh-gift-box">
+            <h3 class="mh-gift-heading">{{ section.settings.gift_heading }}</h3>
+
+            <div class="mh-gift-grid">
+              {% for i in (1..3) %}
+                {% assign image_key = 'gift_' | append: i | append: '_image' %}
+                {% assign name_key = 'gift_' | append: i | append: '_name' %}
+                {% assign price_key = 'gift_' | append: i | append: '_price' %}
+
+                <div class="mh-gift-item {% if forloop.first %}is-selected{% endif %}" data-gift-item>
+                  <div class="mh-gift-image-wrap">
+                    {% if section.settings[image_key] != blank %}
+                      {{
+                        section.settings[image_key]
+                        | image_url: width: 400
+                        | image_tag:
+                          class: 'mh-gift-image',
+                          loading: 'lazy',
+                          alt: section.settings[name_key]
+                      }}
+                    {% else %}
+                      {{ 'product-1' | placeholder_svg_tag: 'mh-gift-image placeholder-svg' }}
+                    {% endif %}
+                  </div>
+
+                  <span class="mh-gift-name">{{ section.settings[name_key] }}</span>
+
+                  {% if section.settings[price_key] != blank %}
+                    <span class="mh-gift-price">{{ section.settings[price_key] }}</span>
+                  {% endif %}
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        {% endif %}
+      </div>
+
+      <div
+        class="mh-plan-card {% if section.settings.default_selected_plan == 'otp' %}is-selected{% endif %}"
+        data-plan-card
+        data-plan-type="otp"
+      >
+        <div class="mh-plan-main">
+          <span class="mh-radio" aria-hidden="true"></span>
+
+          <div class="mh-plan-copy">
+            <span class="mh-plan-title">{{ section.settings.otp_title }}</span>
+          </div>
+
+          <div class="mh-price-wrap">
+            <div class="mh-price-row">
+              <span class="mh-price">{{ section.settings.otp_price }}</span>
+              {% if section.settings.otp_compare_price != blank %}
+                <span class="mh-compare">{{ section.settings.otp_compare_price }}</span>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+        <div class="mh-benefits-content">
+          <ul class="mh-benefits-list">
+            {% assign otp_included = section.settings.otp_included_benefits | newline_to_br | split: '<br />' %}
+            {% for benefit in otp_included %}
+              {% assign clean_benefit = benefit | strip %}
+              {% if clean_benefit != blank %}
+                <li class="mh-benefit">
+                  <span class="mh-icon" aria-hidden="true">
+                    <svg viewBox="0 0 18 18" fill="none">
+                      <path d="M5 9l3 3 5-5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                  </span>
+                  <span>{{ clean_benefit }}</span>
+                </li>
+              {% endif %}
+            {% endfor %}
+
+            {% assign otp_crossed = section.settings.otp_crossed_benefits | newline_to_br | split: '<br />' %}
+            {% for benefit in otp_crossed %}
+              {% assign clean_benefit = benefit | strip %}
+              {% if clean_benefit != blank %}
+                <li class="mh-benefit is-crossed">
+                  <span class="mh-icon" aria-hidden="true">
+                    <svg viewBox="0 0 18 18" fill="none">
+                      <path d="M5 9l3 3 5-5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                  </span>
+                  <span>{{ clean_benefit }}</span>
+                </li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    {% if section.settings.show_add_button %}
+      <button
+        type="button"
+        class="mh-atc"
+        data-sub-atc
+        data-subscribe-text="{{ section.settings.subscribe_button_text | escape }}"
+        data-otp-text="{{ section.settings.otp_button_text | escape }}"
+        {% unless selected_variant %}disabled{% endunless %}
+      >
+        {% if section.settings.default_selected_plan == 'otp' %}
+          {{ section.settings.otp_button_text }}
+        {% else %}
+          {{ section.settings.subscribe_button_text }}
+        {% endif %}
+      </button>
+
+      <div class="mh-message" data-sub-message></div>
+    {% endif %}
+
+    <div data-trust-group="subscribe" {% if section.settings.default_selected_plan != 'subscribe' %}hidden{% endif %}>
+      {% if section.settings.refill_note != blank %}
+        <p class="mh-refill-note">{{ section.settings.refill_note }}</p>
+      {% endif %}
+
+      <div class="mh-trust-row">
+        {% assign trust_items = section.settings.subscribe_trust_items | newline_to_br | split: '<br />' %}
+        {% for item in trust_items %}
+          {% assign clean_item = item | strip %}
+          {% if clean_item != blank %}
+            <span class="mh-trust-item">
+              <span class="mh-trust-check" aria-hidden="true">
+                <svg viewBox="0 0 18 18" fill="none">
+                  <path d="M5 9l3 3 5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+              </span>
+              {{ clean_item }}
+            </span>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+
+    <div data-trust-group="otp" {% if section.settings.default_selected_plan != 'otp' %}hidden{% endif %}>
+      <div class="mh-trust-row">
+        {% assign otp_trust_items = section.settings.otp_trust_items | newline_to_br | split: '<br />' %}
+        {% for item in otp_trust_items %}
+          {% assign clean_item = item | strip %}
+          {% if clean_item != blank %}
+            <span class="mh-trust-item">
+              <span class="mh-trust-check" aria-hidden="true">
+                <svg viewBox="0 0 18 18" fill="none">
+                  <path d="M5 9l3 3 5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+              </span>
+              {{ clean_item }}
+            </span>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      const section = document.querySelector('#sub-selector-{{ section.id }}');
+      if (!section) return;
+
+      const root = section.querySelector('[data-sub-selector-root]');
+      if (!root) return;
+
+      const cards = Array.from(root.querySelectorAll('[data-plan-card]'));
+      const gifts = Array.from(root.querySelectorAll('[data-gift-item]'));
+      const trustGroups = Array.from(root.querySelectorAll('[data-trust-group]'));
+      const atcButton = root.querySelector('[data-sub-atc]');
+      const message = root.querySelector('[data-sub-message]');
+
+      function setTrust(mode) {
+        trustGroups.forEach(function(group) {
+          const isActive = group.getAttribute('data-trust-group') === mode;
+
+          if (isActive) {
+            group.removeAttribute('hidden');
+            group.style.display = 'block';
+          } else {
+            group.setAttribute('hidden', 'hidden');
+            group.style.display = 'none';
+          }
+        });
+      }
+
+      function setMode(mode) {
+        root.setAttribute('data-current-mode', mode);
+
+        cards.forEach(function(card) {
+          card.classList.toggle('is-selected', card.getAttribute('data-plan-type') === mode);
+        });
+
+        if (atcButton) {
+          atcButton.textContent = mode === 'subscribe'
+            ? atcButton.getAttribute('data-subscribe-text')
+            : atcButton.getAttribute('data-otp-text');
+        }
+
+        setTrust(mode);
+
+        if (message) {
+          message.classList.remove('is-visible');
+          message.textContent = '';
+        }
+      }
+
+      cards.forEach(function(card) {
+        card.addEventListener('click', function() {
+          setMode(card.getAttribute('data-plan-type'));
+        });
+      });
+
+      gifts.forEach(function(gift) {
+        gift.addEventListener('click', function(event) {
+          event.stopPropagation();
+          gifts.forEach(function(item) {
+            item.classList.remove('is-selected');
+          });
+          gift.classList.add('is-selected');
+          setMode('subscribe');
+        });
+      });
+
+      setMode(root.getAttribute('data-current-mode') || 'subscribe');
+
+      if (atcButton) {
+        atcButton.addEventListener('click', async function() {
+          const variantId = root.getAttribute('data-variant-id');
+          const mode = root.getAttribute('data-current-mode');
+          const sellingPlanId = root.getAttribute('data-subscribe-selling-plan');
+
+          if (!variantId) {
+            if (message) {
+              message.textContent = 'Please select a product variant first.';
+              message.classList.add('is-visible');
+            }
+            return;
+          }
+
+          const payload = {
+            id: Number(variantId),
+            quantity: 1
+          };
+
+          if (mode === 'subscribe' && sellingPlanId) {
+            payload.selling_plan = Number(sellingPlanId);
+          }
+
+          atcButton.disabled = true;
+          const originalText = atcButton.textContent;
+          atcButton.textContent = '{{ section.settings.loading_text | escape }}';
+
+          try {
+            const response = await fetch('/cart/add.js', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+              },
+              body: JSON.stringify(payload)
+            });
+
+            if (!response.ok) {
+              throw new Error('Cart error');
+            }
+
+            atcButton.textContent = '{{ section.settings.success_text | escape }}';
+
+            if (message) {
+              message.textContent = mode === 'subscribe'
+                ? '{{ section.settings.success_subscribe_message | escape }}'
+                : '{{ section.settings.success_otp_message | escape }}';
+              message.classList.add('is-visible');
+            }
+
+            if ({{ section.settings.redirect_to_cart | json }}) {
+              window.location.href = '/cart';
+            } else {
+              document.dispatchEvent(new CustomEvent('cart:refresh'));
+              document.dispatchEvent(new CustomEvent('cart:updated'));
+            }
+
+            setTimeout(function() {
+              atcButton.textContent = originalText;
+              atcButton.disabled = false;
+            }, 1800);
+          } catch (error) {
+            atcButton.textContent = originalText;
+            atcButton.disabled = false;
+
+            if (message) {
+              message.textContent = '{{ section.settings.error_message | escape }}';
+              message.classList.add('is-visible');
+            }
+          }
+        });
+      }
+    })();
+  </script>
+</section>
+
+{% schema %}
+{
+  "name": "Subscription Selector",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Product setup"
+    },
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Product",
+      "info": "Optional. Leave blank if this is added on the product page."
+    },
+    {
+      "type": "text",
+      "id": "subscribe_selling_plan_id",
+      "label": "Subscription selling plan ID",
+      "info": "Optional if your product has only one selling plan. Add your subscription selling plan ID here for best results."
+    },
+    {
+      "type": "select",
+      "id": "default_selected_plan",
+      "label": "Default selected plan",
+      "default": "subscribe",
+      "options": [
+        {
+          "value": "subscribe",
+          "label": "Subscribe"
+        },
+        {
+          "value": "otp",
+          "label": "One-time"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "show_add_button",
+      "label": "Show add to cart button",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "redirect_to_cart",
+      "label": "Redirect to cart after add",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Section content"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Choose Your Plan"
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Heading alignment",
+      "default": "left",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Subscribe card"
+    },
+    {
+      "type": "text",
+      "id": "subscribe_eyebrow",
+      "label": "Subscribe eyebrow"
+    },
+    {
+      "type": "text",
+      "id": "subscribe_title",
+      "label": "Subscribe title",
+      "default": "Shower Head"
+    },
+    {
+      "type": "text",
+      "id": "subscribe_note",
+      "label": "Subscribe note",
+      "default": "+ SMART REFILL PLAN"
+    },
+    {
+      "type": "text",
+      "id": "subscribe_price",
+      "label": "Subscribe price",
+      "default": "$184.00"
+    },
+    {
+      "type": "text",
+      "id": "subscribe_compare_price",
+      "label": "Subscribe compare price",
+      "default": "$230.00"
+    },
+    {
+      "type": "text",
+      "id": "subscribe_link_text",
+      "label": "Subscribe link text",
+      "default": "Pause, skip or cancel anytime →"
+    },
+    {
+      "type": "text",
+      "id": "refill_note",
+      "label": "Refill note under button",
+      "default": "*Refills $58.50, change, skip or cancel anytime."
+    },
+    {
+      "type": "textarea",
+      "id": "subscribe_trust_items",
+      "label": "Subscribe trust items",
+      "default": "Express shipping\n100-days return\nScheduled refills"
+    },
+    {
+      "type": "header",
+      "content": "Gift box"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_gift_box",
+      "label": "Show gift box",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "gift_heading",
+      "label": "Gift heading",
+      "default": "Choose Your Gift"
+    },
+    {
+      "type": "image_picker",
+      "id": "gift_1_image",
+      "label": "Gift 1 image"
+    },
+    {
+      "type": "text",
+      "id": "gift_1_name",
+      "label": "Gift 1 name",
+      "default": "Blank Space"
+    },
+    {
+      "type": "text",
+      "id": "gift_1_price",
+      "label": "Gift 1 price",
+      "default": "$30.00"
+    },
+    {
+      "type": "image_picker",
+      "id": "gift_2_image",
+      "label": "Gift 2 image"
+    },
+    {
+      "type": "text",
+      "id": "gift_2_name",
+      "label": "Gift 2 name",
+      "default": "Press Reset"
+    },
+    {
+      "type": "text",
+      "id": "gift_2_price",
+      "label": "Gift 2 price",
+      "default": "$30.00"
+    },
+    {
+      "type": "image_picker",
+      "id": "gift_3_image",
+      "label": "Gift 3 image"
+    },
+    {
+      "type": "text",
+      "id": "gift_3_name",
+      "label": "Gift 3 name",
+      "default": "Smooth Talk Dark"
+    },
+    {
+      "type": "text",
+      "id": "gift_3_price",
+      "label": "Gift 3 price",
+      "default": "$38.00"
+    },
+    {
+      "type": "header",
+      "content": "One-time card"
+    },
+    {
+      "type": "text",
+      "id": "otp_title",
+      "label": "One-time title",
+      "default": "Shower Head Only"
+    },
+    {
+      "type": "text",
+      "id": "otp_price",
+      "label": "One-time price",
+      "default": "$230.00"
+    },
+    {
+      "type": "text",
+      "id": "otp_compare_price",
+      "label": "One-time compare price"
+    },
+    {
+      "type": "textarea",
+      "id": "otp_included_benefits",
+      "label": "One-time included benefits",
+      "default": "Shower Head + Filter set"
+    },
+    {
+      "type": "textarea",
+      "id": "otp_crossed_benefits",
+      "label": "One-time crossed-out benefits",
+      "default": "Welcome gift (worth over £20)\nLoyalty benefits + exclusive offers"
+    },
+    {
+      "type": "textarea",
+      "id": "otp_trust_items",
+      "label": "One-time trust items",
+      "default": "Express shipping\n100-days return"
+    },
+    {
+      "type": "header",
+      "content": "Button text"
+    },
+    {
+      "type": "text",
+      "id": "subscribe_button_text",
+      "label": "Subscribe button text",
+      "default": "Start now  -  $184.00"
+    },
+    {
+      "type": "text",
+      "id": "otp_button_text",
+      "label": "One-time button text",
+      "default": "Start now  -  $230.00"
+    },
+    {
+      "type": "text",
+      "id": "loading_text",
+      "label": "Loading text",
+      "default": "Adding..."
+    },
+    {
+      "type": "text",
+      "id": "success_text",
+      "label": "Success button text",
+      "default": "Added!"
+    },
+    {
+      "type": "text",
+      "id": "success_subscribe_message",
+      "label": "Subscribe success message",
+      "default": "Subscription added to cart."
+    },
+    {
+      "type": "text",
+      "id": "success_otp_message",
+      "label": "One-time success message",
+      "default": "One-time purchase added to cart."
+    },
+    {
+      "type": "text",
+      "id": "error_message",
+      "label": "Error message",
+      "default": "Something went wrong. Please try again."
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Max width",
+      "min": 320,
+      "max": 900,
+      "step": 20,
+      "default": 740
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "card_gap",
+      "label": "Card gap",
+      "min": 8,
+      "max": 50,
+      "step": 2,
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Card corner radius",
+      "min": 4,
+      "max": 40,
+      "step": 2,
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading size",
+      "min": 16,
+      "max": 42,
+      "step": 1,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "button_margin_top",
+      "label": "Button top spacing",
+      "min": 8,
+      "max": 50,
+      "step": 2,
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "gift_box_radius",
+      "label": "Gift box corner radius",
+      "min": 4,
+      "max": 40,
+      "step": 2,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "unselected_opacity",
+      "label": "Unselected card opacity",
+      "min": 40,
+      "max": 100,
+      "step": 5,
+      "default": 65
+    },
+    {
+      "type": "header",
+      "content": "Main colors"
+    },
+    {
+      "type": "color",
+      "id": "section_bg",
+      "label": "Section background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "card_bg",
+      "label": "Card background",
+      "default": "#F7F6F2"
+    },
+    {
+      "type": "color",
+      "id": "selected_card_bg",
+      "label": "Selected card background",
+      "default": "#F7F6F2"
+    },
+    {
+      "type": "color",
+      "id": "card_border",
+      "label": "Card border",
+      "default": "#F7F6F2"
+    },
+    {
+      "type": "color",
+      "id": "selected_border",
+      "label": "Selected border",
+      "default": "#F7F6F2"
+    },
+    {
+      "type": "color",
+      "id": "gift_box_bg",
+      "label": "Gift box background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "gift_image_bg",
+      "label": "Gift image background",
+      "default": "#F7F6F2"
+    },
+    {
+      "type": "header",
+      "content": "Text colors"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Main text",
+      "default": "#222222"
+    },
+    {
+      "type": "color",
+      "id": "muted_text_color",
+      "label": "Muted text",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "price_color",
+      "label": "Price",
+      "default": "#222222"
+    },
+    {
+      "type": "color",
+      "id": "compare_price_color",
+      "label": "Compare price",
+      "default": "#999999"
+    },
+    {
+      "type": "color",
+      "id": "daily_price_color",
+      "label": "Small price note",
+      "default": "#777777"
+    },
+    {
+      "type": "color",
+      "id": "link_color",
+      "label": "Link text",
+      "default": "#888888"
+    },
+    {
+      "type": "color",
+      "id": "strike_color",
+      "label": "Crossed-out line",
+      "default": "#222222"
+    },
+    {
+      "type": "header",
+      "content": "Badge colors"
+    },
+    {
+      "type": "color",
+      "id": "eyebrow_bg",
+      "label": "Eyebrow background",
+      "default": "#222222"
+    },
+    {
+      "type": "color",
+      "id": "eyebrow_text",
+      "label": "Eyebrow text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Icon colors"
+    },
+    {
+      "type": "color",
+      "id": "radio_color",
+      "label": "Radio border",
+      "default": "#222222"
+    },
+    {
+      "type": "color",
+      "id": "radio_selected_color",
+      "label": "Radio selected",
+      "default": "#222222"
+    },
+    {
+      "type": "color",
+      "id": "check_color",
+      "label": "Check icon background",
+      "default": "#222222"
+    },
+    {
+      "type": "color",
+      "id": "x_color",
+      "label": "X icon background",
+      "default": "#222222"
+    },
+    {
+      "type": "header",
+      "content": "Button colors"
+    },
+    {
+      "type": "color",
+      "id": "button_bg",
+      "label": "Button background",
+      "default": "#222222"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text",
+      "default": "#FFFFFF"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Subscription Selector"
+    }
+  ]
+}
+{% endschema %}

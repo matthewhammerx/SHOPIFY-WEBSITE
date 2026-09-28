@@ -1,0 +1,1240 @@
+{% comment %}
+  Meowgical Three Prop Hero Section
+{% endcomment %}
+
+<section id="herbans-three-prop-{{ section.id }}" class="herbans-three-prop">
+  <div class="htp-wrap">
+
+    <div class="htp-grid">
+
+      <div class="htp-content">
+
+        {% if section.settings.review_text != blank %}
+          <div class="htp-reviews">
+            <span class="htp-stars">
+              {% for i in (1..5) %}
+                <svg viewBox="0 0 16 16" aria-hidden="true">
+                  <path d="M3.611,15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.172,6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.537.792c.197-.39.73-.39.927,0l2.184,4.327,4.898.696c.441.062.612.636.282.95l-3.522,3.356.83,4.73c.078.443-.36.79-.746.592l-4.391-2.256-4.388,2.256Z"></path>
+                </svg>
+              {% endfor %}
+            </span>
+            <span>{{ section.settings.review_text }}</span>
+          </div>
+        {% endif %}
+
+        {% if section.settings.heading != blank %}
+          <div class="htp-heading">{{ section.settings.heading }}</div>
+        {% endif %}
+
+        {% if section.settings.text != blank %}
+          <div class="htp-text">{{ section.settings.text }}</div>
+        {% endif %}
+
+        {% if section.settings.button_text != blank %}
+          <div class="htp-button-wrap">
+            <a href="{{ section.settings.button_link | default: '#' }}" class="htp-button">
+              {{ section.settings.button_text }}
+            </a>
+
+            <div class="htp-micro-row">
+              {% if section.settings.micro_1 != blank %}
+                <span>
+                  <svg viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                    <path d="M7 1.4L11.2 3v3.15c0 2.66-1.8 5.15-4.2 5.95-2.4-.8-4.2-3.29-4.2-5.95V3L7 1.4Z" stroke="currentColor" stroke-width="1.3"/>
+                    <path d="M4.9 6.8l1.35 1.35L9.3 5.1" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  {{ section.settings.micro_1 }}
+                </span>
+              {% endif %}
+
+              {% if section.settings.micro_2 != blank %}
+                <span>
+                  <svg viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                    <path d="M2.3 4.3h9.4M5 6.8H3.7M5.1 10.2H3.5c-.95 0-1.7-.75-1.7-1.7V3.6c0-.95.75-1.7 1.7-1.7h7c.95 0 1.7.75 1.7 1.7v2.1" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+                    <circle cx="9.8" cy="9.8" r="2.9" stroke="currentColor" stroke-width="1.2"/>
+                    <path d="M8.4 11.2l2.8-2.8" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+                  </svg>
+                  {{ section.settings.micro_2 }}
+                </span>
+              {% endif %}
+            </div>
+          </div>
+        {% endif %}
+
+        <div class="htp-mobile-image-space" aria-hidden="true"></div>
+
+        <div class="htp-props">
+          {% for block in section.blocks %}
+            <div class="htp-prop" {{ block.shopify_attributes }}>
+              <div class="htp-prop-badge">
+                <span>{{ block.settings.number }}</span>
+              </div>
+
+              {% if block.settings.title != blank %}
+                <div class="htp-prop-title">{{ block.settings.title }}</div>
+              {% endif %}
+
+              {% if block.settings.text != blank %}
+                <div class="htp-prop-text">{{ block.settings.text }}</div>
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+
+      </div>
+
+      {% if section.settings.show_media_image %}
+      <div class="htp-media">
+        {% if section.settings.image != blank %}
+          <a href="{{ section.settings.image_link | default: '#' }}" class="htp-image-link">
+            <picture>
+  {% if section.settings.mobile_image != blank %}
+    <source
+      media="(max-width: 768px)"
+      srcset="{{ section.settings.mobile_image | image_url: width: 900 }}"
+    >
+  {% endif %}
+
+  <img
+    src="{{ section.settings.image | image_url: width: 1400 }}"
+    alt="{{ section.settings.image_alt | escape }}"
+    loading="lazy"
+  >
+</picture>
+
+            {% if section.settings.badge_image != blank %}
+              <div class="htp-floating-badge">
+                <img
+                  src="{{ section.settings.badge_image | image_url: width: 400 }}"
+                  alt="{{ section.settings.badge_alt | escape }}"
+                  loading="lazy"
+                >
+              </div>
+            {% endif %}
+          </a>
+        {% endif %}
+      </div>
+      {% endif %}
+
+    </div>
+
+  </div>
+</section>
+
+<style>
+  #herbans-three-prop-{{ section.id }} {
+    position: relative;
+    isolation: isolate;
+    {% if section.settings.background_mode == 'image' and section.settings.background_image != blank %}
+      background-image: url('{{ section.settings.background_image | image_url: width: 2400 }}');
+      background-size: cover;
+      background-position: {{ section.settings.background_position }};
+      background-repeat: no-repeat;
+    {% else %}
+      background: {{ section.settings.section_bg }};
+    {% endif %}
+    padding: {{ section.settings.padding_top_mobile }}px {{ section.settings.padding_side_mobile }}px {{ section.settings.padding_bottom_mobile }}px;
+    overflow: hidden;
+  }
+
+  #herbans-three-prop-{{ section.id }}::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    {% if section.settings.background_mode == 'image' %}
+      background: {{ section.settings.overlay_color | color_modify: 'alpha', section.settings.overlay_opacity | divided_by: 100.0 }};
+    {% else %}
+      background: transparent;
+    {% endif %}
+  }
+
+  #herbans-three-prop-{{ section.id }} * {
+    box-sizing: border-box;
+  }
+
+  #herbans-three-prop-{{ section.id }} .htp-wrap {
+    max-width: {{ section.settings.max_width }}px;
+    margin: 0 auto;
+  }
+
+  #herbans-three-prop-{{ section.id }} .htp-grid {
+    display: flex;
+    flex-direction: column;
+    gap: {{ section.settings.mobile_gap }}px;
+    align-items: center;
+  }
+
+  #herbans-three-prop-{{ section.id }} .htp-content {
+    order: 2;
+    width: 100%;
+    text-align: center;
+  }
+
+  #herbans-three-prop-{{ section.id }} .htp-media {
+    order: 1;
+    width: 100%;
+  }
+
+  #herbans-three-prop-{{ section.id }} .htp-image-link {
+    display: block;
+    position: relative;
+    text-decoration: none;
+  }
+
+  #herbans-three-prop-{{ section.id }} .htp-image-link picture,
+#herbans-three-prop-{{ section.id }} .htp-image-link img {
+  width: 100%;
+  display: block;
+  border-radius: {{ section.settings.image_radius }}px;
+}
+
+#herbans-three-prop-{{ section.id }} .htp-image-link picture {
+  overflow: hidden;
+  box-shadow: {{ section.settings.image_shadow }};
+}
+
+#herbans-three-prop-{{ section.id }} .htp-image-link img {
+  object-fit: cover;
+}
+
+  #herbans-three-prop-{{ section.id }} .htp-floating-badge {
+    position: absolute;
+    top: {{ section.settings.badge_top_mobile }}px;
+    left: {{ section.settings.badge_left_mobile }}px;
+    width: {{ section.settings.badge_width_mobile }}px;
+    z-index: 2;
+  }
+
+  #herbans-three-prop-{{ section.id }} .htp-floating-badge img {
+    width: 100%;
+    display: block;
+    filter: drop-shadow(0 8px 16px rgba(0,0,0,.15));
+  }
+
+  #herbans-three-prop-{{ section.id }} .htp-reviews {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    color: {{ section.settings.review_color }};
+    font-size: {{ section.settings.review_size_mobile }}px;
+    line-height: 1.25;
+    font-weight: 700;
+    margin-bottom: 18px;
+  }
+
+  #herbans-three-prop-{{ section.id }} .htp-stars {
+    display: inline-flex;
+    gap: 2px;
+    color: {{ section.settings.star_color }};
+  }
+
+  #herbans-three-prop-{{ section.id }} .htp-stars svg {
+    width: {{ section.settings.star_size_mobile }}px;
+    height: {{ section.settings.star_size_mobile }}px;
+    fill: currentColor;
+    display: block;
+  }
+
+  #herbans-three-prop-{{ section.id }} .htp-heading,
+  #herbans-three-prop-{{ section.id }} .htp-heading p {
+    margin: 0;
+    color: {{ section.settings.heading_color }};
+    font-size: {{ section.settings.heading_size_mobile }}px;
+    line-height: .96;
+    font-weight: 900;
+    letter-spacing: -0.055em;
+  }
+
+  #herbans-three-prop-{{ section.id }} .htp-heading strong {
+    color: {{ section.settings.heading_accent }};
+    font-weight: inherit;
+  }
+
+  #herbans-three-prop-{{ section.id }} .htp-text,
+  #herbans-three-prop-{{ section.id }} .htp-text p {
+    margin: 16px auto 0;
+    color: {{ section.settings.text_color }};
+    font-size: {{ section.settings.text_size_mobile }}px;
+    line-height: 1.35;
+    font-weight: 500;
+    max-width: 680px;
+  }
+
+  #herbans-three-prop-{{ section.id }} .htp-button-wrap {
+    width: 100%;
+    max-width: {{ section.settings.button_width_mobile }}px;
+    margin: 26px auto 0;
+  }
+
+  #herbans-three-prop-{{ section.id }} .htp-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: {{ section.settings.button_height_mobile }}px;
+    padding: 12px 30px;
+    border-radius: 999px;
+    text-decoration: none;
+    color: {{ section.settings.button_text_color }};
+    font-size: {{ section.settings.button_size_mobile }}px;
+    font-weight: 900;
+    line-height: 1.1;
+    text-align: center;
+    transition: all .25s ease;
+
+    {% if section.settings.button_use_gradient %}
+      background: linear-gradient(135deg, {{ section.settings.button_gradient_1 }}, {{ section.settings.button_gradient_2 }});
+      border: {{ section.settings.button_border_width }}px solid {{ section.settings.button_gradient_1 }};
+    {% else %}
+      background: {{ section.settings.button_bg }};
+      border: {{ section.settings.button_border_width }}px solid {{ section.settings.button_bg }};
+    {% endif %}
+  }
+
+  #herbans-three-prop-{{ section.id }} .htp-button:hover {
+    background: transparent;
+
+    {% if section.settings.button_use_gradient %}
+      color: {{ section.settings.button_gradient_1 }};
+      border-color: {{ section.settings.button_gradient_1 }};
+    {% else %}
+      color: {{ section.settings.button_bg }};
+      border-color: {{ section.settings.button_bg }};
+    {% endif %}
+
+    transform: translateY(-1px);
+  }
+
+  #herbans-three-prop-{{ section.id }} .htp-micro-row {
+    margin-top: 12px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px 18px;
+    color: {{ section.settings.micro_color }};
+    font-size: {{ section.settings.micro_size_mobile }}px;
+    line-height: 1.2;
+    font-weight: 700;
+  }
+
+  #herbans-three-prop-{{ section.id }} .htp-micro-row span {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  #herbans-three-prop-{{ section.id }} .htp-micro-row svg {
+    width: 15px;
+    height: 15px;
+    flex: 0 0 auto;
+  }
+
+  #herbans-three-prop-{{ section.id }} .htp-mobile-image-space {
+    display: block;
+    width: 100%;
+    height: {{ section.settings.mobile_image_space }}px;
+  }
+
+  #herbans-three-prop-{{ section.id }} .htp-props {
+    margin-top: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: {{ section.settings.prop_gap_mobile }}px;
+    width: 100%;
+  }
+
+  #herbans-three-prop-{{ section.id }} .htp-prop {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 7px;
+    min-width: 0;
+  }
+
+  #herbans-three-prop-{{ section.id }} .htp-prop-badge {
+    position: relative;
+    width: {{ section.settings.prop_badge_size_mobile }}px;
+    height: {{ section.settings.prop_badge_size_mobile }}px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: {{ section.settings.prop_badge_bg }};
+    color: {{ section.settings.prop_badge_text }};
+    border-radius: 46% 54% 52% 48% / 44% 45% 55% 56%;
+  }
+
+  #herbans-three-prop-{{ section.id }} .htp-prop-badge span {
+    font-size: {{ section.settings.prop_number_size_mobile }}px;
+    line-height: .9;
+    font-weight: 900;
+    letter-spacing: -0.06em;
+  }
+
+  #herbans-three-prop-{{ section.id }} .htp-prop-title {
+    color: {{ section.settings.prop_title_color }};
+    font-size: {{ section.settings.prop_title_size_mobile }}px;
+    line-height: 1;
+    font-weight: 900;
+    text-align: center;
+  }
+
+  #herbans-three-prop-{{ section.id }} .htp-prop-text {
+    color: {{ section.settings.prop_text_color }};
+    font-size: {{ section.settings.prop_text_size_mobile }}px;
+    line-height: 1.12;
+    font-weight: 700;
+    text-align: center;
+  }
+
+  {% if section.settings.background_mode == 'image' and section.settings.mobile_background_image != blank %}
+    @media screen and (max-width: 899px) {
+      #herbans-three-prop-{{ section.id }} {
+        background-image: url('{{ section.settings.mobile_background_image | image_url: width: 1200 }}');
+      }
+    }
+  {% endif %}
+
+  @media screen and (min-width: 900px) {
+    #herbans-three-prop-{{ section.id }} .htp-mobile-image-space {
+      display: none;
+    }
+
+    #herbans-three-prop-{{ section.id }} {
+      padding: {{ section.settings.padding_top_desktop }}px {{ section.settings.padding_side_desktop }}px {{ section.settings.padding_bottom_desktop }}px;
+    }
+
+    #herbans-three-prop-{{ section.id }} .htp-grid {
+      flex-direction: row;
+      align-items: center;
+      gap: {{ section.settings.desktop_gap }}px;
+    }
+
+    #herbans-three-prop-{{ section.id }} .htp-content {
+      order: 1;
+      flex: 1 1 0;
+    }
+
+    #herbans-three-prop-{{ section.id }} .htp-media {
+      order: 2;
+      flex: 1 1 0;
+    }
+
+    #herbans-three-prop-{{ section.id }} .htp-reviews {
+      font-size: {{ section.settings.review_size_desktop }}px;
+      margin-bottom: 24px;
+    }
+
+    #herbans-three-prop-{{ section.id }} .htp-stars svg {
+      width: {{ section.settings.star_size_desktop }}px;
+      height: {{ section.settings.star_size_desktop }}px;
+    }
+
+    #herbans-three-prop-{{ section.id }} .htp-heading,
+    #herbans-three-prop-{{ section.id }} .htp-heading p {
+      font-size: {{ section.settings.heading_size_desktop }}px;
+    }
+
+    #herbans-three-prop-{{ section.id }} .htp-text,
+    #herbans-three-prop-{{ section.id }} .htp-text p {
+      font-size: {{ section.settings.text_size_desktop }}px;
+      margin-top: 20px;
+    }
+
+    #herbans-three-prop-{{ section.id }} .htp-button-wrap {
+      max-width: {{ section.settings.button_width_desktop }}px;
+      margin-top: 32px;
+    }
+
+    #herbans-three-prop-{{ section.id }} .htp-button {
+      min-height: {{ section.settings.button_height_desktop }}px;
+      font-size: {{ section.settings.button_size_desktop }}px;
+    }
+
+    #herbans-three-prop-{{ section.id }} .htp-micro-row {
+      font-size: {{ section.settings.micro_size_desktop }}px;
+      gap: 16px 24px;
+    }
+
+    #herbans-three-prop-{{ section.id }} .htp-props {
+      margin-top: 42px;
+      gap: {{ section.settings.prop_gap_desktop }}px;
+    }
+
+    #herbans-three-prop-{{ section.id }} .htp-prop-badge {
+      width: {{ section.settings.prop_badge_size_desktop }}px;
+      height: {{ section.settings.prop_badge_size_desktop }}px;
+    }
+
+    #herbans-three-prop-{{ section.id }} .htp-prop-badge span {
+      font-size: {{ section.settings.prop_number_size_desktop }}px;
+    }
+
+    #herbans-three-prop-{{ section.id }} .htp-prop-title {
+      font-size: {{ section.settings.prop_title_size_desktop }}px;
+    }
+
+    #herbans-three-prop-{{ section.id }} .htp-prop-text {
+      font-size: {{ section.settings.prop_text_size_desktop }}px;
+    }
+
+    #herbans-three-prop-{{ section.id }} .htp-floating-badge {
+      top: {{ section.settings.badge_top_desktop }}px;
+      left: {{ section.settings.badge_left_desktop }}px;
+      width: {{ section.settings.badge_width_desktop }}px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Meowgical 3 Prop Hero",
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "<p>Cat Wellness Has Never Been This <strong>Simple.</strong></p>"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Daily, science-backed nutrition designed to support your cat’s heart, digestion, skin, coat, and everyday wellness.</p>"
+    },
+    {
+      "type": "text",
+      "id": "review_text",
+      "label": "Review text",
+      "default": "Rated 4.8 | 35,000+ Happy Cat Parents"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Shop Best Sellers"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "text",
+      "id": "micro_1",
+      "label": "Small text 1",
+      "default": "30-day guarantee"
+    },
+    {
+      "type": "text",
+      "id": "micro_2",
+      "label": "Small text 2",
+      "default": "Cancel anytime"
+    },
+    {
+  "type": "image_picker",
+  "id": "image",
+  "label": "Desktop image"
+},
+{
+  "type": "image_picker",
+  "id": "mobile_image",
+  "label": "Mobile image (optional)"
+},
+    {
+      "type": "url",
+      "id": "image_link",
+      "label": "Image link"
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "Image alt text",
+      "default": "Meowgical cat supplements"
+    },
+    {
+      "type": "image_picker",
+      "id": "badge_image",
+      "label": "Floating badge image"
+    },
+    {
+      "type": "text",
+      "id": "badge_alt",
+      "label": "Badge alt text",
+      "default": "Special offer badge"
+    },
+
+    {
+      "type": "header",
+      "content": "Hero background"
+    },
+    {
+      "type": "select",
+      "id": "background_mode",
+      "label": "Background type",
+      "options": [
+        {
+          "value": "gradient",
+          "label": "Gradient / color"
+        },
+        {
+          "value": "image",
+          "label": "Background image"
+        }
+      ],
+      "default": "gradient"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Desktop background image"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_background_image",
+      "label": "Mobile background image (optional)"
+    },
+    {
+      "type": "select",
+      "id": "background_position",
+      "label": "Background position",
+      "options": [
+        {
+          "value": "center center",
+          "label": "Center"
+        },
+        {
+          "value": "center top",
+          "label": "Top"
+        },
+        {
+          "value": "center bottom",
+          "label": "Bottom"
+        },
+        {
+          "value": "left center",
+          "label": "Left"
+        },
+        {
+          "value": "right center",
+          "label": "Right"
+        }
+      ],
+      "default": "center center"
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "Image overlay color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Image overlay opacity",
+      "min": 0,
+      "max": 90,
+      "step": 5,
+      "unit": "%",
+      "default": 20
+    },
+    {
+      "type": "checkbox",
+      "id": "show_media_image",
+      "label": "Show separate product image",
+      "default": true
+    },
+
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Max width",
+      "min": 900,
+      "max": 1800,
+      "step": 20,
+      "default": 1600
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Desktop top padding",
+      "min": 20,
+      "max": 160,
+      "step": 4,
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Desktop bottom padding",
+      "min": 20,
+      "max": 160,
+      "step": 4,
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding_side_desktop",
+      "label": "Desktop side padding",
+      "min": 20,
+      "max": 100,
+      "step": 4,
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Mobile top padding",
+      "min": 20,
+      "max": 120,
+      "step": 4,
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Mobile bottom padding",
+      "min": 20,
+      "max": 120,
+      "step": 4,
+      "default": 44
+    },
+    {
+      "type": "range",
+      "id": "padding_side_mobile",
+      "label": "Mobile side padding",
+      "min": 12,
+      "max": 32,
+      "step": 2,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "desktop_gap",
+      "label": "Desktop gap",
+      "min": 20,
+      "max": 100,
+      "step": 4,
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "mobile_gap",
+      "label": "Mobile gap",
+      "min": 12,
+      "max": 50,
+      "step": 2,
+      "default": 26
+    },
+    {
+      "type": "range",
+      "id": "mobile_image_space",
+      "label": "Mobile empty image space",
+      "info": "Adds empty background-image space between the button/guarantees and the three props. Mobile only.",
+      "min": 0,
+      "max": 500,
+      "step": 10,
+      "unit": "px",
+      "default": 180
+    },
+
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+  "type": "color_background",
+  "id": "section_bg",
+  "label": "Section background",
+  "default": "linear-gradient(180deg, #842900 0%, #FF7333 55%, #FFECC6 100%)"
+},
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#112D20"
+    },
+    {
+      "type": "color",
+      "id": "heading_accent",
+      "label": "Heading accent",
+      "default": "#D76F3D"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Body text",
+      "default": "#4B5E50"
+    },
+    {
+      "type": "color",
+      "id": "review_color",
+      "label": "Review text",
+      "default": "#112D20"
+    },
+    {
+      "type": "color",
+      "id": "star_color",
+      "label": "Stars",
+      "default": "#008B52"
+    },
+    {
+      "type": "color",
+      "id": "micro_color",
+      "label": "Small text",
+      "default": "#112D20"
+    },
+
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "range",
+      "id": "button_width_desktop",
+      "label": "Desktop button width",
+      "min": 220,
+      "max": 620,
+      "step": 10,
+      "default": 390
+    },
+    {
+      "type": "range",
+      "id": "button_width_mobile",
+      "label": "Mobile button width",
+      "min": 220,
+      "max": 420,
+      "step": 10,
+      "default": 340
+    },
+    {
+      "type": "range",
+      "id": "button_height_desktop",
+      "label": "Desktop button height",
+      "min": 42,
+      "max": 90,
+      "step": 2,
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "button_height_mobile",
+      "label": "Mobile button height",
+      "min": 42,
+      "max": 80,
+      "step": 2,
+      "default": 58
+    },
+    {
+      "type": "range",
+      "id": "button_size_desktop",
+      "label": "Desktop button text size",
+      "min": 14,
+      "max": 30,
+      "step": 1,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "button_size_mobile",
+      "label": "Mobile button text size",
+      "min": 14,
+      "max": 24,
+      "step": 1,
+      "default": 17
+    },
+    {
+      "type": "checkbox",
+      "id": "button_use_gradient",
+      "label": "Use gradient button",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "button_bg",
+      "label": "Button solid background",
+      "default": "#0B4D3A"
+    },
+    {
+      "type": "color",
+      "id": "button_gradient_1",
+      "label": "Button gradient 1",
+      "default": "#4F7F05"
+    },
+    {
+      "type": "color",
+      "id": "button_gradient_2",
+      "label": "Button gradient 2",
+      "default": "#F2A94A"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "button_border_width",
+      "label": "Button border width",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "default": 3
+    },
+
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    {
+      "type": "range",
+      "id": "image_radius",
+      "label": "Image radius",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "default": 28
+    },
+    {
+      "type": "text",
+      "id": "image_shadow",
+      "label": "Image shadow CSS",
+      "default": "none"
+    },
+    {
+      "type": "range",
+      "id": "badge_width_desktop",
+      "label": "Badge width desktop",
+      "min": 60,
+      "max": 280,
+      "step": 10,
+      "default": 150
+    },
+    {
+      "type": "range",
+      "id": "badge_width_mobile",
+      "label": "Badge width mobile",
+      "min": 50,
+      "max": 180,
+      "step": 10,
+      "default": 110
+    },
+    {
+      "type": "range",
+      "id": "badge_top_desktop",
+      "label": "Badge top desktop",
+      "min": -80,
+      "max": 80,
+      "step": 4,
+      "default": -20
+    },
+    {
+      "type": "range",
+      "id": "badge_left_desktop",
+      "label": "Badge left desktop",
+      "min": -80,
+      "max": 80,
+      "step": 4,
+      "default": -20
+    },
+    {
+      "type": "range",
+      "id": "badge_top_mobile",
+      "label": "Badge top mobile",
+      "min": -60,
+      "max": 60,
+      "step": 4,
+      "default": -12
+    },
+    {
+      "type": "range",
+      "id": "badge_left_mobile",
+      "label": "Badge left mobile",
+      "min": -40,
+      "max": 60,
+      "step": 4,
+      "default": -8
+    },
+
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "heading_size_desktop",
+      "label": "Heading size desktop",
+      "min": 42,
+      "max": 100,
+      "step": 1,
+      "default": 70
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Heading size mobile",
+      "min": 34,
+      "max": 72,
+      "step": 1,
+      "default": 52
+    },
+    {
+      "type": "range",
+      "id": "text_size_desktop",
+      "label": "Text size desktop",
+      "min": 14,
+      "max": 28,
+      "step": 1,
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "text_size_mobile",
+      "label": "Text size mobile",
+      "min": 13,
+      "max": 22,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "review_size_desktop",
+      "label": "Review size desktop",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "review_size_mobile",
+      "label": "Review size mobile",
+      "min": 11,
+      "max": 20,
+      "step": 1,
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "star_size_desktop",
+      "label": "Star size desktop",
+      "min": 12,
+      "max": 28,
+      "step": 1,
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "star_size_mobile",
+      "label": "Star size mobile",
+      "min": 10,
+      "max": 22,
+      "step": 1,
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "micro_size_desktop",
+      "label": "Small text size desktop",
+      "min": 11,
+      "max": 22,
+      "step": 1,
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "micro_size_mobile",
+      "label": "Small text size mobile",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "default": 13
+    },
+
+    {
+      "type": "header",
+      "content": "Props"
+    },
+    {
+      "type": "color",
+      "id": "prop_badge_bg",
+      "label": "Prop badge background",
+      "default": "#FFD02F"
+    },
+    {
+      "type": "color",
+      "id": "prop_badge_text",
+      "label": "Prop badge text",
+      "default": "#112D20"
+    },
+    {
+      "type": "color",
+      "id": "prop_title_color",
+      "label": "Prop title",
+      "default": "#112D20"
+    },
+    {
+      "type": "color",
+      "id": "prop_text_color",
+      "label": "Prop text",
+      "default": "#112D20"
+    },
+    {
+      "type": "range",
+      "id": "prop_badge_size_desktop",
+      "label": "Badge size desktop",
+      "min": 50,
+      "max": 120,
+      "step": 2,
+      "default": 82
+    },
+    {
+      "type": "range",
+      "id": "prop_badge_size_mobile",
+      "label": "Badge size mobile",
+      "min": 44,
+      "max": 100,
+      "step": 2,
+      "default": 68
+    },
+    {
+      "type": "range",
+      "id": "prop_number_size_desktop",
+      "label": "Number size desktop",
+      "min": 24,
+      "max": 60,
+      "step": 1,
+      "default": 42
+    },
+    {
+      "type": "range",
+      "id": "prop_number_size_mobile",
+      "label": "Number size mobile",
+      "min": 20,
+      "max": 50,
+      "step": 1,
+      "default": 34
+    },
+    {
+      "type": "range",
+      "id": "prop_title_size_desktop",
+      "label": "Prop title size desktop",
+      "min": 14,
+      "max": 30,
+      "step": 1,
+      "default": 22
+    },
+    {
+      "type": "range",
+      "id": "prop_title_size_mobile",
+      "label": "Prop title size mobile",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "default": 17
+    },
+    {
+      "type": "range",
+      "id": "prop_text_size_desktop",
+      "label": "Prop text size desktop",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "prop_text_size_mobile",
+      "label": "Prop text size mobile",
+      "min": 9,
+      "max": 18,
+      "step": 1,
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "prop_gap_desktop",
+      "label": "Prop gap desktop",
+      "min": 12,
+      "max": 60,
+      "step": 4,
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "prop_gap_mobile",
+      "label": "Prop gap mobile",
+      "min": 6,
+      "max": 30,
+      "step": 2,
+      "default": 10
+    }
+  ],
+  "blocks": [
+    {
+      "type": "prop",
+      "name": "Prop",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "text",
+          "id": "number",
+          "label": "Number",
+          "default": "3"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Daily Essentials"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Small text",
+          "default": "Simple everyday cat wellness"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Meowgical 3 Prop Hero",
+      "blocks": [
+        {
+          "type": "prop",
+          "settings": {
+            "number": "3",
+            "title": "Daily Essentials",
+            "text": "Simple everyday cat wellness"
+          }
+        },
+        {
+          "type": "prop",
+          "settings": {
+            "number": "1",
+            "title": "Simple Routine",
+            "text": "Easy daily support"
+          }
+        },
+        {
+          "type": "prop",
+          "settings": {
+            "number": "30",
+            "title": "Day Guarantee",
+            "text": "Try Meowgical risk-free"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,961 @@
+{% comment %}
+  Meowgical — Cat Parent Social Proof
+  - Fully customizable colors
+  - Desktop becomes a carousel automatically when more than 4 profiles are added
+  - Optional mobile carousel
+  - Centered image badge on mobile
+  - Optional Buy Now button below the carousel
+{% endcomment %}
+
+{% assign profile_count = section.blocks.size %}
+{% assign desktop_carousel = false %}
+{% if profile_count > 4 %}
+  {% assign desktop_carousel = true %}
+{% endif %}
+
+<section
+  id="meowgical-social-proof-{{ section.id }}"
+  class="
+    meowgical-social-proof
+    {% if desktop_carousel %}meowgical-social-proof--desktop-carousel{% endif %}
+    {% if section.settings.enable_mobile_carousel %}meowgical-social-proof--mobile-carousel{% endif %}
+  "
+  style="
+    --msp-bg: {{ section.settings.background_color }};
+    --msp-heading: {{ section.settings.heading_color }};
+    --msp-subheading: {{ section.settings.subheading_color }};
+    --msp-eyebrow-bg: {{ section.settings.eyebrow_background }};
+    --msp-eyebrow-text: {{ section.settings.eyebrow_text_color }};
+    --msp-card-bg: {{ section.settings.card_background }};
+    --msp-card-border: {{ section.settings.card_border_color }};
+    --msp-name: {{ section.settings.name_color }};
+    --msp-meta: {{ section.settings.meta_color }};
+    --msp-secondary-meta: {{ section.settings.secondary_meta_color }};
+    --msp-badge-bg: {{ section.settings.badge_background }};
+    --msp-badge-text: {{ section.settings.badge_text_color }};
+    --msp-accent: {{ section.settings.accent_color }};
+    --msp-arrow-bg: {{ section.settings.arrow_background }};
+    --msp-arrow-text: {{ section.settings.arrow_icon_color }};
+    --msp-dot: {{ section.settings.dot_color }};
+    --msp-dot-active: {{ section.settings.active_dot_color }};
+    --msp-card-width: {{ section.settings.card_width }}px;
+    --msp-image-radius: {{ section.settings.image_radius }}px;
+    --msp-card-radius: {{ section.settings.card_radius }}px;
+    --msp-gap: {{ section.settings.gap }}px;
+    --msp-padding-top: {{ section.settings.padding_top }}px;
+    --msp-padding-bottom: {{ section.settings.padding_bottom }}px;
+  "
+>
+  <div class="meowgical-social-proof__inner page-width">
+    {% if section.settings.eyebrow != blank %}
+      <div class="meowgical-social-proof__eyebrow">
+        {{ section.settings.eyebrow }}
+      </div>
+    {% endif %}
+
+    {% if section.settings.heading != blank %}
+      <h2 class="meowgical-social-proof__heading">
+        {{ section.settings.heading }}
+      </h2>
+    {% endif %}
+
+    {% if section.settings.subheading != blank %}
+      <div class="meowgical-social-proof__subheading rte">
+        {{ section.settings.subheading }}
+      </div>
+    {% endif %}
+
+    <div class="meowgical-social-proof__carousel-shell">
+      {% if desktop_carousel or section.settings.enable_mobile_carousel %}
+        <button
+          class="meowgical-social-proof__arrow meowgical-social-proof__arrow--prev"
+          type="button"
+          aria-label="Previous profiles"
+        >
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="m15 5-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      {% endif %}
+
+      <div class="meowgical-social-proof__viewport">
+        <div class="meowgical-social-proof__track">
+          {% for block in section.blocks %}
+            <article class="meowgical-social-proof__card" {{ block.shopify_attributes }}>
+              <div class="meowgical-social-proof__media">
+                {% if block.settings.image != blank %}
+                  {{
+                    block.settings.image
+                    | image_url: width: 700
+                    | image_tag:
+                      loading: 'lazy',
+                      widths: '180, 240, 320, 480, 700',
+                      sizes: '(min-width: 990px) 220px, 46vw',
+                      class: 'meowgical-social-proof__image',
+                      alt: block.settings.image.alt
+                  }}
+                {% else %}
+                  {{ 'image' | placeholder_svg_tag: 'meowgical-social-proof__placeholder' }}
+                {% endif %}
+
+                {% if block.settings.badge != blank %}
+                  <span class="meowgical-social-proof__badge">
+                    {{ block.settings.badge }}
+                  </span>
+                {% endif %}
+              </div>
+
+              <div class="meowgical-social-proof__content">
+                {% if block.settings.title != blank %}
+                  <h3 class="meowgical-social-proof__name">
+                    {{ block.settings.title }}
+                  </h3>
+                {% endif %}
+
+                {% if block.settings.subtitle != blank %}
+                  <p class="meowgical-social-proof__meta">
+                    {{ block.settings.subtitle }}
+                  </p>
+                {% endif %}
+
+                {% if block.settings.second_subtitle != blank %}
+                  <p class="meowgical-social-proof__meta meowgical-social-proof__meta--secondary">
+                    {{ block.settings.second_subtitle }}
+                  </p>
+                {% endif %}
+              </div>
+            </article>
+          {% endfor %}
+        </div>
+      </div>
+
+      {% if desktop_carousel or section.settings.enable_mobile_carousel %}
+        <button
+          class="meowgical-social-proof__arrow meowgical-social-proof__arrow--next"
+          type="button"
+          aria-label="Next profiles"
+        >
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="m9 5 7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      {% endif %}
+    </div>
+
+    {% if desktop_carousel or section.settings.enable_mobile_carousel %}
+      <div class="meowgical-social-proof__dots" aria-hidden="true"></div>
+    {% endif %}
+
+    {% if section.settings.button_text != blank %}
+      <div class="meowgical-social-proof__cta">
+        <a href="{{ section.settings.button_link | default: '#' }}" class="meowgical-social-proof__button">
+          {{ section.settings.button_text }}
+        </a>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+<style>
+  #meowgical-social-proof-{{ section.id }} {
+    background: var(--msp-bg);
+    padding-top: var(--msp-padding-top);
+    padding-bottom: var(--msp-padding-bottom);
+  }
+
+  #meowgical-social-proof-{{ section.id }} .meowgical-social-proof__inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  #meowgical-social-proof-{{ section.id }} .meowgical-social-proof__eyebrow {
+    width: fit-content;
+    margin: 0 auto 14px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: var(--msp-eyebrow-bg);
+    color: var(--msp-eyebrow-text);
+    font-size: 13px;
+    line-height: 1;
+    font-weight: 800;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+  }
+
+  #meowgical-social-proof-{{ section.id }} .meowgical-social-proof__heading {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+    color: var(--msp-heading);
+    font-size: clamp(32px, 4vw, 58px);
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+    font-weight: 900;
+  }
+
+  #meowgical-social-proof-{{ section.id }} .meowgical-social-proof__heading strong,
+  #meowgical-social-proof-{{ section.id }} .meowgical-social-proof__heading em {
+    color: var(--msp-accent);
+    font-style: normal;
+  }
+
+  #meowgical-social-proof-{{ section.id }} .meowgical-social-proof__subheading {
+    max-width: 720px;
+    margin: 16px auto 0;
+    text-align: center;
+    color: var(--msp-subheading);
+    font-size: 17px;
+    line-height: 1.55;
+  }
+
+  #meowgical-social-proof-{{ section.id }} .meowgical-social-proof__subheading p {
+    margin: 0;
+  }
+
+  #meowgical-social-proof-{{ section.id }} .meowgical-social-proof__carousel-shell {
+    position: relative;
+    margin-top: 42px;
+  }
+
+  #meowgical-social-proof-{{ section.id }} .meowgical-social-proof__viewport {
+    overflow: visible;
+  }
+
+  #meowgical-social-proof-{{ section.id }} .meowgical-social-proof__track {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, var(--msp-card-width)));
+    justify-content: center;
+    gap: var(--msp-gap);
+  }
+
+  #meowgical-social-proof-{{ section.id }} .meowgical-social-proof__card {
+    min-width: 0;
+    background: var(--msp-card-bg);
+    border: 1px solid var(--msp-card-border);
+    border-radius: var(--msp-card-radius);
+    padding: 0 0 20px;
+    overflow: hidden;
+    text-align: center;
+  }
+
+  #meowgical-social-proof-{{ section.id }} .meowgical-social-proof__media {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    border-radius: var(--msp-image-radius);
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  #meowgical-social-proof-{{ section.id }} .meowgical-social-proof__image,
+  #meowgical-social-proof-{{ section.id }} .meowgical-social-proof__placeholder {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+  }
+
+  #meowgical-social-proof-{{ section.id }} .meowgical-social-proof__badge {
+    position: absolute;
+    left: 50%;
+    bottom: 10px;
+    transform: translateX(-50%);
+    width: max-content;
+    max-width: calc(100% - 20px);
+    padding: 7px 11px;
+    border-radius: 999px;
+    background: var(--msp-badge-bg);
+    color: var(--msp-badge-text);
+    font-size: 11px;
+    line-height: 1;
+    font-weight: 800;
+    box-shadow: 0 5px 18px rgba(0,0,0,.12);
+    text-align: center;
+  }
+
+  #meowgical-social-proof-{{ section.id }} .meowgical-social-proof__content {
+    padding: 0 14px;
+  }
+
+  #meowgical-social-proof-{{ section.id }} .meowgical-social-proof__name {
+    margin: 18px 0 0;
+    color: var(--msp-name);
+    font-size: 19px;
+    line-height: 1.2;
+    font-weight: 850;
+    letter-spacing: -0.015em;
+  }
+
+  #meowgical-social-proof-{{ section.id }} .meowgical-social-proof__meta {
+    margin: 9px auto 0;
+    max-width: 210px;
+    color: var(--msp-meta);
+    font-size: 15px;
+    line-height: 1.4;
+    font-weight: 500;
+  }
+
+  #meowgical-social-proof-{{ section.id }} .meowgical-social-proof__meta--secondary {
+    margin-top: 3px;
+    color: var(--msp-secondary-meta);
+    font-size: 13px;
+  }
+
+  #meowgical-social-proof-{{ section.id }} .meowgical-social-proof__arrow {
+    position: absolute;
+    top: 45%;
+    z-index: 3;
+    width: 44px;
+    height: 44px;
+    border: 0;
+    border-radius: 50%;
+    background: var(--msp-arrow-bg);
+    color: var(--msp-arrow-text);
+    box-shadow: 0 8px 22px rgba(0,0,0,.14);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+  #meowgical-social-proof-{{ section.id }} .meowgical-social-proof__arrow svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  #meowgical-social-proof-{{ section.id }} .meowgical-social-proof__arrow--prev {
+    left: -10px;
+  }
+
+  #meowgical-social-proof-{{ section.id }} .meowgical-social-proof__arrow--next {
+    right: -10px;
+  }
+
+  #meowgical-social-proof-{{ section.id }} .meowgical-social-proof__dots {
+    display: none;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 24px;
+  }
+
+  #meowgical-social-proof-{{ section.id }} .meowgical-social-proof__dot {
+    width: 8px;
+    height: 8px;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    background: var(--msp-dot);
+    cursor: pointer;
+    transition: width .2s ease, background .2s ease;
+  }
+
+  #meowgical-social-proof-{{ section.id }} .meowgical-social-proof__dot.is-active {
+    width: 24px;
+    background: var(--msp-dot-active);
+  }
+
+  #meowgical-social-proof-{{ section.id }} .meowgical-social-proof__cta {
+    margin-top: {{ section.settings.button_gap }}px;
+    text-align: center;
+  }
+
+  #meowgical-social-proof-{{ section.id }} .meowgical-social-proof__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 56px;
+    width: min(100%, 400px);
+    padding: 14px 32px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, {{ section.settings.button_gradient_1 }}, {{ section.settings.button_gradient_2 }});
+    border: 1px solid {{ section.settings.button_border_color }};
+    color: {{ section.settings.button_text_color }};
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    box-shadow: 0 10px 24px rgba(47, 126, 216, 0.24);
+    transition: transform 0.2s ease;
+  }
+
+  #meowgical-social-proof-{{ section.id }} .meowgical-social-proof__button:hover {
+    transform: translateY(-1px);
+  }
+
+  @media screen and (min-width: 750px) {
+    #meowgical-social-proof-{{ section.id }}.meowgical-social-proof--desktop-carousel .meowgical-social-proof__viewport {
+      overflow: hidden;
+    }
+
+    #meowgical-social-proof-{{ section.id }}.meowgical-social-proof--desktop-carousel .meowgical-social-proof__track {
+      display: flex;
+      justify-content: flex-start;
+      gap: var(--msp-gap);
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      scroll-behavior: smooth;
+    }
+
+    #meowgical-social-proof-{{ section.id }}.meowgical-social-proof--desktop-carousel .meowgical-social-proof__track::-webkit-scrollbar {
+      display: none;
+    }
+
+    #meowgical-social-proof-{{ section.id }}.meowgical-social-proof--desktop-carousel .meowgical-social-proof__card {
+      flex: 0 0 calc((100% - (3 * var(--msp-gap))) / 4);
+      scroll-snap-align: start;
+    }
+
+    #meowgical-social-proof-{{ section.id }}.meowgical-social-proof--desktop-carousel .meowgical-social-proof__arrow {
+      display: flex;
+    }
+
+    #meowgical-social-proof-{{ section.id }}.meowgical-social-proof--desktop-carousel .meowgical-social-proof__dots {
+      display: flex;
+    }
+  }
+
+  @media screen and (max-width: 989px) and (min-width: 750px) {
+    #meowgical-social-proof-{{ section.id }}:not(.meowgical-social-proof--desktop-carousel) .meowgical-social-proof__track {
+      grid-template-columns: repeat(3, minmax(0, var(--msp-card-width)));
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    #meowgical-social-proof-{{ section.id }} {
+      padding-top: calc(var(--msp-padding-top) * .72);
+      padding-bottom: calc(var(--msp-padding-bottom) * .72);
+    }
+
+    #meowgical-social-proof-{{ section.id }} .meowgical-social-proof__inner {
+      padding: 0 16px;
+    }
+
+    #meowgical-social-proof-{{ section.id }} .meowgical-social-proof__heading {
+      font-size: 34px;
+      line-height: 1.08;
+    }
+
+    #meowgical-social-proof-{{ section.id }} .meowgical-social-proof__subheading {
+      font-size: 15px;
+    }
+
+    #meowgical-social-proof-{{ section.id }} .meowgical-social-proof__carousel-shell {
+      margin-top: 30px;
+    }
+
+    #meowgical-social-proof-{{ section.id }} .meowgical-social-proof__track {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 28px 16px;
+    }
+
+    #meowgical-social-proof-{{ section.id }} .meowgical-social-proof__badge {
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 8px;
+    }
+
+    #meowgical-social-proof-{{ section.id }} .meowgical-social-proof__name {
+      margin-top: 13px;
+      font-size: 17px;
+    }
+
+    #meowgical-social-proof-{{ section.id }} .meowgical-social-proof__meta {
+      margin-top: 6px;
+      font-size: 14px;
+      line-height: 1.35;
+    }
+
+    #meowgical-social-proof-{{ section.id }}.meowgical-social-proof--mobile-carousel .meowgical-social-proof__viewport {
+      overflow: hidden;
+    }
+
+    #meowgical-social-proof-{{ section.id }}.meowgical-social-proof--mobile-carousel .meowgical-social-proof__track {
+      display: flex;
+      justify-content: flex-start;
+      gap: 14px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      scroll-behavior: smooth;
+      padding-bottom: 2px;
+    }
+
+    #meowgical-social-proof-{{ section.id }}.meowgical-social-proof--mobile-carousel .meowgical-social-proof__track::-webkit-scrollbar {
+      display: none;
+    }
+
+    #meowgical-social-proof-{{ section.id }}.meowgical-social-proof--mobile-carousel .meowgical-social-proof__card {
+      flex: 0 0 82%;
+      scroll-snap-align: center;
+    }
+
+    #meowgical-social-proof-{{ section.id }}.meowgical-social-proof--mobile-carousel .meowgical-social-proof__arrow {
+      display: flex;
+      width: 38px;
+      height: 38px;
+      top: 44%;
+    }
+
+    #meowgical-social-proof-{{ section.id }}.meowgical-social-proof--mobile-carousel .meowgical-social-proof__arrow--prev {
+      left: -6px;
+    }
+
+    #meowgical-social-proof-{{ section.id }}.meowgical-social-proof--mobile-carousel .meowgical-social-proof__arrow--next {
+      right: -6px;
+    }
+
+    #meowgical-social-proof-{{ section.id }}.meowgical-social-proof--mobile-carousel .meowgical-social-proof__dots {
+      display: flex;
+    }
+  }
+</style>
+
+<script>
+  (() => {
+    const section = document.getElementById('meowgical-social-proof-{{ section.id }}');
+    if (!section || section.dataset.carouselReady === 'true') return;
+    section.dataset.carouselReady = 'true';
+
+    const track = section.querySelector('.meowgical-social-proof__track');
+    const cards = Array.from(section.querySelectorAll('.meowgical-social-proof__card'));
+    const prev = section.querySelector('.meowgical-social-proof__arrow--prev');
+    const next = section.querySelector('.meowgical-social-proof__arrow--next');
+    const dotsWrap = section.querySelector('.meowgical-social-proof__dots');
+
+    if (!track || cards.length < 2) return;
+
+    const isCarouselActive = () => {
+      const desktopActive =
+        window.matchMedia('(min-width: 750px)').matches &&
+        section.classList.contains('meowgical-social-proof--desktop-carousel');
+
+      const mobileActive =
+        window.matchMedia('(max-width: 749px)').matches &&
+        section.classList.contains('meowgical-social-proof--mobile-carousel');
+
+      return desktopActive || mobileActive;
+    };
+
+    const visibleCount = () =>
+      window.matchMedia('(max-width: 749px)').matches ? 1 : 4;
+
+    const pageCount = () =>
+      Math.max(1, Math.ceil(cards.length / visibleCount()));
+
+    const cardStep = () => {
+      if (!cards[0]) return track.clientWidth;
+      const styles = window.getComputedStyle(track);
+      const gap = parseFloat(styles.columnGap || styles.gap || 0);
+      return cards[0].getBoundingClientRect().width + gap;
+    };
+
+    const currentPage = () => {
+      const perPage = visibleCount();
+      return Math.round(track.scrollLeft / (cardStep() * perPage));
+    };
+
+    const goToPage = (page) => {
+      const maxPage = pageCount() - 1;
+      const safePage = Math.max(0, Math.min(page, maxPage));
+      track.scrollTo({
+        left: safePage * cardStep() * visibleCount(),
+        behavior: 'smooth'
+      });
+    };
+
+    const buildDots = () => {
+      if (!dotsWrap) return;
+      dotsWrap.innerHTML = '';
+
+      if (!isCarouselActive()) return;
+
+      for (let i = 0; i < pageCount(); i += 1) {
+        const dot = document.createElement('button');
+        dot.type = 'button';
+        dot.className = 'meowgical-social-proof__dot';
+        dot.setAttribute('aria-label', `Go to profile page ${i + 1}`);
+        dot.addEventListener('click', () => goToPage(i));
+        dotsWrap.appendChild(dot);
+      }
+
+      updateDots();
+    };
+
+    const updateDots = () => {
+      if (!dotsWrap) return;
+      const dots = Array.from(dotsWrap.children);
+      const active = Math.min(currentPage(), dots.length - 1);
+      dots.forEach((dot, index) => {
+        dot.classList.toggle('is-active', index === active);
+      });
+    };
+
+    prev?.addEventListener('click', () => goToPage(currentPage() - 1));
+    next?.addEventListener('click', () => goToPage(currentPage() + 1));
+
+    let ticking = false;
+    track.addEventListener('scroll', () => {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(() => {
+        updateDots();
+        ticking = false;
+      });
+    });
+
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      window.clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(() => {
+        buildDots();
+        track.scrollLeft = 0;
+      }, 150);
+    });
+
+    buildDots();
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Cat parent social proof",
+  "tag": "section",
+  "class": "section-cat-parent-social-proof",
+  "max_blocks": 12,
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "The Meowgical community"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Trusted by <em>cat parents</em>, loved by their cats."
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "<p>Real cats. Real feeding routines. One simple daily essential.</p>"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_mobile_carousel",
+      "label": "Enable carousel on mobile",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Buy button"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "BUY NOW"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "range",
+      "id": "button_gap",
+      "label": "Space above button",
+      "min": 16,
+      "max": 60,
+      "step": 2,
+      "default": 32,
+      "unit": "px"
+    },
+    {
+      "type": "color",
+      "id": "button_gradient_1",
+      "label": "Button gradient 1",
+      "default": "#2748DC"
+    },
+    {
+      "type": "color",
+      "id": "button_gradient_2",
+      "label": "Button gradient 2",
+      "default": "#6695DE"
+    },
+    {
+      "type": "color",
+      "id": "button_border_color",
+      "label": "Button border",
+      "default": "#173FAE"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Section colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Section background",
+      "default": "#173F3A"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "subheading_color",
+      "label": "Subheading",
+      "default": "#E9F3F1"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Highlighted heading text",
+      "default": "#A8FF57"
+    },
+    {
+      "type": "color",
+      "id": "eyebrow_background",
+      "label": "Eyebrow background",
+      "default": "#E6F6F3"
+    },
+    {
+      "type": "color",
+      "id": "eyebrow_text_color",
+      "label": "Eyebrow text",
+      "default": "#173F3A"
+    },
+    {
+      "type": "header",
+      "content": "Profile card colors"
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Card background",
+      "default": "#173F3A"
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Card border",
+      "default": "#173F3A"
+    },
+    {
+      "type": "color",
+      "id": "name_color",
+      "label": "Cat name",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "meta_color",
+      "label": "Description line 1",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "secondary_meta_color",
+      "label": "Description line 2",
+      "default": "#DDE9E7"
+    },
+    {
+      "type": "color",
+      "id": "badge_background",
+      "label": "Member badge background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "badge_text_color",
+      "label": "Member badge text",
+      "default": "#173F3A"
+    },
+    {
+      "type": "header",
+      "content": "Carousel colors"
+    },
+    {
+      "type": "color",
+      "id": "arrow_background",
+      "label": "Arrow background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "arrow_icon_color",
+      "label": "Arrow icon",
+      "default": "#173F3A"
+    },
+    {
+      "type": "color",
+      "id": "dot_color",
+      "label": "Inactive dots",
+      "default": "#7B9A95"
+    },
+    {
+      "type": "color",
+      "id": "active_dot_color",
+      "label": "Active dot",
+      "default": "#A8FF57"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "card_width",
+      "label": "Desktop card width",
+      "min": 150,
+      "max": 280,
+      "step": 10,
+      "default": 220,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "image_radius",
+      "label": "Image corner radius",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "default": 12,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Card corner radius",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "default": 0,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "Desktop gap",
+      "min": 12,
+      "max": 48,
+      "step": 2,
+      "default": 24,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top spacing",
+      "min": 20,
+      "max": 160,
+      "step": 4,
+      "default": 72,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom spacing",
+      "min": 20,
+      "max": 160,
+      "step": 4,
+      "default": 72,
+      "unit": "px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "profile",
+      "name": "Cat profile",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Photo"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Name",
+          "default": "Luna"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Description line 1",
+          "default": "Indoor Cat • Age 8"
+        },
+        {
+          "type": "text",
+          "id": "second_subtitle",
+          "label": "Description line 2",
+          "default": "SuperTaurine Superfan"
+        },
+        {
+          "type": "text",
+          "id": "badge",
+          "label": "Optional image badge",
+          "default": "Meowgical Member"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Cat parent social proof",
+      "blocks": [
+        {
+          "type": "profile",
+          "settings": {
+            "title": "Luna",
+            "subtitle": "Indoor Cat • Age 8",
+            "second_subtitle": "SuperTaurine Superfan",
+            "badge": "Meowgical Member"
+          }
+        },
+        {
+          "type": "profile",
+          "settings": {
+            "title": "Milo",
+            "subtitle": "Maine Coon • Age 5",
+            "second_subtitle": "SuperTaurine Superfan",
+            "badge": "Meowgical Member"
+          }
+        },
+        {
+          "type": "profile",
+          "settings": {
+            "title": "Mochi",
+            "subtitle": "Picky Eater",
+            "second_subtitle": "SuperTaurine Superfan",
+            "badge": "Meowgical Member"
+          }
+        },
+        {
+          "type": "profile",
+          "settings": {
+            "title": "Nala",
+            "subtitle": "Senior Cat • Age 13",
+            "second_subtitle": "SuperTaurine Superfan",
+            "badge": "Meowgical Member"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

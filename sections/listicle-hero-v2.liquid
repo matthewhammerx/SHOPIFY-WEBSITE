@@ -1,0 +1,1941 @@
+{% comment %}
+  Listicle Hero V2
+  Image hero + review pill + bold accent heading + editable checkmark benefits
+{% endcomment %}
+
+<section id="listicle-hero-v2-{{ section.id }}" class="listicle-hero-v2">
+  <style>
+    {% if section.settings.hide_header %}
+      header,
+      #shopify-section-header,
+      #shopify-section-header-classic,
+      .main_nav,
+      .main-nav,
+      .navbar,
+      #mobile-header-sticky-wrapper,
+      .nav,
+      .header-wrapper,
+      [data-site-header],
+      #shopify-section-static-header,
+      #header,
+      .main-header,
+      #site-header,
+      .shopify-section-group-header-group {
+        display: none !important;
+      }
+
+      .main-content,
+      #MainContent {
+        padding-top: 0 !important;
+        margin-top: 0 !important;
+      }
+    {% endif %}
+
+    #listicle-hero-v2-{{ section.id }} {
+      --hero-bg: {{ section.settings.background_color }};
+      --hero-image-bg: {{ section.settings.image_background_color }};
+      --hero-glow: {{ section.settings.glow_color }};
+
+      --review-bg: {{ section.settings.review_pill_bg }};
+      --review-border: {{ section.settings.review_pill_border }};
+      --review-star: {{ section.settings.review_star_color }};
+      --review-text: {{ section.settings.review_text_color }};
+
+      --heading-color: {{ section.settings.heading_color }};
+      --heading-accent: {{ section.settings.heading_accent_color }};
+      --subheading-color: {{ section.settings.subheading_color }};
+
+      --benefit-bg: {{ section.settings.benefit_bg }};
+      --benefit-text: {{ section.settings.benefit_text_color }};
+      --benefit-check-bg: {{ section.settings.benefit_check_bg }};
+      --benefit-check-color: {{ section.settings.benefit_check_color }};
+
+      --button-bg: {{ section.settings.button_bg }};
+      --button-hover-bg: {{ section.settings.button_hover_bg }};
+      --button-text: {{ section.settings.button_text_color }};
+
+      --floating-badge-bg: {{ section.settings.floating_badge_bg }};
+      --floating-badge-text: {{ section.settings.floating_badge_text_color }};
+
+      --risk-text: {{ section.settings.risk_text_color }};
+      --risk-check-bg: {{ section.settings.risk_check_bg }};
+      --risk-check-color: {{ section.settings.risk_check_color }};
+
+      --top-badge-bg: {{ section.settings.top_badge_bg }};
+      --top-badge-text: {{ section.settings.top_badge_text_color }};
+
+      --overlay-bg: {{ section.settings.overlay_card_bg }};
+      --overlay-text: {{ section.settings.overlay_text_color }};
+
+      position: relative;
+      overflow: hidden;
+      background: var(--hero-bg);
+      font-family: inherit;
+    }
+
+    #listicle-hero-v2-{{ section.id }} * {
+      box-sizing: border-box;
+    }
+
+    #listicle-hero-v2-{{ section.id }} .lhv2-glow {
+      position: absolute;
+      right: -180px;
+      bottom: -180px;
+      width: 720px;
+      height: 720px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--hero-glow) 0%, transparent 70%);
+      opacity: {{ section.settings.glow_opacity | divided_by: 100.0 }};
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    #listicle-hero-v2-{{ section.id }} .lhv2-wrapper {
+      max-width: {{ section.settings.max_width }}px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    #listicle-hero-v2-{{ section.id }} .lhv2-image-side {
+      position: relative;
+      order: 1;
+      height: {{ section.settings.mobile_image_height }}px;
+      background: var(--hero-image-bg);
+      overflow: hidden;
+      border-radius: {{ section.settings.mobile_image_radius }}px;
+      margin: {{ section.settings.mobile_image_margin_top }}px {{ section.settings.mobile_image_margin_sides }}px 0;
+    }
+
+    #listicle-hero-v2-{{ section.id }} .lhv2-main-image,
+    #listicle-hero-v2-{{ section.id }} .placeholder-svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: {{ section.settings.image_fit }};
+      object-position: {{ section.settings.image_position_x }}% {{ section.settings.image_position_y }}%;
+    }
+
+    #listicle-hero-v2-{{ section.id }} .lhv2-top-badge {
+      position: absolute;
+      top: {{ section.settings.top_badge_top_mobile }}px;
+      left: {{ section.settings.top_badge_left_mobile }}px;
+      z-index: 3;
+      background: var(--top-badge-bg);
+      color: var(--top-badge-text);
+      border-radius: 999px;
+      padding: 7px 13px;
+      display: {% if section.settings.show_top_badge %}flex{% else %}none{% endif %};
+      align-items: center;
+      gap: 6px;
+      font-size: {{ section.settings.top_badge_font_mobile }}px;
+      font-weight: 800;
+      line-height: 1;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+      white-space: nowrap;
+    }
+
+    #listicle-hero-v2-{{ section.id }} .lhv2-overlay-card {
+      position: absolute;
+      top: {{ section.settings.overlay_top_mobile }}px;
+      left: {{ section.settings.overlay_left_mobile }}px;
+      z-index: 3;
+      display: {% if section.settings.show_overlay_card %}block{% else %}none{% endif %};
+      width: {{ section.settings.overlay_width_mobile }}px;
+      background: var(--overlay-bg);
+      border-radius: {{ section.settings.overlay_radius }}px;
+      padding: {{ section.settings.overlay_padding_mobile }}px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    }
+
+    #listicle-hero-v2-{{ section.id }} .lhv2-overlay-logo {
+      display: block;
+      max-width: {{ section.settings.overlay_logo_width_mobile }}px;
+      height: auto;
+      margin: 0 auto 8px;
+    }
+
+    #listicle-hero-v2-{{ section.id }} .lhv2-overlay-text {
+      margin: 0;
+      color: var(--overlay-text);
+      font-size: {{ section.settings.overlay_text_size_mobile }}px;
+      font-weight: 700;
+      line-height: 1.2;
+      text-align: center;
+    }
+
+    #listicle-hero-v2-{{ section.id }} .lhv2-content {
+      order: 2;
+      padding: {{ section.settings.mobile_padding_top }}px {{ section.settings.mobile_padding_sides }}px {{ section.settings.mobile_padding_bottom }}px;
+      display: flex;
+      flex-direction: column;
+      gap: {{ section.settings.mobile_content_gap }}px;
+      color: var(--subheading-color);
+    }
+
+    #listicle-hero-v2-{{ section.id }} .lhv2-review-pill {
+      display: {% if section.settings.show_reviews %}flex{% else %}none{% endif %};
+      align-items: center;
+      gap: 8px;
+      width: {% if section.settings.review_full_width_mobile %}100%{% else %}fit-content{% endif %};
+      max-width: 100%;
+      background: var(--review-bg);
+      border: 1px solid var(--review-border);
+      border-radius: 999px;
+      padding: {{ section.settings.review_padding_y_mobile }}px {{ section.settings.review_padding_x_mobile }}px;
+      overflow: hidden;
+      color: var(--review-text);
+    }
+
+    #listicle-hero-v2-{{ section.id }} .lhv2-review-image {
+      height: {{ section.settings.review_image_height_mobile }}px;
+      width: auto;
+      display: block;
+      flex-shrink: 0;
+    }
+
+    #listicle-hero-v2-{{ section.id }} .lhv2-review-row {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      min-width: 0;
+    }
+
+    #listicle-hero-v2-{{ section.id }} .lhv2-stars {
+      display: {% if section.settings.show_stars %}flex{% else %}none{% endif %};
+      align-items: center;
+      gap: 1px;
+      color: var(--review-star);
+      flex-shrink: 0;
+    }
+
+    #listicle-hero-v2-{{ section.id }} .lhv2-stars svg {
+      width: {{ section.settings.star_size }}px;
+      height: {{ section.settings.star_size }}px;
+      fill: currentColor;
+    }
+
+    #listicle-hero-v2-{{ section.id }} .lhv2-review-text {
+      font-size: {{ section.settings.review_text_size_mobile }}px;
+      line-height: 1.2;
+      font-weight: 600;
+      color: var(--review-text);
+      white-space: nowrap;
+    }
+
+    #listicle-hero-v2-{{ section.id }} .lhv2-heading {
+      margin: 0;
+      max-width: {{ section.settings.heading_max_width }}px;
+      color: var(--heading-color) !important;
+      font-size: {{ section.settings.mobile_heading_size }}px;
+      line-height: {{ section.settings.heading_line_height | divided_by: 100.0 }};
+      letter-spacing: -0.045em;
+      font-weight: {{ section.settings.heading_weight }};
+    }
+
+    #listicle-hero-v2-{{ section.id }} .lhv2-heading p,
+    #listicle-hero-v2-{{ section.id }} .lhv2-heading h1,
+    #listicle-hero-v2-{{ section.id }} .lhv2-heading h2,
+    #listicle-hero-v2-{{ section.id }} .lhv2-heading h3 {
+      margin: 0;
+      color: inherit !important;
+      font: inherit;
+      line-height: inherit;
+      letter-spacing: inherit;
+    }
+
+    #listicle-hero-v2-{{ section.id }} .lhv2-heading strong,
+    #listicle-hero-v2-{{ section.id }} .lhv2-heading b {
+      color: var(--heading-accent) !important;
+      font-weight: inherit !important;
+    }
+
+    #listicle-hero-v2-{{ section.id }} .lhv2-subheading {
+      max-width: {{ section.settings.subheading_max_width }}px;
+      color: var(--subheading-color);
+      font-size: {{ section.settings.mobile_subheading_size }}px;
+      line-height: 1.45;
+      font-weight: {{ section.settings.subheading_weight }};
+    }
+
+    #listicle-hero-v2-{{ section.id }} .lhv2-subheading p {
+      margin: 0;
+    }
+
+    #listicle-hero-v2-{{ section.id }} .lhv2-benefits-card {
+      display: {% if section.settings.show_benefits %}block{% else %}none{% endif %};
+      width: 100%;
+      max-width: {{ section.settings.benefit_max_width }}px;
+      background: var(--benefit-bg);
+      border-radius: {{ section.settings.benefit_card_radius }}px;
+      padding: {{ section.settings.benefit_card_padding_mobile }}px;
+      margin-top: {{ section.settings.benefit_margin_top_mobile }}px;
+      margin-bottom: {{ section.settings.benefit_margin_bottom_mobile }}px;
+      {% if section.settings.show_benefit_shadow %}
+        box-shadow: 0 10px 28px rgba(0,0,0,0.08);
+      {% endif %}
+    }
+
+    #listicle-hero-v2-{{ section.id }} .lhv2-benefits-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: {{ section.settings.benefit_gap_mobile }}px;
+    }
+
+    #listicle-hero-v2-{{ section.id }} .lhv2-benefit-item {
+      display: flex;
+      align-items: {{ section.settings.benefit_vertical_alignment }};
+      gap: {{ section.settings.benefit_icon_gap }}px;
+      color: var(--benefit-text);
+      font-size: {{ section.settings.benefit_text_size_mobile }}px;
+      line-height: {{ section.settings.benefit_line_height | divided_by: 100.0 }};
+      font-weight: {{ section.settings.benefit_text_weight }};
+      text-align: left;
+    }
+
+    #listicle-hero-v2-{{ section.id }} .lhv2-benefit-icon {
+      width: {{ section.settings.benefit_icon_size_mobile }}px;
+      height: {{ section.settings.benefit_icon_size_mobile }}px;
+      min-width: {{ section.settings.benefit_icon_size_mobile }}px;
+      border-radius: 999px;
+      background: var(--benefit-check-bg);
+      color: var(--benefit-check-color);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: {{ section.settings.benefit_icon_offset }}px;
+      overflow: hidden;
+    }
+
+    #listicle-hero-v2-{{ section.id }} .lhv2-benefit-icon svg {
+      width: {{ section.settings.benefit_check_size_mobile }}px;
+      height: {{ section.settings.benefit_check_size_mobile }}px;
+      display: block;
+    }
+
+    #listicle-hero-v2-{{ section.id }} .lhv2-benefit-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    #listicle-hero-v2-{{ section.id }} .lhv2-benefit-text p {
+      margin: 0;
+    }
+
+    #listicle-hero-v2-{{ section.id }} .lhv2-benefit-text strong,
+    #listicle-hero-v2-{{ section.id }} .lhv2-benefit-text b {
+      font-weight: 900;
+    }
+
+    #listicle-hero-v2-{{ section.id }} .lhv2-cta-area {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+    }
+
+    #listicle-hero-v2-{{ section.id }} .lhv2-cta-wrap {
+      position: relative;
+      width: 100%;
+      max-width: {{ section.settings.button_max_width_mobile }}px;
+      padding-top: {% if section.settings.floating_badge != blank %}10px{% else %}0{% endif %};
+    }
+
+    #listicle-hero-v2-{{ section.id }} .lhv2-floating-badge {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      transform: translate(-50%, -10%);
+      display: {% if section.settings.floating_badge != blank %}block{% else %}none{% endif %};
+      white-space: nowrap;
+      padding: 6px 13px;
+      border-radius: 999px;
+      background: var(--floating-badge-bg);
+      color: var(--floating-badge-text);
+      font-size: {{ section.settings.floating_badge_size }}px;
+      line-height: 1;
+      font-weight: 800;
+      z-index: 2;
+      box-shadow: 0 5px 12px rgba(0,0,0,0.08);
+    }
+
+    #listicle-hero-v2-{{ section.id }} .lhv2-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-height: {{ section.settings.button_height }}px;
+      background: var(--button-bg);
+      color: var(--button-text);
+      border-radius: 999px;
+      text-decoration: none;
+      font-size: {{ section.settings.button_text_size }}px;
+      font-weight: 800;
+      padding: 17px 28px;
+      text-align: center;
+      border: {% if section.settings.button_border %}1px solid #000{% else %}0{% endif %};
+      box-shadow: {% if section.settings.button_shadow_style == 'hard' %}5px 5px 0 #000{% elsif section.settings.button_shadow_style == 'soft' %}0 8px 18px rgba(0,0,0,0.14){% else %}none{% endif %};
+      transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease, background-color 0.2s ease;
+    }
+
+    #listicle-hero-v2-{{ section.id }} .lhv2-button:hover {
+      background: var(--button-hover-bg);
+      transform: translateY(-2px);
+      box-shadow: {% if section.settings.button_shadow_style == 'hard' %}2px 2px 0 #000{% elsif section.settings.button_shadow_style == 'soft' %}0 12px 25px rgba(0,0,0,0.18){% else %}none{% endif %};
+      opacity: 0.96;
+    }
+
+    #listicle-hero-v2-{{ section.id }} .lhv2-risk-row {
+      display: {% if section.settings.show_risk_row %}flex{% else %}none{% endif %};
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      width: 100%;
+      color: var(--risk-text);
+      font-size: {{ section.settings.risk_text_size }}px;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    #listicle-hero-v2-{{ section.id }} .lhv2-risk-check {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      background: var(--risk-check-bg);
+      color: var(--risk-check-color);
+      border-radius: 50%;
+      display: {% if section.settings.show_risk_check %}inline-flex{% else %}none{% endif %};
+      align-items: center;
+      justify-content: center;
+    }
+
+    #listicle-hero-v2-{{ section.id }} .lhv2-risk-check svg {
+      width: 12px;
+      height: 12px;
+      display: block;
+    }
+
+    #listicle-hero-v2-{{ section.id }} .lhv2-risk-underline {
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    @media screen and (min-width: 768px) {
+      #listicle-hero-v2-{{ section.id }} .lhv2-glow {
+        width: 900px;
+        height: 900px;
+        right: -220px;
+        bottom: -240px;
+      }
+
+      #listicle-hero-v2-{{ section.id }} .lhv2-wrapper {
+        flex-direction: {% if section.settings.desktop_image_position == 'right' %}row{% else %}row-reverse{% endif %};
+        min-height: {{ section.settings.desktop_min_height }}px;
+      }
+
+      #listicle-hero-v2-{{ section.id }} .lhv2-content {
+        order: initial;
+        width: {{ section.settings.desktop_content_width }}%;
+        padding: {{ section.settings.desktop_padding_top }}px {{ section.settings.desktop_padding_right }}px {{ section.settings.desktop_padding_bottom }}px {{ section.settings.desktop_padding_left }}px;
+        justify-content: center;
+        gap: {{ section.settings.desktop_content_gap }}px;
+        text-align: {{ section.settings.desktop_text_align }};
+        align-items: {% if section.settings.desktop_text_align == 'center' %}center{% else %}flex-start{% endif %};
+      }
+
+      #listicle-hero-v2-{{ section.id }} .lhv2-image-side {
+        order: initial;
+        width: {{ 100 | minus: section.settings.desktop_content_width }}%;
+        height: auto;
+        min-height: {{ section.settings.desktop_min_height }}px;
+        margin: 0;
+        border-radius: {{ section.settings.desktop_image_radius }}px;
+      }
+
+      #listicle-hero-v2-{{ section.id }} .lhv2-top-badge {
+        top: {{ section.settings.top_badge_top_desktop }}px;
+        left: {{ section.settings.top_badge_left_desktop }}px;
+        font-size: {{ section.settings.top_badge_font_desktop }}px;
+        padding: 9px 15px;
+      }
+
+      #listicle-hero-v2-{{ section.id }} .lhv2-overlay-card {
+        top: {{ section.settings.overlay_top_desktop }}px;
+        left: {{ section.settings.overlay_left_desktop }}px;
+        width: {{ section.settings.overlay_width_desktop }}px;
+        padding: {{ section.settings.overlay_padding_desktop }}px;
+      }
+
+      #listicle-hero-v2-{{ section.id }} .lhv2-overlay-logo {
+        max-width: {{ section.settings.overlay_logo_width_desktop }}px;
+      }
+
+      #listicle-hero-v2-{{ section.id }} .lhv2-overlay-text {
+        font-size: {{ section.settings.overlay_text_size_desktop }}px;
+      }
+
+      #listicle-hero-v2-{{ section.id }} .lhv2-review-pill {
+        width: fit-content;
+        padding: {{ section.settings.review_padding_y_desktop }}px {{ section.settings.review_padding_x_desktop }}px;
+        {% if section.settings.review_pill_shadow %}
+          box-shadow: 2px 4px 20px rgba(0,0,0,0.1);
+        {% endif %}
+      }
+
+      #listicle-hero-v2-{{ section.id }} .lhv2-review-image {
+        height: {{ section.settings.review_image_height_desktop }}px;
+      }
+
+      #listicle-hero-v2-{{ section.id }} .lhv2-review-text {
+        font-size: {{ section.settings.review_text_size_desktop }}px;
+      }
+
+      #listicle-hero-v2-{{ section.id }} .lhv2-heading {
+        font-size: {{ section.settings.desktop_heading_size }}px;
+        text-align: {{ section.settings.desktop_text_align }};
+      }
+
+      #listicle-hero-v2-{{ section.id }} .lhv2-subheading {
+        font-size: {{ section.settings.desktop_subheading_size }}px;
+        text-align: {{ section.settings.desktop_text_align }};
+      }
+
+      #listicle-hero-v2-{{ section.id }} .lhv2-benefits-card {
+        padding: {{ section.settings.benefit_card_padding_desktop }}px;
+        margin-top: {{ section.settings.benefit_margin_top_desktop }}px;
+        margin-bottom: {{ section.settings.benefit_margin_bottom_desktop }}px;
+      }
+
+      #listicle-hero-v2-{{ section.id }} .lhv2-benefits-list {
+        gap: {{ section.settings.benefit_gap_desktop }}px;
+      }
+
+      #listicle-hero-v2-{{ section.id }} .lhv2-benefit-item {
+        font-size: {{ section.settings.benefit_text_size_desktop }}px;
+      }
+
+      #listicle-hero-v2-{{ section.id }} .lhv2-benefit-icon {
+        width: {{ section.settings.benefit_icon_size_desktop }}px;
+        height: {{ section.settings.benefit_icon_size_desktop }}px;
+        min-width: {{ section.settings.benefit_icon_size_desktop }}px;
+      }
+
+      #listicle-hero-v2-{{ section.id }} .lhv2-benefit-icon svg {
+        width: {{ section.settings.benefit_check_size_desktop }}px;
+        height: {{ section.settings.benefit_check_size_desktop }}px;
+      }
+
+      #listicle-hero-v2-{{ section.id }} .lhv2-cta-area {
+        align-items: {% if section.settings.desktop_text_align == 'center' %}center{% else %}flex-start{% endif %};
+      }
+
+      #listicle-hero-v2-{{ section.id }} .lhv2-cta-wrap {
+        width: auto;
+        max-width: none;
+      }
+
+      #listicle-hero-v2-{{ section.id }} .lhv2-button {
+        width: auto;
+        min-width: {{ section.settings.button_min_width_desktop }}px;
+      }
+
+      #listicle-hero-v2-{{ section.id }} .lhv2-risk-row {
+        justify-content: {% if section.settings.desktop_text_align == 'center' %}center{% else %}flex-start{% endif %};
+      }
+    }
+
+    @media screen and (max-width: 390px) {
+      #listicle-hero-v2-{{ section.id }} .lhv2-heading {
+        font-size: {{ section.settings.mobile_heading_size | minus: 4 }}px;
+      }
+
+      #listicle-hero-v2-{{ section.id }} .lhv2-review-text {
+        font-size: {{ section.settings.review_text_size_mobile | minus: 1 }}px;
+      }
+    }
+  </style>
+
+  {% assign button_href = section.settings.button_link | default: '#offers' %}
+
+  {% if section.settings.show_glow %}
+    <div class="lhv2-glow" aria-hidden="true"></div>
+  {% endif %}
+
+  <div class="lhv2-wrapper">
+    <div class="lhv2-image-side">
+      {% if section.settings.hero_image != blank %}
+        {{
+          section.settings.hero_image
+          | image_url: width: 1800
+          | image_tag:
+            class: 'lhv2-main-image',
+            loading: 'eager',
+            alt: section.settings.hero_image.alt
+        }}
+      {% else %}
+        {{ 'lifestyle-1' | placeholder_svg_tag: 'lhv2-main-image placeholder-svg' }}
+      {% endif %}
+
+      <div class="lhv2-top-badge">
+        <span>{{ section.settings.top_badge_icon }}</span>
+        <span>{{ section.settings.top_badge_text }}</span>
+      </div>
+
+      <div class="lhv2-overlay-card">
+        {% if section.settings.overlay_logo != blank %}
+          {{
+            section.settings.overlay_logo
+            | image_url: width: 400
+            | image_tag:
+              class: 'lhv2-overlay-logo',
+              loading: 'eager',
+              alt: section.settings.overlay_logo.alt
+          }}
+        {% endif %}
+
+        {% if section.settings.overlay_text != blank %}
+          <p class="lhv2-overlay-text">{{ section.settings.overlay_text }}</p>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="lhv2-content">
+      <div class="lhv2-review-pill">
+        {% if section.settings.review_image != blank %}
+          {{
+            section.settings.review_image
+            | image_url: width: 160
+            | image_tag:
+              class: 'lhv2-review-image',
+              loading: 'eager',
+              alt: section.settings.review_image.alt
+          }}
+        {% endif %}
+
+        <div class="lhv2-review-row">
+          <div class="lhv2-stars" aria-hidden="true">
+            {% for i in (1..5) %}
+              <svg viewBox="0 0 16 16">
+                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+              </svg>
+            {% endfor %}
+          </div>
+
+          <span class="lhv2-review-text">{{ section.settings.review_text }}</span>
+        </div>
+      </div>
+
+      {% if section.settings.heading != blank %}
+        <div class="lhv2-heading">
+          {{ section.settings.heading }}
+        </div>
+      {% endif %}
+
+      {% if section.settings.subheading != blank %}
+        <div class="lhv2-subheading">
+          {{ section.settings.subheading }}
+        </div>
+      {% endif %}
+
+      {% if section.settings.show_benefits and section.blocks.size > 0 %}
+        <div class="lhv2-benefits-card">
+          <ul class="lhv2-benefits-list">
+            {% for block in section.blocks %}
+              {% if block.type == 'benefit' %}
+                <li class="lhv2-benefit-item" {{ block.shopify_attributes }}>
+                  <span class="lhv2-benefit-icon" aria-hidden="true">
+                    {% if block.settings.custom_icon != blank %}
+                      {{
+                        block.settings.custom_icon
+                        | image_url: width: 80
+                        | image_tag: loading: 'lazy', alt: ''
+                      }}
+                    {% else %}
+                      <svg viewBox="0 0 18 18" fill="none">
+                        <path d="M5 9l3 3 5-5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    {% endif %}
+                  </span>
+
+                  <span class="lhv2-benefit-text">{{ block.settings.text }}</span>
+                </li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+
+      <div class="lhv2-cta-area">
+        <div class="lhv2-cta-wrap">
+          <span class="lhv2-floating-badge">{{ section.settings.floating_badge }}</span>
+
+          {% if section.settings.button_text != blank %}
+            <a href="{{ button_href }}" class="lhv2-button">
+              {{ section.settings.button_text }}
+            </a>
+          {% endif %}
+        </div>
+
+        <div class="lhv2-risk-row">
+          <span class="lhv2-risk-check" aria-hidden="true">
+            <svg viewBox="0 0 18 18" fill="none">
+              <path d="M5 9l3 3 5-5" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+
+          <span>
+            {{ section.settings.risk_prefix }}
+            {% if section.settings.risk_underlined_text != blank %}
+              <span class="lhv2-risk-underline">{{ section.settings.risk_underlined_text }}</span>
+            {% endif %}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Listicle Hero V2",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "hide_header",
+      "label": "Hide theme header on this page",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_glow",
+      "label": "Show background glow",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "glow_opacity",
+      "label": "Glow opacity",
+      "min": 0,
+      "max": 60,
+      "step": 5,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Max width",
+      "min": 1000,
+      "max": 1800,
+      "step": 50,
+      "default": 1500
+    },
+    {
+      "type": "range",
+      "id": "desktop_min_height",
+      "label": "Desktop minimum height",
+      "min": 400,
+      "max": 900,
+      "step": 20,
+      "default": 660
+    },
+    {
+      "type": "select",
+      "id": "desktop_image_position",
+      "label": "Desktop image position",
+      "default": "right",
+      "options": [
+        { "value": "right", "label": "Right" },
+        { "value": "left", "label": "Left" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "desktop_content_width",
+      "label": "Desktop content width",
+      "min": 45,
+      "max": 70,
+      "step": 1,
+      "default": 62
+    },
+    {
+      "type": "select",
+      "id": "desktop_text_align",
+      "label": "Desktop text align",
+      "default": "left",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Desktop spacing"
+    },
+    {
+      "type": "range",
+      "id": "desktop_padding_top",
+      "label": "Desktop top padding",
+      "min": 0,
+      "max": 140,
+      "step": 4,
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "desktop_padding_right",
+      "label": "Desktop right padding",
+      "min": 0,
+      "max": 140,
+      "step": 4,
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "desktop_padding_bottom",
+      "label": "Desktop bottom padding",
+      "min": 0,
+      "max": 140,
+      "step": 4,
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "desktop_padding_left",
+      "label": "Desktop left padding",
+      "min": 0,
+      "max": 140,
+      "step": 4,
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "desktop_content_gap",
+      "label": "Desktop content gap",
+      "min": 8,
+      "max": 60,
+      "step": 2,
+      "default": 24
+    },
+    {
+      "type": "header",
+      "content": "Mobile spacing"
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "label": "Mobile top padding",
+      "min": 0,
+      "max": 90,
+      "step": 2,
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_sides",
+      "label": "Mobile side padding",
+      "min": 12,
+      "max": 40,
+      "step": 2,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "label": "Mobile bottom padding",
+      "min": 10,
+      "max": 90,
+      "step": 2,
+      "default": 38
+    },
+    {
+      "type": "range",
+      "id": "mobile_content_gap",
+      "label": "Mobile content gap",
+      "min": 8,
+      "max": 44,
+      "step": 2,
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Images"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero image"
+    },
+    {
+      "type": "select",
+      "id": "image_fit",
+      "label": "Image fit",
+      "default": "cover",
+      "options": [
+        { "value": "cover", "label": "Cover" },
+        { "value": "contain", "label": "Contain" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "mobile_image_height",
+      "label": "Mobile image height",
+      "min": 220,
+      "max": 600,
+      "step": 10,
+      "default": 300
+    },
+    {
+      "type": "range",
+      "id": "desktop_image_radius",
+      "label": "Desktop image radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "mobile_image_radius",
+      "label": "Mobile image radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "mobile_image_margin_top",
+      "label": "Mobile image top margin",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "mobile_image_margin_sides",
+      "label": "Mobile image side margin",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "image_position_x",
+      "label": "Image position X",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 52
+    },
+    {
+      "type": "range",
+      "id": "image_position_y",
+      "label": "Image position Y",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "image_picker",
+      "id": "review_image",
+      "label": "Review customers image"
+    },
+    {
+      "type": "image_picker",
+      "id": "overlay_logo",
+      "label": "Overlay card logo"
+    },
+    {
+      "type": "header",
+      "content": "Badges and overlay"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_top_badge",
+      "label": "Show top image badge",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "top_badge_icon",
+      "label": "Top badge icon",
+      "default": "💊"
+    },
+    {
+      "type": "text",
+      "id": "top_badge_text",
+      "label": "Top badge text",
+      "default": "FOR HAIR SUPPORT"
+    },
+    {
+      "type": "range",
+      "id": "top_badge_top_mobile",
+      "label": "Top badge top mobile",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "top_badge_left_mobile",
+      "label": "Top badge left mobile",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "top_badge_top_desktop",
+      "label": "Top badge top desktop",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "top_badge_left_desktop",
+      "label": "Top badge left desktop",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "top_badge_font_mobile",
+      "label": "Top badge font mobile",
+      "min": 9,
+      "max": 20,
+      "step": 1,
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "top_badge_font_desktop",
+      "label": "Top badge font desktop",
+      "min": 10,
+      "max": 22,
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "checkbox",
+      "id": "show_overlay_card",
+      "label": "Show overlay card",
+      "default": true
+    },
+    {
+      "type": "textarea",
+      "id": "overlay_text",
+      "label": "Overlay card text",
+      "default": "Plant-based support for scalp wellness, fuller-looking hair, and healthy DHT balance."
+    },
+    {
+      "type": "range",
+      "id": "overlay_top_mobile",
+      "label": "Overlay top mobile",
+      "min": 0,
+      "max": 180,
+      "step": 2,
+      "default": 58
+    },
+    {
+      "type": "range",
+      "id": "overlay_left_mobile",
+      "label": "Overlay left mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "default": 16
+    },
+    {
+  "type": "range",
+  "id": "overlay_top_desktop",
+  "label": "Overlay top desktop",
+  "min": 0,
+  "max": 220,
+  "step": 4,
+  "default": 80
+},
+    {
+      "type": "range",
+      "id": "overlay_left_desktop",
+      "label": "Overlay left desktop",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "overlay_width_mobile",
+      "label": "Overlay width mobile",
+      "min": 90,
+      "max": 220,
+      "step": 5,
+      "default": 135
+    },
+    {
+      "type": "range",
+      "id": "overlay_width_desktop",
+      "label": "Overlay width desktop",
+      "min": 140,
+      "max": 320,
+      "step": 5,
+      "default": 200
+    },
+    {
+      "type": "range",
+      "id": "overlay_radius",
+      "label": "Overlay radius",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "overlay_padding_mobile",
+      "label": "Overlay padding mobile",
+      "min": 6,
+      "max": 30,
+      "step": 2,
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "overlay_padding_desktop",
+      "label": "Overlay padding desktop",
+      "min": 8,
+      "max": 40,
+      "step": 2,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "overlay_logo_width_mobile",
+      "label": "Overlay logo width mobile",
+      "min": 50,
+      "max": 180,
+      "step": 5,
+      "default": 95
+    },
+    {
+      "type": "range",
+      "id": "overlay_logo_width_desktop",
+      "label": "Overlay logo width desktop",
+      "min": 70,
+      "max": 240,
+      "step": 5,
+      "default": 140
+    },
+    {
+      "type": "range",
+      "id": "overlay_text_size_mobile",
+      "label": "Overlay text size mobile",
+      "min": 8,
+      "max": 18,
+      "step": 1,
+      "default": 11
+    },
+    {
+      "type": "range",
+      "id": "overlay_text_size_desktop",
+      "label": "Overlay text size desktop",
+      "min": 10,
+      "max": 22,
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "header",
+      "content": "Reviews"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_reviews",
+      "label": "Show review pill",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_stars",
+      "label": "Show stars",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "review_text",
+      "label": "Review text",
+      "default": "4.8 stars | 250,000+ members"
+    },
+    {
+      "type": "checkbox",
+      "id": "review_full_width_mobile",
+      "label": "Review pill full width on mobile",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "review_pill_shadow",
+      "label": "Review pill shadow desktop",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "review_image_height_mobile",
+      "label": "Review image height mobile",
+      "min": 14,
+      "max": 40,
+      "step": 1,
+      "default": 22
+    },
+    {
+      "type": "range",
+      "id": "review_image_height_desktop",
+      "label": "Review image height desktop",
+      "min": 14,
+      "max": 44,
+      "step": 1,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "star_size",
+      "label": "Star size",
+      "min": 8,
+      "max": 18,
+      "step": 1,
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "review_text_size_mobile",
+      "label": "Review text size mobile",
+      "min": 9,
+      "max": 18,
+      "step": 1,
+      "default": 11
+    },
+    {
+      "type": "range",
+      "id": "review_text_size_desktop",
+      "label": "Review text size desktop",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "review_padding_y_mobile",
+      "label": "Review padding Y mobile",
+      "min": 2,
+      "max": 14,
+      "step": 1,
+      "default": 5
+    },
+    {
+      "type": "range",
+      "id": "review_padding_x_mobile",
+      "label": "Review padding X mobile",
+      "min": 4,
+      "max": 24,
+      "step": 1,
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "review_padding_y_desktop",
+      "label": "Review padding Y desktop",
+      "min": 2,
+      "max": 16,
+      "step": 1,
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "review_padding_x_desktop",
+      "label": "Review padding X desktop",
+      "min": 4,
+      "max": 28,
+      "step": 1,
+      "default": 10
+    },
+    {
+      "type": "header",
+      "content": "Heading and subheading"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "<p>5 Reasons Why <strong>Herbans</strong> Is Your Hair’s New Best Friend</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "<p>Seeing more hair in the shower, less volume, or a thinner-looking hairline? Here’s why Pumpkin Seed Oil + Saw Palmetto are becoming a simple daily routine for people who want fuller-looking, healthier hair from within.</p>"
+    },
+    {
+      "type": "range",
+      "id": "desktop_heading_size",
+      "label": "Desktop heading size",
+      "min": 36,
+      "max": 86,
+      "step": 2,
+      "default": 58
+    },
+    {
+      "type": "range",
+      "id": "mobile_heading_size",
+      "label": "Mobile heading size",
+      "min": 26,
+      "max": 52,
+      "step": 1,
+      "default": 38
+    },
+    {
+      "type": "range",
+      "id": "heading_line_height",
+      "label": "Heading line height %",
+      "min": 85,
+      "max": 130,
+      "step": 1,
+      "default": 105
+    },
+    {
+      "type": "select",
+      "id": "heading_weight",
+      "label": "Heading weight",
+      "default": "800",
+      "options": [
+        { "value": "700", "label": "Bold" },
+        { "value": "800", "label": "Extra bold" },
+        { "value": "900", "label": "Black" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "heading_max_width",
+      "label": "Heading max width",
+      "min": 400,
+      "max": 1100,
+      "step": 20,
+      "default": 920
+    },
+    {
+      "type": "range",
+      "id": "desktop_subheading_size",
+      "label": "Desktop subheading size",
+      "min": 14,
+      "max": 26,
+      "step": 1,
+      "default": 19
+    },
+    {
+      "type": "range",
+      "id": "mobile_subheading_size",
+      "label": "Mobile subheading size",
+      "min": 13,
+      "max": 22,
+      "step": 1,
+      "default": 17
+    },
+    {
+      "type": "select",
+      "id": "subheading_weight",
+      "label": "Subheading weight",
+      "default": "400",
+      "options": [
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi bold" },
+        { "value": "700", "label": "Bold" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "subheading_max_width",
+      "label": "Subheading max width",
+      "min": 360,
+      "max": 900,
+      "step": 20,
+      "default": 640
+    },
+    {
+      "type": "header",
+      "content": "Checkmark benefits"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_benefits",
+      "label": "Show checkmark benefits",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "benefit_max_width",
+      "label": "Benefit list max width",
+      "min": 300,
+      "max": 900,
+      "step": 20,
+      "default": 620
+    },
+    {
+      "type": "range",
+      "id": "benefit_card_radius",
+      "label": "Benefit card radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "show_benefit_shadow",
+      "label": "Show benefit card shadow",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "benefit_card_padding_mobile",
+      "label": "Benefit card padding mobile",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "benefit_card_padding_desktop",
+      "label": "Benefit card padding desktop",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "benefit_gap_mobile",
+      "label": "Benefit gap mobile",
+      "min": 4,
+      "max": 26,
+      "step": 1,
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "benefit_gap_desktop",
+      "label": "Benefit gap desktop",
+      "min": 4,
+      "max": 32,
+      "step": 1,
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "benefit_margin_top_mobile",
+      "label": "Benefit margin top mobile",
+      "min": -20,
+      "max": 50,
+      "step": 1,
+      "default": -4
+    },
+    {
+      "type": "range",
+      "id": "benefit_margin_bottom_mobile",
+      "label": "Benefit margin bottom mobile",
+      "min": -20,
+      "max": 50,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "benefit_margin_top_desktop",
+      "label": "Benefit margin top desktop",
+      "min": -20,
+      "max": 50,
+      "step": 1,
+      "default": -4
+    },
+    {
+      "type": "range",
+      "id": "benefit_margin_bottom_desktop",
+      "label": "Benefit margin bottom desktop",
+      "min": -20,
+      "max": 50,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "benefit_text_size_mobile",
+      "label": "Benefit text size mobile",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "benefit_text_size_desktop",
+      "label": "Benefit text size desktop",
+      "min": 12,
+      "max": 28,
+      "step": 1,
+      "default": 17
+    },
+    {
+      "type": "select",
+      "id": "benefit_text_weight",
+      "label": "Benefit text weight",
+      "default": "700",
+      "options": [
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi bold" },
+        { "value": "700", "label": "Bold" },
+        { "value": "800", "label": "Extra bold" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "benefit_line_height",
+      "label": "Benefit line height %",
+      "min": 100,
+      "max": 180,
+      "step": 5,
+      "default": 135
+    },
+    {
+      "type": "range",
+      "id": "benefit_icon_size_mobile",
+      "label": "Check circle size mobile",
+      "min": 12,
+      "max": 34,
+      "step": 1,
+      "default": 19
+    },
+    {
+      "type": "range",
+      "id": "benefit_icon_size_desktop",
+      "label": "Check circle size desktop",
+      "min": 12,
+      "max": 38,
+      "step": 1,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "benefit_check_size_mobile",
+      "label": "Check mark size mobile",
+      "min": 8,
+      "max": 26,
+      "step": 1,
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "benefit_check_size_desktop",
+      "label": "Check mark size desktop",
+      "min": 8,
+      "max": 28,
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "benefit_icon_gap",
+      "label": "Space between check and text",
+      "min": 4,
+      "max": 22,
+      "step": 1,
+      "default": 9
+    },
+    {
+      "type": "range",
+      "id": "benefit_icon_offset",
+      "label": "Check icon vertical offset",
+      "min": -8,
+      "max": 8,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "select",
+      "id": "benefit_vertical_alignment",
+      "label": "Benefit vertical alignment",
+      "default": "center",
+      "options": [
+        { "value": "center", "label": "Center" },
+        { "value": "flex-start", "label": "Top" }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "CTA"
+    },
+    {
+      "type": "text",
+      "id": "floating_badge",
+      "label": "Floating badge above button",
+      "default": "600K+ SOFTGELS SOLD"
+    },
+    {
+      "type": "range",
+      "id": "floating_badge_size",
+      "label": "Floating badge text size",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "default": 13
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Save 52% + Free Shipping"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "range",
+      "id": "button_height",
+      "label": "Button height",
+      "min": 44,
+      "max": 76,
+      "step": 2,
+      "default": 58
+    },
+    {
+      "type": "range",
+      "id": "button_text_size",
+      "label": "Button text size",
+      "min": 14,
+      "max": 24,
+      "step": 1,
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "button_max_width_mobile",
+      "label": "Button max width mobile",
+      "min": 240,
+      "max": 480,
+      "step": 10,
+      "default": 420
+    },
+    {
+      "type": "range",
+      "id": "button_min_width_desktop",
+      "label": "Button min width desktop",
+      "min": 220,
+      "max": 500,
+      "step": 10,
+      "default": 330
+    },
+    {
+      "type": "checkbox",
+      "id": "button_border",
+      "label": "Button black border",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "button_shadow_style",
+      "label": "Button shadow style",
+      "default": "soft",
+      "options": [
+        { "value": "soft", "label": "Soft" },
+        { "value": "hard", "label": "Hard Grüns style" },
+        { "value": "none", "label": "None" }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Risk-free row"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_risk_row",
+      "label": "Show risk-free row",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_risk_check",
+      "label": "Show risk-free check icon",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "risk_prefix",
+      "label": "Risk text before underline",
+      "default": "Try It"
+    },
+    {
+      "type": "text",
+      "id": "risk_underlined_text",
+      "label": "Risk text underlined",
+      "default": "Risk-Free For 90 Days"
+    },
+    {
+      "type": "range",
+      "id": "risk_text_size",
+      "label": "Risk text size",
+      "min": 11,
+      "max": 20,
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "header",
+      "content": "Main colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Section background",
+      "default": "#F8F2E8"
+    },
+    {
+      "type": "color",
+      "id": "image_background_color",
+      "label": "Image background",
+      "default": "#EEEEEE"
+    },
+    {
+      "type": "color",
+      "id": "glow_color",
+      "label": "Background glow",
+      "default": "#E88B5F"
+    },
+    {
+      "type": "header",
+      "content": "Top badge colors"
+    },
+    {
+      "type": "color",
+      "id": "top_badge_bg",
+      "label": "Top badge background",
+      "default": "#F7C46C"
+    },
+    {
+      "type": "color",
+      "id": "top_badge_text_color",
+      "label": "Top badge text",
+      "default": "#5A2E1D"
+    },
+    {
+      "type": "header",
+      "content": "Overlay card colors"
+    },
+    {
+      "type": "color",
+      "id": "overlay_card_bg",
+      "label": "Overlay card background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "overlay_text_color",
+      "label": "Overlay card text",
+      "default": "#111111"
+    },
+    {
+      "type": "header",
+      "content": "Review pill colors"
+    },
+    {
+      "type": "color",
+      "id": "review_pill_bg",
+      "label": "Review pill background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "review_pill_border",
+      "label": "Review pill border",
+      "default": "#D9D9D9"
+    },
+    {
+      "type": "color",
+      "id": "review_star_color",
+      "label": "Review stars",
+      "default": "#FFC83D"
+    },
+    {
+      "type": "color",
+      "id": "review_text_color",
+      "label": "Review text",
+      "default": "#111111"
+    },
+    {
+      "type": "header",
+      "content": "Text colors"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading normal words",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "heading_accent_color",
+      "label": "Bold heading words",
+      "default": "#88A63E"
+    },
+    {
+      "type": "color",
+      "id": "subheading_color",
+      "label": "Subheading",
+      "default": "#111111"
+    },
+    {
+      "type": "header",
+      "content": "Benefit colors"
+    },
+    {
+      "type": "color",
+      "id": "benefit_bg",
+      "label": "Benefit list background",
+      "default": "#F8F2E8"
+    },
+    {
+      "type": "color",
+      "id": "benefit_text_color",
+      "label": "Benefit text",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "benefit_check_bg",
+      "label": "Check circle background",
+      "default": "#00624A"
+    },
+    {
+      "type": "color",
+      "id": "benefit_check_color",
+      "label": "Check mark color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "CTA colors"
+    },
+    {
+      "type": "color",
+      "id": "floating_badge_bg",
+      "label": "Floating badge background",
+      "default": "#F7C46C"
+    },
+    {
+      "type": "color",
+      "id": "floating_badge_text_color",
+      "label": "Floating badge text",
+      "default": "#5A2E1D"
+    },
+    {
+      "type": "color",
+      "id": "button_bg",
+      "label": "Button background",
+      "default": "#C9653B"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_bg",
+      "label": "Button hover background",
+      "default": "#B65431"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "risk_text_color",
+      "label": "Risk-free text",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "risk_check_bg",
+      "label": "Risk check icon background",
+      "default": "#C9653B"
+    },
+    {
+      "type": "color",
+      "id": "risk_check_color",
+      "label": "Risk check icon color",
+      "default": "#FFFFFF"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Checkmark benefit",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Benefit text",
+          "default": "<p><strong>Supports healthy hair growth.</strong></p>"
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_icon",
+          "label": "Custom icon optional"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Listicle Hero V2",
+      "blocks": [
+        {
+          "type": "benefit",
+          "settings": {
+            "text": "<p><strong>Pumpkin Seed Oil + Saw Palmetto.</strong></p>"
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "text": "<p><strong>Supports healthy hair growth.</strong></p>"
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "text": "<p><strong>Helps reduce hair shedding.</strong></p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

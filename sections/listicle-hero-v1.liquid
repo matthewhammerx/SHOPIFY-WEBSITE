@@ -1,0 +1,917 @@
+{% comment %}
+  Listicle Hero V3
+  Bold words inside the heading = accent color
+{% endcomment %}
+
+<section id="listicle-hero-{{ section.id }}" class="mh-listicle-hero-v3">
+  <style>
+    {% if section.settings.hide_header %}
+      header,
+      #shopify-section-header,
+      #shopify-section-header-classic,
+      .main_nav,
+      .main-nav,
+      .navbar,
+      #mobile-header-sticky-wrapper,
+      .nav,
+      .header-wrapper,
+      [data-site-header],
+      #shopify-section-static-header,
+      #header,
+      .main-header,
+      #site-header,
+      .shopify-section-group-header-group {
+        display: none !important;
+      }
+
+      .main-content,
+      #MainContent {
+        padding-top: 0 !important;
+        margin-top: 0 !important;
+      }
+    {% endif %}
+
+    #listicle-hero-{{ section.id }} {
+      --hero-bg: {{ section.settings.background_color }};
+      --hero-image-placeholder-bg: {{ section.settings.image_placeholder_bg }};
+      --hero-glow: {{ section.settings.glow_color }};
+
+      --hero-top-badge-bg: {{ section.settings.top_badge_bg }};
+      --hero-top-badge-text: {{ section.settings.top_badge_text_color }};
+
+      --hero-overlay-card-bg: {{ section.settings.overlay_card_bg }};
+      --hero-overlay-text: {{ section.settings.overlay_text_color }};
+
+      --hero-review-pill-bg: {{ section.settings.review_pill_bg }};
+      --hero-review-pill-border: {{ section.settings.review_pill_border }};
+      --hero-review-star: {{ section.settings.review_star_color }};
+      --hero-review-text: {{ section.settings.review_text_color }};
+
+      --hero-heading: {{ section.settings.heading_color }};
+      --hero-heading-accent: {{ section.settings.heading_accent_color }};
+      --hero-subheading: {{ section.settings.subheading_color }};
+
+      --hero-floating-badge-bg: {{ section.settings.floating_badge_bg }};
+      --hero-floating-badge-text: {{ section.settings.floating_badge_text_color }};
+
+      --hero-button-bg: {{ section.settings.button_bg }};
+      --hero-button-text: {{ section.settings.button_text_color }};
+
+      --hero-risk-text: {{ section.settings.risk_text_color }};
+      --hero-check-bg: {{ section.settings.check_icon_bg }};
+      --hero-check-color: {{ section.settings.check_icon_color }};
+
+      background: var(--hero-bg);
+      overflow: hidden;
+      position: relative;
+      font-family: inherit;
+    }
+
+    #listicle-hero-{{ section.id }} * {
+      box-sizing: border-box;
+    }
+
+    #listicle-hero-{{ section.id }} .mh-hero-gradient {
+      position: absolute;
+      width: 620px;
+      height: 620px;
+      border-radius: 50%;
+      background: radial-gradient(
+        circle,
+        color-mix(in srgb, var(--hero-glow) 35%, transparent) 0%,
+        color-mix(in srgb, var(--hero-glow) 12%, transparent) 42%,
+        transparent 74%
+      );
+      pointer-events: none;
+      right: -120px;
+      bottom: -140px;
+      z-index: 0;
+    }
+
+    #listicle-hero-{{ section.id }} .mh-hero-wrapper {
+      max-width: {{ section.settings.max_width }}px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    #listicle-hero-{{ section.id }} .mh-hero-image-side {
+      position: relative;
+      height: {{ section.settings.mobile_image_height }}px;
+      overflow: hidden;
+      order: 1;
+      background: var(--hero-image-placeholder-bg);
+    }
+
+    #listicle-hero-{{ section.id }} .mh-hero-main-image,
+    #listicle-hero-{{ section.id }} .placeholder-svg {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: {{ section.settings.image_position_x }}% {{ section.settings.image_position_y }}%;
+      display: block;
+    }
+
+    #listicle-hero-{{ section.id }} .mh-top-badge {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      background: var(--hero-top-badge-bg);
+      color: var(--hero-top-badge-text);
+      border-radius: 999px;
+      padding: 7px 13px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      z-index: 2;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      line-height: 1;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+    }
+
+    #listicle-hero-{{ section.id }} .mh-overlay-card {
+      position: absolute;
+      top: 58px;
+      left: 16px;
+      background: var(--hero-overlay-card-bg);
+      border-radius: 12px;
+      padding: 10px;
+      width: 135px;
+      z-index: 2;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    }
+
+    #listicle-hero-{{ section.id }} .mh-overlay-logo {
+      display: block;
+      max-width: 95px;
+      height: auto;
+      margin: 0 auto 8px;
+    }
+
+    #listicle-hero-{{ section.id }} .mh-overlay-text {
+      margin: 0;
+      color: var(--hero-overlay-text);
+      text-align: center;
+      font-size: 11px;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    #listicle-hero-{{ section.id }} .mh-hero-content {
+      order: 2;
+      padding: 28px 20px 38px;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+      color: var(--hero-subheading);
+    }
+
+    #listicle-hero-{{ section.id }} .mh-review-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--hero-review-pill-bg);
+      border: 1px solid var(--hero-review-pill-border);
+      border-radius: 999px;
+      padding: 5px 8px;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    #listicle-hero-{{ section.id }} .mh-review-customers {
+      height: 22px;
+      width: auto;
+      flex-shrink: 0;
+      display: block;
+    }
+
+    #listicle-hero-{{ section.id }} .mh-review-row {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      min-width: 0;
+    }
+
+    #listicle-hero-{{ section.id }} .mh-stars {
+      display: flex;
+      align-items: center;
+      gap: 1px;
+      color: var(--hero-review-star);
+      flex-shrink: 0;
+    }
+
+    #listicle-hero-{{ section.id }} .mh-review-text {
+      font-size: 11px;
+      line-height: 1.2;
+      white-space: nowrap;
+      color: var(--hero-review-text);
+    }
+
+    #listicle-hero-{{ section.id }} .mh-heading {
+      color: var(--hero-heading) !important;
+      font-size: {{ section.settings.mobile_heading_size }}px;
+      line-height: 1.05;
+      letter-spacing: -0.045em;
+      font-weight: 800;
+      margin: 0;
+      max-width: 920px;
+    }
+
+    #listicle-hero-{{ section.id }} .mh-heading p,
+    #listicle-hero-{{ section.id }} .mh-heading h1,
+    #listicle-hero-{{ section.id }} .mh-heading h2,
+    #listicle-hero-{{ section.id }} .mh-heading h3 {
+      margin: 0;
+      line-height: inherit;
+      font-size: inherit;
+      font-weight: inherit;
+      letter-spacing: inherit;
+      color: inherit !important;
+    }
+
+    #listicle-hero-{{ section.id }} .mh-heading strong,
+    #listicle-hero-{{ section.id }} .mh-heading b {
+      color: var(--hero-heading-accent) !important;
+      font-weight: inherit !important;
+    }
+
+    #listicle-hero-{{ section.id }} .mh-subheading {
+      color: var(--hero-subheading);
+      font-size: 17px;
+      line-height: 1.45;
+      margin: 0;
+      max-width: 640px;
+    }
+
+    #listicle-hero-{{ section.id }} .mh-subheading p {
+      margin: 0;
+    }
+
+    #listicle-hero-{{ section.id }} .mh-cta-area {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+    }
+
+    #listicle-hero-{{ section.id }} .mh-cta-wrap {
+      position: relative;
+      width: 100%;
+      padding-top: 10px;
+    }
+
+    #listicle-hero-{{ section.id }} .mh-floating-badge {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      transform: translate(-50%, -10%);
+      white-space: nowrap;
+      padding: 6px 13px;
+      border-radius: 999px;
+      background: var(--hero-floating-badge-bg);
+      color: var(--hero-floating-badge-text);
+      font-size: 13px;
+      line-height: 1;
+      font-weight: 800;
+      z-index: 2;
+      box-shadow: 0 5px 12px rgba(0,0,0,0.08);
+    }
+
+    #listicle-hero-{{ section.id }} .mh-cta-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-height: 58px;
+      background: var(--hero-button-bg);
+      color: var(--hero-button-text);
+      border-radius: 999px;
+      text-decoration: none;
+      font-size: 18px;
+      font-weight: 800;
+      padding: 17px 28px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.14);
+      text-align: center;
+    }
+
+    #listicle-hero-{{ section.id }} .mh-cta-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 25px rgba(0,0,0,0.18);
+      opacity: 0.96;
+    }
+
+    #listicle-hero-{{ section.id }} .mh-risk-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      width: 100%;
+      color: var(--hero-risk-text);
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    #listicle-hero-{{ section.id }} .mh-check-icon {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      background: var(--hero-check-bg);
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #listicle-hero-{{ section.id }} .mh-check-icon path {
+      stroke: var(--hero-check-color);
+    }
+
+    #listicle-hero-{{ section.id }} .mh-risk-underline {
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    @media screen and (min-width: 768px) {
+      #listicle-hero-{{ section.id }} .mh-hero-gradient {
+        right: -140px;
+        bottom: -180px;
+        width: 900px;
+        height: 900px;
+      }
+
+      #listicle-hero-{{ section.id }} .mh-hero-wrapper {
+        flex-direction: row;
+        min-height: {{ section.settings.desktop_min_height }}px;
+      }
+
+      #listicle-hero-{{ section.id }} .mh-hero-content {
+        width: 62%;
+        order: 1;
+        padding: 64px 48px 64px 72px;
+        justify-content: center;
+        gap: 28px;
+      }
+
+      #listicle-hero-{{ section.id }} .mh-hero-image-side {
+        width: 38%;
+        height: auto;
+        order: 2;
+      }
+
+      #listicle-hero-{{ section.id }} .mh-top-badge {
+        top: 24px;
+        left: 24px;
+        font-size: 14px;
+        padding: 9px 15px;
+      }
+
+      #listicle-hero-{{ section.id }} .mh-overlay-card {
+        top: 80px;
+        left: 24px;
+        width: 200px;
+        padding: 16px;
+      }
+
+      #listicle-hero-{{ section.id }} .mh-overlay-logo {
+        max-width: 140px;
+        margin-bottom: 10px;
+      }
+
+      #listicle-hero-{{ section.id }} .mh-overlay-text {
+        font-size: 14px;
+      }
+
+      #listicle-hero-{{ section.id }} .mh-review-pill {
+        width: fit-content;
+        max-width: 100%;
+        padding: 6px 10px;
+        box-shadow: 2px 4px 20px rgba(0,0,0,0.1);
+      }
+
+      #listicle-hero-{{ section.id }} .mh-review-customers {
+        height: 24px;
+      }
+
+      #listicle-hero-{{ section.id }} .mh-review-text {
+        font-size: 13px;
+      }
+
+      #listicle-hero-{{ section.id }} .mh-heading {
+        font-size: {{ section.settings.desktop_heading_size }}px;
+      }
+
+      #listicle-hero-{{ section.id }} .mh-subheading {
+        font-size: 19px;
+      }
+
+      #listicle-hero-{{ section.id }} .mh-cta-area {
+        align-items: flex-start;
+      }
+
+      #listicle-hero-{{ section.id }} .mh-cta-wrap {
+        width: auto;
+      }
+
+      #listicle-hero-{{ section.id }} .mh-cta-button {
+        width: auto;
+        min-width: 330px;
+      }
+
+      #listicle-hero-{{ section.id }} .mh-risk-row {
+        justify-content: flex-start;
+      }
+    }
+
+    @media screen and (max-width: 390px) {
+      #listicle-hero-{{ section.id }} .mh-review-text {
+        font-size: 10px;
+      }
+
+      #listicle-hero-{{ section.id }} .mh-heading {
+        font-size: {{ section.settings.mobile_heading_size | minus: 4 }}px;
+      }
+    }
+  </style>
+
+  {% assign button_href = section.settings.button_link | default: '#offers' %}
+
+  {% if section.settings.show_glow %}
+    <div class="mh-hero-gradient" aria-hidden="true"></div>
+  {% endif %}
+
+  <div class="mh-hero-wrapper">
+    <div class="mh-hero-image-side">
+      {% if section.settings.hero_image != blank %}
+        {{
+          section.settings.hero_image
+          | image_url: width: 1600
+          | image_tag:
+            class: 'mh-hero-main-image',
+            loading: 'eager',
+            alt: section.settings.hero_image.alt
+        }}
+      {% else %}
+        {{ 'lifestyle-1' | placeholder_svg_tag: 'mh-hero-main-image placeholder-svg' }}
+      {% endif %}
+
+      {% if section.settings.show_top_badge %}
+        <div class="mh-top-badge">
+          <span>{{ section.settings.top_badge_icon }}</span>
+          <span>{{ section.settings.top_badge_text }}</span>
+        </div>
+      {% endif %}
+
+      {% if section.settings.show_overlay_card %}
+        <div class="mh-overlay-card">
+          {% if section.settings.overlay_logo != blank %}
+            {{
+              section.settings.overlay_logo
+              | image_url: width: 300
+              | image_tag:
+                class: 'mh-overlay-logo',
+                loading: 'eager',
+                alt: section.settings.overlay_logo.alt
+            }}
+          {% endif %}
+
+          {% if section.settings.overlay_text != blank %}
+            <p class="mh-overlay-text">{{ section.settings.overlay_text }}</p>
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="mh-hero-content">
+      {% if section.settings.show_reviews %}
+        <div class="mh-review-pill">
+          {% if section.settings.review_image != blank %}
+            {{
+              section.settings.review_image
+              | image_url: width: 120
+              | image_tag:
+                class: 'mh-review-customers',
+                loading: 'eager',
+                alt: section.settings.review_image.alt
+            }}
+          {% endif %}
+
+          <div class="mh-review-row">
+            <div class="mh-stars" aria-hidden="true">
+              {% for i in (1..5) %}
+                <svg width="10" height="10" viewBox="0 0 16 16" fill="currentColor">
+                  <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                </svg>
+              {% endfor %}
+            </div>
+
+            <span class="mh-review-text">
+              {{ section.settings.review_text }}
+            </span>
+          </div>
+        </div>
+      {% endif %}
+
+      {% if section.settings.heading != blank %}
+        <div class="mh-heading">
+          {{ section.settings.heading }}
+        </div>
+      {% endif %}
+
+      {% if section.settings.subheading != blank %}
+        <div class="mh-subheading">
+          {{ section.settings.subheading }}
+        </div>
+      {% endif %}
+
+      <div class="mh-cta-area">
+        <div class="mh-cta-wrap">
+          {% if section.settings.floating_badge != blank %}
+            <span class="mh-floating-badge">{{ section.settings.floating_badge }}</span>
+          {% endif %}
+
+          {% if section.settings.button_text != blank %}
+            <a href="{{ button_href }}" class="mh-cta-button">
+              {{ section.settings.button_text }}
+            </a>
+          {% endif %}
+        </div>
+
+        {% if section.settings.risk_prefix != blank or section.settings.risk_underlined_text != blank %}
+          <div class="mh-risk-row">
+            <span class="mh-check-icon" aria-hidden="true">
+              <svg width="12" height="12" viewBox="0 0 18 18" fill="none">
+                <path d="M5 9l3 3 5-5" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+
+            <span>
+              {{ section.settings.risk_prefix }}
+              {% if section.settings.risk_underlined_text != blank %}
+                <span class="mh-risk-underline">{{ section.settings.risk_underlined_text }}</span>
+              {% endif %}
+            </span>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Listicle Hero V3",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "hide_header",
+      "label": "Hide theme header on this page",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_glow",
+      "label": "Show background glow",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Max width",
+      "min": 1000,
+      "max": 1800,
+      "step": 50,
+      "default": 1500
+    },
+    {
+      "type": "range",
+      "id": "desktop_min_height",
+      "label": "Desktop minimum height",
+      "min": 400,
+      "max": 900,
+      "step": 20,
+      "default": 660
+    },
+    {
+      "type": "range",
+      "id": "mobile_image_height",
+      "label": "Mobile image height",
+      "min": 220,
+      "max": 600,
+      "step": 10,
+      "default": 300
+    },
+    {
+      "type": "header",
+      "content": "Images"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero image"
+    },
+    {
+      "type": "range",
+      "id": "image_position_x",
+      "label": "Image position X",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 52
+    },
+    {
+      "type": "range",
+      "id": "image_position_y",
+      "label": "Image position Y",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "image_picker",
+      "id": "review_image",
+      "label": "Review customers image"
+    },
+    {
+      "type": "image_picker",
+      "id": "overlay_logo",
+      "label": "Overlay card logo"
+    },
+    {
+      "type": "header",
+      "content": "Badges and overlay"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_top_badge",
+      "label": "Show top image badge",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "top_badge_icon",
+      "label": "Top badge icon",
+      "default": "💊"
+    },
+    {
+      "type": "text",
+      "id": "top_badge_text",
+      "label": "Top badge text",
+      "default": "FOR HAIR SUPPORT"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_overlay_card",
+      "label": "Show overlay card",
+      "default": true
+    },
+    {
+      "type": "textarea",
+      "id": "overlay_text",
+      "label": "Overlay card text",
+      "default": "Plant-based support for scalp wellness, fuller-looking hair, and healthy DHT balance."
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_reviews",
+      "label": "Show review pill",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "review_text",
+      "label": "Review text",
+      "default": "4.8 stars | 250 000+ members"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "<p>5 Reasons Why <strong>Herbans</strong> Is Your Hair’s New Best Friend</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "<p>Seeing more hair in the shower, less volume, or a thinner-looking hairline? Here’s why Pumpkin Seed Oil + Saw Palmetto are becoming a simple daily routine for people who want fuller-looking, healthier hair from within.</p>"
+    },
+    {
+      "type": "text",
+      "id": "floating_badge",
+      "label": "Floating badge above button",
+      "default": "600K+ SOFTGELS SOLD"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Save 52% + Free Shipping"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "text",
+      "id": "risk_prefix",
+      "label": "Risk text before underline",
+      "default": "Try It"
+    },
+    {
+      "type": "text",
+      "id": "risk_underlined_text",
+      "label": "Risk text underlined",
+      "default": "Risk-Free For 90 Days"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "desktop_heading_size",
+      "label": "Desktop heading size",
+      "min": 36,
+      "max": 86,
+      "step": 2,
+      "default": 58
+    },
+    {
+      "type": "range",
+      "id": "mobile_heading_size",
+      "label": "Mobile heading size",
+      "min": 26,
+      "max": 52,
+      "step": 1,
+      "default": 38
+    },
+    {
+      "type": "header",
+      "content": "Main colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Section background",
+      "default": "#F8F2E8"
+    },
+    {
+      "type": "color",
+      "id": "image_placeholder_bg",
+      "label": "Image placeholder background",
+      "default": "#EEEEEE"
+    },
+    {
+      "type": "color",
+      "id": "glow_color",
+      "label": "Background glow",
+      "default": "#E88B5F"
+    },
+    {
+      "type": "header",
+      "content": "Top badge colors"
+    },
+    {
+      "type": "color",
+      "id": "top_badge_bg",
+      "label": "Top badge background",
+      "default": "#F7C46C"
+    },
+    {
+      "type": "color",
+      "id": "top_badge_text_color",
+      "label": "Top badge text",
+      "default": "#5A2E1D"
+    },
+    {
+      "type": "header",
+      "content": "Overlay card colors"
+    },
+    {
+      "type": "color",
+      "id": "overlay_card_bg",
+      "label": "Overlay card background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "overlay_text_color",
+      "label": "Overlay card text",
+      "default": "#111111"
+    },
+    {
+      "type": "header",
+      "content": "Review pill colors"
+    },
+    {
+      "type": "color",
+      "id": "review_pill_bg",
+      "label": "Review pill background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "review_pill_border",
+      "label": "Review pill border",
+      "default": "#D9D9D9"
+    },
+    {
+      "type": "color",
+      "id": "review_star_color",
+      "label": "Review stars",
+      "default": "#FFC83D"
+    },
+    {
+      "type": "color",
+      "id": "review_text_color",
+      "label": "Review text",
+      "default": "#111111"
+    },
+    {
+      "type": "header",
+      "content": "Text colors"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading normal words",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "heading_accent_color",
+      "label": "Bold heading words",
+      "default": "#88A63E"
+    },
+    {
+      "type": "color",
+      "id": "subheading_color",
+      "label": "Subheading",
+      "default": "#111111"
+    },
+    {
+      "type": "header",
+      "content": "CTA colors"
+    },
+    {
+      "type": "color",
+      "id": "floating_badge_bg",
+      "label": "Floating badge background",
+      "default": "#F7C46C"
+    },
+    {
+      "type": "color",
+      "id": "floating_badge_text_color",
+      "label": "Floating badge text",
+      "default": "#5A2E1D"
+    },
+    {
+      "type": "color",
+      "id": "button_bg",
+      "label": "Button background",
+      "default": "#C9653B"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "risk_text_color",
+      "label": "Risk-free text",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "check_icon_bg",
+      "label": "Check icon background",
+      "default": "#C9653B"
+    },
+    {
+      "type": "color",
+      "id": "check_icon_color",
+      "label": "Check icon color",
+      "default": "#FFFFFF"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Listicle Hero V3"
+    }
+  ]
+}
+{% endschema %}

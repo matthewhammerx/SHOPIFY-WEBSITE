@@ -1,0 +1,456 @@
+{% comment %}
+  Meowgical - Kaching Gift Display (mkfg_)
+  Visual-only replica of the old Cat Bundle "Your Free Gifts" component.
+  Reads gift data from the live Kaching Bundles widget rendered elsewhere in
+  this same product section and mirrors it here. Never adds/removes cart
+  items, never touches Kaching's own logic, tracking or cart requests.
+{% endcomment %}
+
+{%- if block.settings.mkfg_enable -%}
+  <div
+    class="mkfg_root"
+    id="mkfg-root-{{ block.id }}"
+    data-mkfg-block-id="{{ block.id }}"
+    data-mkfg-section-id="{{ section.id }}"
+    style="
+      --mkfg-header-bg: {{ block.settings.mkfg_header_bg_color }};
+      --mkfg-header-text: {{ block.settings.mkfg_header_text_color }};
+      --mkfg-border-color: {{ block.settings.mkfg_border_color }};
+      --mkfg-outer-bg: {{ block.settings.mkfg_outer_bg_color }};
+      --mkfg-card-bg: {{ block.settings.mkfg_card_bg_color }};
+      --mkfg-gift-name-color: {{ block.settings.mkfg_gift_name_color }};
+      --mkfg-free-badge-bg: {{ block.settings.mkfg_free_badge_bg_color }};
+      --mkfg-free-badge-text: {{ block.settings.mkfg_free_badge_text_color }};
+      --mkfg-accent-badge-bg: {{ block.settings.mkfg_accent_badge_bg_color }};
+      --mkfg-accent-badge-text: {{ block.settings.mkfg_accent_badge_text_color }};
+      --mkfg-border-radius: {{ block.settings.mkfg_border_radius | default: 12 }}px;
+      --mkfg-image-size: {{ block.settings.mkfg_gift_image_size | default: 56 }}px;
+      --mkfg-desktop-margin-top: {{ block.settings.mkfg_desktop_margin_top | default: 16 }}px;
+      --mkfg-desktop-margin-bottom: {{ block.settings.mkfg_desktop_margin_bottom | default: 16 }}px;
+      --mkfg-mobile-margin-top: {{ block.settings.mkfg_mobile_margin_top | default: 12 }}px;
+      --mkfg-mobile-margin-bottom: {{ block.settings.mkfg_mobile_margin_bottom | default: 12 }}px;
+    "
+    {{ block.shopify_attributes }}
+  >
+    <div class="mkfg_wrap" data-mkfg-wrap style="display:none;">
+      <div class="mkfg_header">
+        <div class="mkfg_headings">
+          {%- if block.settings.mkfg_main_heading != blank -%}
+            <p class="mkfg_main_heading">{{ block.settings.mkfg_main_heading }}</p>
+          {%- endif -%}
+          {%- if block.settings.mkfg_secondary_heading != blank -%}
+            <p class="mkfg_secondary_heading">{{ block.settings.mkfg_secondary_heading }}</p>
+          {%- endif -%}
+        </div>
+        {%- if block.settings.mkfg_header_badge_text != blank -%}
+          <span class="mkfg_header_badge">{{ block.settings.mkfg_header_badge_text }}</span>
+        {%- endif -%}
+      </div>
+      <div class="mkfg_grid" data-mkfg-grid role="list"></div>
+    </div>
+  </div>
+
+  <style>
+    #mkfg-root-{{ block.id }} .mkfg_wrap {
+      margin-top: var(--mkfg-desktop-margin-top);
+      margin-bottom: var(--mkfg-desktop-margin-bottom);
+      border: 0.1rem solid var(--mkfg-border-color);
+      border-radius: var(--mkfg-border-radius);
+      overflow: hidden;
+      background: var(--mkfg-outer-bg);
+    }
+    #mkfg-root-{{ block.id }} .mkfg_header {
+      background: var(--mkfg-header-bg);
+      color: var(--mkfg-header-text);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.8rem;
+      padding: 0.9rem 1.4rem;
+    }
+    #mkfg-root-{{ block.id }} .mkfg_headings {
+      display: flex;
+      flex-direction: column;
+      gap: 0.1rem;
+    }
+    #mkfg-root-{{ block.id }} .mkfg_main_heading {
+      margin: 0;
+      font-weight: 700;
+      font-size: 1.4rem;
+      color: var(--mkfg-header-text);
+      line-height: 1.3;
+    }
+    #mkfg-root-{{ block.id }} .mkfg_secondary_heading {
+      margin: 0;
+      font-weight: 500;
+      font-size: 1.1rem;
+      color: var(--mkfg-header-text);
+      opacity: 0.85;
+      line-height: 1.3;
+    }
+    #mkfg-root-{{ block.id }} .mkfg_header_badge {
+      flex-shrink: 0;
+      background: var(--mkfg-accent-badge-bg);
+      color: var(--mkfg-accent-badge-text);
+      font-size: 1.1rem;
+      font-weight: 800;
+      padding: 0.35rem 0.9rem;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+    #mkfg-root-{{ block.id }} .mkfg_grid {
+      display: grid;
+      grid-template-columns: repeat(var(--mkfg-gift-count, 3), 1fr);
+      gap: 1rem;
+      padding: 1.6rem;
+    }
+    #mkfg-root-{{ block.id }} .mkfg_gift {
+      text-align: center;
+      background: var(--mkfg-card-bg);
+    }
+    #mkfg-root-{{ block.id }} .mkfg_gift_image_wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #mkfg-root-{{ block.id }} .mkfg_gift_image {
+      width: var(--mkfg-image-size);
+      height: auto;
+      display: block;
+      margin: 0 auto;
+      border-radius: 0.4rem;
+    }
+    #mkfg-root-{{ block.id }} .mkfg_gift_badge {
+      position: absolute;
+      top: 0.4rem;
+      left: 0.4rem;
+      background: var(--mkfg-accent-badge-bg);
+      color: var(--mkfg-accent-badge-text);
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 0.15rem 0.5rem;
+      border-radius: 0.4rem;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 0.3em;
+    }
+    #mkfg-root-{{ block.id }} .mkfg_gift_badge_prefix {
+      background: var(--mkfg-free-badge-bg);
+      color: var(--mkfg-free-badge-text);
+      padding: 0.05rem 0.35rem;
+      border-radius: 0.3rem;
+    }
+    #mkfg-root-{{ block.id }} .mkfg_gift_badge_price {
+      text-decoration: line-through;
+    }
+    #mkfg-root-{{ block.id }} .mkfg_gift_title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin: 0.6rem 0 0;
+      line-height: 1.3;
+      color: var(--mkfg-gift-name-color);
+    }
+    @media screen and (max-width: 749px) {
+      #mkfg-root-{{ block.id }} .mkfg_wrap {
+        margin-top: var(--mkfg-mobile-margin-top);
+        margin-bottom: var(--mkfg-mobile-margin-bottom);
+      }
+      #mkfg-root-{{ block.id }} .mkfg_grid {
+        grid-template-columns: repeat(var(--mkfg-gift-count, 3), 1fr);
+        gap: 0.6rem;
+        padding: 1rem;
+      }
+      #mkfg-root-{{ block.id }} .mkfg_gift_image_wrap {
+        padding: 0.3rem;
+      }
+      #mkfg-root-{{ block.id }} .mkfg_gift_badge {
+        padding: 0.1rem 0.35rem;
+        font-size: 0.75rem;
+      }
+      #mkfg-root-{{ block.id }} .mkfg_gift_title {
+        margin-top: 0.4rem;
+        font-size: 1rem;
+      }
+      #mkfg-root-{{ block.id }} .mkfg_header {
+        padding: 0.7rem 1rem;
+      }
+      #mkfg-root-{{ block.id }} .mkfg_main_heading {
+        font-size: 1.2rem;
+      }
+    }
+
+    /* Applied only to the exact Kaching gift container this block found and
+       successfully mirrored - never a blanket rule, and only added by JS
+       after a confirmed, successful render. */
+    .mkfg_hide_kaching_gifts {
+      display: none !important;
+    }
+  </style>
+
+  <script>
+    (function () {
+      var mkfgBlockId = {{ block.id | json }};
+      var mkfgSectionId = {{ section.id | json }};
+      var mkfgShowValues = {{ block.settings.mkfg_show_gift_values | json }};
+      var mkfgRootId = 'mkfg-root-' + mkfgBlockId;
+
+      function mkfgEscapeText(value) {
+        var div = document.createElement('div');
+        div.textContent = value == null ? '' : String(value);
+        return div.textContent;
+      }
+
+      function mkfgInitRoot(root) {
+        if (!root || root.dataset.mkfgInitialized === 'true') return;
+        root.dataset.mkfgInitialized = 'true';
+
+        var scope = root.closest('.shopify-section') || document;
+        var wrap = root.querySelector('[data-mkfg-wrap]');
+        var grid = root.querySelector('[data-mkfg-grid]');
+
+        var kachingBlock = null;
+        var kachingGiftsContainer = null;
+        var giftsObserver = null;
+        var scopeObserver = null;
+        var dealListenerFn = null;
+        var recheckTimer = null;
+
+        function findKachingBlock() {
+          return scope.querySelector('kaching-bundles-block');
+        }
+
+        function findKachingGiftsContainer(block) {
+          if (!block) return scope.querySelector('.kaching-bundles__progressive-gifts');
+          return block.querySelector('.kaching-bundles__progressive-gifts');
+        }
+
+        function showOwnDisplay() {
+          if (wrap) wrap.style.display = '';
+        }
+
+        function hideOwnDisplay() {
+          if (wrap) wrap.style.display = 'none';
+          if (grid) grid.innerHTML = '';
+        }
+
+        function markKachingHidden(container) {
+          if (container && !container.classList.contains('mkfg_hide_kaching_gifts')) {
+            container.classList.add('mkfg_hide_kaching_gifts');
+          }
+        }
+
+        function buildGiftCard(giftEl) {
+          var imgEl = giftEl.querySelector('.kaching-bundles__progressive-gifts__gift__image');
+          var titleEl = giftEl.querySelector('.kaching-bundles__progressive-gifts__gift__title');
+          var labelTextEls = giftEl.querySelectorAll('.kaching-bundles__progressive-gifts__gift__label__text');
+
+          var freeText = '';
+          var valueText = '';
+          labelTextEls.forEach(function (labelEl) {
+            var text = mkfgEscapeText(labelEl.textContent.trim());
+            if (labelEl.classList.contains('kaching-bundles__progressive-gifts__gift__label__text--crossed-out')) {
+              valueText = text;
+            } else if (!freeText) {
+              freeText = text;
+            }
+          });
+
+          var title = titleEl ? mkfgEscapeText(titleEl.textContent.trim()) : '';
+          var imgSrc = imgEl ? imgEl.getAttribute('src') : '';
+          var imgAlt = imgEl ? mkfgEscapeText(imgEl.getAttribute('alt') || title) : title;
+
+          if (!title && !imgSrc) return null;
+
+          var card = document.createElement('div');
+          card.className = 'mkfg_gift';
+          card.setAttribute('role', 'listitem');
+
+          var imageWrap = document.createElement('div');
+          imageWrap.className = 'mkfg_gift_image_wrap';
+
+          if (imgSrc) {
+            var imageNode = document.createElement('img');
+            imageNode.className = 'mkfg_gift_image';
+            imageNode.src = imgSrc;
+            imageNode.alt = imgAlt;
+            imageNode.loading = 'lazy';
+            imageWrap.appendChild(imageNode);
+          }
+
+          if (freeText || (mkfgShowValues && valueText)) {
+            var badge = document.createElement('span');
+            badge.className = 'mkfg_gift_badge';
+            if (freeText) {
+              var prefixNode = document.createElement('span');
+              prefixNode.className = 'mkfg_gift_badge_prefix';
+              prefixNode.textContent = freeText;
+              badge.appendChild(prefixNode);
+            }
+            if (mkfgShowValues && valueText) {
+              var priceNode = document.createElement('span');
+              priceNode.className = 'mkfg_gift_badge_price';
+              priceNode.textContent = valueText;
+              badge.appendChild(priceNode);
+            }
+            imageWrap.appendChild(badge);
+          }
+
+          card.appendChild(imageWrap);
+
+          var titleNode = document.createElement('p');
+          titleNode.className = 'mkfg_gift_title';
+          titleNode.textContent = title;
+          card.appendChild(titleNode);
+
+          return card;
+        }
+
+        function renderFromKaching(isRecheck) {
+          var container = findKachingGiftsContainer(kachingBlock) || kachingGiftsContainer;
+          if (!container) {
+            hideOwnDisplay();
+            return;
+          }
+
+          if (container !== kachingGiftsContainer) {
+            kachingGiftsContainer = container;
+            observeGiftsContainer(container);
+          }
+
+          var giftEls = Array.prototype.slice.call(
+            container.querySelectorAll('.kaching-bundles__progressive-gifts__gift')
+          );
+          if (!giftEls.length) {
+            if (!isRecheck) {
+              if (recheckTimer) clearTimeout(recheckTimer);
+              recheckTimer = setTimeout(function () {
+                recheckTimer = null;
+                renderFromKaching(true);
+              }, 150);
+              return;
+            }
+            hideOwnDisplay();
+            return;
+          }
+
+          if (recheckTimer) {
+            clearTimeout(recheckTimer);
+            recheckTimer = null;
+          }
+
+          var cards = [];
+          giftEls.forEach(function (giftEl) {
+            var card = buildGiftCard(giftEl);
+            if (card) cards.push(card);
+          });
+
+          if (!cards.length) {
+            hideOwnDisplay();
+            return;
+          }
+
+          if (grid) {
+            grid.innerHTML = '';
+            grid.style.setProperty('--mkfg-gift-count', String(cards.length));
+            cards.forEach(function (card) {
+              grid.appendChild(card);
+            });
+          }
+
+          showOwnDisplay();
+          markKachingHidden(container);
+        }
+
+        function attachDealListener(block) {
+          if (!block || dealListenerFn) return;
+          dealListenerFn = function () {
+            renderFromKaching();
+          };
+          block.addEventListener('deal-bar-selected', dealListenerFn);
+        }
+
+        function observeGiftsContainer(container) {
+          if (!container) return;
+          if (giftsObserver) giftsObserver.disconnect();
+          giftsObserver = new MutationObserver(function () {
+            renderFromKaching();
+          });
+          giftsObserver.observe(container, { childList: true, subtree: true, characterData: true });
+        }
+
+        function tryConnectToKaching() {
+          var block = findKachingBlock();
+          if (!block) return false;
+
+          kachingBlock = block;
+          attachDealListener(block);
+
+          var container = findKachingGiftsContainer(block);
+          if (!container) return false;
+
+          kachingGiftsContainer = container;
+          observeGiftsContainer(container);
+          renderFromKaching();
+          return true;
+        }
+
+        if (!tryConnectToKaching()) {
+          scopeObserver = new MutationObserver(function () {
+            if (tryConnectToKaching() && scopeObserver) {
+              scopeObserver.disconnect();
+              scopeObserver = null;
+            }
+          });
+          scopeObserver.observe(scope, { childList: true, subtree: true });
+        }
+
+        root._mkfgCleanup = function () {
+          if (recheckTimer) {
+            clearTimeout(recheckTimer);
+            recheckTimer = null;
+          }
+          if (giftsObserver) {
+            giftsObserver.disconnect();
+            giftsObserver = null;
+          }
+          if (scopeObserver) {
+            scopeObserver.disconnect();
+            scopeObserver = null;
+          }
+          if (kachingBlock && dealListenerFn) {
+            kachingBlock.removeEventListener('deal-bar-selected', dealListenerFn);
+            dealListenerFn = null;
+          }
+          root.dataset.mkfgInitialized = 'false';
+        };
+      }
+
+      function mkfgBoot() {
+        var root = document.getElementById(mkfgRootId);
+        if (root) mkfgInitRoot(root);
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', mkfgBoot);
+      } else {
+        mkfgBoot();
+      }
+
+      document.addEventListener('shopify:section:load', function (evt) {
+        if (!evt.detail || evt.detail.sectionId !== mkfgSectionId) return;
+        var root = document.getElementById(mkfgRootId);
+        if (!root) return;
+        if (typeof root._mkfgCleanup === 'function') root._mkfgCleanup();
+        mkfgInitRoot(root);
+      });
+
+      document.addEventListener('shopify:section:unload', function (evt) {
+        if (!evt.detail || evt.detail.sectionId !== mkfgSectionId) return;
+        var root = document.getElementById(mkfgRootId);
+        if (root && typeof root._mkfgCleanup === 'function') root._mkfgCleanup();
+      });
+    })();
+  </script>
+{%- endif -%}

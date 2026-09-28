@@ -1,0 +1,428 @@
+<style>
+  .rc-feature {
+    background: var(--rc-bg);
+    color: var(--rc-ink);
+  }
+
+  .rc-feature__inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: var(--rc-padding, 32px) 24px;
+  }
+
+  .rc-track {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 24px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding: 40px 4px 4px;
+    margin: -40px -4px 0;
+  }
+  .rc-track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .rc-slide {
+    flex: 0 0 100%;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .rc-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    position: relative;
+    z-index: 2;
+    margin-bottom: -40px;
+    border: 3px solid var(--rc-bg, #fff);
+    background: rgba(0, 0, 0, 0.06);
+  }
+
+  .rc-card {
+    width: 100%;
+    border: 1.5px solid var(--rc-card-border, #1a1a17);
+    border-radius: 20px;
+    background: var(--rc-card-bg, #fff);
+    padding: 48px 20px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    text-align: center;
+  }
+
+  .rc-stars {
+    display: flex;
+    gap: 2px;
+  }
+  .rc-stars svg {
+    width: 18px;
+    height: 18px;
+    color: var(--rc-star, #8bc34a);
+  }
+
+  .rc-quote {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--rc-quote, var(--rc-ink));
+  }
+  .rc-quote p {
+    margin: 0;
+  }
+
+  .rc-name-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .rc-name {
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--rc-name, var(--rc-ink));
+  }
+  .rc-badge {
+    width: 16px;
+    height: 16px;
+    color: var(--rc-badge, #8bc34a);
+    flex-shrink: 0;
+  }
+
+  .rc-nav {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 24px;
+  }
+  .rc-arrow {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 2px solid var(--rc-arrow-border, #14210e);
+    background: var(--rc-arrow-bg, #bfe94a);
+    color: var(--rc-arrow-border, #14210e);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0;
+  }
+  .rc-arrow svg {
+    width: 18px;
+    height: 18px;
+  }
+  .rc-arrow:focus-visible {
+    outline: 2px solid var(--rc-arrow-border, #14210e);
+    outline-offset: 2px;
+  }
+
+  .rc-banner {
+    margin: 32px 0 0;
+    text-align: center;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    font-size: 15px;
+    text-transform: uppercase;
+    color: var(--rc-banner-text, inherit);
+  }
+  .rc-banner a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  @media (min-width: 860px) {
+    .rc-slide {
+      flex: 0 0 calc((100% - 48px) / 3);
+    }
+  }
+</style>
+
+<section id="rc-feature-{{ section.id }}" class="rc-feature" style="
+  --rc-bg: {{ section.settings.bg_color }};
+  --rc-ink: {{ section.settings.text_color }};
+  --rc-card-bg: {{ section.settings.card_bg }};
+  --rc-card-border: {{ section.settings.card_border }};
+  --rc-star: {{ section.settings.star_color }};
+  --rc-quote: {{ section.settings.quote_color }};
+  --rc-name: {{ section.settings.name_color }};
+  --rc-badge: {{ section.settings.badge_color }};
+  --rc-arrow-bg: {{ section.settings.arrow_bg }};
+  --rc-arrow-border: {{ section.settings.arrow_border }};
+  --rc-banner-text: {{ section.settings.banner_text_color }};
+  --rc-padding: {{ section.settings.section_padding }}px;
+">
+  <div class="rc-feature__inner">
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="rc-track" data-carousel-track>
+        {%- for block in section.blocks -%}
+          <div class="rc-slide" {{ block.shopify_attributes }}>
+            {%- if block.settings.avatar != blank -%}
+              <img class="rc-avatar" src="{{ block.settings.avatar | image_url: width: 160 }}" alt="{{ block.settings.name | escape }}" loading="lazy" width="80" height="80">
+            {%- endif -%}
+            <div class="rc-card">
+              {%- if block.settings.rating > 0 -%}
+                <div class="rc-stars" role="img" aria-label="{{ block.settings.rating }} out of 5 stars">
+                  {%- for i in (1..block.settings.rating) -%}
+                    <svg viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M10 1.5l2.59 5.24 5.78.84-4.18 4.08.99 5.76L10 14.77l-5.18 2.65.99-5.76-4.18-4.08 5.78-.84L10 1.5z"/></svg>
+                  {%- endfor -%}
+                </div>
+              {%- endif -%}
+              {%- if block.settings.quote != blank -%}
+                <div class="rc-quote">{{ block.settings.quote }}</div>
+              {%- endif -%}
+              {%- if block.settings.name != blank -%}
+                <div class="rc-name-row">
+                  <span class="rc-name">{{ block.settings.name }}</span>
+                  {%- if section.settings.show_badge -%}
+                    <svg class="rc-badge" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M17.5 10a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0z" stroke="currentColor" stroke-width="1.3"/><path d="M6.5 10.2l2.2 2.2 4.8-4.8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 1 -%}
+      <div class="rc-nav">
+        <button type="button" class="rc-arrow" data-carousel-prev aria-label="Previous reviews">
+          <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0" fill="currentColor"/></svg>
+        </button>
+        <button type="button" class="rc-arrow" data-carousel-next aria-label="Next reviews">
+          <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708" fill="currentColor"/></svg>
+        </button>
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.banner_text != blank -%}
+      <p class="rc-banner">
+        {%- if section.settings.banner_link != blank -%}
+          <a href="{{ section.settings.banner_link }}">{{ section.settings.banner_text }}</a>
+        {%- else -%}
+          {{ section.settings.banner_text }}
+        {%- endif -%}
+      </p>
+    {%- endif -%}
+
+  </div>
+</section>
+
+<script>
+  (function () {
+    var root = document.getElementById('rc-feature-{{ section.id }}');
+    if (!root) return;
+
+    var track = root.querySelector('[data-carousel-track]');
+    if (!track) return;
+
+    function slideBy(direction) {
+      var slide = track.querySelector('.rc-slide');
+      if (!slide) return;
+      var styles = getComputedStyle(track);
+      var gap = parseFloat(styles.columnGap || styles.gap || '0');
+      var amount = (slide.getBoundingClientRect().width + gap) * direction;
+      track.scrollBy({ left: amount, behavior: 'smooth' });
+    }
+
+    root.addEventListener('click', function (e) {
+      if (e.target.closest('[data-carousel-prev]')) {
+        slideBy(-1);
+      } else if (e.target.closest('[data-carousel-next]')) {
+        slideBy(1);
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Reviews carousel",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Reviews"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_badge",
+      "label": "Show verified badge next to name",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Banner"
+    },
+    {
+      "type": "text",
+      "id": "banner_text",
+      "label": "Banner text",
+      "default": "Save 50% Now!"
+    },
+    {
+      "type": "url",
+      "id": "banner_link",
+      "label": "Banner link"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "section_padding",
+      "label": "Vertical padding",
+      "min": 16,
+      "max": 96,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background",
+      "default": "#FAF5EC"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Body text",
+      "default": "#1A1A17"
+    },
+    {
+      "type": "color",
+      "id": "card_bg",
+      "label": "Card background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "card_border",
+      "label": "Card border",
+      "default": "#1A1A17"
+    },
+    {
+      "type": "color",
+      "id": "star_color",
+      "label": "Star color",
+      "default": "#8BC34A"
+    },
+    {
+      "type": "color",
+      "id": "quote_color",
+      "label": "Quote text",
+      "default": "#1A1A17"
+    },
+    {
+      "type": "color",
+      "id": "name_color",
+      "label": "Name text",
+      "default": "#1A1A17"
+    },
+    {
+      "type": "color",
+      "id": "badge_color",
+      "label": "Verified badge",
+      "default": "#8BC34A"
+    },
+    {
+      "type": "color",
+      "id": "arrow_bg",
+      "label": "Arrow background",
+      "default": "#BFE94A"
+    },
+    {
+      "type": "color",
+      "id": "arrow_border",
+      "label": "Arrow icon / border",
+      "default": "#14210E"
+    },
+    {
+      "type": "color",
+      "id": "banner_text_color",
+      "label": "Banner text",
+      "default": "#1A1A17"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "avatar",
+          "label": "Photo"
+        },
+        {
+          "type": "range",
+          "id": "rating",
+          "label": "Star rating",
+          "min": 0,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        },
+        {
+          "type": "richtext",
+          "id": "quote",
+          "label": "Quote"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Name",
+          "default": "First L."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Reviews carousel",
+      "blocks": [
+        {
+          "type": "review",
+          "settings": {
+            "name": "Michelle F.",
+            "quote": "<p>\"Rosie started limping after her morning walks. My vet suggested a joint supplement and I found Wuffes. Three weeks in, she was back to her usual self — climbing stairs, chasing the ball, greeting me at the door.\"</p>"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "name": "Ned H.",
+            "quote": "<p>\"Butters\" my 95 pound 11 year old son all of a sudden was having problems jumping up on the couch. Started this &amp; almost immediately was back to his old self enjoying his favorite spot on his blanket on the couch.</p>"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "name": "Keely G.",
+            "quote": "<p>\"I've tried three other supplements. This one actually stopped my dog's limp completely. I noticed the difference inside of two weeks.\"</p>"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "name": "Haley H.",
+            "quote": "<p>\"I just sprinkle it over her food — she doesn't even notice it's there. Her walks are so much smoother now. I genuinely can't believe how well it works.\"</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

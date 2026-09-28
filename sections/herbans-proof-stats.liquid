@@ -1,0 +1,694 @@
+{% comment %}
+  Herbans 50/50 Stats Section
+{% endcomment %}
+
+<section id="herbans-stats-{{ section.id }}" class="herbans-stats">
+  <div class="hs-outer">
+    <div class="hs-card">
+      <div class="hs-content">
+        {% if section.settings.heading != blank %}
+          <div class="hs-heading">{{ section.settings.heading }}</div>
+        {% endif %}
+
+        {% if section.settings.text != blank %}
+          <div class="hs-text">{{ section.settings.text }}</div>
+        {% endif %}
+
+        <div class="hs-stats-row">
+          {% for block in section.blocks %}
+            <div class="hs-main-stat" {{ block.shopify_attributes }}>
+              <div class="hs-main-number">{{ block.settings.number }}</div>
+              <div class="hs-main-label">{{ block.settings.label }}</div>
+            </div>
+          {% endfor %}
+        </div>
+
+        {% if section.settings.button_text != blank %}
+          <div class="hs-button-wrap">
+            <a href="{{ section.settings.button_link | default: '#' }}" class="hs-button">
+              {{ section.settings.button_text }}
+            </a>
+
+            {% if section.settings.sources_text != blank %}
+              <div class="hs-sources">{{ section.settings.sources_text }}</div>
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
+
+      {% if section.settings.image != blank %}
+        <div class="hs-image-wrap">
+          <img
+            src="{{ section.settings.image | image_url: width: 1200 }}"
+            alt="{{ section.settings.image_alt | escape }}"
+            loading="lazy"
+          >
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<style>
+  #herbans-stats-{{ section.id }} {
+    background: {{ section.settings.section_bg }};
+    padding: {{ section.settings.mobile_padding_top }}px {{ section.settings.mobile_side_padding }}px {{ section.settings.mobile_padding_bottom }}px;
+  }
+
+  #herbans-stats-{{ section.id }} * {
+    box-sizing: border-box;
+  }
+
+  #herbans-stats-{{ section.id }} .hs-outer {
+    max-width: {{ section.settings.max_width }}px;
+    margin: 0 auto;
+  }
+
+  #herbans-stats-{{ section.id }} .hs-card {
+    background: {{ section.settings.card_bg }};
+    border-radius: {{ section.settings.card_radius }}px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: {{ section.settings.card_shadow }};
+  }
+
+  #herbans-stats-{{ section.id }} .hs-content {
+    padding: {{ section.settings.mobile_content_padding }}px;
+    text-align: center;
+    order: 2;
+  }
+
+  #herbans-stats-{{ section.id }} .hs-image-wrap {
+    order: 1;
+    min-height: {{ section.settings.mobile_image_height }}px;
+    background: #eee;
+  }
+
+  #herbans-stats-{{ section.id }} .hs-image-wrap img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  #herbans-stats-{{ section.id }} .hs-heading,
+  #herbans-stats-{{ section.id }} .hs-heading p {
+    margin: 0;
+    color: {{ section.settings.heading_color }};
+    font-size: {{ section.settings.mobile_heading_size }}px;
+    line-height: 0.95;
+    font-weight: 900;
+    letter-spacing: -0.04em;
+  }
+
+  #herbans-stats-{{ section.id }} .hs-heading strong {
+    color: {{ section.settings.heading_accent }};
+    font-weight: inherit;
+  }
+
+  #herbans-stats-{{ section.id }} .hs-text,
+  #herbans-stats-{{ section.id }} .hs-text p {
+    margin: 14px 0 0;
+    color: {{ section.settings.text_color }};
+    font-size: {{ section.settings.mobile_text_size }}px;
+    line-height: 1.4;
+    font-weight: 500;
+  }
+
+  #herbans-stats-{{ section.id }} .hs-stats-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px;
+    margin-top: 30px;
+  }
+
+  #herbans-stats-{{ section.id }} .hs-main-number {
+    color: {{ section.settings.stat_color }};
+    font-size: {{ section.settings.mobile_main_stat_size }}px;
+    line-height: 0.9;
+    font-weight: 800;
+    letter-spacing: -0.05em;
+  }
+
+  #herbans-stats-{{ section.id }} .hs-main-label {
+    margin-top: 10px;
+    color: {{ section.settings.stat_text_color }};
+    font-size: {{ section.settings.mobile_stat_label_size }}px;
+    line-height: 1.25;
+    font-weight: 700;
+  }
+
+  #herbans-stats-{{ section.id }} .hs-button-wrap {
+    margin-top: 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  #herbans-stats-{{ section.id }} .hs-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: {{ section.settings.button_width }}px;
+    min-height: {{ section.settings.mobile_button_height }}px;
+    padding: 12px 34px;
+    border-radius: 999px;
+    text-decoration: none;
+    color: {{ section.settings.button_text_color }};
+    font-size: {{ section.settings.mobile_button_size }}px;
+    font-weight: 900;
+    line-height: 1.1;
+    text-align: center;
+    transition: all .25s ease;
+
+    {% if section.settings.button_use_gradient %}
+      background: linear-gradient(135deg, {{ section.settings.button_gradient_1 }}, {{ section.settings.button_gradient_2 }});
+      border: {{ section.settings.button_border_width }}px solid {{ section.settings.button_gradient_1 }};
+    {% else %}
+      background: {{ section.settings.button_bg }};
+      border: {{ section.settings.button_border_width }}px solid {{ section.settings.button_bg }};
+    {% endif %}
+  }
+
+  #herbans-stats-{{ section.id }} .hs-button:hover {
+    background: transparent;
+
+    {% if section.settings.button_use_gradient %}
+      color: {{ section.settings.button_gradient_1 }};
+      border-color: {{ section.settings.button_gradient_1 }};
+    {% else %}
+      color: {{ section.settings.button_bg }};
+      border-color: {{ section.settings.button_bg }};
+    {% endif %}
+
+    transform: translateY(-1px);
+  }
+
+  #herbans-stats-{{ section.id }} .hs-sources {
+    color: {{ section.settings.sources_color }};
+    font-size: 13px;
+    text-decoration: underline;
+  }
+
+  @media screen and (min-width: 768px) {
+    #herbans-stats-{{ section.id }} {
+      padding: {{ section.settings.desktop_padding_top }}px {{ section.settings.desktop_side_padding }}px {{ section.settings.desktop_padding_bottom }}px;
+    }
+
+    #herbans-stats-{{ section.id }} .hs-card {
+      flex-direction: row;
+      align-items: stretch;
+      min-height: {{ section.settings.desktop_image_height }}px;
+    }
+
+    #herbans-stats-{{ section.id }} .hs-content {
+      width: 50%;
+      order: 1;
+      padding: {{ section.settings.desktop_content_padding }}px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    #herbans-stats-{{ section.id }} .hs-image-wrap {
+      width: 50%;
+      order: 2;
+      min-height: {{ section.settings.desktop_image_height }}px;
+    }
+
+    #herbans-stats-{{ section.id }} .hs-heading,
+    #herbans-stats-{{ section.id }} .hs-heading p {
+      font-size: {{ section.settings.desktop_heading_size }}px;
+    }
+
+    #herbans-stats-{{ section.id }} .hs-text,
+    #herbans-stats-{{ section.id }} .hs-text p {
+      font-size: {{ section.settings.desktop_text_size }}px;
+      margin-top: 22px;
+    }
+
+    #herbans-stats-{{ section.id }} .hs-stats-row {
+      gap: 50px;
+      margin-top: 54px;
+    }
+
+    #herbans-stats-{{ section.id }} .hs-main-number {
+      font-size: {{ section.settings.desktop_main_stat_size }}px;
+    }
+
+    #herbans-stats-{{ section.id }} .hs-main-label {
+      font-size: {{ section.settings.desktop_stat_label_size }}px;
+    }
+
+    #herbans-stats-{{ section.id }} .hs-button-wrap {
+      margin-top: 48px;
+    }
+
+    #herbans-stats-{{ section.id }} .hs-button {
+      min-height: {{ section.settings.desktop_button_height }}px;
+      font-size: {{ section.settings.desktop_button_size }}px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Herbans Proof Stats",
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Top heading",
+      "default": "<p>Modern Hair Stress Is <strong>Real</strong></p>"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Top text",
+      "default": "<p>Daily stress, aging, hormonal shifts, and nutrient gaps can all affect how full your hair looks over time.*</p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Top image"
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "Image alt text",
+      "default": "Herbans lifestyle image"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Try Herbans Today"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "text",
+      "id": "sources_text",
+      "label": "Source text",
+      "default": "Based on customer feedback"
+    },
+
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Max width",
+      "min": 900,
+      "max": 1800,
+      "step": 20,
+      "default": 1720
+    },
+    {
+      "type": "range",
+      "id": "desktop_padding_top",
+      "label": "Desktop top padding",
+      "min": 20,
+      "max": 160,
+      "step": 4,
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "desktop_padding_bottom",
+      "label": "Desktop bottom padding",
+      "min": 20,
+      "max": 160,
+      "step": 4,
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "desktop_side_padding",
+      "label": "Desktop side padding",
+      "min": 16,
+      "max": 80,
+      "step": 4,
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "label": "Mobile top padding",
+      "min": 20,
+      "max": 120,
+      "step": 4,
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "label": "Mobile bottom padding",
+      "min": 20,
+      "max": 120,
+      "step": 4,
+      "default": 44
+    },
+    {
+      "type": "range",
+      "id": "mobile_side_padding",
+      "label": "Mobile side padding",
+      "min": 12,
+      "max": 32,
+      "step": 2,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "desktop_content_padding",
+      "label": "Desktop content padding",
+      "min": 30,
+      "max": 110,
+      "step": 4,
+      "default": 90
+    },
+    {
+      "type": "range",
+      "id": "mobile_content_padding",
+      "label": "Mobile content padding",
+      "min": 20,
+      "max": 60,
+      "step": 2,
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "desktop_image_height",
+      "label": "Desktop section height",
+      "min": 420,
+      "max": 900,
+      "step": 20,
+      "default": 820
+    },
+    {
+      "type": "range",
+      "id": "mobile_image_height",
+      "label": "Mobile image height",
+      "min": 220,
+      "max": 520,
+      "step": 20,
+      "default": 320
+    },
+
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "section_bg",
+      "label": "Section background",
+      "default": "#DAECE3"
+    },
+    {
+      "type": "color",
+      "id": "card_bg",
+      "label": "Card background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading",
+      "default": "#0B7F3A"
+    },
+    {
+      "type": "color",
+      "id": "heading_accent",
+      "label": "Heading bold color",
+      "default": "#D76F3D"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Body text",
+      "default": "#4E6258"
+    },
+    {
+      "type": "color",
+      "id": "stat_color",
+      "label": "Stat numbers",
+      "default": "#0B7F3A"
+    },
+    {
+      "type": "color",
+      "id": "stat_text_color",
+      "label": "Stat text",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "sources_color",
+      "label": "Sources text",
+      "default": "#777777"
+    },
+
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "range",
+      "id": "button_width",
+      "label": "Button max width",
+      "min": 180,
+      "max": 600,
+      "step": 10,
+      "default": 380
+    },
+    {
+      "type": "range",
+      "id": "desktop_button_height",
+      "label": "Desktop button height",
+      "min": 42,
+      "max": 90,
+      "step": 2,
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "mobile_button_height",
+      "label": "Mobile button height",
+      "min": 42,
+      "max": 80,
+      "step": 2,
+      "default": 58
+    },
+    {
+      "type": "range",
+      "id": "desktop_button_size",
+      "label": "Desktop button text size",
+      "min": 14,
+      "max": 30,
+      "step": 1,
+      "default": 22
+    },
+    {
+      "type": "range",
+      "id": "mobile_button_size",
+      "label": "Mobile button text size",
+      "min": 14,
+      "max": 24,
+      "step": 1,
+      "default": 17
+    },
+    {
+      "type": "checkbox",
+      "id": "button_use_gradient",
+      "label": "Use gradient button",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "button_bg",
+      "label": "Button solid background",
+      "default": "#0B4D3A"
+    },
+    {
+      "type": "color",
+      "id": "button_gradient_1",
+      "label": "Button gradient 1",
+      "default": "#D76F3D"
+    },
+    {
+      "type": "color",
+      "id": "button_gradient_2",
+      "label": "Button gradient 2",
+      "default": "#F5A55A"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "button_border_width",
+      "label": "Button border width",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "default": 3
+    },
+
+    {
+      "type": "header",
+      "content": "Corners / shadows"
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Card radius",
+      "min": 8,
+      "max": 40,
+      "step": 1,
+      "default": 28
+    },
+    {
+      "type": "text",
+      "id": "card_shadow",
+      "label": "Card shadow CSS",
+      "default": "none"
+    },
+
+    {
+      "type": "header",
+      "content": "Typography desktop"
+    },
+    {
+      "type": "range",
+      "id": "desktop_heading_size",
+      "label": "Heading size",
+      "min": 32,
+      "max": 72,
+      "step": 1,
+      "default": 52
+    },
+    {
+      "type": "range",
+      "id": "desktop_text_size",
+      "label": "Text size",
+      "min": 14,
+      "max": 30,
+      "step": 1,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "desktop_main_stat_size",
+      "label": "Main stat size",
+      "min": 48,
+      "max": 130,
+      "step": 2,
+      "default": 112
+    },
+    {
+      "type": "range",
+      "id": "desktop_stat_label_size",
+      "label": "Main stat label size",
+      "min": 12,
+      "max": 28,
+      "step": 1,
+      "default": 22
+    },
+
+    {
+      "type": "header",
+      "content": "Typography mobile"
+    },
+    {
+      "type": "range",
+      "id": "mobile_heading_size",
+      "label": "Heading size",
+      "min": 26,
+      "max": 52,
+      "step": 1,
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "mobile_text_size",
+      "label": "Text size",
+      "min": 13,
+      "max": 22,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "mobile_main_stat_size",
+      "label": "Main stat size",
+      "min": 44,
+      "max": 90,
+      "step": 2,
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "mobile_stat_label_size",
+      "label": "Main stat label size",
+      "min": 12,
+      "max": 21,
+      "step": 1,
+      "default": 14
+    }
+  ],
+  "blocks": [
+    {
+      "type": "main_stat",
+      "name": "Statistic",
+      "limit": 2,
+      "settings": [
+        {
+          "type": "text",
+          "id": "number",
+          "label": "Number",
+          "default": "84%"
+        },
+        {
+          "type": "textarea",
+          "id": "label",
+          "label": "Label",
+          "default": "noticed less shedding after adding Herbans to their routine.*"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Herbans Proof Stats",
+      "blocks": [
+        {
+          "type": "main_stat",
+          "settings": {
+            "number": "84%",
+            "label": "noticed less shedding after adding Herbans to their routine.*"
+          }
+        },
+        {
+          "type": "main_stat",
+          "settings": {
+            "number": "78%",
+            "label": "felt their hair looked fuller with consistent daily use.*"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,357 @@
+<style>
+  .pi-feature {
+    background: var(--pi-bg);
+    color: var(--pi-ink);
+  }
+
+  .pi-feature__inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: var(--pi-padding, 32px) 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  .pi-media {
+    width: 100%;
+    aspect-ratio: var(--pi-image-ratio, 5 / 4);
+    overflow: hidden;
+    border-radius: var(--pi-image-radius, 0px);
+    order: 2;
+  }
+  .pi-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: var(--pi-image-position, 50% 50%);
+    display: block;
+  }
+  .pi-media--placeholder svg {
+    width: 100%;
+    height: 100%;
+  }
+  .pi-media--desktop {
+    display: none;
+  }
+
+  .pi-text {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+    order: 1;
+  }
+  .pi-title {
+    margin: 0;
+    font-size: 26px;
+    line-height: 1.2;
+    font-weight: 800;
+    color: var(--pi-heading);
+    text-wrap: balance;
+  }
+  .pi-desc {
+    max-width: 60ch;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+  .pi-desc p {
+    margin: 0;
+  }
+  .pi-desc strong {
+    color: var(--pi-heading);
+  }
+  .pi-button {
+    background: var(--pi-button-bg, #1e3d2c);
+    color: var(--pi-button-text, #fff);
+    border: 2px solid var(--pi-button-border, transparent);
+    border-radius: 999px;
+    padding: 16px 32px;
+    font-weight: 800;
+    font-size: 14px;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    text-transform: uppercase;
+    display: block;
+    width: 100%;
+    text-align: center;
+    cursor: pointer;
+    box-sizing: border-box;
+  }
+  .pi-button:focus-visible {
+    outline: 2px solid var(--pi-button-border, var(--pi-button-bg));
+    outline-offset: 3px;
+  }
+
+  @media (min-width: 860px) {
+    .pi-feature__inner {
+      flex-direction: var(--pi-image-direction, row);
+      align-items: center;
+      gap: 56px;
+      padding: var(--pi-padding, 56px) 40px;
+    }
+    .pi-media--mobile {
+      display: none;
+    }
+    .pi-media--desktop {
+      display: block;
+      flex: 0 0 var(--pi-image-width, 50%);
+      order: 0;
+    }
+    .pi-text {
+      flex: 1 1 0%;
+      order: 0;
+    }
+    .pi-button {
+      display: inline-block;
+      width: auto;
+    }
+  }
+</style>
+
+{%- case section.settings.image_ratio -%}
+  {%- when 'square' -%}{%- assign image_ratio = '1 / 1' -%}
+  {%- when 'portrait' -%}{%- assign image_ratio = '4 / 5' -%}
+  {%- when 'landscape' -%}{%- assign image_ratio = '4 / 3' -%}
+  {%- when 'wide' -%}{%- assign image_ratio = '16 / 9' -%}
+  {%- when 'original' -%}
+    {%- if section.settings.image != blank -%}
+      {%- assign image_ratio = section.settings.image.aspect_ratio | append: ' / 1' -%}
+    {%- else -%}
+      {%- assign image_ratio = '5 / 4' -%}
+    {%- endif -%}
+  {%- else -%}
+    {%- assign image_ratio = '5 / 4' -%}
+{%- endcase -%}
+
+{%- if section.settings.image_position == 'right' -%}
+  {%- assign image_direction = 'row-reverse' -%}
+{%- else -%}
+  {%- assign image_direction = 'row' -%}
+{%- endif -%}
+
+{%- if section.settings.image != blank and section.settings.image.presentation.focal_point -%}
+  {%- assign focal_point = section.settings.image.presentation.focal_point.x | append: '% ' | append: section.settings.image.presentation.focal_point.y | append: '%' -%}
+{%- else -%}
+  {%- assign focal_point = '50% 50%' -%}
+{%- endif -%}
+
+<section class="pi-feature" style="
+  --pi-bg: {{ section.settings.bg_color }};
+  --pi-heading: {{ section.settings.heading_color }};
+  --pi-ink: {{ section.settings.text_color }};
+  --pi-button-bg: {{ section.settings.button_bg }};
+  --pi-button-text: {{ section.settings.button_text }};
+  --pi-button-border: {{ section.settings.button_border }};
+  --pi-padding: {{ section.settings.section_padding }}px;
+  --pi-image-ratio: {{ image_ratio }};
+  --pi-image-direction: {{ image_direction }};
+  --pi-image-position: {{ focal_point }};
+  --pi-image-radius: {{ section.settings.image_radius }}px;
+  --pi-image-width: {{ section.settings.image_width }}%;
+">
+  <div class="pi-feature__inner">
+
+    {%- if section.settings.image != blank -%}
+      <picture class="pi-media pi-media--mobile">
+        <source srcset="{{ section.settings.image | image_url: width: 820 }}" media="(max-width: 640px)">
+        <source srcset="{{ section.settings.image | image_url: width: 1024 }}" media="(min-width: 641px)">
+        <img
+          src="{{ section.settings.image | image_url: width: 1024 }}"
+          alt="{{ section.settings.image.alt | default: section.settings.heading | escape }}"
+          loading="eager"
+          width="{{ section.settings.image.width }}"
+          height="{{ section.settings.image.height }}"
+          style="object-position: {{ focal_point }};"
+        >
+      </picture>
+    {%- else -%}
+      <div class="pi-media pi-media--mobile pi-media--placeholder">
+        {{ 'image' | placeholder_svg_tag: 'pi-placeholder-svg' }}
+      </div>
+    {%- endif -%}
+
+    <div class="pi-text">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="pi-title">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.description != blank -%}
+        <div class="pi-desc">{{ section.settings.description }}</div>
+      {%- endif -%}
+      {%- if section.settings.button_label != blank -%}
+        {%- if section.settings.button_link != blank -%}
+          <a href="{{ section.settings.button_link }}" class="pi-button">{{ section.settings.button_label }}</a>
+        {%- else -%}
+          <span class="pi-button">{{ section.settings.button_label }}</span>
+        {%- endif -%}
+      {%- endif -%}
+    </div>
+
+    {%- if section.settings.image != blank -%}
+      <picture class="pi-media pi-media--desktop">
+        <source srcset="{{ section.settings.image | image_url: width: 1800 }}" media="(min-width: 1025px)">
+        <source srcset="{{ section.settings.image | image_url: width: 1024 }}" media="(min-width: 861px) and (max-width: 1024px)">
+        <img
+          src="{{ section.settings.image | image_url: width: 1800 }}"
+          alt="{{ section.settings.image.alt | default: section.settings.heading | escape }}"
+          loading="eager"
+          width="{{ section.settings.image.width }}"
+          height="{{ section.settings.image.height }}"
+          style="object-position: {{ focal_point }};"
+        >
+      </picture>
+    {%- endif -%}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Proof image",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "5. No Fillers, No Artificial Additives - Just What Works"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Unlike supermarket supplements that pad their formulas with cheap fillers and underdosed ingredients, <strong>Wuffes contains only what's been proven to work - at doses high enough to actually make a difference.</strong> No artificial colors. No GMOs. No hormones or antibiotics. <strong>Third-party batch tested and manufactured in an FDA registered, GMP-certified facility in the USA.</strong> Every ingredient is globally sourced for maximum purity and potency.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Try risk-free today"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image",
+      "info": "If your image already has icons or graphics baked in, upload it as one flat image — this section doesn't add separate icon overlays."
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Image position (desktop)",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Image shape",
+      "options": [
+        { "value": "square", "label": "Square" },
+        { "value": "portrait", "label": "Vertical (portrait)" },
+        { "value": "landscape", "label": "Horizontal (landscape)" },
+        { "value": "wide", "label": "Wide" },
+        { "value": "original", "label": "Original image proportions" }
+      ],
+      "default": "square"
+    },
+    {
+      "type": "range",
+      "id": "image_radius",
+      "label": "Image corner radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "image_width",
+      "label": "Image width (desktop)",
+      "min": 30,
+      "max": 70,
+      "step": 1,
+      "unit": "%",
+      "default": 50
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "section_padding",
+      "label": "Vertical padding",
+      "min": 16,
+      "max": 96,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background",
+      "default": "#F2E8D6"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading",
+      "default": "#1E3D2C"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Body text",
+      "default": "#1A1A17"
+    },
+    {
+      "type": "color",
+      "id": "button_bg",
+      "label": "Button background",
+      "default": "#1E3D2C"
+    },
+    {
+      "type": "color",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "button_border",
+      "label": "Button border",
+      "default": "#1E3D2C"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Proof image"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,555 @@
+<style>
+  .tf-feature {
+    background: var(--tf-bg);
+    color: var(--tf-ink);
+  }
+
+  .tf-feature__inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: var(--tf-padding, 32px) 24px;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-areas: "text" "media" "avatars";
+    gap: 28px;
+  }
+
+  .tf-text {
+    grid-area: text;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .tf-title {
+    margin: 0;
+    font-size: 26px;
+    line-height: 1.2;
+    font-weight: 800;
+    color: var(--tf-heading);
+    text-wrap: balance;
+  }
+  .tf-desc {
+    max-width: 60ch;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+  .tf-desc p {
+    margin: 0 0 1em;
+  }
+  .tf-desc p:last-child {
+    margin-bottom: 0;
+  }
+  .tf-button {
+    align-self: flex-start;
+    background: var(--tf-button-bg, #1e3d2c);
+    color: var(--tf-button-text, #fff);
+    border: none;
+    border-radius: 999px;
+    padding: 14px 28px;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    text-transform: uppercase;
+    display: inline-block;
+    cursor: pointer;
+  }
+  .tf-button:focus-visible {
+    outline: 2px solid var(--tf-button-bg, #1e3d2c);
+    outline-offset: 3px;
+  }
+
+  .tf-media-col {
+    grid-area: media;
+  }
+  .tf-media {
+    position: relative;
+  }
+  .tf-slide {
+    display: none;
+  }
+  .tf-slide.is-active {
+    display: block;
+  }
+
+  .tf-compare {
+    position: relative;
+    aspect-ratio: var(--tf-media-ratio, 4 / 3);
+    display: flex;
+    overflow: hidden;
+    border-radius: var(--tf-image-radius, 0px);
+    background: rgba(0, 0, 0, 0.04);
+  }
+  .tf-compare__half {
+    position: relative;
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+  }
+  .tf-compare__half img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .tf-chip {
+    position: absolute;
+    bottom: 12px;
+    background: var(--tf-chip-bg, #fff);
+    color: var(--tf-chip-text, #1e3d2c);
+    font-weight: 800;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    padding: 6px 12px;
+    border-radius: 999px;
+  }
+  .tf-chip--before {
+    left: 12px;
+  }
+  .tf-chip--after {
+    right: 12px;
+  }
+
+  .tf-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: var(--tf-arrow-bg, #bfe94a);
+    color: var(--tf-arrow-icon, #14210e);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 2;
+    padding: 0;
+  }
+  .tf-arrow svg {
+    width: 18px;
+    height: 18px;
+  }
+  .tf-arrow--prev {
+    left: 12px;
+  }
+  .tf-arrow--next {
+    right: 12px;
+  }
+  .tf-arrow:focus-visible {
+    outline: 2px solid var(--tf-arrow-icon, #14210e);
+    outline-offset: 2px;
+  }
+
+  .tf-caption {
+    margin: 14px 0 0;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .tf-avatars {
+    grid-area: avatars;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .tf-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    padding: 0;
+    border: 2px solid transparent;
+    background: none;
+    cursor: pointer;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .tf-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 50%;
+  }
+  .tf-avatar.is-active {
+    border-color: var(--tf-avatar-ring, #1e3d2c);
+  }
+
+  @media (min-width: 860px) {
+    .tf-feature__inner {
+      grid-template-columns: minmax(0, calc(100% - var(--tf-media-width, 50%))) minmax(0, var(--tf-media-width, 50%));
+      grid-template-areas: "text media" "avatars media";
+      align-items: start;
+      gap: 40px 56px;
+      padding: var(--tf-padding, 56px) 40px;
+    }
+    .tf-title {
+      font-size: 32px;
+    }
+  }
+</style>
+
+{%- case section.settings.media_ratio -%}
+  {%- when 'square' -%}{%- assign media_ratio = '1 / 1' -%}
+  {%- when 'portrait' -%}{%- assign media_ratio = '4 / 5' -%}
+  {%- when 'wide' -%}{%- assign media_ratio = '16 / 9' -%}
+  {%- else -%}{%- assign media_ratio = '4 / 3' -%}
+{%- endcase -%}
+
+<section
+  id="tf-feature-{{ section.id }}"
+  class="tf-feature"
+  style="
+    --tf-bg: {{ section.settings.bg_color }};
+    --tf-heading: {{ section.settings.heading_color }};
+    --tf-ink: {{ section.settings.text_color }};
+    --tf-button-bg: {{ section.settings.button_bg }};
+    --tf-button-text: {{ section.settings.button_text }};
+    --tf-chip-bg: {{ section.settings.chip_bg }};
+    --tf-chip-text: {{ section.settings.chip_text }};
+    --tf-arrow-bg: {{ section.settings.arrow_bg }};
+    --tf-arrow-icon: {{ section.settings.arrow_icon }};
+    --tf-avatar-ring: {{ section.settings.avatar_ring }};
+    --tf-padding: {{ section.settings.section_padding }}px;
+    --tf-media-ratio: {{ media_ratio }};
+    --tf-image-radius: {{ section.settings.image_radius }}px;
+    --tf-media-width: {{ section.settings.media_width }}%;
+  "
+>
+  <div class="tf-feature__inner">
+
+    <div class="tf-text">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="tf-title">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.description != blank -%}
+        <div class="tf-desc">{{ section.settings.description }}</div>
+      {%- endif -%}
+      {%- if section.settings.button_label != blank -%}
+        {%- if section.settings.button_link != blank -%}
+          <a href="{{ section.settings.button_link }}" class="tf-button">{{ section.settings.button_label }}</a>
+        {%- else -%}
+          <span class="tf-button">{{ section.settings.button_label }}</span>
+        {%- endif -%}
+      {%- endif -%}
+    </div>
+
+    <div class="tf-media-col">
+      <div class="tf-media">
+        <div class="tf-slides">
+          {%- for block in section.blocks -%}
+            <div class="tf-slide{% if forloop.first %} is-active{% endif %}" data-slide="{{ forloop.index0 }}" data-block-id="{{ block.id }}" {{ block.shopify_attributes }}>
+              <div class="tf-compare">
+                {%- if block.settings.before_image != blank -%}
+                  <div class="tf-compare__half">
+                    <img
+                      src="{{ block.settings.before_image | image_url: width: 700 }}"
+                      alt="{{ block.settings.before_image.alt | default: block.settings.name_age | append: ' before' | escape }}"
+                      loading="lazy"
+                      width="{{ block.settings.before_image.width }}"
+                      height="{{ block.settings.before_image.height }}"
+                    >
+                    <span class="tf-chip tf-chip--before">Before</span>
+                  </div>
+                {%- endif -%}
+                {%- if block.settings.after_image != blank -%}
+                  <div class="tf-compare__half">
+                    <img
+                      src="{{ block.settings.after_image | image_url: width: 700 }}"
+                      alt="{{ block.settings.after_image.alt | default: block.settings.name_age | append: ' after' | escape }}"
+                      loading="lazy"
+                      width="{{ block.settings.after_image.width }}"
+                      height="{{ block.settings.after_image.height }}"
+                    >
+                    <span class="tf-chip tf-chip--after">After</span>
+                  </div>
+                {%- endif -%}
+
+                {%- if section.blocks.size > 1 -%}
+                  <button type="button" class="tf-arrow tf-arrow--prev" data-carousel-prev aria-label="Previous story">
+                    <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0" fill="currentColor"/></svg>
+                  </button>
+                  <button type="button" class="tf-arrow tf-arrow--next" data-carousel-next aria-label="Next story">
+                    <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708" fill="currentColor"/></svg>
+                  </button>
+                {%- endif -%}
+              </div>
+
+              {%- if block.settings.name_age != blank or block.settings.story != blank -%}
+                <p class="tf-caption"><strong>{{ block.settings.name_age }}</strong>{% if block.settings.name_age != blank and block.settings.story != blank %} — {% endif %}{{ block.settings.story }}</p>
+              {%- endif -%}
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+
+    {%- if section.blocks.size > 1 -%}
+      <div class="tf-avatars" role="list">
+        {%- for block in section.blocks -%}
+          {%- assign avatar = block.settings.avatar_image | default: block.settings.after_image -%}
+          <button type="button" class="tf-avatar{% if forloop.first %} is-active{% endif %}" data-carousel-goto="{{ forloop.index0 }}" aria-label="View {{ block.settings.name_age }}'s story">
+            {%- if avatar != blank -%}
+              <img src="{{ avatar | image_url: width: 88 }}" alt="" loading="lazy" width="44" height="44">
+            {%- endif -%}
+          </button>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+  </div>
+</section>
+
+<script>
+  (function () {
+    var root = document.getElementById('tf-feature-{{ section.id }}');
+    if (!root) return;
+
+    var slides = Array.prototype.slice.call(root.querySelectorAll('[data-slide]'));
+    var avatars = Array.prototype.slice.call(root.querySelectorAll('[data-carousel-goto]'));
+
+    function goTo(index) {
+      var count = slides.length;
+      if (count === 0) return;
+      var next = ((index % count) + count) % count;
+      slides.forEach(function (slide, i) {
+        slide.classList.toggle('is-active', i === next);
+      });
+      avatars.forEach(function (avatar, i) {
+        avatar.classList.toggle('is-active', i === next);
+      });
+    }
+
+    function currentIndex() {
+      var active = slides.findIndex(function (slide) {
+        return slide.classList.contains('is-active');
+      });
+      return active === -1 ? 0 : active;
+    }
+
+    root.addEventListener('click', function (e) {
+      if (e.target.closest('[data-carousel-prev]')) {
+        goTo(currentIndex() - 1);
+      } else if (e.target.closest('[data-carousel-next]')) {
+        goTo(currentIndex() + 1);
+      } else {
+        var avatarButton = e.target.closest('[data-carousel-goto]');
+        if (avatarButton) {
+          goTo(parseInt(avatarButton.getAttribute('data-carousel-goto'), 10));
+        }
+      }
+    });
+
+    if (Shopify && Shopify.designMode) {
+      document.addEventListener('shopify:block:select', function (event) {
+        var blockId = event.detail.blockId;
+        var slide = root.querySelector('[data-block-id="' + blockId + '"]');
+        if (slide) {
+          goTo(slides.indexOf(slide));
+        }
+      });
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Testimonial carousel",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "2. A Life-Changing Experience for Over 750,000 Dogs"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>I've seen senior dogs with painful limping and low energy completely regain their mobility and confidence.</p><p>Dogs that struggled to get off the couch are running in the park again. Dogs that dreaded the stairs are bounding up them. It's one of the most rewarding things I see in my practice - and it's why I recommend Wuffes to dog owners who want to give their senior dogs more good years.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Try risk-free today"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "header",
+      "content": "Media"
+    },
+    {
+      "type": "select",
+      "id": "media_ratio",
+      "label": "Before/after image shape",
+      "options": [
+        { "value": "square", "label": "Square" },
+        { "value": "portrait", "label": "Vertical (portrait)" },
+        { "value": "landscape", "label": "Horizontal (landscape)" },
+        { "value": "wide", "label": "Wide" }
+      ],
+      "default": "landscape"
+    },
+    {
+      "type": "range",
+      "id": "image_radius",
+      "label": "Image corner radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "media_width",
+      "label": "Media width (desktop)",
+      "min": 30,
+      "max": 70,
+      "step": 1,
+      "unit": "%",
+      "default": 50
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "section_padding",
+      "label": "Vertical padding",
+      "min": 16,
+      "max": 96,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background",
+      "default": "#FAF5EC"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading",
+      "default": "#1E3D2C"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Body text",
+      "default": "#1A1A17"
+    },
+    {
+      "type": "color",
+      "id": "button_bg",
+      "label": "Button background",
+      "default": "#1E3D2C"
+    },
+    {
+      "type": "color",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "chip_bg",
+      "label": "Before/After chip background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "chip_text",
+      "label": "Before/After chip text",
+      "default": "#1E3D2C"
+    },
+    {
+      "type": "color",
+      "id": "arrow_bg",
+      "label": "Arrow button background",
+      "default": "#BFE94A"
+    },
+    {
+      "type": "color",
+      "id": "arrow_icon",
+      "label": "Arrow icon",
+      "default": "#14210E"
+    },
+    {
+      "type": "color",
+      "id": "avatar_ring",
+      "label": "Active avatar ring",
+      "default": "#1E3D2C"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "story",
+      "name": "Story",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "before_image",
+          "label": "Before image"
+        },
+        {
+          "type": "image_picker",
+          "id": "after_image",
+          "label": "After image"
+        },
+        {
+          "type": "image_picker",
+          "id": "avatar_image",
+          "label": "Avatar thumbnail",
+          "info": "Optional. Uses the after image if left empty."
+        },
+        {
+          "type": "text",
+          "id": "name_age",
+          "label": "Name and age",
+          "default": "Dog Name (age)"
+        },
+        {
+          "type": "text",
+          "id": "story",
+          "label": "Story",
+          "default": "from struggling to thriving"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonial carousel",
+      "blocks": [
+        { "type": "story", "settings": { "name_age": "Max (10 years old)", "story": "from limping on walks to running off-leash" } },
+        { "type": "story", "settings": { "name_age": "Bella (9 years old)", "story": "from avoiding stairs to climbing easily" } },
+        { "type": "story", "settings": { "name_age": "Gus (12 years old)", "story": "from barely rising in the morning to full tail-wagging greetings" } },
+        { "type": "story", "settings": { "name_age": "Luna (8 years old)", "story": "from refusing car rides to jumping in on her own" } },
+        { "type": "story", "settings": { "name_age": "Charlie (11 years old)", "story": "from lying still all day to playing in the backyard again" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,1263 @@
+{% comment %}
+  Meowgical - Why Choose
+  Fully customizable: heading + feature callout box (badge, text, avatars, CTA button) + reason cards grid.
+{% endcomment %}
+
+<section
+  id="mwg-why-choose-{{ section.id }}"
+  class="mwg-why-choose-{{ section.id }}"
+>
+  <div class="mwg-inner">
+
+    <div class="mwg-top">
+      <h2 class="mwg-heading">
+        {{ section.settings.heading }}
+      </h2>
+
+      {% if section.settings.show_feature_box %}
+        <div class="mwg-feature-box">
+          {% if section.settings.badge_image != blank %}
+            <div class="mwg-badge-wrap">
+              <img
+                src="{{ section.settings.badge_image | image_url: width: 500 }}"
+                alt="{{ section.settings.badge_alt | escape }}"
+                loading="lazy"
+                class="mwg-badge"
+              >
+            </div>
+          {% endif %}
+
+          <div class="mwg-feature-content">
+            {% if section.settings.feature_text != blank %}
+              <p class="mwg-feature-text">
+                {{ section.settings.feature_text }}
+              </p>
+            {% endif %}
+
+            <div class="mwg-feature-bottom">
+              <div class="mwg-avatar-group">
+                {% if section.settings.avatar_1 != blank %}
+                  <img src="{{ section.settings.avatar_1 | image_url: width: 80 }}" alt="" loading="lazy">
+                {% endif %}
+                {% if section.settings.avatar_2 != blank %}
+                  <img src="{{ section.settings.avatar_2 | image_url: width: 80 }}" alt="" loading="lazy">
+                {% endif %}
+                {% if section.settings.avatar_3 != blank %}
+                  <img src="{{ section.settings.avatar_3 | image_url: width: 80 }}" alt="" loading="lazy">
+                {% endif %}
+              </div>
+
+              {% if section.settings.link_text != blank %}
+                <a href="{{ section.settings.link_url | default: '#product-form' }}" class="mwg-feature-cta">
+                  {{ section.settings.link_text }}
+                </a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="mwg-cards">
+      {% for block in section.blocks %}
+        <div class="mwg-card" {{ block.shopify_attributes }}>
+          <div class="mwg-card-head">
+            <h3>{{ block.settings.card_title }}</h3>
+
+            {% if block.settings.card_icon != blank %}
+              <div class="mwg-icon-circle">
+                <img
+                  src="{{ block.settings.card_icon | image_url: width: 100 }}"
+                  alt=""
+                  loading="lazy"
+                >
+              </div>
+            {% else %}
+              <div class="mwg-icon-circle">
+                <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 8.5l3 3 7-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+            {% endif %}
+          </div>
+
+          {% if block.settings.card_text != blank %}
+            <p>{{ block.settings.card_text }}</p>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+
+  </div>
+</section>
+
+<style>
+  #mwg-why-choose-{{ section.id }} {
+    background: {{ section.settings.section_bg }};
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    padding-left: {{ section.settings.padding_sides }}px;
+    padding-right: {{ section.settings.padding_sides }}px;
+  }
+
+  #mwg-why-choose-{{ section.id }} * {
+    box-sizing: border-box;
+  }
+
+  #mwg-why-choose-{{ section.id }} .mwg-inner {
+    max-width: {{ section.settings.max_width }}px;
+    margin: 0 auto;
+  }
+
+  #mwg-why-choose-{{ section.id }} .mwg-top {
+    display: flex;
+    flex-direction: column;
+    gap: {{ section.settings.top_gap }}px;
+    margin-bottom: {{ section.settings.cards_gap_top }}px;
+  }
+
+  #mwg-why-choose-{{ section.id }} .mwg-heading,
+  #mwg-why-choose-{{ section.id }} .mwg-heading p {
+    margin: 0;
+    color: {{ section.settings.heading_color }};
+    font-size: {{ section.settings.heading_size_mobile }}px;
+    line-height: {{ section.settings.heading_line_height }};
+    font-weight: {{ section.settings.heading_weight }};
+    text-align: {{ section.settings.heading_align_mobile }};
+    letter-spacing: {{ section.settings.heading_letter_spacing }}px;
+  }
+
+  #mwg-why-choose-{{ section.id }} .mwg-heading strong,
+  #mwg-why-choose-{{ section.id }} .mwg-heading em {
+    color: {{ section.settings.heading_accent }};
+    font-weight: inherit;
+    font-style: italic;
+  }
+
+  #mwg-why-choose-{{ section.id }} .mwg-feature-box {
+    background: {{ section.settings.feature_bg }};
+    {% if section.settings.feature_use_gradient %}
+      background: linear-gradient(135deg, {{ section.settings.feature_gradient_1 }}, {{ section.settings.feature_gradient_2 }});
+    {% endif %}
+    border-radius: {{ section.settings.feature_radius_mobile }}px;
+    padding: {{ section.settings.feature_padding_mobile }}px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: {{ section.settings.feature_gap }}px;
+    max-width: {{ section.settings.feature_max_width }}px;
+    width: 100%;
+    box-shadow: {{ section.settings.feature_shadow }};
+  }
+
+  #mwg-why-choose-{{ section.id }} .mwg-badge-wrap {
+    flex-shrink: 0;
+  }
+
+  #mwg-why-choose-{{ section.id }} .mwg-badge {
+    width: {{ section.settings.badge_width_mobile }}px;
+    height: auto;
+    display: block;
+  }
+
+  #mwg-why-choose-{{ section.id }} .mwg-feature-content {
+    display: flex;
+    flex-direction: column;
+    gap: {{ section.settings.feature_content_gap }}px;
+    align-items: center;
+  }
+
+  #mwg-why-choose-{{ section.id }} .mwg-feature-text {
+    margin: 0;
+    color: {{ section.settings.feature_text_color }};
+    font-size: {{ section.settings.feature_text_size_mobile }}px;
+    line-height: {{ section.settings.feature_text_line_height }};
+    font-weight: {{ section.settings.feature_text_weight }};
+    text-align: {{ section.settings.feature_text_align_mobile }};
+  }
+
+  #mwg-why-choose-{{ section.id }} .mwg-feature-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: {{ section.settings.avatar_link_gap }}px;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  #mwg-why-choose-{{ section.id }} .mwg-avatar-group {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  #mwg-why-choose-{{ section.id }} .mwg-avatar-group img {
+    width: {{ section.settings.avatar_size }}px;
+    height: {{ section.settings.avatar_size }}px;
+    border-radius: 999px;
+    object-fit: cover;
+    border: {{ section.settings.avatar_border_width }}px solid {{ section.settings.avatar_border_color }};
+    margin-left: -{{ section.settings.avatar_overlap }}px;
+  }
+
+  #mwg-why-choose-{{ section.id }} .mwg-avatar-group img:first-child {
+    margin-left: 0;
+  }
+
+  #mwg-why-choose-{{ section.id }} .mwg-feature-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: {{ section.settings.button_height_mobile }}px;
+    padding: 10px 22px;
+    border: {{ section.settings.button_border_width }}px solid {{ section.settings.button_border_color }};
+    border-radius: 999px;
+    {% if section.settings.button_use_gradient %}
+      background: linear-gradient(135deg, {{ section.settings.button_gradient_1 }}, {{ section.settings.button_gradient_2 }});
+    {% else %}
+      background: {{ section.settings.button_bg }};
+    {% endif %}
+    color: {{ section.settings.button_text_color }};
+    text-decoration: none;
+    font-size: {{ section.settings.link_size }}px;
+    font-weight: {{ section.settings.link_weight }};
+    line-height: 1;
+    letter-spacing: .01em;
+    box-shadow: {{ section.settings.button_shadow }};
+    transition: transform .2s ease;
+  }
+
+  #mwg-why-choose-{{ section.id }} .mwg-feature-cta:hover {
+    transform: translateY(-1px);
+  }
+
+  #mwg-why-choose-{{ section.id }} .mwg-cards {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: {{ section.settings.card_gap_mobile }}px;
+  }
+
+  #mwg-why-choose-{{ section.id }} .mwg-card {
+    background: {{ section.settings.card_bg }};
+    border-radius: {{ section.settings.card_radius }}px;
+    padding: {{ section.settings.card_padding_mobile }}px;
+    box-shadow: {{ section.settings.card_shadow }};
+    border: {{ section.settings.card_border_width }}px solid {{ section.settings.card_border_color }};
+  }
+
+  #mwg-why-choose-{{ section.id }} .mwg-card-head {
+    display: flex;
+    align-items: flex-start;
+    gap: {{ section.settings.card_head_gap }}px;
+    margin-bottom: {{ section.settings.card_title_bottom_gap }}px;
+  }
+
+  #mwg-why-choose-{{ section.id }} .mwg-card h3 {
+    margin: 0;
+    flex: 1;
+    min-width: 0;
+    color: {{ section.settings.card_title_color }};
+    font-size: {{ section.settings.card_title_size_mobile }}px;
+    line-height: {{ section.settings.card_title_line_height }};
+    font-weight: {{ section.settings.card_title_weight }};
+    letter-spacing: {{ section.settings.card_title_letter_spacing }}px;
+    overflow-wrap: break-word;
+  }
+
+  #mwg-why-choose-{{ section.id }} .mwg-card p {
+    margin: 0;
+    color: {{ section.settings.card_text_color }};
+    font-size: {{ section.settings.card_text_size_mobile }}px;
+    line-height: {{ section.settings.card_text_line_height }};
+    font-weight: {{ section.settings.card_text_weight }};
+  }
+
+  #mwg-why-choose-{{ section.id }} .mwg-icon-circle {
+    width: {{ section.settings.icon_circle_size_mobile }}px;
+    height: {{ section.settings.icon_circle_size_mobile }}px;
+    border-radius: 999px;
+    border: {{ section.settings.icon_border_width }}px solid {{ section.settings.icon_border_color }};
+    background: {{ section.settings.icon_circle_bg }};
+    color: {{ section.settings.icon_color }};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  #mwg-why-choose-{{ section.id }} .mwg-icon-circle img {
+    width: {{ section.settings.icon_size_mobile }}px;
+    height: {{ section.settings.icon_size_mobile }}px;
+    object-fit: contain;
+  }
+
+  #mwg-why-choose-{{ section.id }} .mwg-icon-circle svg {
+    width: 45%;
+    height: 45%;
+  }
+
+  @media screen and (min-width: 768px) {
+    #mwg-why-choose-{{ section.id }} {
+      padding-left: {{ section.settings.padding_sides_desktop }}px;
+      padding-right: {{ section.settings.padding_sides_desktop }}px;
+    }
+
+    #mwg-why-choose-{{ section.id }} .mwg-top {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    #mwg-why-choose-{{ section.id }} .mwg-heading,
+    #mwg-why-choose-{{ section.id }} .mwg-heading p {
+      font-size: {{ section.settings.heading_size_desktop }}px;
+      text-align: {{ section.settings.heading_align_desktop }};
+      max-width: {{ section.settings.heading_max_width }}px;
+    }
+
+    #mwg-why-choose-{{ section.id }} .mwg-feature-box {
+      flex-direction: row;
+      align-items: center;
+      border-radius: {{ section.settings.feature_radius_desktop }}px;
+      padding: {{ section.settings.feature_padding_desktop }}px;
+    }
+
+    #mwg-why-choose-{{ section.id }} .mwg-badge {
+      width: {{ section.settings.badge_width_desktop }}px;
+    }
+
+    #mwg-why-choose-{{ section.id }} .mwg-feature-content {
+      align-items: flex-start;
+    }
+
+    #mwg-why-choose-{{ section.id }} .mwg-feature-text {
+      font-size: {{ section.settings.feature_text_size_desktop }}px;
+      text-align: {{ section.settings.feature_text_align_desktop }};
+    }
+
+    #mwg-why-choose-{{ section.id }} .mwg-feature-bottom {
+      justify-content: flex-start;
+    }
+
+    #mwg-why-choose-{{ section.id }} .mwg-feature-cta {
+      min-height: {{ section.settings.button_height_desktop }}px;
+    }
+
+    #mwg-why-choose-{{ section.id }} .mwg-cards {
+      grid-template-columns: repeat({{ section.settings.columns_desktop }}, 1fr);
+      gap: {{ section.settings.card_gap_desktop }}px;
+    }
+
+    #mwg-why-choose-{{ section.id }} .mwg-card {
+      padding: {{ section.settings.card_padding_desktop }}px;
+    }
+
+    #mwg-why-choose-{{ section.id }} .mwg-card h3 {
+      font-size: {{ section.settings.card_title_size_desktop }}px;
+    }
+
+    #mwg-why-choose-{{ section.id }} .mwg-card p {
+      font-size: {{ section.settings.card_text_size_desktop }}px;
+    }
+
+    #mwg-why-choose-{{ section.id }} .mwg-icon-circle {
+      width: {{ section.settings.icon_circle_size_desktop }}px;
+      height: {{ section.settings.icon_circle_size_desktop }}px;
+    }
+
+    #mwg-why-choose-{{ section.id }} .mwg-icon-circle img {
+      width: {{ section.settings.icon_size_desktop }}px;
+      height: {{ section.settings.icon_size_desktop }}px;
+    }
+  }
+
+  /* MOBILE ONLY — move feature box under all cards */
+  @media screen and (max-width: 767px) {
+    #mwg-why-choose-{{ section.id }} .mwg-inner {
+      display: flex;
+      flex-direction: column;
+    }
+
+    #mwg-why-choose-{{ section.id }} .mwg-top {
+      display: contents;
+    }
+
+    #mwg-why-choose-{{ section.id }} .mwg-heading {
+      order: 1;
+      margin-bottom: {{ section.settings.cards_gap_top }}px;
+    }
+
+    #mwg-why-choose-{{ section.id }} .mwg-cards {
+      order: 2;
+    }
+
+    #mwg-why-choose-{{ section.id }} .mwg-feature-box {
+      order: 3;
+      margin-top: {{ section.settings.cards_gap_top }}px;
+      max-width: 100%;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Why Choose Meowgical",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Layout"
+    },
+    {
+      "type": "color",
+      "id": "section_bg",
+      "label": "Section background",
+      "default": "#F6F7FC"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Max width",
+      "min": 900,
+      "max": 1600,
+      "step": 20,
+      "default": 1140
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding_sides",
+      "label": "Side padding mobile",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_sides_desktop",
+      "label": "Side padding desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "top_gap",
+      "label": "Header gap",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "cards_gap_top",
+      "label": "Space between header and cards",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "default": 36
+    },
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "<p>Why Cat Parents Choose <em>SuperTaurine</em></p>"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#101010"
+    },
+    {
+      "type": "color",
+      "id": "heading_accent",
+      "label": "Heading accent",
+      "default": "#3456D1"
+    },
+    {
+      "type": "range",
+      "id": "heading_size_desktop",
+      "label": "Heading size desktop",
+      "min": 24,
+      "max": 80,
+      "step": 1,
+      "default": 44
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Heading size mobile",
+      "min": 20,
+      "max": 56,
+      "step": 1,
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "heading_weight",
+      "label": "Heading weight",
+      "min": 300,
+      "max": 900,
+      "step": 100,
+      "default": 800
+    },
+    {
+      "type": "range",
+      "id": "heading_line_height",
+      "label": "Heading line height",
+      "min": 0.8,
+      "max": 1.6,
+      "step": 0.1,
+      "default": 1.1
+    },
+    {
+      "type": "range",
+      "id": "heading_letter_spacing",
+      "label": "Heading letter spacing",
+      "min": -3,
+      "max": 5,
+      "step": 0.5,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "heading_max_width",
+      "label": "Heading max width desktop",
+      "min": 300,
+      "max": 900,
+      "step": 20,
+      "default": 500
+    },
+    {
+      "type": "select",
+      "id": "heading_align_desktop",
+      "label": "Heading align desktop",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "heading_align_mobile",
+      "label": "Heading align mobile",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Top Feature Box"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_feature_box",
+      "label": "Show feature box",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "feature_use_gradient",
+      "label": "Use gradient feature box background",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "feature_gradient_1",
+      "label": "Feature gradient color 1",
+      "default": "#3E50DC"
+    },
+    {
+      "type": "color",
+      "id": "feature_gradient_2",
+      "label": "Feature gradient color 2",
+      "default": "#6695DE"
+    },
+    {
+      "type": "color",
+      "id": "feature_bg",
+      "label": "Feature box background (solid, if gradient off)",
+      "default": "#3456D1"
+    },
+    {
+      "type": "text",
+      "id": "feature_shadow",
+      "label": "Feature box shadow CSS",
+      "default": "0 16px 42px rgba(24, 45, 110, 0.14)"
+    },
+    {
+      "type": "range",
+      "id": "feature_max_width",
+      "label": "Feature box max width",
+      "min": 300,
+      "max": 900,
+      "step": 20,
+      "default": 660
+    },
+    {
+      "type": "range",
+      "id": "feature_padding_desktop",
+      "label": "Feature padding desktop",
+      "min": 10,
+      "max": 60,
+      "step": 2,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "feature_padding_mobile",
+      "label": "Feature padding mobile",
+      "min": 10,
+      "max": 60,
+      "step": 2,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "feature_radius_desktop",
+      "label": "Feature radius desktop",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "feature_radius_mobile",
+      "label": "Feature radius mobile",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "feature_gap",
+      "label": "Badge/text gap",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "feature_content_gap",
+      "label": "Feature content gap",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "default": 14
+    },
+    {
+      "type": "image_picker",
+      "id": "badge_image",
+      "label": "Badge/logo image"
+    },
+    {
+      "type": "text",
+      "id": "badge_alt",
+      "label": "Badge alt text",
+      "default": "Meowgical badge"
+    },
+    {
+      "type": "range",
+      "id": "badge_width_desktop",
+      "label": "Badge width desktop",
+      "min": 60,
+      "max": 320,
+      "step": 5,
+      "default": 170
+    },
+    {
+      "type": "range",
+      "id": "badge_width_mobile",
+      "label": "Badge width mobile",
+      "min": 60,
+      "max": 320,
+      "step": 5,
+      "default": 150
+    },
+    {
+      "type": "textarea",
+      "id": "feature_text",
+      "label": "Feature text",
+      "default": "Thousands of cat parents trust Meowgical as part of their cat's daily wellness routine."
+    },
+    {
+      "type": "color",
+      "id": "feature_text_color",
+      "label": "Feature text color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "feature_text_size_desktop",
+      "label": "Feature text size desktop",
+      "min": 10,
+      "max": 32,
+      "step": 1,
+      "default": 17
+    },
+    {
+      "type": "range",
+      "id": "feature_text_size_mobile",
+      "label": "Feature text size mobile",
+      "min": 10,
+      "max": 28,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "feature_text_weight",
+      "label": "Feature text weight",
+      "min": 300,
+      "max": 900,
+      "step": 100,
+      "default": 500
+    },
+    {
+      "type": "range",
+      "id": "feature_text_line_height",
+      "label": "Feature text line height",
+      "min": 1,
+      "max": 2,
+      "step": 0.1,
+      "default": 1.4
+    },
+    {
+      "type": "select",
+      "id": "feature_text_align_desktop",
+      "label": "Feature text align desktop",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "feature_text_align_mobile",
+      "label": "Feature text align mobile",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Avatars + CTA Button"
+    },
+    {
+      "type": "image_picker",
+      "id": "avatar_1",
+      "label": "Avatar 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "avatar_2",
+      "label": "Avatar 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "avatar_3",
+      "label": "Avatar 3"
+    },
+    {
+      "type": "range",
+      "id": "avatar_size",
+      "label": "Avatar size",
+      "min": 16,
+      "max": 60,
+      "step": 1,
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "avatar_overlap",
+      "label": "Avatar overlap",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "default": 7
+    },
+    {
+      "type": "range",
+      "id": "avatar_border_width",
+      "label": "Avatar border width",
+      "min": 0,
+      "max": 8,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "color",
+      "id": "avatar_border_color",
+      "label": "Avatar border color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "avatar_link_gap",
+      "label": "Avatar/button gap",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "text",
+      "id": "link_text",
+      "label": "Button text",
+      "default": "View Results & Learn More"
+    },
+    {
+      "type": "url",
+      "id": "link_url",
+      "label": "Button link"
+    },
+    {
+      "type": "range",
+      "id": "link_size",
+      "label": "Button text size",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "link_weight",
+      "label": "Button text weight",
+      "min": 300,
+      "max": 900,
+      "step": 100,
+      "default": 700
+    },
+    {
+      "type": "checkbox",
+      "id": "button_use_gradient",
+      "label": "Use gradient button",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "button_gradient_1",
+      "label": "Button gradient color 1",
+      "default": "#3E50DC"
+    },
+    {
+      "type": "color",
+      "id": "button_gradient_2",
+      "label": "Button gradient color 2",
+      "default": "#6695DE"
+    },
+    {
+      "type": "color",
+      "id": "button_bg",
+      "label": "Button background (solid)",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text color",
+      "default": "#3456D1"
+    },
+    {
+      "type": "range",
+      "id": "button_border_width",
+      "label": "Button border width",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "color",
+      "id": "button_border_color",
+      "label": "Button border color",
+      "default": "#3456D1"
+    },
+    {
+      "type": "range",
+      "id": "button_height_mobile",
+      "label": "Button height mobile",
+      "min": 32,
+      "max": 60,
+      "step": 2,
+      "default": 42
+    },
+    {
+      "type": "range",
+      "id": "button_height_desktop",
+      "label": "Button height desktop",
+      "min": 32,
+      "max": 64,
+      "step": 2,
+      "default": 44
+    },
+    {
+      "type": "text",
+      "id": "button_shadow",
+      "label": "Button shadow CSS",
+      "default": "0 6px 16px rgba(0, 0, 0, 0.12)"
+    },
+    {
+      "type": "header",
+      "content": "Cards Layout"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "Columns desktop",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "card_gap_desktop",
+      "label": "Card gap desktop",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "card_gap_mobile",
+      "label": "Card gap mobile",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "default": 18
+    },
+    {
+      "type": "color",
+      "id": "card_bg",
+      "label": "Card background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Card radius",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "card_padding_desktop",
+      "label": "Card padding desktop",
+      "min": 10,
+      "max": 70,
+      "step": 2,
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "card_padding_mobile",
+      "label": "Card padding mobile",
+      "min": 10,
+      "max": 70,
+      "step": 2,
+      "default": 24
+    },
+    {
+      "type": "text",
+      "id": "card_shadow",
+      "label": "Card shadow CSS",
+      "default": "none"
+    },
+    {
+      "type": "range",
+      "id": "card_border_width",
+      "label": "Card border width",
+      "min": 0,
+      "max": 6,
+      "step": 1,
+      "default": 1
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Card border color",
+      "default": "#D9DFF4"
+    },
+    {
+      "type": "range",
+      "id": "card_head_gap",
+      "label": "Card title/icon gap",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "card_title_bottom_gap",
+      "label": "Space under card title row",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "header",
+      "content": "Card Title"
+    },
+    {
+      "type": "color",
+      "id": "card_title_color",
+      "label": "Card title color",
+      "default": "#101010"
+    },
+    {
+      "type": "range",
+      "id": "card_title_size_desktop",
+      "label": "Card title size desktop",
+      "min": 14,
+      "max": 48,
+      "step": 1,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "card_title_size_mobile",
+      "label": "Card title size mobile",
+      "min": 14,
+      "max": 40,
+      "step": 1,
+      "default": 21
+    },
+    {
+      "type": "range",
+      "id": "card_title_weight",
+      "label": "Card title weight",
+      "min": 300,
+      "max": 900,
+      "step": 100,
+      "default": 800
+    },
+    {
+      "type": "range",
+      "id": "card_title_line_height",
+      "label": "Card title line height",
+      "min": 0.8,
+      "max": 1.8,
+      "step": 0.1,
+      "default": 1.2
+    },
+    {
+      "type": "range",
+      "id": "card_title_letter_spacing",
+      "label": "Card title letter spacing",
+      "min": -3,
+      "max": 5,
+      "step": 0.5,
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Card Text"
+    },
+    {
+      "type": "color",
+      "id": "card_text_color",
+      "label": "Card text color",
+      "default": "#4B4F5C"
+    },
+    {
+      "type": "range",
+      "id": "card_text_size_desktop",
+      "label": "Card text size desktop",
+      "min": 12,
+      "max": 28,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "card_text_size_mobile",
+      "label": "Card text size mobile",
+      "min": 12,
+      "max": 26,
+      "step": 1,
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "card_text_weight",
+      "label": "Card text weight",
+      "min": 300,
+      "max": 900,
+      "step": 100,
+      "default": 400
+    },
+    {
+      "type": "range",
+      "id": "card_text_line_height",
+      "label": "Card text line height",
+      "min": 1,
+      "max": 2.2,
+      "step": 0.1,
+      "default": 1.6
+    },
+    {
+      "type": "header",
+      "content": "Icons"
+    },
+    {
+      "type": "color",
+      "id": "icon_circle_bg",
+      "label": "Icon circle background",
+      "default": "#EEF1FC"
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Icon mark (fallback checkmark)",
+      "default": "#3456D1"
+    },
+    {
+      "type": "color",
+      "id": "icon_border_color",
+      "label": "Icon circle border color",
+      "default": "#3456D1"
+    },
+    {
+      "type": "range",
+      "id": "icon_border_width",
+      "label": "Icon circle border width",
+      "min": 0,
+      "max": 6,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "icon_circle_size_desktop",
+      "label": "Icon circle size desktop",
+      "min": 30,
+      "max": 100,
+      "step": 1,
+      "default": 52
+    },
+    {
+      "type": "range",
+      "id": "icon_circle_size_mobile",
+      "label": "Icon circle size mobile",
+      "min": 30,
+      "max": 100,
+      "step": 1,
+      "default": 46
+    },
+    {
+      "type": "range",
+      "id": "icon_size_desktop",
+      "label": "Icon size desktop",
+      "min": 10,
+      "max": 70,
+      "step": 1,
+      "default": 26
+    },
+    {
+      "type": "range",
+      "id": "icon_size_mobile",
+      "label": "Icon size mobile",
+      "min": 10,
+      "max": 70,
+      "step": 1,
+      "default": 22
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Reason card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "card_title",
+          "label": "Card title",
+          "default": "PURE TAURINE FORMULA"
+        },
+        {
+          "type": "textarea",
+          "id": "card_text",
+          "label": "Card text",
+          "default": "No complicated blends. No unnecessary fillers. Just focused daily taurine support."
+        },
+        {
+          "type": "image_picker",
+          "id": "card_icon",
+          "label": "Card icon",
+          "info": "Optional. A checkmark is used if left empty."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Why Choose Meowgical",
+      "blocks": [
+        {
+          "type": "card",
+          "settings": {
+            "card_title": "PURE TAURINE FORMULA",
+            "card_text": "No complicated blends. No unnecessary fillers. Just focused daily taurine support."
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "card_title": "MADE SPECIFICALLY FOR CATS",
+            "card_text": "Built around the unique nutritional needs of cats and their essential requirement for dietary taurine."
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "card_title": "QUALITY YOU CAN TRUST",
+            "card_text": "Third-party tested with a clearly labeled single-ingredient formula, so you know exactly what goes into their bowl."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

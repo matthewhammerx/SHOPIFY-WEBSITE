@@ -1,0 +1,422 @@
+{% comment %}
+  Meowgical — Quality Icon Row
+  Layout reference: Wuffes "Quality You Don't Have to Question" section.
+  Rebuilt generalized (any number of points, any icon) in the Meowgical
+  brand system. Mobile is a locked 2-column grid; desktop expands to
+  however many blocks are added, in one row.
+{% endcomment %}
+
+<section id="mg-quality-{{ section.id }}" class="mg-quality">
+  <div class="mg-quality__wrap">
+
+    {% if section.settings.heading != blank %}
+      <h2 class="mg-quality__heading">{{ section.settings.heading }}</h2>
+    {% endif %}
+
+    {% if section.blocks.size > 0 %}
+      <div class="mg-quality__grid" style="--mg-quality-count: {{ section.blocks.size }};">
+        {% for block in section.blocks %}
+          <div class="mg-quality__item" {{ block.shopify_attributes }}>
+            <div class="mg-quality__icon-circle">
+              {% if block.settings.icon != blank %}
+                <img
+                  src="{{ block.settings.icon | image_url: width: 160 }}"
+                  alt=""
+                  class="mg-quality__icon-image"
+                  loading="lazy"
+                  width="40"
+                  height="40"
+                >
+              {% else %}
+                <span class="mg-quality__icon-fallback" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <path d="M5 12.5 9.2 17 19 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+              {% endif %}
+            </div>
+            <p class="mg-quality__label">{{ block.settings.label }}</p>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+  </div>
+</section>
+
+<style>
+  #mg-quality-{{ section.id }} {
+    background: {{ section.settings.background_color }};
+    padding: {{ section.settings.padding_top_mobile }}px 16px {{ section.settings.padding_bottom_mobile }}px;
+  }
+
+  #mg-quality-{{ section.id }} * {
+    box-sizing: border-box;
+  }
+
+  #mg-quality-{{ section.id }} .mg-quality__wrap {
+    max-width: {{ section.settings.max_width }}px;
+    margin: 0 auto;
+  }
+
+  #mg-quality-{{ section.id }} .mg-quality__heading {
+    margin: 0 0 {{ section.settings.heading_gap_mobile }}px;
+    color: {{ section.settings.heading_color }};
+    font-size: {{ section.settings.heading_size_mobile }}px;
+    line-height: 1.15;
+    font-weight: 800;
+    letter-spacing: -.02em;
+    text-align: center;
+  }
+
+  /* Mobile: locked 2-column grid, same as the reference layout */
+  #mg-quality-{{ section.id }} .mg-quality__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: {{ section.settings.row_gap_mobile }}px {{ section.settings.column_gap_mobile }}px;
+  }
+
+  #mg-quality-{{ section.id }} .mg-quality__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  #mg-quality-{{ section.id }} .mg-quality__icon-circle {
+    display: grid;
+    place-items: center;
+    width: {{ section.settings.icon_circle_size_mobile }}px;
+    height: {{ section.settings.icon_circle_size_mobile }}px;
+    border: {{ section.settings.icon_border_width }}px solid {{ section.settings.icon_color }};
+    border-radius: 999px;
+    margin-bottom: 14px;
+  }
+
+  #mg-quality-{{ section.id }} .mg-quality__icon-image {
+    width: 60%;
+    height: 60%;
+    object-fit: contain;
+  }
+
+  #mg-quality-{{ section.id }} .mg-quality__icon-fallback {
+    display: grid;
+    place-items: center;
+    width: 60%;
+    height: 60%;
+    color: {{ section.settings.icon_color }};
+  }
+
+  #mg-quality-{{ section.id }} .mg-quality__icon-fallback svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  #mg-quality-{{ section.id }} .mg-quality__label {
+    margin: 0;
+    max-width: 180px;
+    color: {{ section.settings.label_color }};
+    font-size: {{ section.settings.label_size_mobile }}px;
+    line-height: 1.35;
+    font-weight: 700;
+  }
+
+  @media screen and (min-width: 750px) {
+    #mg-quality-{{ section.id }} {
+      padding: {{ section.settings.padding_top_desktop }}px 40px {{ section.settings.padding_bottom_desktop }}px;
+    }
+
+    #mg-quality-{{ section.id }} .mg-quality__heading {
+      margin-bottom: {{ section.settings.heading_gap_desktop }}px;
+      font-size: {{ section.settings.heading_size_desktop }}px;
+    }
+
+    #mg-quality-{{ section.id }} .mg-quality__grid {
+      grid-template-columns: repeat(var(--mg-quality-count), minmax(0, 1fr));
+      gap: {{ section.settings.row_gap_desktop }}px {{ section.settings.column_gap_desktop }}px;
+    }
+
+    #mg-quality-{{ section.id }} .mg-quality__icon-circle {
+      width: {{ section.settings.icon_circle_size_desktop }}px;
+      height: {{ section.settings.icon_circle_size_desktop }}px;
+    }
+
+    #mg-quality-{{ section.id }} .mg-quality__label {
+      font-size: {{ section.settings.label_size_desktop }}px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Meowgical Quality Icons",
+  "tag": "section",
+  "class": "section-meowgical-quality-icons",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Quality You Don't Have to Question"
+    },
+
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#12204A"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Icon circle & icon color",
+      "default": "#6695DE"
+    },
+    {
+      "type": "color",
+      "id": "label_color",
+      "label": "Label text",
+      "default": "#FFFFFF"
+    },
+
+    {
+      "type": "header",
+      "content": "Icon Circle"
+    },
+    {
+      "type": "range",
+      "id": "icon_border_width",
+      "label": "Circle border width",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "icon_circle_size_mobile",
+      "label": "Circle size mobile",
+      "min": 56,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 88
+    },
+    {
+      "type": "range",
+      "id": "icon_circle_size_desktop",
+      "label": "Circle size desktop",
+      "min": 64,
+      "max": 140,
+      "step": 2,
+      "unit": "px",
+      "default": 96
+    },
+
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Heading size mobile",
+      "min": 20,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 26
+    },
+    {
+      "type": "range",
+      "id": "heading_size_desktop",
+      "label": "Heading size desktop",
+      "min": 24,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "label_size_mobile",
+      "label": "Label size mobile",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "label_size_desktop",
+      "label": "Label size desktop",
+      "min": 13,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+
+    {
+      "type": "header",
+      "content": "Layout & Spacing"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Max width",
+      "min": 700,
+      "max": 1300,
+      "step": 20,
+      "unit": "px",
+      "default": 980
+    },
+    {
+      "type": "range",
+      "id": "heading_gap_mobile",
+      "label": "Space below heading mobile",
+      "min": 16,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "heading_gap_desktop",
+      "label": "Space below heading desktop",
+      "min": 20,
+      "max": 70,
+      "step": 2,
+      "unit": "px",
+      "default": 44
+    },
+    {
+      "type": "range",
+      "id": "row_gap_mobile",
+      "label": "Row gap mobile",
+      "min": 16,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "column_gap_mobile",
+      "label": "Column gap mobile",
+      "min": 8,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "row_gap_desktop",
+      "label": "Row gap desktop",
+      "min": 16,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "column_gap_desktop",
+      "label": "Column gap desktop",
+      "min": 8,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Top padding mobile",
+      "min": 20,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Bottom padding mobile",
+      "min": 20,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Top padding desktop",
+      "min": 20,
+      "max": 140,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Bottom padding desktop",
+      "min": 20,
+      "max": 140,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    }
+  ],
+  "blocks": [
+    {
+      "type": "point",
+      "name": "Quality point",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon (optional — falls back to a checkmark)"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Third-Party Lab Tested"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Meowgical Quality Icons",
+      "blocks": [
+        { "type": "point", "settings": { "label": "Third-Party Lab Tested" } },
+        { "type": "point", "settings": { "label": "No Unnecessary Fillers" } },
+        { "type": "point", "settings": { "label": "No Artificial Colors or Flavors" } },
+        { "type": "point", "settings": { "label": "Made in the USA" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

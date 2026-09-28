@@ -1,0 +1,380 @@
+{% comment %}
+  Meowgical — Transformation Testimonials
+  Reference: Wuffes "Join the Thousands..." before/after proof section.
+  Each review card can independently use either:
+  - One combined image (single upload)
+  - Two side-by-side images (before/after, or two GIFs)
+  Before/After labels can be toggled on or off per card.
+  Rebuilt in the Meowgical blue brand system.
+{% endcomment %}
+
+<section id="mg-transform-{{ section.id }}" class="mg-transform">
+  <div class="mgtr-wrap">
+
+    {% if section.settings.heading != blank %}
+      <h2 class="mgtr-heading">{{ section.settings.heading }}</h2>
+    {% endif %}
+
+    <div class="mgtr-grid" style="--mgtr-columns: {{ section.settings.desktop_columns }};">
+      {% for block in section.blocks %}
+        <div class="mgtr-card" {{ block.shopify_attributes }}>
+
+          {% if block.settings.layout == 'single' %}
+            <div class="mgtr-media mgtr-media--single">
+              {% if block.settings.single_image != blank %}
+                <img
+                  src="{{ block.settings.single_image | image_url: width: 900 }}"
+                  alt="{{ block.settings.reviewer_name | escape }} transformation"
+                  class="mgtr-image mgtr-image--single"
+                  loading="lazy"
+                >
+              {% else %}
+                <div class="mgtr-placeholder">Add an image</div>
+              {% endif %}
+            </div>
+          {% else %}
+            <div class="mgtr-media mgtr-media--split">
+              <div class="mgtr-media-half">
+                {% if block.settings.before_image != blank %}
+                  <img
+                    src="{{ block.settings.before_image | image_url: width: 500 }}"
+                    alt="{{ block.settings.before_label | escape }}"
+                    class="mgtr-image"
+                    loading="lazy"
+                  >
+                {% else %}
+                  <div class="mgtr-placeholder">Add before image</div>
+                {% endif %}
+                {% if block.settings.before_label != blank and block.settings.show_labels %}
+                  <span class="mgtr-label">{{ block.settings.before_label }}</span>
+                {% endif %}
+              </div>
+              <div class="mgtr-media-half">
+                {% if block.settings.after_image != blank %}
+                  <img
+                    src="{{ block.settings.after_image | image_url: width: 500 }}"
+                    alt="{{ block.settings.after_label | escape }}"
+                    class="mgtr-image"
+                    loading="lazy"
+                  >
+                {% else %}
+                  <div class="mgtr-placeholder">Add after image</div>
+                {% endif %}
+                {% if block.settings.after_label != blank and block.settings.show_labels %}
+                  <span class="mgtr-label">{{ block.settings.after_label }}</span>
+                {% endif %}
+              </div>
+            </div>
+          {% endif %}
+
+          <div class="mgtr-content">
+            <div class="mgtr-author-row">
+              <div class="mgtr-author">
+                <span>{{ block.settings.reviewer_name }}</span>
+                {% if block.settings.verified %}
+                  <span class="mgtr-verified" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none">
+                      <path d="M9 12.5 11 14.5 15.5 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      <circle cx="12" cy="12" r="9.5" stroke="currentColor" stroke-width="1.4"/>
+                    </svg>
+                  </span>
+                {% endif %}
+              </div>
+
+              <div class="mgtr-stars" aria-hidden="true">
+                {% for i in (1..5) %}
+                  <svg viewBox="0 0 20 20" class="mgtr-star{% if i > block.settings.rating %} is-empty{% endif %}">
+                    <path d="M10 1.5l2.6 5.6 6.1.7-4.5 4.2 1.2 6-5.4-3-5.4 3 1.2-6L1.3 7.8l6.1-.7z"/>
+                  </svg>
+                {% endfor %}
+              </div>
+            </div>
+
+            {% if block.settings.review_text != blank %}
+              <p class="mgtr-text">{{ block.settings.review_text }}</p>
+            {% endif %}
+          </div>
+
+        </div>
+      {% endfor %}
+    </div>
+
+    {% if section.settings.button_text != blank %}
+      <div class="mgtr-cta">
+        <a href="{{ section.settings.button_link | default: '#' }}" class="mgtr-button">
+          {{ section.settings.button_text }}
+        </a>
+        {% if section.settings.guarantee_text != blank %}
+          <p class="mgtr-guarantee">{{ section.settings.guarantee_text }}</p>
+        {% endif %}
+      </div>
+    {% endif %}
+
+  </div>
+</section>
+
+<style>
+  #mg-transform-{{ section.id }} {
+    background: {{ section.settings.background_color }};
+    padding: {{ section.settings.padding_top_mobile }}px 16px {{ section.settings.padding_bottom_mobile }}px;
+  }
+
+  #mg-transform-{{ section.id }} * {
+    box-sizing: border-box;
+  }
+
+  #mg-transform-{{ section.id }} .mgtr-wrap {
+    max-width: {{ section.settings.max_width }}px;
+    margin: 0 auto;
+  }
+
+  #mg-transform-{{ section.id }} .mgtr-heading {
+    margin: 0 0 32px;
+    color: {{ section.settings.heading_color }};
+    font-size: {{ section.settings.heading_size_mobile }}px;
+    line-height: 1.15;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    text-align: center;
+  }
+
+  #mg-transform-{{ section.id }} .mgtr-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  #mg-transform-{{ section.id }} .mgtr-card {
+    background: {{ section.settings.card_bg }};
+    border-radius: {{ section.settings.card_radius }}px;
+    overflow: hidden;
+    box-shadow: 0 12px 34px rgba(24, 45, 110, 0.14);
+  }
+
+  #mg-transform-{{ section.id }} .mgtr-media {
+    position: relative;
+    padding: 14px 14px 0;
+  }
+
+  #mg-transform-{{ section.id }} .mgtr-media--split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  #mg-transform-{{ section.id }} .mgtr-media-half {
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  #mg-transform-{{ section.id }} .mgtr-image {
+    display: block;
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+
+  #mg-transform-{{ section.id }} .mgtr-image--single {
+    height: 260px;
+  }
+
+  #mg-transform-{{ section.id }} .mgtr-placeholder {
+    display: grid;
+    place-items: center;
+    height: 220px;
+    background: {{ section.settings.placeholder_bg }};
+    color: {{ section.settings.accent_color }};
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 13px;
+    text-align: center;
+    padding: 10px;
+  }
+
+  #mg-transform-{{ section.id }} .mgtr-label {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    padding: 5px 12px;
+    border-radius: 6px;
+    background: {{ section.settings.label_bg }};
+    color: {{ section.settings.label_text_color }};
+    font-size: 13px;
+    font-weight: 800;
+  }
+
+  #mg-transform-{{ section.id }} .mgtr-content {
+    padding: 18px 18px 22px;
+  }
+
+  #mg-transform-{{ section.id }} .mgtr-author-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  #mg-transform-{{ section.id }} .mgtr-author {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: {{ section.settings.author_color }};
+    font-size: 16px;
+    font-weight: 800;
+  }
+
+  #mg-transform-{{ section.id }} .mgtr-verified {
+    display: inline-flex;
+    color: {{ section.settings.accent_color }};
+  }
+
+  #mg-transform-{{ section.id }} .mgtr-verified svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  #mg-transform-{{ section.id }} .mgtr-stars {
+    display: flex;
+    gap: 2px;
+  }
+
+  #mg-transform-{{ section.id }} .mgtr-star {
+    width: 16px;
+    height: 16px;
+    fill: {{ section.settings.star_color }};
+  }
+
+  #mg-transform-{{ section.id }} .mgtr-star.is-empty {
+    fill: {{ section.settings.star_empty_color }};
+  }
+
+  #mg-transform-{{ section.id }} .mgtr-text {
+    margin: 0;
+    color: {{ section.settings.text_color }};
+    font-size: 15px;
+    line-height: 1.55;
+  }
+
+  #mg-transform-{{ section.id }} .mgtr-cta {
+    margin-top: 36px;
+    text-align: center;
+  }
+
+  #mg-transform-{{ section.id }} .mgtr-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 56px;
+    width: min(100%, 400px);
+    padding: 14px 32px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, {{ section.settings.button_gradient_1 }}, {{ section.settings.button_gradient_2 }});
+    border: 1px solid {{ section.settings.button_border_color }};
+    color: {{ section.settings.button_text_color }};
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    box-shadow: 0 10px 24px rgba(47, 126, 216, 0.24);
+    transition: transform 0.2s ease;
+  }
+
+  #mg-transform-{{ section.id }} .mgtr-button:hover {
+    transform: translateY(-1px);
+  }
+
+  #mg-transform-{{ section.id }} .mgtr-guarantee {
+    margin: 14px 0 0;
+    color: {{ section.settings.guarantee_color }};
+    font-size: 12px;
+    font-style: italic;
+  }
+
+  @media screen and (min-width: 750px) {
+    #mg-transform-{{ section.id }} {
+      padding: {{ section.settings.padding_top_desktop }}px 40px {{ section.settings.padding_bottom_desktop }}px;
+    }
+
+    #mg-transform-{{ section.id }} .mgtr-heading {
+      font-size: {{ section.settings.heading_size_desktop }}px;
+    }
+
+    #mg-transform-{{ section.id }} .mgtr-grid {
+      display: grid;
+      grid-template-columns: repeat(var(--mgtr-columns), minmax(0, 1fr));
+      gap: 24px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Transformation Proof",
+  "settings": [
+    { "type": "header", "content": "Heading" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Join Thousands of Cat Parents Seeing Real Results" },
+    { "type": "header", "content": "CTA" },
+    { "type": "text", "id": "button_text", "label": "Button text", "default": "START NOW" },
+    { "type": "url", "id": "button_link", "label": "Button link" },
+    { "type": "text", "id": "guarantee_text", "label": "Guarantee text", "default": "Try risk-free with our 60-Day Money-Back Guarantee" },
+    { "type": "color", "id": "guarantee_color", "label": "Guarantee text color", "default": "#6A78B8" },
+    { "type": "color", "id": "button_gradient_1", "label": "Button gradient 1", "default": "#2748DC" },
+    { "type": "color", "id": "button_gradient_2", "label": "Button gradient 2", "default": "#6695DE" },
+    { "type": "color", "id": "button_border_color", "label": "Button border", "default": "#173FAE" },
+    { "type": "color", "id": "button_text_color", "label": "Button text color", "default": "#FFFFFF" },
+    { "type": "header", "content": "Layout" },
+    { "type": "range", "id": "desktop_columns", "label": "Desktop columns", "min": 2, "max": 4, "step": 1, "default": 3 },
+    { "type": "range", "id": "max_width", "label": "Max width", "min": 800, "max": 1400, "step": 20, "default": 1180 },
+    { "type": "range", "id": "card_radius", "label": "Card radius", "min": 0, "max": 32, "step": 2, "default": 20 },
+    { "type": "header", "content": "Typography" },
+    { "type": "range", "id": "heading_size_mobile", "label": "Heading size mobile", "min": 20, "max": 40, "step": 1, "default": 26 },
+    { "type": "range", "id": "heading_size_desktop", "label": "Heading size desktop", "min": 26, "max": 50, "step": 1, "default": 34 },
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "background_color", "label": "Section background", "default": "#12204A" },
+    { "type": "color", "id": "heading_color", "label": "Heading", "default": "#FFFFFF" },
+    { "type": "color", "id": "card_bg", "label": "Card background", "default": "#FFFFFF" },
+    { "type": "color", "id": "author_color", "label": "Reviewer name", "default": "#111111" },
+    { "type": "color", "id": "text_color", "label": "Review text", "default": "#4A4A4A" },
+    { "type": "color", "id": "star_color", "label": "Filled star", "default": "#2748DC" },
+    { "type": "color", "id": "star_empty_color", "label": "Empty star", "default": "#D9DFF4" },
+    { "type": "color", "id": "accent_color", "label": "Accent (verified badge)", "default": "#2748DC" },
+    { "type": "color", "id": "label_bg", "label": "Before/After label background", "default": "#6695DE" },
+    { "type": "color", "id": "label_text_color", "label": "Before/After label text", "default": "#FFFFFF" },
+    { "type": "color", "id": "placeholder_bg", "label": "Placeholder background", "default": "#EEF5FF" },
+    { "type": "header", "content": "Spacing" },
+    { "type": "range", "id": "padding_top_mobile", "label": "Top padding mobile", "min": 20, "max": 100, "step": 4, "default": 48 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Bottom padding mobile", "min": 20, "max": 100, "step": 4, "default": 48 },
+    { "type": "range", "id": "padding_top_desktop", "label": "Top padding desktop", "min": 20, "max": 140, "step": 4, "default": 72 },
+    { "type": "range", "id": "padding_bottom_desktop", "label": "Bottom padding desktop", "min": 20, "max": 140, "step": 4, "default": 72 }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Transformation review",
+      "settings": [
+        { "type": "select", "id": "layout", "label": "Image layout", "default": "split", "options": [ { "value": "split", "label": "Two images side by side (before/after or two GIFs)" }, { "value": "single", "label": "One combined image" } ] },
+        { "type": "image_picker", "id": "single_image", "label": "Single/combined image (used if layout = One combined image)" },
+        { "type": "image_picker", "id": "before_image", "label": "Before image / GIF 1 (used if layout = Two images)" },
+        { "type": "text", "id": "before_label", "label": "Before label", "default": "Before" },
+        { "type": "image_picker", "id": "after_image", "label": "After image / GIF 2 (used if layout = Two images)" },
+        { "type": "text", "id": "after_label", "label": "After label", "default": "After" },
+        { "type": "checkbox", "id": "show_labels", "label": "Show Before/After labels", "default": true },
+        { "type": "text", "id": "reviewer_name", "label": "Reviewer name", "default": "Jamie T." },
+        { "type": "checkbox", "id": "verified", "label": "Show verified badge", "default": true },
+        { "type": "range", "id": "rating", "label": "Star rating", "min": 1, "max": 5, "step": 1, "default": 5 },
+        { "type": "textarea", "id": "review_text", "label": "Review text", "default": "My cat has so much more energy since starting SuperTaurine." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Transformation Proof",
+      "blocks": [{ "type": "testimonial" }, { "type": "testimonial" }, { "type": "testimonial" }]
+    }
+  ]
+}
+{% endschema %}

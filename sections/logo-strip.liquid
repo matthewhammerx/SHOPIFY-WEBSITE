@@ -1,0 +1,188 @@
+{% comment %}
+  Logo Strip - Custom Shopify Section
+{% endcomment %}
+
+<section id="logo-strip-{{ section.id }}" class="mh-logo-strip">
+  <style>
+    #logo-strip-{{ section.id }} {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+      text-align: center;
+      background-color: {{ section.settings.background_color }};
+    }
+
+    #logo-strip-{{ section.id }} * {
+      box-sizing: border-box;
+    }
+
+    #logo-strip-{{ section.id }} .mh-logo-wrapper {
+      display: inline-block;
+    }
+
+    #logo-strip-{{ section.id }} .mh-logo-link {
+      display: inline-block;
+      text-decoration: none;
+    }
+
+    #logo-strip-{{ section.id }} .mh-logo-image {
+      width: {{ section.settings.logo_width_desktop }}px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    #logo-strip-{{ section.id }} .mh-logo-placeholder {
+      width: {{ section.settings.logo_width_desktop }}px;
+      height: auto;
+      min-height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #f4f4f4;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 0 auto;
+    }
+
+    #logo-strip-{{ section.id }} .mh-logo-placeholder svg {
+      width: 100%;
+      height: auto;
+      max-width: 200px;
+    }
+
+    @media screen and (max-width: 749px) {
+      #logo-strip-{{ section.id }} {
+        padding: {{ section.settings.padding_top_mobile }}px 0 {{ section.settings.padding_bottom_mobile }}px;
+      }
+
+      #logo-strip-{{ section.id }} .mh-logo-image,
+      #logo-strip-{{ section.id }} .mh-logo-placeholder {
+        width: {{ section.settings.logo_width_mobile }}px;
+      }
+    }
+  </style>
+
+  <div class="mh-logo-wrapper">
+    {% if section.settings.logo_link != blank %}
+      <a href="{{ section.settings.logo_link }}" class="mh-logo-link" aria-label="{{ section.settings.logo_alt | escape }}">
+    {% endif %}
+
+      {% if section.settings.logo_image != blank %}
+        {{
+          section.settings.logo_image
+          | image_url: width: 600
+          | image_tag:
+            class: 'mh-logo-image',
+            loading: 'lazy',
+            alt: section.settings.logo_alt
+        }}
+      {% else %}
+        <div class="mh-logo-placeholder">
+          {{ 'image' | placeholder_svg_tag }}
+        </div>
+      {% endif %}
+
+    {% if section.settings.logo_link != blank %}
+      </a>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Logo Strip",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo_image",
+      "label": "Logo image"
+    },
+    {
+      "type": "text",
+      "id": "logo_alt",
+      "label": "Logo alt text",
+      "default": "Logo"
+    },
+    {
+      "type": "url",
+      "id": "logo_link",
+      "label": "Logo link"
+    },
+    {
+      "type": "range",
+      "id": "logo_width_desktop",
+      "label": "Logo width desktop",
+      "min": 40,
+      "max": 300,
+      "step": 5,
+      "default": 90
+    },
+    {
+      "type": "range",
+      "id": "logo_width_mobile",
+      "label": "Logo width mobile",
+      "min": 40,
+      "max": 250,
+      "step": 5,
+      "default": 80
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Desktop spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Mobile spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding top mobile",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding bottom mobile",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Logo Strip"
+    }
+  ]
+}
+{% endschema %}

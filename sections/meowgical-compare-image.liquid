@@ -1,0 +1,506 @@
+{% comment %}
+  Meowgical — Image Comparison Table
+  For comparison tables designed as static images (like Grüns' approach)
+  instead of a coded table. Supports separate desktop and mobile images,
+  since table graphics usually need different crops per breakpoint.
+{% endcomment %}
+
+<section id="mg-compare-img-{{ section.id }}" class="mg-compare-img">
+  <div class="mgci-wrap{% if section.settings.eyebrow != blank or section.settings.heading != blank or section.settings.text != blank %} mgci-has-intro{% endif %}">
+
+    {% if section.settings.eyebrow != blank or section.settings.heading != blank or section.settings.text != blank or section.settings.button_text != blank %}
+      <div class="mgci-intro">
+        {% if section.settings.eyebrow != blank %}
+          <div class="mgci-eyebrow">{{ section.settings.eyebrow }}</div>
+        {% endif %}
+
+        {% if section.settings.heading != blank %}
+          <div class="mgci-heading">{{ section.settings.heading }}</div>
+        {% endif %}
+
+        {% if section.settings.text != blank %}
+          <div class="mgci-text">{{ section.settings.text }}</div>
+        {% endif %}
+
+        {% if section.settings.button_text != blank %}
+          <div class="mgci-cta">
+            <a href="{{ section.settings.button_link | default: '#' }}" class="mgci-button">
+              {{ section.settings.button_text }}
+            </a>
+          </div>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    <div class="mgci-image-wrap">
+      {% if section.settings.desktop_image != blank %}
+        <picture>
+          {% if section.settings.mobile_image != blank %}
+            <source media="(max-width: 749px)" srcset="{{ section.settings.mobile_image | image_url: width: 800 }}">
+          {% endif %}
+          <img
+            src="{{ section.settings.desktop_image | image_url: width: 1600 }}"
+            srcset="
+              {{ section.settings.desktop_image | image_url: width: 600 }} 600w,
+              {{ section.settings.desktop_image | image_url: width: 900 }} 900w,
+              {{ section.settings.desktop_image | image_url: width: 1200 }} 1200w,
+              {{ section.settings.desktop_image | image_url: width: 1600 }} 1600w
+            "
+            sizes="(min-width: 990px) {{ section.settings.max_width }}px, 100vw"
+            alt="{{ section.settings.image_alt | escape }}"
+            loading="lazy"
+            class="mgci-image"
+          >
+        </picture>
+      {% else %}
+        <div class="mgci-placeholder">Upload a comparison table image</div>
+      {% endif %}
+    </div>
+
+    {% if section.settings.footnote != blank %}
+      <div class="mgci-footnote">{{ section.settings.footnote }}</div>
+    {% endif %}
+
+  </div>
+</section>
+
+<style>
+  #mg-compare-img-{{ section.id }} {
+    background: {{ section.settings.section_bg }};
+    padding: {{ section.settings.padding_top_mobile }}px {{ section.settings.padding_side_mobile }}px {{ section.settings.padding_bottom_mobile }}px;
+  }
+
+  #mg-compare-img-{{ section.id }} * {
+    box-sizing: border-box;
+  }
+
+  #mg-compare-img-{{ section.id }} .mgci-wrap {
+    max-width: {{ section.settings.max_width }}px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  #mg-compare-img-{{ section.id }} .mgci-intro {
+    max-width: 560px;
+    margin: 0 auto {{ section.settings.intro_gap }}px;
+  }
+
+  #mg-compare-img-{{ section.id }} .mgci-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: {{ section.settings.eyebrow_bg }};
+    color: {{ section.settings.eyebrow_color }};
+    border-radius: 999px;
+    padding: 8px 15px;
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  #mg-compare-img-{{ section.id }} .mgci-heading {
+    margin: 0;
+    color: {{ section.settings.heading_color }};
+    font-size: {{ section.settings.heading_size_mobile }}px;
+    line-height: 1.08;
+    font-weight: 900;
+    letter-spacing: -0.03em;
+  }
+
+  #mg-compare-img-{{ section.id }} .mgci-heading strong {
+    color: {{ section.settings.heading_accent }};
+    font-weight: inherit;
+  }
+
+  #mg-compare-img-{{ section.id }} .mgci-text {
+    margin-top: 14px;
+    color: {{ section.settings.text_color }};
+    font-size: {{ section.settings.body_size_mobile }}px;
+    line-height: 1.5;
+  }
+
+  #mg-compare-img-{{ section.id }} .mgci-image-wrap {
+    width: 100%;
+  }
+
+  #mg-compare-img-{{ section.id }} .mgci-image {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: {{ section.settings.image_radius }}px;
+  }
+
+  #mg-compare-img-{{ section.id }} .mgci-placeholder {
+    display: grid;
+    place-items: center;
+    min-height: 300px;
+    background: {{ section.settings.eyebrow_bg }};
+    color: {{ section.settings.eyebrow_color }};
+    border-radius: {{ section.settings.image_radius }}px;
+    font-weight: 700;
+  }
+
+  #mg-compare-img-{{ section.id }} .mgci-footnote {
+    max-width: 560px;
+    margin: 14px auto 0;
+    color: {{ section.settings.footnote_color }};
+    font-size: 12px;
+    line-height: 1.4;
+    opacity: 0.75;
+  }
+
+  #mg-compare-img-{{ section.id }} .mgci-cta {
+    margin-top: {{ section.settings.cta_gap }}px;
+    text-align: center;
+  }
+
+  #mg-compare-img-{{ section.id }} .mgci-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 56px;
+    padding: 14px 32px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, {{ section.settings.button_gradient_1 }}, {{ section.settings.button_gradient_2 }});
+    border: 1px solid {{ section.settings.button_border_color }};
+    color: {{ section.settings.button_text_color }};
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    box-shadow: 0 10px 24px rgba(47, 126, 216, 0.24);
+    transition: transform 0.2s ease;
+  }
+
+  #mg-compare-img-{{ section.id }} .mgci-button:hover {
+    transform: translateY(-1px);
+  }
+
+  @media screen and (min-width: 750px) {
+    #mg-compare-img-{{ section.id }} {
+      padding: {{ section.settings.padding_top_desktop }}px {{ section.settings.padding_side_desktop }}px {{ section.settings.padding_bottom_desktop }}px;
+    }
+
+    #mg-compare-img-{{ section.id }} .mgci-wrap {
+      text-align: left;
+    }
+
+    #mg-compare-img-{{ section.id }} .mgci-wrap.mgci-has-intro {
+      display: grid;
+      grid-template-columns: minmax(0, 380px) minmax(0, 1fr);
+      align-items: center;
+      gap: 56px;
+    }
+
+    #mg-compare-img-{{ section.id }} .mgci-intro {
+      max-width: none;
+      margin: 0;
+    }
+
+    #mg-compare-img-{{ section.id }} .mgci-footnote {
+      grid-column: 1 / -1;
+    }
+
+    #mg-compare-img-{{ section.id }} .mgci-heading {
+      font-size: {{ section.settings.heading_size_desktop }}px;
+    }
+
+    #mg-compare-img-{{ section.id }} .mgci-text {
+      font-size: {{ section.settings.body_size_desktop }}px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Meowgical Compare (Image)",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Intro (optional)"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "<p><strong>SuperTaurine</strong> vs. Everyone Else</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Most taurine products are a guess. SuperTaurine is measured, tested, and made specifically for cats.</p>"
+    },
+
+    {
+      "type": "header",
+      "content": "Comparison Table Image"
+    },
+    {
+      "type": "paragraph",
+      "content": "Upload your designed comparison table as an image. If your table has a different crop for mobile, upload that separately below — otherwise the desktop image is used everywhere."
+    },
+    {
+      "type": "image_picker",
+      "id": "desktop_image",
+      "label": "Desktop / default image"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "Mobile image (optional)"
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "Image alt text",
+      "default": "SuperTaurine comparison table"
+    },
+    {
+      "type": "range",
+      "id": "image_radius",
+      "label": "Image corner radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "default": 16
+    },
+
+    {
+      "type": "header",
+      "content": "Footnote"
+    },
+    {
+      "type": "richtext",
+      "id": "footnote",
+      "label": "Footnote",
+      "default": "<p>*Comparison based on publicly available product information as of 2026.</p>"
+    },
+
+    {
+      "type": "header",
+      "content": "CTA (optional)"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "color",
+      "id": "button_gradient_1",
+      "label": "Button gradient color 1",
+      "default": "#2748DC"
+    },
+    {
+      "type": "color",
+      "id": "button_gradient_2",
+      "label": "Button gradient color 2",
+      "default": "#6695DE"
+    },
+    {
+      "type": "color",
+      "id": "button_border_color",
+      "label": "Button border",
+      "default": "#173FAE"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "cta_gap",
+      "label": "Space above button",
+      "min": 8,
+      "max": 60,
+      "step": 2,
+      "default": 28
+    },
+
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Heading size mobile",
+      "min": 20,
+      "max": 46,
+      "step": 1,
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "heading_size_desktop",
+      "label": "Heading size desktop",
+      "min": 28,
+      "max": 70,
+      "step": 1,
+      "default": 44
+    },
+    {
+      "type": "range",
+      "id": "body_size_mobile",
+      "label": "Body text size mobile",
+      "min": 12,
+      "max": 22,
+      "step": 1,
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "body_size_desktop",
+      "label": "Body text size desktop",
+      "min": 14,
+      "max": 26,
+      "step": 1,
+      "default": 18
+    },
+
+    {
+      "type": "header",
+      "content": "Layout & Spacing"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Max width",
+      "min": 600,
+      "max": 1400,
+      "step": 20,
+      "default": 1200
+    },
+    {
+      "type": "range",
+      "id": "intro_gap",
+      "label": "Space below intro",
+      "min": 16,
+      "max": 60,
+      "step": 2,
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Top padding mobile",
+      "min": 0,
+      "max": 140,
+      "step": 4,
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Bottom padding mobile",
+      "min": 0,
+      "max": 140,
+      "step": 4,
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_side_mobile",
+      "label": "Side padding mobile",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Top padding desktop",
+      "min": 0,
+      "max": 180,
+      "step": 4,
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Bottom padding desktop",
+      "min": 0,
+      "max": 180,
+      "step": 4,
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding_side_desktop",
+      "label": "Side padding desktop",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "default": 40
+    },
+
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "section_bg",
+      "label": "Section background",
+      "default": "#F2F6FF"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "heading_accent",
+      "label": "Heading accent",
+      "default": "#2748DC"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Body text",
+      "default": "#4A4A4A"
+    },
+    {
+      "type": "color",
+      "id": "eyebrow_bg",
+      "label": "Eyebrow background",
+      "default": "#DDE5FF"
+    },
+    {
+      "type": "color",
+      "id": "eyebrow_color",
+      "label": "Eyebrow text",
+      "default": "#173FAE"
+    },
+    {
+      "type": "color",
+      "id": "footnote_color",
+      "label": "Footnote",
+      "default": "#697084"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Meowgical Compare (Image)"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,660 @@
+{% style %}
+  #shopify-section-{{ section.id }} {
+    position: relative;
+    z-index: 40;
+  }
+
+  #shopify-section-{{ section.id }} .mg-sticky-atc {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 999;
+    transform: translateY(110%);
+    visibility: hidden;
+    opacity: 0;
+    transition:
+      transform 250ms cubic-bezier(0.4, 0, 0.2, 1),
+      opacity 200ms ease,
+      visibility 200ms ease;
+    background: linear-gradient(
+      {{ section.settings.gradient_angle }}deg,
+      {{ section.settings.background_start }},
+      {{ section.settings.background_end }}
+    );
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 -8px 28px rgba(0, 0, 0, 0.12);
+  }
+
+  #shopify-section-{{ section.id }} .mg-sticky-atc.is-visible {
+    transform: translateY(0);
+    visibility: visible;
+    opacity: 1;
+  }
+
+  #shopify-section-{{ section.id }} .mg-sticky-atc__inner {
+    width: 100%;
+    max-width: {{ section.settings.max_width }}px;
+    margin: 0 auto;
+    padding: 11px 14px calc(11px + env(safe-area-inset-bottom));
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 9px;
+  }
+
+  #shopify-section-{{ section.id }} .mg-sticky-atc__proof {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    min-width: 0;
+    color: {{ section.settings.text_color }};
+  }
+
+  #shopify-section-{{ section.id }} .mg-sticky-atc__stars {
+    display: flex;
+    align-items: center;
+    gap: 1px;
+    flex-shrink: 0;
+  }
+
+  #shopify-section-{{ section.id }} .mg-sticky-atc__star {
+    width: 13px;
+    height: 13px;
+    fill: {{ section.settings.star_color }};
+  }
+
+  #shopify-section-{{ section.id }} .mg-sticky-atc__proof-text {
+    margin: 0;
+    color: {{ section.settings.text_color }};
+    font-family: inherit;
+    font-size: 11px;
+    line-height: 1.25;
+    font-weight: 500;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  #shopify-section-{{ section.id }} .mg-sticky-atc__proof-text strong {
+    font-weight: 800;
+  }
+
+  #shopify-section-{{ section.id }} .mg-sticky-atc__action {
+    position: relative;
+    width: 100%;
+    max-width: 430px;
+    padding-top: 9px;
+  }
+
+  #shopify-section-{{ section.id }} .mg-sticky-atc__badge {
+    position: absolute;
+    top: 9px;
+    left: 50%;
+    z-index: 2;
+    transform: translate(-50%, -50%);
+    padding: 4px 12px;
+    border-radius: 999px;
+    background: {{ section.settings.badge_background }};
+    color: {{ section.settings.badge_text_color }};
+    border: {{ section.settings.badge_border_width }}px solid {{ section.settings.badge_border_color }};
+    font-family: inherit;
+    font-size: 10px;
+    line-height: 1;
+    font-weight: 800;
+    text-align: center;
+    white-space: nowrap;
+    box-shadow: 0 2px 7px rgba(0, 0, 0, 0.12);
+  }
+
+  #shopify-section-{{ section.id }} .mg-sticky-atc__button {
+    width: 100%;
+    min-height: 50px;
+    padding: 13px 20px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    border: {{ section.settings.button_border_width }}px solid {{ section.settings.button_border_color }};
+    border-radius: {{ section.settings.button_radius }}px;
+    background: {{ section.settings.button_background }};
+    color: {{ section.settings.button_text_color }};
+    font-family: inherit;
+    font-size: 15px;
+    line-height: 1.1;
+    font-weight: 800;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    box-shadow: 0 5px 14px rgba(0, 0, 0, 0.13);
+    transition:
+      transform 160ms ease,
+      background 160ms ease,
+      opacity 160ms ease;
+  }
+
+  #shopify-section-{{ section.id }} .mg-sticky-atc__button:hover {
+    transform: translateY(-1px);
+    background: {{ section.settings.button_hover_background }};
+    color: {{ section.settings.button_text_color }};
+  }
+
+  #shopify-section-{{ section.id }} .mg-sticky-atc__button:active {
+    transform: translateY(0);
+  }
+
+  #shopify-section-{{ section.id }} .mg-sticky-atc__button-arrow {
+    width: 17px;
+    height: 17px;
+    stroke: currentColor;
+    flex-shrink: 0;
+  }
+
+  @media screen and (min-width: 992px) {
+    #shopify-section-{{ section.id }} .mg-sticky-atc {
+      top: 0;
+      bottom: auto;
+      transform: translateY(-110%);
+      border-top: 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.12);
+    }
+
+    #shopify-section-{{ section.id }} .mg-sticky-atc.is-visible {
+      transform: translateY(0);
+    }
+
+    #shopify-section-{{ section.id }} .mg-sticky-atc__inner {
+      min-height: 88px;
+      padding: 12px 24px;
+      flex-direction: row;
+      justify-content: space-between;
+      gap: 28px;
+    }
+
+    #shopify-section-{{ section.id }} .mg-sticky-atc__proof {
+      justify-content: flex-start;
+    }
+
+    #shopify-section-{{ section.id }} .mg-sticky-atc__star {
+      width: 15px;
+      height: 15px;
+    }
+
+    #shopify-section-{{ section.id }} .mg-sticky-atc__proof-text {
+      font-size: 14px;
+    }
+
+    #shopify-section-{{ section.id }} .mg-sticky-atc__action {
+      width: {{ section.settings.desktop_button_width }}px;
+      flex-shrink: 0;
+    }
+
+    #shopify-section-{{ section.id }} .mg-sticky-atc__button {
+      min-height: 54px;
+      font-size: 16px;
+    }
+
+    #shopify-section-{{ section.id }} .mg-sticky-atc__badge {
+      font-size: 11px;
+    }
+  }
+
+  {% if section.settings.hide_on_desktop %}
+    @media screen and (min-width: 992px) {
+      #shopify-section-{{ section.id }} .mg-sticky-atc {
+        display: none !important;
+      }
+    }
+  {% endif %}
+
+  {% if section.settings.hide_on_mobile %}
+    @media screen and (max-width: 991px) {
+      #shopify-section-{{ section.id }} .mg-sticky-atc {
+        display: none !important;
+      }
+    }
+  {% endif %}
+{% endstyle %}
+
+<div
+  class="mg-sticky-atc"
+  data-mg-sticky-atc
+  data-show-mode="{{ section.settings.show_mode }}"
+  data-scroll-distance="{{ section.settings.scroll_distance }}"
+  data-trigger-selector="{{ section.settings.trigger_selector | escape }}"
+>
+  <div class="mg-sticky-atc__inner">
+
+    {% if section.settings.show_social_proof %}
+      <div class="mg-sticky-atc__proof">
+        <div class="mg-sticky-atc__stars" aria-label="{{ section.settings.rating }} out of 5 stars">
+          {% for i in (1..5) %}
+            <svg
+              class="mg-sticky-atc__star"
+              viewBox="0 0 16 16"
+              aria-hidden="true"
+            >
+              <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+            </svg>
+          {% endfor %}
+        </div>
+
+        <p class="mg-sticky-atc__proof-text">
+          <strong>{{ section.settings.rating }}</strong> stars
+          {% if section.settings.review_text != blank %}
+            | <strong>{{ section.settings.review_text }}</strong>
+          {% endif %}
+          {% if section.settings.customer_text != blank %}
+            | <strong>{{ section.settings.customer_text }}</strong>
+          {% endif %}
+        </p>
+      </div>
+    {% endif %}
+
+    <div class="mg-sticky-atc__action">
+      {% if section.settings.badge_text != blank %}
+        <span class="mg-sticky-atc__badge">
+          {{ section.settings.badge_text }}
+        </span>
+      {% endif %}
+
+      <a
+        href="{{ section.settings.button_link | default: '#offers' }}"
+        class="mg-sticky-atc__button"
+        data-mg-sticky-button
+      >
+        <span>{{ section.settings.button_text }}</span>
+
+        {% if section.settings.show_arrow %}
+          <svg
+            class="mg-sticky-atc__button-arrow"
+            viewBox="0 0 24 24"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M5 12h14M13 6l6 6-6 6"
+              stroke-width="2.2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        {% endif %}
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  (() => {
+    const sectionRoot = document.getElementById('shopify-section-{{ section.id }}');
+    if (!sectionRoot) return;
+
+    const stickyBar = sectionRoot.querySelector('[data-mg-sticky-atc]');
+    if (!stickyBar || stickyBar.dataset.initialized === 'true') return;
+
+    stickyBar.dataset.initialized = 'true';
+
+    const showMode = stickyBar.dataset.showMode;
+    const scrollDistance = Number.parseInt(
+      stickyBar.dataset.scrollDistance,
+      10
+    ) || 500;
+
+    const triggerSelector = stickyBar.dataset.triggerSelector || '#offers';
+
+    let observer = null;
+
+    function showStickyBar() {
+      stickyBar.classList.add('is-visible');
+      stickyBar.setAttribute('aria-hidden', 'false');
+    }
+
+    function hideStickyBar() {
+      stickyBar.classList.remove('is-visible');
+      stickyBar.setAttribute('aria-hidden', 'true');
+    }
+
+    function handleScrollDistance() {
+      if (window.scrollY >= scrollDistance) {
+        showStickyBar();
+      } else {
+        hideStickyBar();
+      }
+    }
+
+    function initializeTriggerObserver() {
+      const triggerElement = document.querySelector(triggerSelector);
+
+      if (!triggerElement) {
+        window.addEventListener('scroll', handleScrollDistance, {
+          passive: true
+        });
+        handleScrollDistance();
+        return;
+      }
+
+      observer = new IntersectionObserver(
+        (entries) => {
+          const entry = entries[0];
+
+          if (entry.isIntersecting) {
+            hideStickyBar();
+          } else if (entry.boundingClientRect.top < 0) {
+            showStickyBar();
+          } else {
+            hideStickyBar();
+          }
+        },
+        {
+          threshold: 0.05
+        }
+      );
+
+      observer.observe(triggerElement);
+    }
+
+    if (showMode === 'always') {
+      showStickyBar();
+    } else if (showMode === 'after_scroll') {
+      window.addEventListener('scroll', handleScrollDistance, {
+        passive: true
+      });
+      handleScrollDistance();
+    } else {
+      initializeTriggerObserver();
+    }
+
+    const stickyButton = stickyBar.querySelector('[data-mg-sticky-button]');
+
+    if (stickyButton) {
+      stickyButton.addEventListener('click', (event) => {
+        const href = stickyButton.getAttribute('href');
+
+        if (!href || !href.startsWith('#')) return;
+
+        const destination = document.querySelector(href);
+
+        if (!destination) return;
+
+        event.preventDefault();
+
+        destination.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center'
+        });
+      });
+    }
+
+    document.addEventListener(
+      'shopify:section:unload',
+      (event) => {
+        if (event.detail.sectionId !== '{{ section.id }}') return;
+
+        window.removeEventListener('scroll', handleScrollDistance);
+
+        if (observer) {
+          observer.disconnect();
+        }
+      },
+      { once: true }
+    );
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Sticky add to cart",
+  "tag": "section",
+  "class": "sticky-add-to-cart-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Display behavior"
+    },
+    {
+      "type": "select",
+      "id": "show_mode",
+      "label": "Show sticky bar",
+      "default": "after_trigger",
+      "options": [
+        {
+          "value": "after_trigger",
+          "label": "After trigger section is passed"
+        },
+        {
+          "value": "after_scroll",
+          "label": "After scrolling a set distance"
+        },
+        {
+          "value": "always",
+          "label": "Always"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "trigger_selector",
+      "label": "Trigger CSS selector",
+      "default": "#offers",
+      "info": "The sticky bar appears after this element is passed. Example: #offers"
+    },
+    {
+      "type": "range",
+      "id": "scroll_distance",
+      "label": "Scroll distance",
+      "min": 100,
+      "max": 2000,
+      "step": 50,
+      "unit": "px",
+      "default": 500
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_on_desktop",
+      "label": "Hide on desktop",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_on_mobile",
+      "label": "Hide on mobile",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Social proof"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_social_proof",
+      "label": "Show social proof",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "rating",
+      "label": "Rating",
+      "default": "4.8"
+    },
+    {
+      "type": "text",
+      "id": "review_text",
+      "label": "Review text",
+      "default": "13,000+ reviews"
+    },
+    {
+      "type": "text",
+      "id": "customer_text",
+      "label": "Customer text",
+      "default": "77,000+ cat families"
+    },
+    {
+      "type": "color",
+      "id": "star_color",
+      "label": "Star color",
+      "default": "#FFD34E"
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge text",
+      "default": "FREE GIFTS INCLUDED"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "SAVE 61% + FREE GIFTS"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrow",
+      "label": "Show button arrow",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "desktop_button_width",
+      "label": "Desktop button width",
+      "min": 240,
+      "max": 500,
+      "step": 10,
+      "unit": "px",
+      "default": 350
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_start",
+      "label": "Background start",
+      "default": "#1737A6"
+    },
+    {
+      "type": "color",
+      "id": "background_end",
+      "label": "Background end",
+      "default": "#244ED8"
+    },
+    {
+      "type": "range",
+      "id": "gradient_angle",
+      "label": "Gradient angle",
+      "min": 0,
+      "max": 360,
+      "step": 5,
+      "unit": "°",
+      "default": 90
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Social proof text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "badge_background",
+      "label": "Badge background",
+      "default": "#FFD34E"
+    },
+    {
+      "type": "color",
+      "id": "badge_text_color",
+      "label": "Badge text",
+      "default": "#102A76"
+    },
+    {
+      "type": "color",
+      "id": "badge_border_color",
+      "label": "Badge border",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "badge_border_width",
+      "label": "Badge border width",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "default": 2
+    },
+    {
+      "type": "color",
+      "id": "button_background",
+      "label": "Button background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_background",
+      "label": "Button hover background",
+      "default": "#F1F5FF"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text",
+      "default": "#1737A6"
+    },
+    {
+      "type": "color",
+      "id": "button_border_color",
+      "label": "Button border",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "button_border_width",
+      "label": "Button border width",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "button_radius",
+      "label": "Button corner radius",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Content maximum width",
+      "min": 800,
+      "max": 1600,
+      "step": 50,
+      "unit": "px",
+      "default": 1200
+    }
+  ],
+  "presets": [
+    {
+      "name": "Sticky add to cart"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,2027 @@
+{% comment %}
+  Custom Product Section
+  File name: custom-product-section.liquid
+{% endcomment %}
+
+{% assign v = product.selected_or_first_available_variant %}
+{% assign sp = section.settings.spid %}
+
+{% if sp == blank and product.selling_plan_groups.size > 0 %}
+  {% assign sp = product.selling_plan_groups.first.selling_plans.first.id %}
+{% endif %}
+
+<section id="custom-product-{{ section.id }}" class="cps">
+  <div class="cps-wrap">
+
+    {% if section.settings.show_eyebrow %}
+      <div class="cps-top-badge">
+        {{ section.settings.eyebrow }}
+      </div>
+    {% endif %}
+
+    <div class="cps-main-grid">
+
+      <div class="cps-gallery-col {% if section.settings.sticky_gal %}cps-sticky{% endif %}">
+        <div class="cps-gallery cps-thumb-{{ section.settings.thumb_pos }}">
+          <div class="cps-g-main">
+            <div class="cps-g-track" data-cps-track>
+              {% assign g_count = 0 %}
+
+              {% if section.settings.src == 'product' and product.media.size > 0 %}
+                {% for media in product.media %}
+                  {% if media.media_type == 'image' %}
+                    <div class="cps-g-slide" data-cps-slide>
+                      <img
+                        src="{{ media.preview_image | image_url: width: 1400 }}"
+                        alt="{{ media.alt | default: product.title | escape }}"
+                        loading="{% if g_count == 0 %}eager{% else %}lazy{% endif %}"
+                      >
+                    </div>
+                    {% assign g_count = g_count | plus: 1 %}
+                  {% endif %}
+                {% endfor %}
+              {% else %}
+                {% for block in section.blocks %}
+                  {% if block.type == 'img' %}
+                    <div class="cps-g-slide" data-cps-slide {{ block.shopify_attributes }}>
+                      {% if block.settings.d_img != blank %}
+                        <picture>
+                          {% if block.settings.m_img != blank %}
+                            <source media="(max-width: 749px)" srcset="{{ block.settings.m_img | image_url: width: 900 }}">
+                          {% endif %}
+                          <img
+                            src="{{ block.settings.d_img | image_url: width: 1400 }}"
+                            alt="{{ block.settings.alt | default: block.settings.d_img.alt | escape }}"
+                            loading="{% if g_count == 0 %}eager{% else %}lazy{% endif %}"
+                          >
+                        </picture>
+                      {% elsif product.featured_image != blank %}
+                        <img src="{{ product.featured_image | image_url: width: 1400 }}" alt="{{ product.title | escape }}">
+                      {% else %}
+                        <div class="cps-placeholder">
+                          {{ 'product-1' | placeholder_svg_tag }}
+                        </div>
+                      {% endif %}
+
+                      {% if block.settings.badge != blank %}
+                        <div class="cps-img-badge">{{ block.settings.badge }}</div>
+                      {% endif %}
+                    </div>
+                    {% assign g_count = g_count | plus: 1 %}
+                  {% endif %}
+                {% endfor %}
+              {% endif %}
+
+              {% if g_count == 0 %}
+                <div class="cps-g-slide" data-cps-slide>
+                  {% if product.featured_image != blank %}
+                    <img src="{{ product.featured_image | image_url: width: 1400 }}" alt="{{ product.title | escape }}">
+                  {% else %}
+                    <div class="cps-placeholder">
+                      {{ 'product-1' | placeholder_svg_tag }}
+                    </div>
+                  {% endif %}
+                </div>
+              {% endif %}
+            </div>
+
+            {% if section.settings.show_arrow %}
+              <button type="button" class="cps-arrow cps-prev" data-cps-prev aria-label="Previous image">‹</button>
+              <button type="button" class="cps-arrow cps-next" data-cps-next aria-label="Next image">›</button>
+            {% endif %}
+          </div>
+
+          {% if section.settings.show_thumb %}
+            <div class="cps-thumbs" data-cps-thumbs>
+              {% assign t_count = 0 %}
+
+              {% if section.settings.src == 'product' and product.media.size > 0 %}
+                {% for media in product.media %}
+                  {% if media.media_type == 'image' %}
+                    <button type="button" class="cps-thumb {% if t_count == 0 %}active{% endif %}" data-cps-thumb="{{ t_count }}">
+                      <img src="{{ media.preview_image | image_url: width: 180 }}" alt="{{ media.alt | default: product.title | escape }}">
+                    </button>
+                    {% assign t_count = t_count | plus: 1 %}
+                  {% endif %}
+                {% endfor %}
+              {% else %}
+                {% for block in section.blocks %}
+                  {% if block.type == 'img' %}
+                    <button type="button" class="cps-thumb {% if t_count == 0 %}active{% endif %}" data-cps-thumb="{{ t_count }}">
+                      {% if block.settings.thumb != blank %}
+                        <img src="{{ block.settings.thumb | image_url: width: 180 }}" alt="{{ block.settings.alt | escape }}">
+                      {% elsif block.settings.d_img != blank %}
+                        <img src="{{ block.settings.d_img | image_url: width: 180 }}" alt="{{ block.settings.alt | default: block.settings.d_img.alt | escape }}">
+                      {% elsif product.featured_image != blank %}
+                        <img src="{{ product.featured_image | image_url: width: 180 }}" alt="{{ product.title | escape }}">
+                      {% else %}
+                        {{ 'product-1' | placeholder_svg_tag }}
+                      {% endif %}
+                    </button>
+                    {% assign t_count = t_count | plus: 1 %}
+                  {% endif %}
+                {% endfor %}
+              {% endif %}
+            </div>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="cps-info-col">
+        {% if section.settings.review_txt != blank %}
+          <a class="cps-reviews" href="{{ section.settings.review_link | default: '#reviews' }}">
+            <span class="cps-stars">★★★★★</span>
+            <span>{{ section.settings.review_txt }}</span>
+          </a>
+        {% endif %}
+
+        {% if section.settings.head != blank %}
+          <h1 class="cps-title">{{ section.settings.head }}</h1>
+        {% endif %}
+
+        {% if section.settings.desc != blank %}
+          <div class="cps-desc">{{ section.settings.desc }}</div>
+        {% endif %}
+
+        <form method="post" action="/cart/add" class="cps-form" data-cps-form>
+          <input type="hidden" name="id" value="{{ v.id }}" data-cps-var>
+          <input type="hidden" name="quantity" value="{{ section.settings.def_qty }}" data-cps-qty>
+          <input type="hidden" name="selling_plan" value="{{ sp }}" data-cps-plan>
+
+          {% if section.settings.show_vars and product.has_only_default_variant == false %}
+            <div class="cps-block cps-variants">
+              {% for option in product.options_with_values %}
+                {% assign opt_i = option.position | minus: 1 %}
+                <div class="cps-opt-group">
+                  <div class="cps-label">
+                    {{ option.name }}:
+                    <span data-cps-opt-title="{{ opt_i }}">{{ option.selected_value }}</span>
+                  </div>
+
+                  <div class="cps-opt-values">
+                    {% for value in option.values %}
+                      <button
+                        type="button"
+                        class="cps-opt-btn {% if option.selected_value == value %}active{% endif %}"
+                        data-cps-opt
+                        data-opt-index="{{ opt_i }}"
+                        data-opt-value="{{ value | escape }}"
+                      >
+                        {{ value }}
+                      </button>
+                    {% endfor %}
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          {% endif %}
+
+          {% if section.settings.show_qty %}
+            <div class="cps-block cps-qty-block">
+              <div class="cps-label-row">
+                <div class="cps-label">{{ section.settings.qty_label }}</div>
+                {% if section.settings.qty_note != blank %}
+                  <div class="cps-qty-note">{{ section.settings.qty_note }}</div>
+                {% endif %}
+              </div>
+
+              <div class="cps-qty-pills">
+                <button type="button" class="cps-qty-btn {% if section.settings.def_qty == '1' %}active{% endif %}" data-cps-q="1">1</button>
+                <button type="button" class="cps-qty-btn {% if section.settings.def_qty == '2' %}active{% endif %}" data-cps-q="2">2</button>
+              </div>
+            </div>
+          {% endif %}
+
+          <div class="cps-block cps-offers">
+            <div class="cps-label">{{ section.settings.offer_label }}</div>
+
+            <button type="button" class="cps-offer-card {% if section.settings.default_offer == 'sub' %}active{% endif %}" data-cps-plan-btn="sub">
+              {% if section.settings.sub_top != blank %}
+                <div class="cps-offer-top">{{ section.settings.sub_top }}</div>
+              {% endif %}
+
+              <div class="cps-offer-inner">
+                <div class="cps-radio"></div>
+
+                <div class="cps-offer-left">
+                  <div class="cps-offer-title">{{ section.settings.sub_title }}</div>
+                  <div class="cps-offer-note">{{ section.settings.sub_note }}</div>
+
+                  <ul class="cps-offer-benefits">
+                    {% if section.settings.sub_ben1 != blank %}
+                      <li>✓ {{ section.settings.sub_ben1 }}</li>
+                    {% endif %}
+                    {% if section.settings.sub_ben2 != blank %}
+                      <li>✓ {{ section.settings.sub_ben2 }}</li>
+                    {% endif %}
+                    {% if section.settings.sub_ben3 != blank %}
+                      <li>✓ {{ section.settings.sub_ben3 }}</li>
+                    {% endif %}
+                  </ul>
+                </div>
+
+                <div class="cps-offer-price">
+                  <div>
+                    <strong>{{ section.settings.sub_price }}</strong>
+                    {% if section.settings.sub_cmp != blank %}
+                      <s>{{ section.settings.sub_cmp }}</s>
+                    {% endif %}
+                  </div>
+                  {% if section.settings.sub_day != blank %}
+                    <small>{{ section.settings.sub_day }}</small>
+                  {% endif %}
+                </div>
+              </div>
+            </button>
+
+            <button type="button" class="cps-offer-card {% if section.settings.default_offer == 'otp' %}active{% endif %}" data-cps-plan-btn="otp">
+              <div class="cps-offer-inner">
+                <div class="cps-radio"></div>
+
+                <div class="cps-offer-left">
+                  <div class="cps-offer-title">{{ section.settings.otp_title }}</div>
+                  <div class="cps-offer-note">{{ section.settings.otp_note }}</div>
+                </div>
+
+                <div class="cps-offer-price">
+                  <div>
+                    <strong>{{ section.settings.otp_price }}</strong>
+                    {% if section.settings.otp_cmp != blank %}
+                      <s>{{ section.settings.otp_cmp }}</s>
+                    {% endif %}
+                  </div>
+                  {% if section.settings.otp_day != blank %}
+                    <small>{{ section.settings.otp_day }}</small>
+                  {% endif %}
+                </div>
+              </div>
+            </button>
+          </div>
+
+          <button type="submit" class="cps-atc" data-cps-atc>
+            {{ section.settings.cta_text }}
+          </button>
+
+          {% if section.settings.show_disc and section.settings.disc_txt != blank %}
+            <div class="cps-discount">
+              {{ section.settings.disc_txt }}
+            </div>
+          {% endif %}
+        </form>
+
+        {% if section.settings.show_trust %}
+          <div class="cps-trust-row">
+            <div class="cps-trust-item">
+              <div class="cps-trust-icon">{{ section.settings.trust1_icon }}</div>
+              <div>{{ section.settings.trust1_txt }}</div>
+            </div>
+            <div class="cps-trust-item">
+              <div class="cps-trust-icon">{{ section.settings.trust2_icon }}</div>
+              <div>{{ section.settings.trust2_txt }}</div>
+            </div>
+            <div class="cps-trust-item">
+              <div class="cps-trust-icon">{{ section.settings.trust3_icon }}</div>
+              <div>{{ section.settings.trust3_txt }}</div>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
+    {% if section.settings.pack_show %}
+      <div class="cps-packed">
+        {% if section.settings.pack_head != blank %}
+          <h2>{{ section.settings.pack_head }}</h2>
+        {% endif %}
+
+        {% if section.settings.pack_sub != blank %}
+          <p class="cps-pack-sub">{{ section.settings.pack_sub }}</p>
+        {% endif %}
+
+        <div class="cps-ing-grid">
+          {% for block in section.blocks %}
+            {% if block.type == 'ing' %}
+              <div class="cps-ing-item" {{ block.shopify_attributes }}>
+                <div class="cps-ing-icon">
+                  {% if block.settings.ing_img != blank %}
+                    <img src="{{ block.settings.ing_img | image_url: width: 100 }}" alt="{{ block.settings.title | escape }}">
+                  {% else %}
+                    <span>{{ block.settings.emoji }}</span>
+                  {% endif %}
+                </div>
+
+                <div>
+                  <div class="cps-ing-title">{{ block.settings.title }}</div>
+                  {% if block.settings.text != blank %}
+                    <div class="cps-ing-text">{{ block.settings.text }}</div>
+                  {% endif %}
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+
+    {% if section.settings.faq_show %}
+      <div class="cps-faq">
+        {% for block in section.blocks %}
+          {% if block.type == 'faq' %}
+            <details class="cps-faq-item" {{ block.shopify_attributes }}>
+              <summary>
+                <span>{{ block.settings.q }}</span>
+                <span class="cps-plus">+</span>
+              </summary>
+              <div class="cps-faq-answer">
+                {{ block.settings.a }}
+              </div>
+            </details>
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% endif %}
+
+  </div>
+
+  <script type="application/json" data-cps-vars>
+    [
+      {% for variant in product.variants %}
+        {
+          "id": {{ variant.id | json }},
+          "available": {{ variant.available | json }},
+          "options": {{ variant.options | json }}
+        }{% unless forloop.last %},{% endunless %}
+      {% endfor %}
+    ]
+  </script>
+</section>
+
+<style>
+  #custom-product-{{ section.id }} {
+    background: {{ section.settings.bg }};
+    color: {{ section.settings.text_col }};
+    padding-top: {{ section.settings.pad_top }}px;
+    padding-bottom: {{ section.settings.pad_bot }}px;
+  }
+
+  #custom-product-{{ section.id }} * {
+    box-sizing: border-box;
+  }
+
+  #custom-product-{{ section.id }} .cps-wrap {
+    max-width: {{ section.settings.maxw }}px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  #custom-product-{{ section.id }} .cps-top-badge {
+    width: fit-content;
+    margin: 0 auto 28px;
+    background: {{ section.settings.eyebrow_bg }};
+    color: {{ section.settings.eyebrow_col }};
+    padding: 10px 28px;
+    border-radius: 999px;
+    font-weight: 800;
+    font-size: 15px;
+    text-align: center;
+  }
+
+  #custom-product-{{ section.id }} .cps-main-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 470px;
+    gap: {{ section.settings.gap }}px;
+    align-items: start;
+  }
+
+  #custom-product-{{ section.id }} .cps-sticky {
+    position: sticky;
+    top: 20px;
+  }
+
+  #custom-product-{{ section.id }} .cps-gallery {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  #custom-product-{{ section.id }} .cps-g-main {
+    position: relative;
+    overflow: hidden;
+    border: {{ section.settings.border_w }}px solid {{ section.settings.border_col }};
+    border-radius: {{ section.settings.rad }}px;
+    background: {{ section.settings.img_bg }};
+    aspect-ratio: {{ section.settings.ratio }};
+  }
+
+  #custom-product-{{ section.id }} .cps-g-track {
+    display: flex;
+    height: 100%;
+    transition: transform .32s ease;
+  }
+
+  #custom-product-{{ section.id }} .cps-g-slide {
+    min-width: 100%;
+    height: 100%;
+    position: relative;
+  }
+
+  #custom-product-{{ section.id }} .cps-g-slide img,
+  #custom-product-{{ section.id }} .cps-g-slide picture {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  #custom-product-{{ section.id }} .cps-g-slide img {
+    object-fit: {{ section.settings.fit }};
+    object-position: center;
+  }
+
+  #custom-product-{{ section.id }} .cps-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f6f6f6;
+  }
+
+  #custom-product-{{ section.id }} .cps-placeholder svg {
+    width: 60%;
+    height: 60%;
+  }
+
+  #custom-product-{{ section.id }} .cps-img-badge {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    background: {{ section.settings.eyebrow_bg }};
+    color: {{ section.settings.eyebrow_col }};
+    padding: 7px 13px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 800;
+  }
+
+  #custom-product-{{ section.id }} .cps-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1px solid #000;
+    background: rgba(255,255,255,.8);
+    color: #001f10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    line-height: 1;
+    cursor: pointer;
+    z-index: 2;
+  }
+
+  #custom-product-{{ section.id }} .cps-prev {
+    left: 12px;
+  }
+
+  #custom-product-{{ section.id }} .cps-next {
+    right: 12px;
+  }
+
+  #custom-product-{{ section.id }} .cps-thumbs {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  #custom-product-{{ section.id }} .cps-thumbs::-webkit-scrollbar {
+    display: none;
+  }
+
+  #custom-product-{{ section.id }} .cps-thumb {
+    width: {{ section.settings.thumb_size }}px;
+    height: {{ section.settings.thumb_size }}px;
+    min-width: {{ section.settings.thumb_size }}px;
+    border: 1px solid {{ section.settings.thumb_col }};
+    border-radius: {{ section.settings.thumb_rad }}px;
+    background: {{ section.settings.thumb_bg }};
+    padding: 0;
+    overflow: hidden;
+    cursor: pointer;
+    opacity: .5;
+    transition: .2s ease;
+  }
+
+  #custom-product-{{ section.id }} .cps-thumb.active,
+  #custom-product-{{ section.id }} .cps-thumb:hover {
+    opacity: 1;
+    border-color: {{ section.settings.thumb_active }};
+  }
+
+  #custom-product-{{ section.id }} .cps-thumb img,
+  #custom-product-{{ section.id }} .cps-thumb svg {
+    width: 100%;
+    height: 100%;
+    object-fit: {{ section.settings.thumb_fit }};
+    display: block;
+  }
+
+  @media screen and (min-width: 990px) {
+    #custom-product-{{ section.id }} .cps-thumb-left {
+      display: grid;
+      grid-template-columns: {{ section.settings.thumb_size }}px minmax(0, 1fr);
+      gap: 14px;
+      align-items: start;
+    }
+
+    #custom-product-{{ section.id }} .cps-thumb-left .cps-thumbs {
+      grid-column: 1;
+      grid-row: 1;
+      flex-direction: column;
+      overflow-y: auto;
+      overflow-x: hidden;
+      max-height: 690px;
+    }
+
+    #custom-product-{{ section.id }} .cps-thumb-left .cps-g-main {
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+    #custom-product-{{ section.id }} .cps-thumb-right {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) {{ section.settings.thumb_size }}px;
+      gap: 14px;
+      align-items: start;
+    }
+
+    #custom-product-{{ section.id }} .cps-thumb-right .cps-g-main {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    #custom-product-{{ section.id }} .cps-thumb-right .cps-thumbs {
+      grid-column: 2;
+      grid-row: 1;
+      flex-direction: column;
+      overflow-y: auto;
+      overflow-x: hidden;
+      max-height: 690px;
+    }
+  }
+
+  #custom-product-{{ section.id }} .cps-reviews {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: {{ section.settings.text_col }};
+    text-decoration: underline;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+
+  #custom-product-{{ section.id }} .cps-stars {
+    color: {{ section.settings.star_col }};
+    letter-spacing: 1px;
+  }
+
+  #custom-product-{{ section.id }} .cps-title {
+    margin: 0 0 10px;
+    color: {{ section.settings.head_col }};
+    font-size: 31px;
+    line-height: 1.1;
+    font-weight: 900;
+    letter-spacing: -0.04em;
+  }
+
+  #custom-product-{{ section.id }} .cps-desc {
+    font-size: 17px;
+    line-height: 1.35;
+    font-weight: 600;
+    margin-bottom: 18px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #111;
+  }
+
+  #custom-product-{{ section.id }} .cps-desc p {
+    margin: 0;
+  }
+
+  #custom-product-{{ section.id }} .cps-block {
+    border-top: 1px solid #111;
+    padding-top: 22px;
+    margin-top: 22px;
+  }
+
+  #custom-product-{{ section.id }} .cps-label,
+  #custom-product-{{ section.id }} .cps-label-row {
+    font-size: 15px;
+    font-weight: 900;
+    margin-bottom: 12px;
+  }
+
+  #custom-product-{{ section.id }} .cps-label-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  #custom-product-{{ section.id }} .cps-qty-note {
+    font-size: 13px;
+    color: #777;
+    border: 1px dashed #aaa;
+    border-radius: 4px;
+    padding: 3px 9px;
+    font-weight: 600;
+  }
+
+  #custom-product-{{ section.id }} .cps-opt-values,
+  #custom-product-{{ section.id }} .cps-qty-pills {
+    display: flex;
+    gap: 12px;
+  }
+
+  #custom-product-{{ section.id }} .cps-opt-group + .cps-opt-group {
+    margin-top: 14px;
+  }
+
+  #custom-product-{{ section.id }} .cps-opt-btn,
+  #custom-product-{{ section.id }} .cps-qty-btn {
+    flex: 1;
+    border: 1px solid #111;
+    background: #fff;
+    color: #000;
+    border-radius: 8px;
+    min-height: 42px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  #custom-product-{{ section.id }} .cps-opt-btn.active,
+  #custom-product-{{ section.id }} .cps-qty-btn.active {
+    background: #daece3;
+    font-weight: 900;
+  }
+
+  #custom-product-{{ section.id }} .cps-offers {
+    border-top: none;
+    margin-top: 24px;
+    padding-top: 0;
+  }
+
+  #custom-product-{{ section.id }} .cps-offer-card {
+    position: relative;
+    width: 100%;
+    display: block;
+    text-align: left;
+    border: 1px solid #111;
+    background: #fff;
+    border-radius: 8px;
+    padding: 0;
+    overflow: hidden;
+    cursor: pointer;
+    margin-bottom: 14px;
+    color: #000;
+  }
+
+  #custom-product-{{ section.id }} .cps-offer-card.active {
+    background: #daece3;
+    border-color: #006b36;
+  }
+
+  #custom-product-{{ section.id }} .cps-offer-top {
+    background: #006b36;
+    color: #ffcf2e;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 900;
+    text-transform: uppercase;
+    padding: 6px;
+  }
+
+  #custom-product-{{ section.id }} .cps-offer-inner {
+    display: flex;
+    gap: 12px;
+    padding: 14px;
+  }
+
+  #custom-product-{{ section.id }} .cps-radio {
+    width: 18px;
+    height: 18px;
+    border: 1.5px solid #111;
+    border-radius: 50%;
+    margin-top: 2px;
+    position: relative;
+    flex: 0 0 auto;
+  }
+
+  #custom-product-{{ section.id }} .cps-offer-card.active .cps-radio:after {
+    content: "";
+    width: 10px;
+    height: 10px;
+    background: #006b36;
+    border-radius: 50%;
+    position: absolute;
+    inset: 3px;
+  }
+
+  #custom-product-{{ section.id }} .cps-offer-left {
+    flex: 1;
+  }
+
+  #custom-product-{{ section.id }} .cps-offer-title {
+    font-size: 19px;
+    line-height: 1.15;
+    font-weight: 900;
+  }
+
+  #custom-product-{{ section.id }} .cps-offer-note {
+    font-size: 14px;
+    margin-top: 3px;
+  }
+
+  #custom-product-{{ section.id }} .cps-offer-benefits {
+    list-style: none;
+    padding: 12px 0 0;
+    margin: 0;
+    display: grid;
+    gap: 10px;
+    font-size: 14px;
+  }
+
+  #custom-product-{{ section.id }} .cps-offer-benefits li {
+    margin: 0;
+  }
+
+  #custom-product-{{ section.id }} .cps-offer-price {
+    text-align: right;
+    min-width: 95px;
+    font-size: 14px;
+  }
+
+  #custom-product-{{ section.id }} .cps-offer-price strong {
+    font-size: 18px;
+    font-weight: 900;
+  }
+
+  #custom-product-{{ section.id }} .cps-offer-price s {
+    color: #777;
+    margin-left: 4px;
+  }
+
+  #custom-product-{{ section.id }} .cps-offer-price small {
+    display: block;
+    margin-top: 4px;
+  }
+
+  #custom-product-{{ section.id }} .cps-atc {
+    width: 100%;
+    min-height: 56px;
+    border-radius: 999px;
+    border: 1px solid #111;
+    background: #007e40;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 900;
+    cursor: pointer;
+    margin-top: 6px;
+  }
+
+  #custom-product-{{ section.id }} .cps-atc:disabled {
+    background: #aaa;
+    cursor: not-allowed;
+  }
+
+  #custom-product-{{ section.id }} .cps-discount {
+    margin-top: 16px;
+    background: {{ section.settings.disc_bg }};
+    color: {{ section.settings.disc_col }};
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 800;
+  }
+
+  #custom-product-{{ section.id }} .cps-trust-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-top: 24px;
+  }
+
+  #custom-product-{{ section.id }} .cps-trust-item {
+    text-align: center;
+    font-size: 13px;
+    line-height: 1.25;
+    font-weight: 600;
+  }
+
+  #custom-product-{{ section.id }} .cps-trust-icon {
+    width: 34px;
+    height: 34px;
+    margin: 0 auto 8px;
+    border: 1px solid #007e40;
+    color: #007e40;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #custom-product-{{ section.id }} .cps-packed {
+    max-width: {{ section.settings.pack_width }}px;
+    margin: 70px auto 0;
+  }
+
+  #custom-product-{{ section.id }} .cps-packed h2 {
+    text-align: center;
+    margin: 0 0 22px;
+    font-size: 26px;
+    font-weight: 900;
+  }
+
+  #custom-product-{{ section.id }} .cps-pack-sub {
+    text-align: center;
+    max-width: 600px;
+    margin: -10px auto 26px;
+    font-size: 16px;
+  }
+
+  #custom-product-{{ section.id }} .cps-ing-grid {
+    display: grid;
+    grid-template-columns: repeat({{ section.settings.pack_cols }}, minmax(0, 1fr));
+    gap: 18px 28px;
+  }
+
+  #custom-product-{{ section.id }} .cps-ing-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  #custom-product-{{ section.id }} .cps-ing-icon {
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+    border-radius: 50%;
+    background: {{ section.settings.ing_icon_bg }};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  #custom-product-{{ section.id }} .cps-ing-icon img {
+    width: 70%;
+    height: 70%;
+    object-fit: contain;
+  }
+
+  #custom-product-{{ section.id }} .cps-ing-title {
+    font-size: 16px;
+    font-weight: 800;
+  }
+
+  #custom-product-{{ section.id }} .cps-ing-text {
+    font-size: 13px;
+    opacity: .75;
+    margin-top: 2px;
+  }
+
+  #custom-product-{{ section.id }} .cps-faq {
+    max-width: {{ section.settings.faq_width }}px;
+    margin: {{ section.settings.faq_top }}px auto 0;
+    border-top: 1px solid {{ section.settings.faq_col }};
+  }
+
+  #custom-product-{{ section.id }} .cps-faq-item {
+    border-bottom: 1px solid {{ section.settings.faq_col }};
+  }
+
+  #custom-product-{{ section.id }} .cps-faq-item summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 20px 0;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    font-size: 19px;
+    font-weight: 900;
+    color: {{ section.settings.faq_q_col }};
+  }
+
+  #custom-product-{{ section.id }} .cps-faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  #custom-product-{{ section.id }} .cps-plus {
+    font-size: 30px;
+    line-height: 1;
+    transition: .2s ease;
+  }
+
+  #custom-product-{{ section.id }} .cps-faq-item[open] .cps-plus {
+    transform: rotate(45deg);
+  }
+
+  #custom-product-{{ section.id }} .cps-faq-answer {
+    color: {{ section.settings.faq_a_col }};
+    padding: 0 40px 20px 0;
+    font-size: 15px;
+    line-height: 1.55;
+  }
+
+  @media screen and (max-width: 989px) {
+    #custom-product-{{ section.id }} .cps-main-grid {
+      grid-template-columns: 1fr;
+    }
+
+    #custom-product-{{ section.id }} .cps-sticky {
+      position: relative;
+      top: auto;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    #custom-product-{{ section.id }} {
+      padding-top: {{ section.settings.mob_pad_top }}px;
+      padding-bottom: {{ section.settings.mob_pad_bot }}px;
+    }
+
+    #custom-product-{{ section.id }} .cps-wrap {
+      padding: 0 14px;
+    }
+
+    #custom-product-{{ section.id }} .cps-title {
+      font-size: 28px;
+    }
+
+    #custom-product-{{ section.id }} .cps-desc {
+      font-size: 16px;
+    }
+
+    #custom-product-{{ section.id }} .cps-g-main {
+      border-radius: {{ section.settings.mob_rad }}px;
+    }
+
+    #custom-product-{{ section.id }} .cps-trust-row {
+      gap: 8px;
+    }
+
+    #custom-product-{{ section.id }} .cps-trust-item {
+      font-size: 11px;
+    }
+
+    #custom-product-{{ section.id }} .cps-ing-grid {
+      grid-template-columns: 1fr;
+    }
+
+    #custom-product-{{ section.id }} .cps-offer-inner {
+      gap: 10px;
+    }
+
+    #custom-product-{{ section.id }} .cps-offer-price {
+      min-width: 82px;
+    }
+  }
+</style>
+
+<script>
+  (() => {
+    const section = document.querySelector('#custom-product-{{ section.id }}');
+    if (!section) return;
+
+    const track = section.querySelector('[data-cps-track]');
+    const slides = Array.from(section.querySelectorAll('[data-cps-slide]'));
+    const thumbs = Array.from(section.querySelectorAll('[data-cps-thumb]'));
+    const prev = section.querySelector('[data-cps-prev]');
+    const next = section.querySelector('[data-cps-next]');
+    let current = 0;
+
+    function goTo(i) {
+      if (!track || !slides.length) return;
+      current = (i + slides.length) % slides.length;
+      track.style.transform = `translateX(-${current * 100}%)`;
+      thumbs.forEach((t, index) => t.classList.toggle('active', index === current));
+    }
+
+    thumbs.forEach((thumb) => {
+      thumb.addEventListener('click', () => goTo(Number(thumb.dataset.cpsThumb)));
+    });
+
+    if (prev) prev.addEventListener('click', () => goTo(current - 1));
+    if (next) next.addEventListener('click', () => goTo(current + 1));
+
+    let startX = 0;
+    let endX = 0;
+
+    if (track) {
+      track.addEventListener('touchstart', e => {
+        startX = e.touches[0].clientX;
+      }, { passive: true });
+
+      track.addEventListener('touchmove', e => {
+        endX = e.touches[0].clientX;
+      }, { passive: true });
+
+      track.addEventListener('touchend', () => {
+        const diff = startX - endX;
+        if (Math.abs(diff) > 45) {
+          if (diff > 0) goTo(current + 1);
+          else goTo(current - 1);
+        }
+      });
+    }
+
+    const form = section.querySelector('[data-cps-form]');
+    const varInput = section.querySelector('[data-cps-var]');
+    const qtyInput = section.querySelector('[data-cps-qty]');
+    const planInput = section.querySelector('[data-cps-plan]');
+    const atc = section.querySelector('[data-cps-atc]');
+    const planBtns = Array.from(section.querySelectorAll('[data-cps-plan-btn]'));
+    const qtyBtns = Array.from(section.querySelectorAll('[data-cps-q]'));
+    const optBtns = Array.from(section.querySelectorAll('[data-cps-opt]'));
+    const varsEl = section.querySelector('[data-cps-vars]');
+    const spid = "{{ sp }}";
+
+    let variants = [];
+
+    try {
+      variants = varsEl ? JSON.parse(varsEl.textContent) : [];
+    } catch(e) {
+      variants = [];
+    }
+
+    function setPlan(type) {
+      planBtns.forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.cpsPlanBtn === type);
+      });
+
+      if (!planInput) return;
+
+      if (type === 'sub' && spid && spid !== 'null' && spid !== '') {
+        planInput.disabled = false;
+        planInput.value = spid;
+      } else {
+        planInput.value = '';
+        planInput.disabled = true;
+      }
+    }
+
+    planBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        setPlan(btn.dataset.cpsPlanBtn);
+      });
+    });
+
+    setPlan("{{ section.settings.default_offer }}");
+
+    qtyBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        qtyBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        if (qtyInput) {
+          qtyInput.value = btn.dataset.cpsQ;
+        }
+      });
+    });
+
+    function updateVariant() {
+      if (!variants.length || !optBtns.length) return;
+
+      const selected = [];
+
+      optBtns.forEach(btn => {
+        if (btn.classList.contains('active')) {
+          selected[Number(btn.dataset.optIndex)] = btn.dataset.optValue;
+        }
+      });
+
+      const matched = variants.find(v => {
+        return JSON.stringify(v.options) === JSON.stringify(selected);
+      });
+
+      if (!matched) return;
+
+      if (varInput) {
+        varInput.value = matched.id;
+      }
+
+      if (atc) {
+        atc.disabled = !matched.available;
+        atc.textContent = matched.available ? "{{ section.settings.cta_text | escape }}" : "Sold Out";
+      }
+    }
+
+    optBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const index = btn.dataset.optIndex;
+
+        optBtns.forEach(b => {
+          if (b.dataset.optIndex === index) {
+            b.classList.remove('active');
+          }
+        });
+
+        btn.classList.add('active');
+
+        const label = section.querySelector(`[data-cps-opt-title="${index}"]`);
+        if (label) {
+          label.textContent = btn.dataset.optValue;
+        }
+
+        updateVariant();
+      });
+    });
+
+    if (form && atc) {
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        const variantId = varInput ? varInput.value : '';
+        const qty = qtyInput ? qtyInput.value : '1';
+        const sellingPlan = planInput && !planInput.disabled ? planInput.value : '';
+
+        if (!variantId) {
+          alert('Variant missing. Make sure this section is on a product page.');
+          return;
+        }
+
+        const originalText = atc.textContent;
+
+        atc.disabled = true;
+        atc.textContent = 'Adding...';
+
+        const payload = {
+          id: Number(variantId),
+          quantity: Number(qty || 1)
+        };
+
+        if (sellingPlan) {
+          payload.selling_plan = Number(sellingPlan);
+        }
+
+        try {
+          const res = await fetch('/cart/add.js', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            },
+            body: JSON.stringify(payload)
+          });
+
+          if (!res.ok) {
+            const error = await res.json();
+            throw new Error(error.description || 'Could not add to cart.');
+          }
+
+          atc.textContent = 'Added ✓';
+
+          document.dispatchEvent(new CustomEvent('cart:refresh'));
+          document.dispatchEvent(new CustomEvent('cart:updated'));
+          document.dispatchEvent(new CustomEvent('cart:open'));
+          window.dispatchEvent(new CustomEvent('cart:refresh'));
+          window.dispatchEvent(new CustomEvent('cart:updated'));
+          window.dispatchEvent(new CustomEvent('cart:open'));
+
+          setTimeout(() => {
+            atc.disabled = false;
+            atc.textContent = originalText;
+          }, 1200);
+
+        } catch (err) {
+          alert(err.message || 'Something went wrong.');
+          atc.disabled = false;
+          atc.textContent = originalText;
+        }
+      });
+    }
+
+    updateVariant();
+    goTo(0);
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Custom Product Section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Gallery"
+    },
+    {
+      "type": "select",
+      "id": "src",
+      "label": "Image source",
+      "default": "custom",
+      "options": [
+        {
+          "value": "custom",
+          "label": "Custom image blocks"
+        },
+        {
+          "value": "product",
+          "label": "Product media"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "show_thumb",
+      "label": "Show thumbnails",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrow",
+      "label": "Show arrows",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "thumb_pos",
+      "label": "Thumbnail position",
+      "default": "left",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        },
+        {
+          "value": "bottom",
+          "label": "Bottom"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "sticky_gal",
+      "label": "Sticky gallery desktop",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "maxw",
+      "label": "Section max width",
+      "min": 900,
+      "max": 1500,
+      "step": 20,
+      "default": 1260
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "Column gap",
+      "min": 20,
+      "max": 80,
+      "step": 2,
+      "default": 50
+    },
+    {
+      "type": "select",
+      "id": "ratio",
+      "label": "Image ratio",
+      "default": "1 / 1",
+      "options": [
+        {
+          "value": "1 / 1",
+          "label": "Square"
+        },
+        {
+          "value": "4 / 5",
+          "label": "Portrait"
+        },
+        {
+          "value": "16 / 9",
+          "label": "Landscape"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "fit",
+      "label": "Image fit",
+      "default": "cover",
+      "options": [
+        {
+          "value": "cover",
+          "label": "Cover"
+        },
+        {
+          "value": "contain",
+          "label": "Contain"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "img_bg",
+      "label": "Image background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "border_w",
+      "label": "Image border width",
+      "min": 0,
+      "max": 5,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "color",
+      "id": "border_col",
+      "label": "Image border color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "rad",
+      "label": "Image radius desktop",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "mob_rad",
+      "label": "Image radius mobile",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "thumb_size",
+      "label": "Thumbnail size",
+      "min": 45,
+      "max": 100,
+      "step": 5,
+      "default": 75
+    },
+    {
+      "type": "select",
+      "id": "thumb_fit",
+      "label": "Thumbnail fit",
+      "default": "cover",
+      "options": [
+        {
+          "value": "cover",
+          "label": "Cover"
+        },
+        {
+          "value": "contain",
+          "label": "Contain"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "thumb_col",
+      "label": "Thumbnail border",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "thumb_active",
+      "label": "Active thumb border",
+      "default": "#007E40"
+    },
+    {
+      "type": "color",
+      "id": "thumb_bg",
+      "label": "Thumbnail background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "thumb_rad",
+      "label": "Thumbnail radius",
+      "min": 0,
+      "max": 24,
+      "step": 1,
+      "default": 6
+    },
+    {
+      "type": "header",
+      "content": "Spacing and colors"
+    },
+    {
+      "type": "color",
+      "id": "bg",
+      "label": "Section background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "text_col",
+      "label": "Text color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "head_col",
+      "label": "Heading color",
+      "default": "#007E40"
+    },
+    {
+      "type": "range",
+      "id": "pad_top",
+      "label": "Padding top desktop",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "pad_bot",
+      "label": "Padding bottom desktop",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "mob_pad_top",
+      "label": "Padding top mobile",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "mob_pad_bot",
+      "label": "Padding bottom mobile",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Top badge"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_eyebrow",
+      "label": "Show top badge",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Top badge text",
+      "default": "3rd-Party & Clinically Tested"
+    },
+    {
+      "type": "color",
+      "id": "eyebrow_bg",
+      "label": "Badge background",
+      "default": "#FFF2C7"
+    },
+    {
+      "type": "color",
+      "id": "eyebrow_col",
+      "label": "Badge text color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Main copy"
+    },
+    {
+      "type": "text",
+      "id": "review_txt",
+      "label": "Review text",
+      "default": "4.8/5.0 (95,000+), 95,000+ Customers"
+    },
+    {
+      "type": "url",
+      "id": "review_link",
+      "label": "Review link"
+    },
+    {
+      "type": "color",
+      "id": "star_col",
+      "label": "Star color",
+      "default": "#007E40"
+    },
+    {
+      "type": "text",
+      "id": "head",
+      "label": "Title",
+      "default": "Support Thicker-Looking Hair From Within"
+    },
+    {
+      "type": "richtext",
+      "id": "desc",
+      "label": "Description",
+      "default": "<p>Pumpkin Seed Oil + Saw Palmetto softgels made to support healthy-looking hair, scalp wellness, and daily confidence.</p>"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vars",
+      "label": "Show variant buttons",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Quantity"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_qty",
+      "label": "Show quantity selector",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "qty_label",
+      "label": "Quantity label",
+      "default": "Select Quantity"
+    },
+    {
+      "type": "text",
+      "id": "qty_note",
+      "label": "Quantity note",
+      "default": "Buy 2 Save 5%"
+    },
+    {
+      "type": "select",
+      "id": "def_qty",
+      "label": "Default quantity",
+      "default": "1",
+      "options": [
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Offer cards"
+    },
+    {
+      "type": "text",
+      "id": "offer_label",
+      "label": "Offer label",
+      "default": "Select Offer"
+    },
+    {
+      "type": "select",
+      "id": "default_offer",
+      "label": "Default offer",
+      "default": "otp",
+      "options": [
+        {
+          "value": "sub",
+          "label": "Subscribe"
+        },
+        {
+          "value": "otp",
+          "label": "One-time"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "spid",
+      "label": "Selling plan ID"
+    },
+    {
+      "type": "text",
+      "id": "sub_top",
+      "label": "Subscription top bar",
+      "default": "Most Popular: Get 49% Off"
+    },
+    {
+      "type": "text",
+      "id": "sub_title",
+      "label": "Subscription title",
+      "default": "Subscribe & Save"
+    },
+    {
+      "type": "text",
+      "id": "sub_note",
+      "label": "Subscription note",
+      "default": "1 bottle delivered every 4 weeks"
+    },
+    {
+      "type": "text",
+      "id": "sub_price",
+      "label": "Subscription price",
+      "default": "$39.95"
+    },
+    {
+      "type": "text",
+      "id": "sub_cmp",
+      "label": "Subscription compare",
+      "default": "$79.95"
+    },
+    {
+      "type": "text",
+      "id": "sub_day",
+      "label": "Subscription per day",
+      "default": "$1.33/day"
+    },
+    {
+      "type": "text",
+      "id": "sub_ben1",
+      "label": "Sub benefit 1",
+      "default": "FAST & FREE Shipping On First Order"
+    },
+    {
+      "type": "text",
+      "id": "sub_ben2",
+      "label": "Sub benefit 2",
+      "default": "Pause Or Cancel Any Time"
+    },
+    {
+      "type": "text",
+      "id": "sub_ben3",
+      "label": "Sub benefit 3",
+      "default": "30-Day Money-Back Guarantee"
+    },
+    {
+      "type": "text",
+      "id": "otp_title",
+      "label": "One-time title",
+      "default": "One Time Purchase"
+    },
+    {
+      "type": "text",
+      "id": "otp_note",
+      "label": "One-time note",
+      "default": "Delivered once"
+    },
+    {
+      "type": "text",
+      "id": "otp_price",
+      "label": "One-time price",
+      "default": "$54.95"
+    },
+    {
+      "type": "text",
+      "id": "otp_cmp",
+      "label": "One-time compare",
+      "default": "$79.95"
+    },
+    {
+      "type": "text",
+      "id": "otp_day",
+      "label": "One-time per day",
+      "default": "$1.83/day"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Button text",
+      "default": "Start Now"
+    },
+    {
+      "type": "header",
+      "content": "Discount message"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_disc",
+      "label": "Show discount bar",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "disc_txt",
+      "label": "Discount text",
+      "default": "Limited Time Discount Auto-Applied ✅"
+    },
+    {
+      "type": "color",
+      "id": "disc_bg",
+      "label": "Discount background",
+      "default": "#FFF2C7"
+    },
+    {
+      "type": "color",
+      "id": "disc_col",
+      "label": "Discount text",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Trust icons"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_trust",
+      "label": "Show trust icons",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "trust1_icon",
+      "label": "Trust icon 1",
+      "default": "✓"
+    },
+    {
+      "type": "text",
+      "id": "trust1_txt",
+      "label": "Trust text 1",
+      "default": "30-Day Money-Back Guarantee"
+    },
+    {
+      "type": "text",
+      "id": "trust2_icon",
+      "label": "Trust icon 2",
+      "default": "✓"
+    },
+    {
+      "type": "text",
+      "id": "trust2_txt",
+      "label": "Trust text 2",
+      "default": "Clinically and 3rd party tested"
+    },
+    {
+      "type": "text",
+      "id": "trust3_icon",
+      "label": "Trust icon 3",
+      "default": "✓"
+    },
+    {
+      "type": "text",
+      "id": "trust3_txt",
+      "label": "Trust text 3",
+      "default": "Easy daily softgels"
+    },
+    {
+      "type": "header",
+      "content": "Packed With"
+    },
+    {
+      "type": "checkbox",
+      "id": "pack_show",
+      "label": "Show packed section",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "pack_head",
+      "label": "Packed heading",
+      "default": "Packed With"
+    },
+    {
+      "type": "textarea",
+      "id": "pack_sub",
+      "label": "Packed subheading",
+      "default": "A targeted daily formula made with plant-based ingredients."
+    },
+    {
+      "type": "range",
+      "id": "pack_width",
+      "label": "Packed max width",
+      "min": 400,
+      "max": 1000,
+      "step": 20,
+      "default": 620
+    },
+    {
+      "type": "select",
+      "id": "pack_cols",
+      "label": "Packed columns",
+      "default": "1",
+      "options": [
+        {
+          "value": "1",
+          "label": "1 column"
+        },
+        {
+          "value": "2",
+          "label": "2 columns"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "ing_icon_bg",
+      "label": "Ingredient icon bg",
+      "default": "#E3F1EA"
+    },
+    {
+      "type": "header",
+      "content": "FAQ"
+    },
+    {
+      "type": "checkbox",
+      "id": "faq_show",
+      "label": "Show FAQ",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "faq_top",
+      "label": "FAQ margin top",
+      "min": 20,
+      "max": 100,
+      "step": 4,
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "faq_width",
+      "label": "FAQ width",
+      "min": 600,
+      "max": 1200,
+      "step": 20,
+      "default": 900
+    },
+    {
+      "type": "color",
+      "id": "faq_col",
+      "label": "FAQ border",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "faq_q_col",
+      "label": "FAQ question",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "faq_a_col",
+      "label": "FAQ answer",
+      "default": "#333333"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "img",
+      "name": "Gallery Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "d_img",
+          "label": "Desktop image"
+        },
+        {
+          "type": "image_picker",
+          "id": "m_img",
+          "label": "Mobile image"
+        },
+        {
+          "type": "image_picker",
+          "id": "thumb",
+          "label": "Thumbnail"
+        },
+        {
+          "type": "text",
+          "id": "badge",
+          "label": "Image badge"
+        },
+        {
+          "type": "text",
+          "id": "alt",
+          "label": "Alt text"
+        }
+      ]
+    },
+    {
+      "type": "ing",
+      "name": "Ingredient",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "ing_img",
+          "label": "Icon image"
+        },
+        {
+          "type": "text",
+          "id": "emoji",
+          "label": "Emoji fallback",
+          "default": "🌿"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Pumpkin Seed Oil"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Small text",
+          "default": "Supports scalp wellness and healthier-looking hair."
+        }
+      ]
+    },
+    {
+      "type": "faq",
+      "name": "FAQ",
+      "settings": [
+        {
+          "type": "text",
+          "id": "q",
+          "label": "Question",
+          "default": "Why Herbans?"
+        },
+        {
+          "type": "richtext",
+          "id": "a",
+          "label": "Answer",
+          "default": "<p>Herbans combines Pumpkin Seed Oil and Saw Palmetto in easy daily softgels designed to support healthier-looking hair from within.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Product Section",
+      "blocks": [
+        {
+          "type": "img"
+        },
+        {
+          "type": "img"
+        },
+        {
+          "type": "img"
+        },
+        {
+          "type": "ing",
+          "settings": {
+            "emoji": "🎃",
+            "title": "Pumpkin Seed Oil",
+            "text": "Supports scalp wellness and healthier-looking hair."
+          }
+        },
+        {
+          "type": "ing",
+          "settings": {
+            "emoji": "🌴",
+            "title": "Saw Palmetto",
+            "text": "Plant-based support commonly used in hair wellness formulas."
+          }
+        },
+        {
+          "type": "ing",
+          "settings": {
+            "emoji": "💊",
+            "title": "Easy Daily Softgels",
+            "text": "No messy oils, powders, or gummies."
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "q": "Why Herbans?",
+            "a": "<p>Herbans is made for people who want a simple daily softgel routine with targeted plant-based ingredients.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "q": "Ingredients",
+            "a": "<p>The formula features Pumpkin Seed Oil and Saw Palmetto.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "q": "Directions",
+            "a": "<p>Take daily as directed on the product label. Consistency is key.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "q": "Benefits",
+            "a": "<p>Designed to support healthier-looking hair, scalp wellness, and daily confidence.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

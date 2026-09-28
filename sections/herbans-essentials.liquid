@@ -1,0 +1,1434 @@
+{% comment %}
+  Herbans Essentials Banner
+  Clean version: no stars, no rating, no verified badge
+  Mobile carousel with next-card peek
+  Added: sticky Add to Cart safe spacing on mobile
+{% endcomment %}
+
+{% assign overlay_alpha = section.settings.overlay_opacity | times: 0.01 %}
+{% assign cards_alpha = section.settings.cards_bg_opacity | times: 0.01 %}
+{% assign bg_media_alpha = section.settings.background_media_opacity | times: 0.01 %}
+
+<section id="herbans-essentials-{{ section.id }}" class="he-section">
+  <div class="he-container">
+    <div class="he-banner">
+
+      {% if section.settings.background_video_url != blank %}
+        <video class="he-bg-video" autoplay muted loop playsinline>
+          <source src="{{ section.settings.background_video_url }}">
+        </video>
+      {% elsif section.settings.background_image != blank %}
+        <img
+          class="he-bg-image"
+          src="{{ section.settings.background_image | image_url: width: 2200 }}"
+          alt="{{ section.settings.background_alt | escape }}"
+          loading="lazy"
+        >
+      {% endif %}
+
+      <div class="he-overlay"></div>
+
+      <div class="he-content">
+        <div class="he-top">
+          {% if section.settings.subtitle != blank %}
+            <p class="he-subtitle">{{ section.settings.subtitle }}</p>
+          {% endif %}
+
+          {% if section.settings.heading != blank %}
+            <h2 class="he-heading">{{ section.settings.heading }}</h2>
+          {% endif %}
+        </div>
+
+        <div class="he-bottom">
+          <div class="he-cards-panel">
+            <div class="he-cards">
+              {% for block in section.blocks %}
+                <div class="he-card" {{ block.shopify_attributes }}>
+                  <div class="he-icon-wrap">
+                    {% if block.settings.icon_image != blank %}
+                      <img
+                        class="he-icon-img"
+                        src="{{ block.settings.icon_image | image_url: width: 180 }}"
+                        alt="{{ block.settings.title | escape }}"
+                        loading="lazy"
+                      >
+                    {% else %}
+                      {% case forloop.index %}
+                        {% when 1 %}
+                          <svg class="he-icon-svg" viewBox="0 0 80 80" fill="none" aria-hidden="true">
+                            <circle cx="40" cy="40" r="22" stroke="currentColor" stroke-width="3"/>
+                            <circle cx="40" cy="40" r="31" stroke="currentColor" stroke-width="3" opacity=".8"/>
+                            <circle cx="40" cy="28" r="13" stroke="currentColor" stroke-width="3"/>
+                          </svg>
+                        {% when 2 %}
+                          <svg class="he-icon-svg" viewBox="0 0 80 80" fill="none" aria-hidden="true">
+                            <path d="M12 42C18 22 26 22 32 42C38 62 46 62 52 42C58 22 66 22 68 42" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+                          </svg>
+                        {% when 3 %}
+                          <svg class="he-icon-svg" viewBox="0 0 80 80" fill="none" aria-hidden="true">
+                            <path d="M40 10V20M40 60V70M70 40H60M20 40H10M61 19L54 26M26 54L19 61M61 61L54 54M26 26L19 19" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                            <circle cx="40" cy="40" r="17" stroke="currentColor" stroke-width="3"/>
+                          </svg>
+                        {% else %}
+                          <svg class="he-icon-svg" viewBox="0 0 80 80" fill="none" aria-hidden="true">
+                            <circle cx="40" cy="40" r="22" stroke="currentColor" stroke-width="3"/>
+                            <path d="M28 42L36 50L53 30" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                          </svg>
+                      {% endcase %}
+                    {% endif %}
+                  </div>
+
+                  {% if block.settings.title != blank %}
+                    <h3 class="he-card-title">{{ block.settings.title }}</h3>
+                  {% endif %}
+
+                  {% if block.settings.text != blank %}
+                    <div class="he-card-text">{{ block.settings.text }}</div>
+                  {% endif %}
+                </div>
+              {% endfor %}
+            </div>
+
+            {% if section.settings.mobile_scroll_cards %}
+              <div class="he-mobile-scroll-indicator" aria-hidden="true">
+                <span class="he-mobile-scroll-pill"></span>
+              </div>
+            {% endif %}
+          </div>
+
+          {% if section.settings.disclaimer != blank %}
+            <div class="he-disclaimer">
+              {{ section.settings.disclaimer }}
+            </div>
+          {% endif %}
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  #herbans-essentials-{{ section.id }},
+  #herbans-essentials-{{ section.id }} * {
+    box-sizing: border-box;
+  }
+
+  #herbans-essentials-{{ section.id }} {
+    background: {{ section.settings.section_bg }};
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+
+  #herbans-essentials-{{ section.id }} .he-container {
+    max-width: {{ section.settings.container_width }}px;
+    margin: 0 auto;
+    padding-left: {{ section.settings.side_padding }}px;
+    padding-right: {{ section.settings.side_padding }}px;
+  }
+
+  #herbans-essentials-{{ section.id }} .he-banner {
+    position: relative;
+    min-height: {{ section.settings.banner_height }}px;
+    border-radius: {{ section.settings.banner_radius }}px;
+    overflow: hidden;
+    background: {{ section.settings.fallback_bg }};
+  }
+
+  #herbans-essentials-{{ section.id }} .he-bg-image,
+  #herbans-essentials-{{ section.id }} .he-bg-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: {{ section.settings.background_position }};
+    opacity: {{ bg_media_alpha }};
+    z-index: 1;
+  }
+
+  #herbans-essentials-{{ section.id }} .he-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background: linear-gradient(
+      {{ section.settings.gradient_direction }}deg,
+      {{ section.settings.overlay_color }} 0%,
+      {{ section.settings.overlay_color_2 }} 100%
+    );
+    opacity: {{ overlay_alpha }};
+  }
+
+  #herbans-essentials-{{ section.id }} .he-content {
+    position: relative;
+    z-index: 3;
+    min-height: {{ section.settings.banner_height }}px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: {{ section.settings.content_padding_top }}px {{ section.settings.content_padding_x }}px {{ section.settings.content_padding_bottom }}px;
+  }
+
+  #herbans-essentials-{{ section.id }} .he-top {
+    max-width: {{ section.settings.heading_max_width }}px;
+  }
+
+  #herbans-essentials-{{ section.id }} .he-subtitle {
+    margin: 0 0 {{ section.settings.subtitle_bottom }}px;
+    color: {{ section.settings.subtitle_color }};
+    font-size: {{ section.settings.subtitle_size }}px;
+    line-height: {{ section.settings.subtitle_line_height }}px;
+    font-weight: {{ section.settings.subtitle_weight }};
+    max-width: {{ section.settings.text_max_width }}px;
+  }
+
+  #herbans-essentials-{{ section.id }} .he-heading {
+    margin: 0;
+    color: {{ section.settings.heading_color }};
+    font-size: {{ section.settings.heading_size }}px;
+    line-height: {{ section.settings.heading_line_height }}px;
+    font-weight: {{ section.settings.heading_weight }};
+    letter-spacing: {{ section.settings.heading_letter_spacing }}px;
+    max-width: {{ section.settings.heading_max_width }}px;
+  }
+
+  #herbans-essentials-{{ section.id }} .he-bottom {
+    margin-top: auto;
+  }
+
+  #herbans-essentials-{{ section.id }} .he-cards-panel {
+    position: relative;
+    margin-top: {{ section.settings.cards_top }}px;
+    background: {{ section.settings.cards_bg_color | color_modify: 'alpha', cards_alpha }};
+    border-radius: {{ section.settings.cards_radius }}px;
+    padding: {{ section.settings.cards_padding_y }}px {{ section.settings.cards_padding_x }}px;
+    backdrop-filter: blur({{ section.settings.cards_blur }}px);
+    -webkit-backdrop-filter: blur({{ section.settings.cards_blur }}px);
+  }
+
+  #herbans-essentials-{{ section.id }} .he-cards {
+    display: grid;
+    grid-template-columns: repeat({{ section.settings.desktop_columns }}, minmax(0, 1fr));
+    gap: {{ section.settings.card_gap }}px;
+  }
+
+  #herbans-essentials-{{ section.id }} .he-card {
+    color: {{ section.settings.card_text_color }};
+  }
+
+  #herbans-essentials-{{ section.id }} .he-icon-wrap {
+    width: {{ section.settings.icon_size }}px;
+    height: {{ section.settings.icon_size }}px;
+    margin-bottom: {{ section.settings.icon_bottom }}px;
+    color: {{ section.settings.icon_color }};
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  #herbans-essentials-{{ section.id }} .he-icon-img,
+  #herbans-essentials-{{ section.id }} .he-icon-svg {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+
+  #herbans-essentials-{{ section.id }} .he-card-title {
+    margin: 0 0 {{ section.settings.card_title_bottom }}px;
+    color: {{ section.settings.card_title_color }};
+    font-size: {{ section.settings.card_title_size }}px;
+    line-height: {{ section.settings.card_title_line_height }}px;
+    font-weight: {{ section.settings.card_title_weight }};
+  }
+
+  #herbans-essentials-{{ section.id }} .he-card-text {
+    color: {{ section.settings.card_text_color }};
+    font-size: {{ section.settings.card_text_size }}px;
+    line-height: {{ section.settings.card_text_line_height }}px;
+    font-weight: {{ section.settings.card_text_weight }};
+    max-width: {{ section.settings.card_text_width }}px;
+  }
+
+  #herbans-essentials-{{ section.id }} .he-card-text p {
+    margin: 0;
+  }
+
+  #herbans-essentials-{{ section.id }} .he-disclaimer {
+    margin-top: {{ section.settings.disclaimer_top }}px;
+    color: {{ section.settings.disclaimer_color }};
+    font-size: {{ section.settings.disclaimer_size }}px;
+    line-height: {{ section.settings.disclaimer_line_height }}px;
+    position: relative;
+    z-index: 6;
+  }
+
+  #herbans-essentials-{{ section.id }} .he-disclaimer p {
+    margin: 0;
+  }
+
+  #herbans-essentials-{{ section.id }} .he-mobile-scroll-indicator {
+    display: none;
+  }
+
+  @media screen and (max-width: 989px) {
+    #herbans-essentials-{{ section.id }} {
+      padding-top: {{ section.settings.mobile_padding_top }}px;
+      padding-bottom: calc({{ section.settings.mobile_padding_bottom }}px + {{ section.settings.mobile_sticky_cart_safe_space }}px);
+    }
+
+    #herbans-essentials-{{ section.id }} .he-container {
+      padding-left: {{ section.settings.mobile_side_padding }}px;
+      padding-right: {{ section.settings.mobile_side_padding }}px;
+    }
+
+    #herbans-essentials-{{ section.id }} .he-banner {
+      min-height: {{ section.settings.mobile_banner_height }}px;
+      border-radius: {{ section.settings.mobile_banner_radius }}px;
+    }
+
+    #herbans-essentials-{{ section.id }} .he-content {
+      min-height: {{ section.settings.mobile_banner_height }}px;
+      padding: {{ section.settings.mobile_content_padding_top }}px {{ section.settings.mobile_content_padding_x }}px calc({{ section.settings.mobile_content_padding_bottom }}px + {{ section.settings.mobile_sticky_cart_safe_space }}px);
+      justify-content: space-between;
+    }
+
+    #herbans-essentials-{{ section.id }} .he-top {
+      max-width: 95%;
+    }
+
+    #herbans-essentials-{{ section.id }} .he-subtitle {
+      font-size: {{ section.settings.mobile_subtitle_size }}px;
+      line-height: {{ section.settings.mobile_subtitle_line_height }}px;
+      margin-bottom: {{ section.settings.mobile_subtitle_bottom }}px;
+    }
+
+    #herbans-essentials-{{ section.id }} .he-heading {
+      font-size: {{ section.settings.mobile_heading_size }}px;
+      line-height: {{ section.settings.mobile_heading_line_height }}px;
+      letter-spacing: {{ section.settings.mobile_heading_letter_spacing }}px;
+      max-width: 92%;
+    }
+
+    #herbans-essentials-{{ section.id }} .he-bottom {
+      margin-top: auto;
+    }
+
+    #herbans-essentials-{{ section.id }} .he-cards-panel {
+      margin-top: {{ section.settings.mobile_cards_top }}px;
+      background: transparent;
+      padding: 0;
+      border-radius: 0;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      overflow: visible;
+      width: calc(100% + {{ section.settings.mobile_content_padding_x }}px);
+      margin-right: calc(-1 * {{ section.settings.mobile_content_padding_x }}px);
+    }
+
+    #herbans-essentials-{{ section.id }} .he-cards {
+      display: flex;
+      gap: {{ section.settings.mobile_card_gap }}px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      padding-right: 0;
+      padding-bottom: 8px;
+      width: 100%;
+    }
+
+    #herbans-essentials-{{ section.id }} .he-cards::-webkit-scrollbar {
+      display: none;
+    }
+
+    #herbans-essentials-{{ section.id }} .he-card {
+      flex: 0 0 calc(100% - {{ section.settings.mobile_next_card_peek }}px);
+      min-width: calc(100% - {{ section.settings.mobile_next_card_peek }}px);
+      max-width: calc(100% - {{ section.settings.mobile_next_card_peek }}px);
+      scroll-snap-align: start;
+      background: {{ section.settings.cards_bg_color | color_modify: 'alpha', cards_alpha }};
+      border-radius: {{ section.settings.mobile_card_radius }}px;
+      padding: {{ section.settings.mobile_card_padding_y }}px {{ section.settings.mobile_card_padding_x }}px;
+      backdrop-filter: blur({{ section.settings.cards_blur }}px);
+      -webkit-backdrop-filter: blur({{ section.settings.cards_blur }}px);
+      box-sizing: border-box;
+    }
+
+    #herbans-essentials-{{ section.id }} .he-icon-wrap {
+      width: {{ section.settings.mobile_icon_size }}px;
+      height: {{ section.settings.mobile_icon_size }}px;
+      margin-bottom: {{ section.settings.mobile_icon_bottom }}px;
+    }
+
+    #herbans-essentials-{{ section.id }} .he-card-title {
+      font-size: {{ section.settings.mobile_card_title_size }}px;
+      line-height: {{ section.settings.mobile_card_title_line_height }}px;
+    }
+
+    #herbans-essentials-{{ section.id }} .he-card-text {
+      font-size: {{ section.settings.mobile_card_text_size }}px;
+      line-height: {{ section.settings.mobile_card_text_line_height }}px;
+      max-width: 100%;
+    }
+
+    #herbans-essentials-{{ section.id }} .he-disclaimer {
+      margin-top: 14px;
+      margin-bottom: 18px;
+      font-size: {{ section.settings.mobile_disclaimer_size }}px;
+      line-height: {{ section.settings.mobile_disclaimer_line_height }}px;
+      max-width: 92%;
+    }
+
+    #herbans-essentials-{{ section.id }} .he-mobile-scroll-indicator {
+      {% if section.settings.mobile_scroll_cards %}
+        display: flex;
+      {% else %}
+        display: none;
+      {% endif %}
+      position: absolute;
+      right: 16px;
+      bottom: 20px;
+      z-index: 5;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
+
+    #herbans-essentials-{{ section.id }} .he-mobile-scroll-pill {
+      width: 18px;
+      height: 7px;
+      border-radius: 999px;
+      background: #ffffff;
+      opacity: 1;
+      display: block;
+      animation: he-pill-pulse 1.8s ease-in-out infinite;
+    }
+  }
+
+  @keyframes he-pill-pulse {
+    0%, 100% { transform: translateX(0); opacity: 0.85; }
+    50% { transform: translateX(4px); opacity: 1; }
+  }
+</style>
+<style>
+  @media screen and (max-width: 989px) {
+    /* Force THIS section behind sticky add-to-cart */
+    #shopify-section-{{ section.id }},
+    #herbans-essentials-{{ section.id }},
+    #herbans-essentials-{{ section.id }} .he-section,
+    #herbans-essentials-{{ section.id }} .he-container,
+    #herbans-essentials-{{ section.id }} .he-banner,
+    #herbans-essentials-{{ section.id }} .he-content,
+    #herbans-essentials-{{ section.id }} .he-bottom,
+    #herbans-essentials-{{ section.id }} .he-cards-panel,
+    #herbans-essentials-{{ section.id }} .he-cards,
+    #herbans-essentials-{{ section.id }} .he-card,
+    #herbans-essentials-{{ section.id }} .he-disclaimer {
+      position: relative !important;
+      z-index: 0 !important;
+      isolation: auto !important;
+      transform: none !important;
+    }
+
+    /* Remove the extra safe spacing that was making the section sit above the bar */
+    #herbans-essentials-{{ section.id }} {
+      padding-bottom: {{ section.settings.mobile_padding_bottom }}px !important;
+    }
+
+    #herbans-essentials-{{ section.id }} .he-content {
+      padding-bottom: {{ section.settings.mobile_content_padding_bottom }}px !important;
+    }
+
+    #herbans-essentials-{{ section.id }} .he-disclaimer {
+      margin-bottom: 0 !important;
+    }
+
+    /* Force the sticky add-to-cart above all custom sections */
+    body sticky-atc.sticky-atc,
+    body .sticky-atc,
+    body [id^="sticky-atc-"] {
+      position: fixed !important;
+      left: 0 !important;
+      right: 0 !important;
+      bottom: 0 !important;
+      width: 100% !important;
+      z-index: 2147483647 !important;
+      pointer-events: auto !important;
+      transform: translateZ(0) !important;
+      isolation: isolate !important;
+    }
+
+    body sticky-atc.sticky-atc .sticky-atc-container,
+    body .sticky-atc .sticky-atc-container,
+    body [id^="sticky-atc-"] .sticky-atc-container {
+      position: relative !important;
+      z-index: 2147483647 !important;
+    }
+  }
+  @media screen and (max-width: 989px) {
+  /* Keep the section behind sticky ATC */
+  #shopify-section-{{ section.id }},
+  #herbans-essentials-{{ section.id }} {
+    position: relative !important;
+    z-index: 0 !important;
+    isolation: auto !important;
+  }
+
+  /* Restore image layer */
+  #herbans-essentials-{{ section.id }} .he-bg-image,
+  #herbans-essentials-{{ section.id }} .he-bg-video {
+    z-index: 1 !important;
+  }
+
+  /* Restore overlay behind the text/cards */
+  #herbans-essentials-{{ section.id }} .he-overlay {
+    z-index: 2 !important;
+    pointer-events: none !important;
+  }
+
+  /* Restore all content above the overlay */
+  #herbans-essentials-{{ section.id }} .he-content,
+  #herbans-essentials-{{ section.id }} .he-top,
+  #herbans-essentials-{{ section.id }} .he-bottom,
+  #herbans-essentials-{{ section.id }} .he-cards-panel,
+  #herbans-essentials-{{ section.id }} .he-cards,
+  #herbans-essentials-{{ section.id }} .he-card,
+  #herbans-essentials-{{ section.id }} .he-disclaimer {
+    position: relative !important;
+    z-index: 3 !important;
+    opacity: 1 !important;
+    filter: none !important;
+  }
+
+  /* Keep sticky add-to-cart above this section */
+  body sticky-atc.sticky-atc,
+  body .sticky-atc,
+  body [id^="sticky-atc-"] {
+    position: fixed !important;
+    z-index: 2147483647 !important;
+    pointer-events: auto !important;
+  }
+}
+</style>
+
+<script>
+  (function () {
+    function forceStickyAtcAboveHerbans() {
+      var herbansWrapper = document.getElementById('shopify-section-{{ section.id }}');
+      var stickyAtc = document.querySelector('sticky-atc.sticky-atc, .sticky-atc, [id^="sticky-atc-"]');
+
+      if (herbansWrapper) {
+        herbansWrapper.style.position = 'relative';
+        herbansWrapper.style.zIndex = '0';
+        herbansWrapper.style.isolation = 'auto';
+        herbansWrapper.style.transform = 'none';
+      }
+
+      if (stickyAtc) {
+        stickyAtc.style.position = 'fixed';
+        stickyAtc.style.left = '0';
+        stickyAtc.style.right = '0';
+        stickyAtc.style.bottom = '0';
+        stickyAtc.style.width = '100%';
+        stickyAtc.style.zIndex = '2147483647';
+        stickyAtc.style.pointerEvents = 'auto';
+        stickyAtc.style.transform = 'translateZ(0)';
+        stickyAtc.style.isolation = 'isolate';
+
+        var stickyParentSection = stickyAtc.closest('.shopify-section');
+
+        if (stickyParentSection) {
+          stickyParentSection.style.position = 'relative';
+          stickyParentSection.style.zIndex = '2147483646';
+          stickyParentSection.style.isolation = 'isolate';
+        }
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', forceStickyAtcAboveHerbans);
+    document.addEventListener('shopify:section:load', forceStickyAtcAboveHerbans);
+    window.addEventListener('scroll', forceStickyAtcAboveHerbans, { passive: true });
+
+    setTimeout(forceStickyAtcAboveHerbans, 300);
+    setTimeout(forceStickyAtcAboveHerbans, 1000);
+  })();
+</script>
+{% schema %}
+{
+  "name": "Herbans Essentials",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background image"
+    },
+    {
+      "type": "text",
+      "id": "background_video_url",
+      "label": "Background video URL"
+    },
+    {
+      "type": "text",
+      "id": "background_alt",
+      "label": "Background alt text",
+      "default": "Herbans lifestyle image"
+    },
+    {
+      "type": "select",
+      "id": "background_position",
+      "label": "Background position",
+      "default": "center center",
+      "options": [
+        { "value": "center center", "label": "Center" },
+        { "value": "center top", "label": "Top" },
+        { "value": "center bottom", "label": "Bottom" },
+        { "value": "left center", "label": "Left" },
+        { "value": "right center", "label": "Right" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "background_media_opacity",
+      "label": "Background image/video opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 100
+    },
+    {
+      "type": "color",
+      "id": "fallback_bg",
+      "label": "Fallback background",
+      "default": "#6A7058"
+    },
+    {
+      "type": "color",
+      "id": "section_bg",
+      "label": "Section background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Overlay"
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "Overlay color 1",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "overlay_color_2",
+      "label": "Overlay color 2",
+      "default": "#6F735B"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Overlay opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "gradient_direction",
+      "label": "Gradient direction",
+      "min": 0,
+      "max": 360,
+      "step": 10,
+      "default": 90
+    },
+    {
+      "type": "header",
+      "content": "Text"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Eyebrow / subtitle",
+      "default": "Powered by pumpkin seed oil + saw palmetto."
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Daily support for hair, urinary comfort, and hormonal balance.*"
+    },
+    {
+      "type": "richtext",
+      "id": "disclaimer",
+      "label": "Disclaimer",
+      "default": "<p>*These statements have not been evaluated by the Food and Drug Administration.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Desktop layout"
+    },
+    {
+      "type": "range",
+      "id": "container_width",
+      "label": "Container width",
+      "min": 900,
+      "max": 1600,
+      "step": 10,
+      "default": 1420
+    },
+    {
+      "type": "range",
+      "id": "side_padding",
+      "label": "Desktop side padding",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Desktop top padding",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Desktop bottom padding",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "banner_height",
+      "label": "Banner height",
+      "min": 420,
+      "max": 900,
+      "step": 10,
+      "default": 590
+    },
+    {
+      "type": "range",
+      "id": "banner_radius",
+      "label": "Banner radius",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "default": 34
+    },
+    {
+      "type": "range",
+      "id": "content_padding_top",
+      "label": "Content top padding",
+      "min": 20,
+      "max": 160,
+      "step": 2,
+      "default": 90
+    },
+    {
+      "type": "range",
+      "id": "content_padding_bottom",
+      "label": "Content bottom padding",
+      "min": 20,
+      "max": 160,
+      "step": 2,
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "content_padding_x",
+      "label": "Content side padding",
+      "min": 20,
+      "max": 140,
+      "step": 2,
+      "default": 42
+    },
+    {
+      "type": "header",
+      "content": "Cards panel"
+    },
+    {
+      "type": "color",
+      "id": "cards_bg_color",
+      "label": "Cards background color",
+      "default": "#31342F"
+    },
+    {
+      "type": "range",
+      "id": "cards_bg_opacity",
+      "label": "Cards background opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 70
+    },
+    {
+      "type": "range",
+      "id": "cards_blur",
+      "label": "Cards blur",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "cards_top",
+      "label": "Desktop cards top spacing",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "default": 110
+    },
+    {
+      "type": "range",
+      "id": "cards_padding_y",
+      "label": "Desktop cards vertical padding",
+      "min": 10,
+      "max": 100,
+      "step": 2,
+      "default": 42
+    },
+    {
+      "type": "range",
+      "id": "cards_padding_x",
+      "label": "Desktop cards horizontal padding",
+      "min": 10,
+      "max": 100,
+      "step": 2,
+      "default": 46
+    },
+    {
+      "type": "range",
+      "id": "cards_radius",
+      "label": "Desktop cards panel radius",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "card_gap",
+      "label": "Desktop card gap",
+      "min": 10,
+      "max": 80,
+      "step": 2,
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "desktop_columns",
+      "label": "Desktop columns",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "text_max_width",
+      "label": "Subtitle max width",
+      "min": 200,
+      "max": 1000,
+      "step": 10,
+      "default": 760
+    },
+    {
+      "type": "range",
+      "id": "heading_max_width",
+      "label": "Heading max width",
+      "min": 300,
+      "max": 1300,
+      "step": 10,
+      "default": 1120
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Subtitle color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "card_title_color",
+      "label": "Card title color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "card_text_color",
+      "label": "Card text color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Icon color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "disclaimer_color",
+      "label": "Disclaimer color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "subtitle_size",
+      "label": "Subtitle size",
+      "min": 12,
+      "max": 30,
+      "step": 1,
+      "default": 19
+    },
+    {
+      "type": "range",
+      "id": "subtitle_line_height",
+      "label": "Subtitle line height",
+      "min": 14,
+      "max": 40,
+      "step": 1,
+      "default": 26
+    },
+    {
+      "type": "select",
+      "id": "subtitle_weight",
+      "label": "Subtitle weight",
+      "default": "700",
+      "options": [
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi bold" },
+        { "value": "700", "label": "Bold" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "subtitle_bottom",
+      "label": "Subtitle bottom spacing",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading size",
+      "min": 24,
+      "max": 80,
+      "step": 1,
+      "default": 46
+    },
+    {
+      "type": "range",
+      "id": "heading_line_height",
+      "label": "Heading line height",
+      "min": 28,
+      "max": 92,
+      "step": 1,
+      "default": 56
+    },
+    {
+      "type": "select",
+      "id": "heading_weight",
+      "label": "Heading weight",
+      "default": "400",
+      "options": [
+        { "value": "300", "label": "Light" },
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi bold" },
+        { "value": "700", "label": "Bold" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "heading_letter_spacing",
+      "label": "Heading letter spacing",
+      "min": -3,
+      "max": 5,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "label": "Desktop icon size",
+      "min": 20,
+      "max": 100,
+      "step": 2,
+      "default": 58
+    },
+    {
+      "type": "range",
+      "id": "icon_bottom",
+      "label": "Desktop icon bottom spacing",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "card_title_size",
+      "label": "Desktop card title size",
+      "min": 14,
+      "max": 34,
+      "step": 1,
+      "default": 22
+    },
+    {
+      "type": "range",
+      "id": "card_title_line_height",
+      "label": "Desktop card title line height",
+      "min": 16,
+      "max": 42,
+      "step": 1,
+      "default": 28
+    },
+    {
+      "type": "select",
+      "id": "card_title_weight",
+      "label": "Desktop card title weight",
+      "default": "700",
+      "options": [
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi bold" },
+        { "value": "700", "label": "Bold" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "card_title_bottom",
+      "label": "Desktop card title bottom spacing",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "card_text_size",
+      "label": "Desktop card text size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "card_text_line_height",
+      "label": "Desktop card text line height",
+      "min": 16,
+      "max": 34,
+      "step": 1,
+      "default": 23
+    },
+    {
+      "type": "select",
+      "id": "card_text_weight",
+      "label": "Desktop card text weight",
+      "default": "600",
+      "options": [
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi bold" },
+        { "value": "700", "label": "Bold" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "card_text_width",
+      "label": "Desktop card text max width",
+      "min": 150,
+      "max": 500,
+      "step": 10,
+      "default": 340
+    },
+    {
+      "type": "range",
+      "id": "disclaimer_top",
+      "label": "Desktop disclaimer top spacing",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "disclaimer_size",
+      "label": "Desktop disclaimer size",
+      "min": 9,
+      "max": 18,
+      "step": 1,
+      "default": 11
+    },
+    {
+      "type": "range",
+      "id": "disclaimer_line_height",
+      "label": "Desktop disclaimer line height",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Mobile layout"
+    },
+    {
+      "type": "checkbox",
+      "id": "mobile_scroll_cards",
+      "label": "Enable horizontal scroll on mobile",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "mobile_sticky_cart_safe_space",
+      "label": "Mobile sticky cart safe space",
+      "min": 0,
+      "max": 160,
+      "step": 5,
+      "default": 95
+    },
+    {
+      "type": "range",
+      "id": "mobile_next_card_peek",
+      "label": "Mobile next card visible amount",
+      "min": 20,
+      "max": 120,
+      "step": 2,
+      "default": 70
+    },
+    {
+      "type": "range",
+      "id": "mobile_side_padding",
+      "label": "Mobile side padding",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "label": "Mobile top padding",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "label": "Mobile bottom padding",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "mobile_banner_height",
+      "label": "Mobile banner height",
+      "min": 500,
+      "max": 1000,
+      "step": 10,
+      "default": 700
+    },
+    {
+      "type": "range",
+      "id": "mobile_banner_radius",
+      "label": "Mobile banner radius",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "mobile_content_padding_top",
+      "label": "Mobile content top padding",
+      "min": 10,
+      "max": 120,
+      "step": 2,
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "mobile_content_padding_bottom",
+      "label": "Mobile content bottom padding",
+      "min": 10,
+      "max": 80,
+      "step": 2,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "mobile_content_padding_x",
+      "label": "Mobile content side padding",
+      "min": 10,
+      "max": 60,
+      "step": 2,
+      "default": 22
+    },
+    {
+      "type": "range",
+      "id": "mobile_subtitle_size",
+      "label": "Mobile subtitle size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "mobile_subtitle_line_height",
+      "label": "Mobile subtitle line height",
+      "min": 14,
+      "max": 32,
+      "step": 1,
+      "default": 22
+    },
+    {
+      "type": "range",
+      "id": "mobile_subtitle_bottom",
+      "label": "Mobile subtitle bottom spacing",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "mobile_heading_size",
+      "label": "Mobile heading size",
+      "min": 22,
+      "max": 52,
+      "step": 1,
+      "default": 34
+    },
+    {
+      "type": "range",
+      "id": "mobile_heading_line_height",
+      "label": "Mobile heading line height",
+      "min": 26,
+      "max": 60,
+      "step": 1,
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "mobile_heading_letter_spacing",
+      "label": "Mobile heading letter spacing",
+      "min": -3,
+      "max": 5,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "mobile_cards_top",
+      "label": "Mobile cards top spacing",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "mobile_card_gap",
+      "label": "Mobile card gap",
+      "min": 8,
+      "max": 40,
+      "step": 2,
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "mobile_card_radius",
+      "label": "Mobile card radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "mobile_card_padding_y",
+      "label": "Mobile card vertical padding",
+      "min": 10,
+      "max": 60,
+      "step": 2,
+      "default": 26
+    },
+    {
+      "type": "range",
+      "id": "mobile_card_padding_x",
+      "label": "Mobile card horizontal padding",
+      "min": 10,
+      "max": 60,
+      "step": 2,
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "mobile_icon_size",
+      "label": "Mobile icon size",
+      "min": 20,
+      "max": 80,
+      "step": 2,
+      "default": 46
+    },
+    {
+      "type": "range",
+      "id": "mobile_icon_bottom",
+      "label": "Mobile icon bottom spacing",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "mobile_card_title_size",
+      "label": "Mobile card title size",
+      "min": 14,
+      "max": 28,
+      "step": 1,
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "mobile_card_title_line_height",
+      "label": "Mobile card title line height",
+      "min": 16,
+      "max": 34,
+      "step": 1,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "mobile_card_text_size",
+      "label": "Mobile card text size",
+      "min": 12,
+      "max": 22,
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "mobile_card_text_line_height",
+      "label": "Mobile card text line height",
+      "min": 16,
+      "max": 30,
+      "step": 1,
+      "default": 21
+    },
+    {
+      "type": "range",
+      "id": "mobile_disclaimer_size",
+      "label": "Mobile disclaimer size",
+      "min": 9,
+      "max": 16,
+      "step": 1,
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "mobile_disclaimer_line_height",
+      "label": "Mobile disclaimer line height",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "default": 15
+    }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Benefit card",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon_image",
+          "label": "Icon image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Card title",
+          "default": "Hair Shedding Defense"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Card text",
+          "default": "<p>Helps support stronger-looking hair and visible shedding control over time.*</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Herbans Essentials",
+      "blocks": [
+        {
+          "type": "benefit",
+          "settings": {
+            "title": "Hair Shedding Defense",
+            "text": "<p>Helps support stronger-looking hair and visible shedding control over time.*</p>"
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "title": "Bladder Comfort",
+            "text": "<p>Supports a more comfortable, predictable daily routine from within.*</p>"
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "title": "Urinary Flow Support",
+            "text": "<p>Helps support healthy urinary flow and fewer bathroom interruptions.*</p>"
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "title": "Prostate Wellness",
+            "text": "<p>Supports prostate comfort, hormonal balance, and daily men’s wellness.*</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

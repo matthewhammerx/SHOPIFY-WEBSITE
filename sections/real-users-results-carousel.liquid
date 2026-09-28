@@ -1,0 +1,650 @@
+{% comment %}
+FILE NAME:
+real-users-results-carousel.liquid
+{% endcomment %}
+
+<section id="real-users-{{ section.id }}" class="real-users-section">
+  <div class="real-users-container">
+
+    {% if section.settings.show_badge %}
+      <div class="real-users-badge">
+        {{ section.settings.badge_text }}
+      </div>
+    {% endif %}
+
+    {% if section.settings.heading != blank %}
+      <h2 class="real-users-heading">
+        {{ section.settings.heading }}
+      </h2>
+    {% endif %}
+
+    <div class="embla">
+      <div class="embla__viewport">
+        <div class="embla__container">
+
+          {% for block in section.blocks %}
+            <div class="embla__slide" {{ block.shopify_attributes }}>
+
+              {% if block.type == 'video' %}
+                <div class="real-video-slide">
+                  {% if block.settings.video_url != blank %}
+                    <iframe
+                      src="{{ block.settings.video_url }}"
+                      frameborder="0"
+                      allow="autoplay; fullscreen; picture-in-picture"
+                      loading="lazy">
+                    </iframe>
+                  {% endif %}
+                </div>
+              {% endif %}
+
+              {% if block.type == 'review' %}
+                <div class="real-review-card">
+
+                  <div class="review-header">
+                    <div class="review-user">
+                      {% if block.settings.avatar != blank %}
+                        <img
+                          src="{{ block.settings.avatar | image_url: width: 120 }}"
+                          alt="{{ block.settings.name }}"
+                          class="review-avatar">
+                      {% endif %}
+
+                      <div>
+                        <div class="review-name-wrap">
+                          <span class="review-name">{{ block.settings.name }}</span>
+                          {% if block.settings.show_verified %}
+                            <span class="verified-badge">✓</span>
+                          {% endif %}
+                        </div>
+                        <span class="review-subtitle">{{ block.settings.subtitle }}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="review-content">
+                    <div class="review-stars">
+                      {% for i in (1..block.settings.stars) %}★{% endfor %}
+                    </div>
+
+                    <div class="review-text">
+                      {{ block.settings.review_text }}
+                    </div>
+                  </div>
+
+                  {% if block.settings.image != blank %}
+                    <div class="review-image-wrap">
+                      <img
+                        src="{{ block.settings.image | image_url: width: 1000 }}"
+                        alt=""
+                        class="review-image">
+                    </div>
+                  {% endif %}
+
+                </div>
+              {% endif %}
+
+            </div>
+          {% endfor %}
+
+        </div>
+      </div>
+
+      <div class="real-users-controls">
+        <button class="embla-prev" type="button">←</button>
+        <div class="embla-dots"></div>
+        <button class="embla-next" type="button">→</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<style>
+#real-users-{{ section.id }}{
+  background:{{ section.settings.section_bg }};
+  padding:{{ section.settings.padding_top }}px {{ section.settings.padding_side }}px {{ section.settings.padding_bottom }}px;
+  overflow:hidden;
+}
+
+#real-users-{{ section.id }} .real-users-container{
+  max-width:{{ section.settings.max_width }}px;
+  margin:0 auto;
+}
+
+#real-users-{{ section.id }} .real-users-badge{
+  display:inline-flex;
+  background:{{ section.settings.badge_bg }};
+  color:{{ section.settings.badge_text_color }};
+  border-radius:999px;
+  padding:8px 18px;
+  font-size:{{ section.settings.badge_size }}px;
+  font-weight:700;
+  text-transform:uppercase;
+  margin-bottom:18px;
+}
+
+#real-users-{{ section.id }} .real-users-heading{
+  font-size:{{ section.settings.heading_size_desktop }}px;
+  color:{{ section.settings.heading_color }};
+  text-align:center;
+  margin:0 0 40px;
+  line-height:1.1;
+  font-weight:700;
+}
+
+#real-users-{{ section.id }} .embla__viewport{
+  overflow:hidden;
+}
+
+#real-users-{{ section.id }} .embla__container{
+  display:flex;
+  gap:{{ section.settings.slide_gap }}px;
+}
+
+#real-users-{{ section.id }} .embla__slide{
+  flex:0 0 {{ section.settings.slide_width_desktop }}px;
+}
+
+#real-users-{{ section.id }} .real-video-slide,
+#real-users-{{ section.id }} .real-review-card{
+  width:100%;
+  height:{{ section.settings.slide_height_desktop }}px;
+  border-radius:{{ section.settings.card_radius }}px;
+  overflow:hidden;
+}
+
+#real-users-{{ section.id }} .real-video-slide{
+  position:relative;
+  background:#000;
+}
+
+#real-users-{{ section.id }} .real-video-slide iframe{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+}
+
+#real-users-{{ section.id }} .real-review-card{
+  background:{{ section.settings.card_bg }};
+  display:flex;
+  flex-direction:column;
+  box-shadow:{{ section.settings.card_shadow }};
+}
+
+#real-users-{{ section.id }} .review-header{
+  border-bottom:1px solid rgba(0,0,0,0.1);
+  padding:16px;
+}
+
+#real-users-{{ section.id }} .review-user{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+#real-users-{{ section.id }} .review-avatar{
+  width:48px;
+  height:48px;
+  border-radius:999px;
+  object-fit:cover;
+}
+
+#real-users-{{ section.id }} .review-name-wrap{
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+
+#real-users-{{ section.id }} .review-name{
+  font-size:16px;
+  font-weight:700;
+  color:{{ section.settings.name_color }};
+}
+
+#real-users-{{ section.id }} .verified-badge{
+  width:18px;
+  height:18px;
+  border-radius:999px;
+  background:{{ section.settings.verified_bg }};
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:12px;
+  font-weight:700;
+}
+
+#real-users-{{ section.id }} .review-subtitle{
+  font-size:13px;
+  color:{{ section.settings.subtitle_color }};
+}
+
+#real-users-{{ section.id }} .review-content{
+  padding:16px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+#real-users-{{ section.id }} .review-stars{
+  color:{{ section.settings.star_color }};
+  font-size:18px;
+  letter-spacing:2px;
+}
+
+#real-users-{{ section.id }} .review-text{
+  color:{{ section.settings.text_color }};
+  font-size:{{ section.settings.text_size }}px;
+  line-height:1.5;
+}
+
+#real-users-{{ section.id }} .review-image-wrap{
+  flex:1;
+  overflow:hidden;
+  margin-top:auto;
+}
+
+#real-users-{{ section.id }} .review-image{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+#real-users-{{ section.id }} .real-users-controls{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:20px;
+  margin-top:30px;
+}
+
+#real-users-{{ section.id }} .embla-prev,
+#real-users-{{ section.id }} .embla-next{
+  width:44px;
+  height:44px;
+  border-radius:999px;
+  border:1px solid rgba(0,0,0,0.15);
+  background:white;
+  cursor:pointer;
+  font-size:18px;
+}
+
+#real-users-{{ section.id }} .embla-dots{
+  display:flex;
+  gap:8px;
+}
+
+#real-users-{{ section.id }} .embla-dot{
+  width:8px;
+  height:8px;
+  border-radius:999px;
+  background:black;
+  opacity:0.2;
+  cursor:pointer;
+  border:0;
+  padding:0;
+}
+
+#real-users-{{ section.id }} .embla-dot.is-selected{
+  opacity:1;
+}
+
+@media(max-width:768px){
+  #real-users-{{ section.id }} .real-users-heading{
+    font-size:{{ section.settings.heading_size_mobile }}px;
+  }
+
+  #real-users-{{ section.id }} .embla__slide{
+    flex:0 0 {{ section.settings.slide_width_mobile }}px;
+  }
+
+  #real-users-{{ section.id }} .real-video-slide,
+  #real-users-{{ section.id }} .real-review-card{
+    height:{{ section.settings.slide_height_mobile }}px;
+  }
+}
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/embla-carousel/embla-carousel.umd.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+  const root = document.querySelector("#real-users-{{ section.id }}");
+  if (!root || typeof EmblaCarousel === "undefined") return;
+
+  const viewport = root.querySelector(".embla__viewport");
+  const dotsContainer = root.querySelector(".embla-dots");
+  const prevBtn = root.querySelector(".embla-prev");
+  const nextBtn = root.querySelector(".embla-next");
+
+  const embla = EmblaCarousel(viewport, {
+    loop: true,
+    align: "start"
+  });
+
+  embla.scrollSnapList().forEach(function(_, index){
+    const dot = document.createElement("button");
+    dot.className = "embla-dot";
+    dot.type = "button";
+    dot.addEventListener("click", function(){
+      embla.scrollTo(index);
+    });
+    dotsContainer.appendChild(dot);
+  });
+
+  const dots = dotsContainer.querySelectorAll(".embla-dot");
+
+  function updateDots(){
+    dots.forEach(function(dot, index){
+      dot.classList.toggle("is-selected", index === embla.selectedScrollSnap());
+    });
+  }
+
+  embla.on("select", updateDots);
+  updateDots();
+
+  prevBtn.addEventListener("click", function(){ embla.scrollPrev(); });
+  nextBtn.addEventListener("click", function(){ embla.scrollNext(); });
+});
+</script>
+
+{% schema %}
+{
+  "name": "Real Users Results",
+  "settings": [
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge text",
+      "default": "REAL USERS, REAL RESULTS"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_badge",
+      "label": "Show badge",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "badge_size",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "label": "Badge text size",
+      "default": 13
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Trusted By Thousands Of Customers"
+    },
+    {
+      "type": "color",
+      "id": "section_bg",
+      "label": "Section background",
+      "default": "#F7F1E8"
+    },
+    {
+      "type": "color",
+      "id": "badge_bg",
+      "label": "Badge background",
+      "default": "#E4D3BF"
+    },
+    {
+      "type": "color",
+      "id": "badge_text_color",
+      "label": "Badge text color",
+      "default": "#1F3D2D"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#1F3D2D"
+    },
+    {
+      "type": "range",
+      "id": "heading_size_desktop",
+      "min": 20,
+      "max": 80,
+      "step": 1,
+      "label": "Heading size desktop",
+      "default": 52
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "min": 18,
+      "max": 50,
+      "step": 1,
+      "label": "Heading size mobile",
+      "default": 34
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 150,
+      "step": 2,
+      "label": "Padding top",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 150,
+      "step": 2,
+      "label": "Padding bottom",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_side",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "label": "Side padding",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "min": 800,
+      "max": 1800,
+      "step": 20,
+      "label": "Max width",
+      "default": 1600
+    },
+    {
+      "type": "range",
+      "id": "slide_gap",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "label": "Slide gap",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "slide_width_desktop",
+      "min": 200,
+      "max": 500,
+      "step": 5,
+      "label": "Slide width desktop",
+      "default": 320
+    },
+    {
+      "type": "range",
+      "id": "slide_width_mobile",
+      "min": 180,
+      "max": 400,
+      "step": 5,
+      "label": "Slide width mobile",
+      "default": 270
+    },
+    {
+      "type": "range",
+      "id": "slide_height_desktop",
+      "min": 300,
+      "max": 900,
+      "step": 10,
+      "label": "Slide height desktop",
+      "default": 520
+    },
+    {
+      "type": "range",
+      "id": "slide_height_mobile",
+      "min": 300,
+      "max": 700,
+      "step": 10,
+      "label": "Slide height mobile",
+      "default": 440
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "label": "Card radius",
+      "default": 20
+    },
+    {
+      "type": "text",
+      "id": "card_shadow",
+      "label": "Card shadow",
+      "default": "2px 4px 16px rgba(0,0,0,0.1)"
+    },
+    {
+      "type": "color",
+      "id": "card_bg",
+      "label": "Card background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "name_color",
+      "label": "Name color",
+      "default": "#1F3D2D"
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Subtitle color",
+      "default": "#777777"
+    },
+    {
+      "type": "color",
+      "id": "star_color",
+      "label": "Star color",
+      "default": "#F4A623"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Review text color",
+      "default": "#1F1F1F"
+    },
+    {
+      "type": "color",
+      "id": "verified_bg",
+      "label": "Verified badge background",
+      "default": "#1DA1F2"
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "min": 10,
+      "max": 28,
+      "step": 1,
+      "label": "Text size",
+      "default": 16
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review Card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "avatar",
+          "label": "Avatar"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Name",
+          "default": "Nicole M."
+        },
+        {
+          "type": "checkbox",
+          "id": "show_verified",
+          "label": "Show verified badge",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "default": "Verified Customer"
+        },
+        {
+          "type": "range",
+          "id": "stars",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "label": "Stars",
+          "default": 5
+        },
+        {
+          "type": "textarea",
+          "id": "review_text",
+          "label": "Review text",
+          "default": "I noticed less shedding and healthier looking hair within weeks."
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Bottom image"
+        }
+      ]
+    },
+    {
+      "type": "video",
+      "name": "Video Slide",
+      "settings": [
+        {
+          "type": "text",
+          "id": "video_url",
+          "label": "Vimeo embed URL"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Real Users Results",
+      "blocks": [
+        {
+          "type": "video"
+        },
+        {
+          "type": "review"
+        },
+        {
+          "type": "video"
+        },
+        {
+          "type": "review"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

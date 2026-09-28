@@ -1,0 +1,111 @@
+.article-hero {
+  background: var(--wf-bg);
+  color: var(--wf-ink);
+}
+
+.article-hero__inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: var(--wf-padding, 32px) 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.article-hero__media {
+  width: 100%;
+  aspect-ratio: var(--wf-image-ratio, 4 / 3);
+  overflow: hidden;
+}
+.article-hero__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: var(--wf-image-position, 50% 50%);
+  display: block;
+}
+.article-hero__media--placeholder svg {
+  width: 100%;
+  height: 100%;
+}
+.article-hero__media--desktop {
+  display: none;
+}
+
+.article-hero__title {
+  margin: 0;
+  font-family: var(--wf-heading-font, inherit);
+  font-size: var(--wf-title-size-mobile, 26px);
+  line-height: 1.2;
+  font-weight: 800;
+  color: var(--wf-heading);
+  text-wrap: balance;
+}
+
+.article-hero__byline {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.article-hero__avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+.article-hero__author {
+  font-family: var(--wf-body-font, inherit);
+  font-weight: 700;
+  font-size: calc(var(--wf-body-size, 17px) - 1px);
+  color: var(--wf-ink);
+}
+.article-hero__date {
+  font-family: var(--wf-body-font, inherit);
+  font-size: calc(var(--wf-body-size, 17px) - 3px);
+  color: var(--wf-muted);
+  margin-top: 2px;
+}
+
+.article-hero__desc {
+  font-family: var(--wf-body-font, inherit);
+  max-width: 60ch;
+  font-size: var(--wf-body-size, 17px);
+  line-height: 1.55;
+  color: var(--wf-ink);
+}
+.article-hero__desc p {
+  margin: 0;
+}
+.article-hero__desc strong {
+  color: var(--wf-heading);
+}
+
+.article-hero__text {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+@media (min-width: 860px) {
+  .article-hero__inner {
+    flex-direction: var(--wf-image-direction, row);
+    align-items: center;
+    gap: 56px;
+    padding: var(--wf-padding, 56px) 40px;
+  }
+  .article-hero__media--mobile {
+    display: none;
+  }
+  .article-hero__media--desktop {
+    display: block;
+    flex: 1 1 50%;
+    border-radius: 4px;
+  }
+  .article-hero__text {
+    flex: 1 1 50%;
+  }
+  .article-hero__title {
+    font-size: var(--wf-title-size-desktop, 40px);
+  }
+}
