@@ -79,9 +79,14 @@
 /* ---------- Main product ---------- */
 .lw-pdp { padding: 28px 0 56px; background: var(--lw-bg, #fff); }
 .lw-pdp__grid { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 48px; align-items: start; }
-@media (max-width: 989px) { .lw-pdp__grid { grid-template-columns: 1fr; gap: 24px; } }
-.lw-pdp__media { position: sticky; top: 90px; display: grid; gap: 28px; }
-@media (max-width: 989px) { .lw-pdp__media { position: static; } }
+.lw-pdp__grid { grid-template-areas: "gallery info" "ugc info"; grid-template-rows: auto 1fr; row-gap: 32px; }
+.lw-pdp__gallery { grid-area: gallery; display: grid; gap: 28px; }
+.lw-pdp__info { grid-area: info; }
+.lw-pdp__ugc { grid-area: ugc; align-self: start; }
+@media (max-width: 989px) {
+  .lw-pdp__grid { grid-template-columns: minmax(0, 1fr); grid-template-areas: "gallery" "info" "ugc"; grid-template-rows: auto; gap: 24px; }
+  .lw-pdp__ugc { margin-top: 16px; }
+}
 .lw-gallery__stage { display: grid; grid-template-columns: 1fr; gap: 10px; }
 .lw-gallery__stage--tiles { grid-template-columns: 1.9fr 1fr; }
 .lw-gallery__main { position: relative; border-radius: var(--lw-radius); overflow: hidden; background: var(--lw-beige); aspect-ratio: 1 / 1; }
@@ -418,7 +423,7 @@
 .shopify-design-mode .lw-reveal { opacity: 1; transform: none; }
 
 /* Grid children must be allowed to shrink (prevents sliders/thumbnails forcing horizontal overflow) */
-.lw-pdp__grid > *, .lw-tl__grid > *, .lw-cmp__grid > *, .lw-bprod__grid > *, .lw-stats__grid > *, .lw-facts__grid > *, .lw-guar__grid > *, .lw-gallery__stage > *, .lw-pdp__info > *, .lw-pdp__media > *, .lw-ugc > * { min-width: 0; }
+.lw-pdp__grid > *, .lw-tl__grid > *, .lw-cmp__grid > *, .lw-bprod__grid > *, .lw-stats__grid > *, .lw-facts__grid > *, .lw-guar__grid > *, .lw-gallery__stage > *, .lw-pdp__info > *, .lw-pdp__media > *, .lw-pdp__ugc > *, .lw-ugc > * { min-width: 0; }
 .lw sup { font-size: .6em; line-height: 0; vertical-align: super; margin-left: 1px; }
 
 /* ---------- Sale countdown bar ---------- */
@@ -434,3 +439,4 @@
 .lw-cd__unit b { font: 600 26px/1 var(--lw-font-head); font-variant-numeric: tabular-nums; }
 .lw-cd__unit span { font-size: 12px; opacity: .9; margin-top: 3px; }
 @media (max-width: 749px) { .lw-cd__inner { gap: 16px; } .lw-cd__title { font-size: 17px; } .lw-cd__text { font-size: 11.5px; } .lw-cd__unit b { font-size: 20px; } .lw-cd__timer i { font-size: 18px; } .lw-cd__unit { min-width: 26px; } .lw-cd__unit span { font-size: 10px; } }
+@media (max-width: 749px) { .lw-rating { flex-wrap: nowrap; font-size: 12px; gap: 8px; } .lw-rating__avatars img, .lw-rating__avatars span { width: 20px; height: 20px; } }

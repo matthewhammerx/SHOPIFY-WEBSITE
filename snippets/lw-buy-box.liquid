@@ -5,6 +5,7 @@
     bs         – settings object holding the buy box settings (block.settings or section.settings)
     section    – current section (for blocks + ids)
     main       – true on the main product section (used by sticky ATC)
+    bs.app_bundles – bundle-app mode (Kaching etc.): no built-in offers, standard product form instead
     attrs      – optional block.shopify_attributes for theme editor
 
   Pricing model (always matches checkout):
@@ -40,6 +41,7 @@
   assign default_gifts = default_gifts | default: 0
 -%}
 <lw-buy-box class="lw-buy" id="LwBuy-{{ section.id }}" {% if main %}data-main{% endif %} data-redirect="{{ bs.after_add | default: 'drawer' }}" {{ attrs }}>
+  {%- unless bs.app_bundles -%}
   {%- if bs.show_price_header -%}
     <div class="lw-buy__price">
       <span class="lw-buy__now" data-lw-price>{{ current.price | money }}</span>
@@ -187,6 +189,8 @@
     </div>
   {%- endif -%}
 
+  {%- endunless -%}
+
   {%- if bs.show_delivery -%}
     <div class="lw-delivery">
       <span class="lw-delivery__dot" aria-hidden="true"></span>
@@ -195,6 +199,17 @@
     </div>
   {%- endif -%}
 
+  {%- if bs.app_bundles -%}
+    {%- assign form_id = 'LwProductForm-' | append: section.id -%}
+    {%- form 'product', lw_product, id: form_id, class: 'lw-buy__form', novalidate: 'novalidate' -%}
+      <input type="hidden" name="id" value="{{ current.id }}">
+      <input type="hidden" name="quantity" value="1">
+      <button type="submit" name="add" class="lw-btn lw-atc" data-lw-atc {% unless current.available %}disabled{% endunless %}>
+        <span class="lw-atc__label">{% if current.available %}{{ bs.atc_label | default: 'Add To Cart' }}{% else %}{{ 'products.product.sold_out' | t }}{% endif %}</span>
+        <svg class="lw-atc__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16M14 6l6 6-6 6"/></svg>
+      </button>
+    {%- endform -%}
+  {%- else -%}
   <button type="button" class="lw-btn lw-atc" data-lw-atc {% unless current.available %}disabled{% endunless %}>
     <span class="lw-atc__label">{% if current.available %}{{ bs.atc_label | default: 'Add To Cart' }}{% else %}{{ 'products.product.sold_out' | t }}{% endif %}</span>
     {%- if bs.show_atc_price -%}
@@ -202,6 +217,7 @@
     {%- endif -%}
     <svg class="lw-atc__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16M14 6l6 6-6 6"/></svg>
   </button>
+  {%- endif -%}
   <p class="lw-buy__error" data-lw-error role="alert"></p>
 
   {%- if bs.note_1 != blank or bs.note_2 != blank -%}

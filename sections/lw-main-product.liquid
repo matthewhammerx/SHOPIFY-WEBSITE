@@ -8,7 +8,7 @@
 -%}
 <section class="lw lw-pdp" id="lw-product" style="--lw-bg: {{ section.settings.bg }};">
   <div class="lw-wrap lw-pdp__grid">
-    <div class="lw-pdp__media">
+    <div class="lw-pdp__media lw-pdp__gallery">
       <div class="lw-gallery" data-lw-gallery>
         <div class="lw-gallery__stage{% if tiles.size > 0 %} lw-gallery__stage--tiles{% endif %}">
           <div class="lw-gallery__main">
@@ -65,32 +65,6 @@
         {%- endif -%}
       </div>
 
-      {%- if ugc.size > 0 -%}
-        <div class="lw-ugc">
-          {%- if section.settings.ugc_heading != blank -%}<h3 class="lw-h lw-h--sm">{{ section.settings.ugc_heading }}</h3>{%- endif -%}
-          <div class="lw-slider" data-lw-slider style="--lw-cols: 3; --lw-cols-t: 3; --lw-col-m: 42%; --lw-gap: 10px;">
-            <div class="lw-slider__track">
-              {%- for block in ugc -%}
-                <div class="lw-vid" data-lw-video {{ block.shopify_attributes }}>
-                  {%- if block.settings.video != blank -%}
-                    {{ block.settings.video | video_tag: playsinline: true, loop: true, muted: true, preload: 'metadata', image_size: '500x' }}
-                  {%- elsif block.settings.image != blank -%}
-                    {{ block.settings.image | image_url: width: 500 | image_tag: loading: 'lazy' }}
-                  {%- else -%}
-                    {{ 'lifestyle-1' | placeholder_svg_tag: 'lw-placeholder' }}
-                  {%- endif -%}
-                  {%- if block.settings.video != blank -%}<span class="lw-vid__play">{% render 'lw-icon', icon: 'play' %}</span>{%- endif -%}
-                  {%- if block.settings.caption != blank -%}<span class="lw-vid__cap">{{ block.settings.caption }}</span>{%- endif -%}
-                </div>
-              {%- endfor -%}
-            </div>
-            <div class="lw-slider__nav"><div class="lw-slider__dots" hidden></div><div class="lw-slider__arrows">
-              <button type="button" data-lw-prev aria-label="Previous">{% render 'lw-icon', icon: 'arrow-left' %}</button>
-              <button type="button" data-lw-next aria-label="Next">{% render 'lw-icon', icon: 'arrow-right' %}</button>
-            </div></div>
-          </div>
-        </div>
-      {%- endif -%}
     </div>
 
     <div class="lw-pdp__info">
@@ -163,6 +137,35 @@
         {%- endcase -%}
       {%- endfor -%}
     </div>
+
+    {%- if ugc.size > 0 -%}
+    <div class="lw-pdp__ugc">
+        <div class="lw-ugc">
+          {%- if section.settings.ugc_heading != blank -%}<h3 class="lw-h lw-h--sm">{{ section.settings.ugc_heading }}</h3>{%- endif -%}
+          <div class="lw-slider" data-lw-slider style="--lw-cols: 3; --lw-cols-t: 3; --lw-col-m: 42%; --lw-gap: 10px;">
+            <div class="lw-slider__track">
+              {%- for block in ugc -%}
+                <div class="lw-vid" data-lw-video {{ block.shopify_attributes }}>
+                  {%- if block.settings.video != blank -%}
+                    {{ block.settings.video | video_tag: playsinline: true, loop: true, muted: true, preload: 'metadata', image_size: '500x' }}
+                  {%- elsif block.settings.image != blank -%}
+                    {{ block.settings.image | image_url: width: 500 | image_tag: loading: 'lazy' }}
+                  {%- else -%}
+                    {{ 'lifestyle-1' | placeholder_svg_tag: 'lw-placeholder' }}
+                  {%- endif -%}
+                  {%- if block.settings.video != blank -%}<span class="lw-vid__play">{% render 'lw-icon', icon: 'play' %}</span>{%- endif -%}
+                  {%- if block.settings.caption != blank -%}<span class="lw-vid__cap">{{ block.settings.caption }}</span>{%- endif -%}
+                </div>
+              {%- endfor -%}
+            </div>
+            <div class="lw-slider__nav"><div class="lw-slider__dots" hidden></div><div class="lw-slider__arrows">
+              <button type="button" data-lw-prev aria-label="Previous">{% render 'lw-icon', icon: 'arrow-left' %}</button>
+              <button type="button" data-lw-next aria-label="Next">{% render 'lw-icon', icon: 'arrow-right' %}</button>
+            </div></div>
+          </div>
+        </div>
+    </div>
+    {%- endif -%}
   </div>
 </section>
 
@@ -1431,6 +1434,17 @@
       "name": "Buy box",
       "limit": 1,
       "settings": [
+        {
+          "type": "header",
+          "content": "Bundle app (Kaching Bundles, etc.)"
+        },
+        {
+          "type": "checkbox",
+          "id": "app_bundles",
+          "label": "Use a bundle app instead of the built-in offers",
+          "default": false,
+          "info": "Hides the offer cards, gifts box, price row and subscribe toggle, and outputs a standard Shopify product form. Add the Kaching Bundles app block right above this buy box."
+        },
         {
           "type": "header",
           "content": "Price header"

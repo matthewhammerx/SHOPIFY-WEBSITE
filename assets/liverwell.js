@@ -39,7 +39,13 @@
         el.querySelector('input').addEventListener('change', () => this.update());
       });
       if (this.subInput) this.subInput.addEventListener('change', () => this.update());
-      if (this.atc) this.atc.addEventListener('click', (e) => { e.preventDefault(); this.addToCart(); });
+      this.form = this.querySelector('form[action*="/cart/add"]');
+      if (this.form) {
+        // Bundle-app mode (Kaching etc.): the app writes variant/quantity/properties into this form.
+        this.form.addEventListener('submit', (e) => { e.preventDefault(); this.submitForm(); });
+      } else if (this.atc) {
+        this.atc.addEventListener('click', (e) => { e.preventDefault(); this.addToCart(); });
+      }
       this.update();
     }
 
@@ -95,35 +101,53 @@
         }
       });
 
+      await this.post(JSON.stringify({ items }), 'application/json', d.discount, item.id);
+    }
+
+    async submitForm() {
+      const fd = new FormData(this.form);
+      await this.post(fd, null, null, Number(fd.get('id')));
+    }
+
+    async post(body, contentType, discount, variantId) {
+      if (!this.atc) return;
       this.atc.classList.add('is-loading');
       this.atc.disabled = true;
       if (this.errorEl) this.errorEl.classList.remove('is-visible');
 
       const drawer = document.querySelector('cart-drawer');
       const sections = drawer ? ['cart-drawer', 'cart-icon-bubble'] : ['cart-icon-bubble'];
+      if (body instanceof FormData) {
+        body.append('sections', sections.join(','));
+        body.append('sections_url', window.location.pathname);
+      } else {
+        const obj = JSON.parse(body);
+        obj.sections = sections;
+        obj.sections_url = window.location.pathname;
+        body = JSON.stringify(obj);
+      }
+      const headers = { Accept: 'application/json', 'X-Requested-With': 'XMLHttpRequest' };
+      if (contentType) headers['Content-Type'] = contentType;
+      const cartUrl = (window.routes && window.routes.cart_url) || '/cart';
       try {
-        if (d.discount) {
-          await fetch('/discount/' + encodeURIComponent(d.discount), { credentials: 'same-origin' }).catch(() => {});
+        if (discount) {
+          await fetch('/discount/' + encodeURIComponent(discount), { credentials: 'same-origin' }).catch(() => {});
         }
-        const res = await fetch((window.routes && window.routes.cart_add_url ? window.routes.cart_add_url : '/cart/add') + '.js', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-          body: JSON.stringify({ items, sections, sections_url: window.location.pathname })
-        });
+        const res = await fetch((window.routes && window.routes.cart_add_url ? window.routes.cart_add_url : '/cart/add') + '.js', { method: 'POST', headers, body });
         const data = await res.json();
         if (!res.ok || data.status) throw new Error(data.description || data.message || 'Could not add to cart');
 
         if (this.dataset.redirect === 'checkout') { window.location.href = '/checkout'; return; }
         if (drawer && typeof drawer.renderContents === 'function' && this.dataset.redirect !== 'cart') {
-          data.id = item.id;
+          data.id = data.id || variantId;
           try {
             drawer.classList.remove('is-empty');
             drawer.renderContents(data);
           } catch (err) {
-            window.location.href = (window.routes && window.routes.cart_url) || '/cart';
+            window.location.href = cartUrl;
           }
         } else {
-          window.location.href = (window.routes && window.routes.cart_url) || '/cart';
+          window.location.href = cartUrl;
         }
         document.dispatchEvent(new CustomEvent('lw:added', { detail: data }));
       } catch (err) {

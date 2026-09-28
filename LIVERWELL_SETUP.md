@@ -19,6 +19,12 @@ The bundle cards read their price from real variants:
 Create one option, such as **"Bundle"**, with the values *1 Bottle / 2 Bottles / 3 Bottles*, in that order. The "per bottle" text is worked out automatically.
 If you'd rather keep a single variant, set each offer's *Variant position* to 0, *Quantity* to 1/2/3, and optionally add a *Discount code* with its matching *Displayed discount %*.
 
+## Using Kaching Bundles instead
+1. In the theme editor, open the product section, click the **Buy box** block, and tick **"Use a bundle app instead of the built-in offers"**. This hides my offer cards, the gifts box, the price row and the subscribe toggle, and outputs a standard Shopify product form.
+2. Click **Add block → Apps → Kaching Bundles** and drag it right above the Buy box.
+3. Set up your bundles and discounts inside Kaching. Kaching's own discount sets the checkout price.
+4. Test one order. If an item is added twice, turn off Kaching's own add-to-cart setting so only the buy box button adds to cart.
+
 ## 3. Subscribe & save (optional)
 The toggle shows up only after you install a subscriptions app (Shopify Subscriptions, Recharge, Appstle…) and attach a selling plan to the product. It adds the first selling plan to the cart at that plan's price.
 

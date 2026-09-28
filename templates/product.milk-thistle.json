@@ -300,9 +300,9 @@
         "benefits_9",
         "stock_10",
         "buy_box_11",
-        "offer_12",
-        "offer_13",
         "offer_14",
+        "offer_13",
+        "offer_12",
         "gift_15",
         "gift_16",
         "gift_17",
@@ -1128,9 +1128,9 @@
         }
       },
       "block_order": [
-        "offer_1",
-        "offer_2",
         "offer_3",
+        "offer_2",
+        "offer_1",
         "gift_4",
         "gift_5",
         "gift_6"
