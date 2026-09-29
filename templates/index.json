@@ -61,7 +61,7 @@
         "tag": "LW-01",
         "card_title": "Milk Thistle Support",
         "card_button": "Shop Now",
-        "bg": "#095946",
+        "bg": "#16301f",
         "padding_top": 88,
         "padding_bottom": 88
       }
@@ -248,7 +248,7 @@
         "button_link": "",
         "bg": "#fafaf5",
         "fg": "#16301f",
-        "accent": "#009370",
+        "accent": "#2f5a3a",
         "padding_top": 64,
         "padding_bottom": 64
       }
@@ -360,8 +360,8 @@
         "them_label": "Other Brands",
         "button_label": "Try Risk-Free Today",
         "button_link": "",
-        "bg": "#0b5a47",
-        "bg_2": "#053a2d",
+        "bg": "#3d6b45",
+        "bg_2": "#16301f",
         "fg": "#ffffff",
         "us_bg": "#5c6b2e",
         "padding_top": 80,
@@ -429,7 +429,7 @@
         "columns": 6,
         "bg": "#fafaf5",
         "fg": "#16301f",
-        "accent": "#009370",
+        "accent": "#2f5a3a",
         "padding_top": 64,
         "padding_bottom": 64
       }
@@ -558,7 +558,7 @@
         "trust_3": "",
         "bg": "#fafaf5",
         "fg": "#16301f",
-        "accent": "#009370",
+        "accent": "#2f5a3a",
         "padding_top": 64,
         "padding_bottom": 64
       }
@@ -633,7 +633,7 @@
         "schema_markup": true,
         "bg": "#fafaf5",
         "fg": "#16301f",
-        "accent": "#009370",
+        "accent": "#2f5a3a",
         "padding_top": 64,
         "padding_bottom": 64
       }
@@ -644,7 +644,7 @@
         "card_1": {
           "type": "card",
           "settings": {
-            "bg": "#009370",
+            "bg": "#2f5a3a",
             "title": "Support your liver, daily.",
             "text": "Feel lighter, think clearer, and start the day with energy that holds.†",
             "button": "Shop Now",
@@ -654,7 +654,7 @@
         "card_2": {
           "type": "card",
           "settings": {
-            "bg": "#095946",
+            "bg": "#16301f",
             "title": "Try it risk-free for 90 days.",
             "text": "If you don't feel the difference, we'll refund every cent.",
             "button": "Get Started",

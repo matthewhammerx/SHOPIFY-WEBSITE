@@ -930,3 +930,23 @@
 .lw-brand .lwh-cause__icon { border-radius: 999px; }
 .lw-brand .lwh-statbox { border-radius: 999px; }
 @media (max-width: 749px) { .lw-brand .lwh-panel, .lw-brand .lwh-glasspanel, .lw-brand .lwh-pcard, .lw-brand .lwh-cta { border-radius: 22px; } }
+
+/* ===== Site palette: sage + forest + lime (homepage & brand PDP) — overrides the earlier vibrant layer ===== */
+.lw-brand { --lw-green: #2f5a3a; --lw-green-dark: #16301f; --lw-accent: #2f5a3a; --lw-mint: #e7efe1; --lw-mint-strong: #d6e4cc; }
+.lw-brand .lw .lw-h em { color: #2f5a3a !important; }
+.lw-brand .lw-tl__label, .lw-brand .lw-reason__label, .lw-brand .lw-pill { background: #2f5a3a !important; }
+.lw-brand .lw-tl__list::before, .lw-brand .lw-tl__step::before { background: #2f5a3a !important; }
+.lw-brand .lw-tl__points .lw-icon, .lw-brand .lw-benefit-grid__item .lw-icon, .lw-brand .lw-bprod__icon .lw-icon { color: #2f5a3a; }
+.lw-brand .lw-guar__seal svg, .lw-brand .lw-guar__eyebrow { color: #2f5a3a !important; }
+.lw-brand .lw-bprod .lw-h em { color: #2f5a3a !important; }
+.lw-brand .lw-stats .lw-h em, .lw-brand .lw-glass .lw-h em, .lw-brand .lw-cmps .lw-h em, .lw-brand .lw-cmp .lw-h em { color: #d9f28b !important; }
+.lw-brand .lw-delivery__dot { background: #4caf6a; }
+/* Sage glow on the green feature panels (same look as the "underdosed" panel) */
+.lw-brand .lw-stats { background: radial-gradient(circle at 15% 20%, #5f8f55 0%, #2f5a3a 45%, #16301f 100%); }
+.lw-brand .lwh { --lwh-forest: #16301f; --lwh-sage: #2f5a3a; --lwh-cream: #fafaf5; }
+.lw-brand .lwh-btn:hover { background: #0d2215; }
+.lw-brand .lwh-h em, .lw-brand .lwh-eyebrow { color: #2f5a3a; }
+.lw-brand .lwh-dark .lwh-h em, .lw-brand .lwh-glasspanel .lwh-h em, .lw-brand .lwh-science .lwh-h em, .lw-brand .lwh-dark .lwh-eyebrow { color: #d9f28b; }
+.lw-brand .lwh-pcard { background: #2f5a3a; }
+.lw-brand .lwh-science__fallback { background: radial-gradient(circle at 20% 20%, #5f8f55 0%, #2f5a3a 40%, #16301f 100%); }
+.lw-brand .lwh-dark { background: radial-gradient(circle at 15% 15%, #5f8f55 0%, #2f5a3a 42%, #16301f 100%); }
