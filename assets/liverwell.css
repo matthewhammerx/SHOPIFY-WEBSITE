@@ -1497,3 +1497,13 @@ cart-drawer .cart-item .compare-price, cart-drawer .cart-item__old-price { color
 .lw-brand .lw-sticky.is-shown.is-visible .lw-sticky__inner {
   transition: transform .5s cubic-bezier(.22, 1, .36, 1), opacity .4s ease, --lw-r .8s cubic-bezier(.65, 0, .35, 1) .28s; }
 .lw-brand .lw-sticky .lw-sticky__info, .lw-brand .lw-sticky .lw-btn { opacity: calc(var(--lw-r) * 1.8 - .8); }
+
+/* Sticky ATC v5 (Seed's structure): the FIXED element is a clear, pill-sized box pinned near the bottom
+   (no background / no backdrop — Safari only samples those on the fixed element itself);
+   the glass colour lives on the inner layer. */
+@media (max-width: 749px) {
+  .lw-brand .lw-sticky, .lw-brand .lw-sticky.is-visible {
+    top: auto !important; bottom: calc(env(safe-area-inset-bottom) + 8px) !important; left: 12px !important; right: 12px !important;
+    height: auto !important; }
+  .lw-brand .lw-sticky .lw-sticky__inner, .lw-brand .lw-sticky.is-visible .lw-sticky__inner { position: relative; left: auto; right: auto; bottom: auto; }
+}
