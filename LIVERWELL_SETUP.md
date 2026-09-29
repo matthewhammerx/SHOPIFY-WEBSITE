@@ -20,7 +20,7 @@ Create one option, such as **"Bundle"**, with the values *1 Bottle / 2 Bottles /
 If you'd rather keep a single variant, set each offer's *Variant position* to 0, *Quantity* to 1/2/3, and optionally add a *Discount code* with its matching *Displayed discount %*.
 
 ## Customer videos
-In the theme editor, customer videos are their own section, **LW · Customer videos**, placed directly under the product section. Each video is a **Video** block listed underneath it. Click one to edit it, drag to reorder, or use **Add block → Video** to add more.
+In the theme editor, customer videos are their own section, **LW · Customer videos** (file `sections/lw-ugc.liquid`), placed directly under the product section. Each video is a **Video** block listed underneath it. Click one to edit it, drag to reorder, or use **Add block → Video** to add more.
 - **Each video:** caption sticker, video file, image (if there's no video), and **Show on**: desktop and mobile, desktop only, or mobile only.
 - **Section settings:** heading, **Show on desktop** and **Show on mobile**, how many videos are visible on each device, arrows and dots.
 - **Position:**
