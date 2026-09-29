@@ -1507,3 +1507,10 @@ cart-drawer .cart-item .compare-price, cart-drawer .cart-item__old-price { color
     height: auto !important; }
   .lw-brand .lw-sticky .lw-sticky__inner, .lw-brand .lw-sticky.is-visible .lw-sticky__inner { position: relative; left: auto; right: auto; bottom: auto; }
 }
+/* Sticky ATC: transparent adaptive glass (Seed-style) — takes the colour of what's behind it */
+.lw-brand .lw-sticky .lw-sticky__inner, .lw-brand .lw-sticky.is-visible .lw-sticky__inner {
+  background: rgba(58, 62, 55, .30); -webkit-backdrop-filter: blur(24px) saturate(1.7); backdrop-filter: blur(24px) saturate(1.7);
+  border: 1px solid rgba(255, 255, 255, .28); box-shadow: 0 14px 34px -16px rgba(0, 0, 0, .35), inset 0 1px 0 rgba(255, 255, 255, .22); }
+.lw-brand .lw-sticky__title { text-shadow: 0 1px 8px rgba(0, 0, 0, .18); }
+.lw-brand .lw-sticky__img { background: rgba(255, 255, 255, .22) !important; }
+.lw-brand .lw-sticky .lw-sticky__inner, .lw-brand .lw-sticky.is-visible .lw-sticky__inner { background: rgba(58, 62, 55, .36); -webkit-backdrop-filter: blur(32px) saturate(1.8); backdrop-filter: blur(32px) saturate(1.8); }
