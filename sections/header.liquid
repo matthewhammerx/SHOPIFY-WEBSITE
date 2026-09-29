@@ -387,6 +387,44 @@
                               </li>
                             {%- endfor -%}
                           </ul>
+                          {%- liquid
+                            assign lw_has_products = false
+                            for childlink in link.links
+                              if childlink.type == 'product_link' and childlink.object
+                                assign lw_has_products = true
+                              endif
+                            endfor
+                            assign lw_fallback = section.settings.lw_menu_product | default: all_products['milk-thistle']
+                          -%}
+                          <div class="lw-mega">
+                            <ul class="lw-mega__list" role="list">
+                              {%- for childlink in link.links -%}
+                                {%- assign lw_p = nil -%}
+                                {%- if childlink.type == 'product_link' -%}{%- assign lw_p = childlink.object -%}{%- endif -%}
+                                <li>
+                                  <a class="lw-mega__row{% if childlink.current %} is-active{% endif %}" href="{{ childlink.url }}">
+                                    <span class="lw-mega__thumb">
+                                      {%- if lw_p and lw_p.featured_image -%}
+                                        {{ lw_p.featured_image | image_url: width: 160 | image_tag: loading: 'lazy', alt: '' }}
+                                      {%- elsif childlink.object.featured_image -%}
+                                        {{ childlink.object.featured_image | image_url: width: 160 | image_tag: loading: 'lazy', alt: '' }}
+                                      {%- elsif childlink.object.image -%}
+                                        {{ childlink.object.image | image_url: width: 160 | image_tag: loading: 'lazy', alt: '' }}
+                                      {%- endif -%}
+                                    </span>
+                                    <span class="lw-mega__text">
+                                      {%- if forloop.first and section.settings.lw_menu_badge != blank -%}<span class="lw-mega__badge">{{ section.settings.lw_menu_badge }}</span>{%- elsif lw_p -%}<span class="lw-mega__eyebrow">From {{ lw_p.price_min | money }}</span>{%- endif -%}
+                                      <span class="lw-mega__title">{{ childlink.title | escape }}</span>
+                                    </span>
+                                  </a>
+                                </li>
+                              {%- endfor -%}
+                              {%- if lw_has_products == false and lw_fallback != blank and lw_fallback.id and link.links.size == 0 -%}
+                                <li><a class="lw-mega__row" href="{{ lw_fallback.url }}"><span class="lw-mega__thumb">{{ lw_fallback.featured_image | image_url: width: 160 | image_tag: loading: 'lazy', alt: '' }}</span><span class="lw-mega__text"><span class="lw-mega__title">{{ lw_fallback.title }}</span></span></a></li>
+                              {%- endif -%}
+                            </ul>
+                            <a class="lw-mega__all" href="{{ link.url | default: routes.all_products_collection_url }}">Shop All Products <span aria-hidden="true">&rarr;</span></a>
+                          </div>
                         </div>
                       </details>
                     </header-menu>
