@@ -1159,3 +1159,16 @@
   .lw-brand .lwh-hero--split .lwh-link { align-self: center; }
   .lw-brand .lwh-hero--split .lwh-note { order: 7; justify-content: center; margin-top: 14px; }
 }
+
+/* ===== Header, brand pages: blends into the page, LiverWell type + colors ===== */
+.lw-brand .header-wrapper { background: #fafaf5; border-bottom: 0; box-shadow: none; }
+.lw-brand.lw-tpl-index .header-wrapper { background: #eef6e9; }
+.lw-brand .header__heading .h2, .lw-brand .header__heading-link .h2 { font-family: var(--lw-font-body); font-weight: 500; letter-spacing: -0.03em; color: #16301f; }
+.lw-brand .header__icon, .lw-brand .header__icon .svg-wrapper, .lw-brand .header__icon svg { color: #16301f; }
+.lw-brand .cart-count-bubble { background: linear-gradient(135deg, #34c77b, #16a05f); color: #fff; }
+/* Hero: less flat — white glow top-right + soft sage glow bottom-left, starts in the header color so they read as one */
+.lw-brand .lwh-hero--split .lwh-hero__frame {
+  background:
+    radial-gradient(55% 65% at 88% 18%, rgba(255,255,255,.95) 0%, rgba(255,255,255,0) 60%),
+    radial-gradient(50% 55% at 5% 95%, rgba(95,143,85,.22) 0%, rgba(95,143,85,0) 65%),
+    linear-gradient(180deg, #eef6e9 0%, #e2eed9 100%); }
