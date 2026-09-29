@@ -995,3 +995,18 @@
 /* 5. Stars + small accents a touch brighter */
 .lw-brand .lw-stars, .lw-brand .lwh-rating .lw-stars { color: #1fa463; }
 .lw-brand .lw-offer__now, .lw-brand .lw-buy__now { color: #139158; }
+
+/* Brand: timeline — soft mint step pills + button moved to the bottom of the block */
+.lw-brand .lw-tl__label { background: #e6f5ea !important; color: #147a48; border: 1px solid #cdebd6; }
+.lw-brand .lw-tl__intro { display: contents; }
+.lw-brand .lw-tl__grid { grid-template-areas: "img list" "head list" "sub list" "btn btn"; grid-template-rows: auto auto 1fr auto; column-gap: 56px; row-gap: 16px; align-items: start; }
+.lw-brand .lw-tl__img { grid-area: img; }
+.lw-brand .lw-tl__grid .lw-h { grid-area: head; text-align: center; }
+.lw-brand .lw-tl__grid .lw-sub { grid-area: sub; text-align: center; }
+.lw-brand .lw-tl__list { grid-area: list; align-self: center; }
+.lw-brand .lw-tl__intro > .lw-btn { grid-area: btn; justify-self: center; width: 100%; max-width: 440px; margin-top: 28px; }
+@media (max-width: 849px) {
+  .lw-brand .lw-tl__grid { grid-template-areas: "img" "head" "sub" "list" "btn"; grid-template-rows: none; row-gap: 16px; }
+  .lw-brand .lw-tl__list { margin-top: 12px; }
+  .lw-brand .lw-tl__intro > .lw-btn { margin-top: 16px; }
+}
