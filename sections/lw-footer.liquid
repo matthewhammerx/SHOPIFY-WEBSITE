@@ -1,20 +1,9 @@
 {%- liquid
   assign menus = section.blocks | where: 'type', 'menu'
-  assign badges = section.blocks | where: 'type', 'badge'
   assign brand = section.settings.brand_name | default: shop.name
 -%}
 <footer class="lwf{% if section.settings.rounded %} lwf--rounded{% endif %}" style="--lwf-bg: {{ section.settings.bg }}; --lwf-bg2: {{ section.settings.bg_2 }}; --lwf-fg: {{ section.settings.fg }}; --lwf-accent: {{ section.settings.accent }}; --lwf-pt: {{ section.settings.padding_top }}px;">
   <div class="lwf__wrap">
-    {%- if badges.size > 0 -%}
-      <ul class="lwf__trust">
-        {%- for block in badges -%}
-          <li class="lwf__badge" {{ block.shopify_attributes }}>
-            <span class="lwf__badgeicon">{% render 'lw-icon', icon: block.settings.icon %}</span>
-            <span><strong>{{ block.settings.title }}</strong>{%- if block.settings.text != blank -%}<small>{{ block.settings.text }}</small>{%- endif -%}</span>
-          </li>
-        {%- endfor -%}
-      </ul>
-    {%- endif -%}
 
     {%- if section.settings.show_newsletter -%}
       <div class="lwf__news">

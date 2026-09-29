@@ -1134,3 +1134,4 @@
 .lw-brand .lw .lw-glass__btn, .lw-brand .lw .lw-glass__btn:hover { background: linear-gradient(135deg, #eefab8 0%, #d9f28b 50%, #bfe36a 100%); color: #16301f !important; box-shadow: 0 10px 26px -8px rgba(217, 242, 139, .55); position: relative; overflow: hidden; isolation: isolate; }
 .lw-brand .lw .lw-glass__btn::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,.55) 50%, transparent 70%); transform: translateX(-120%); transition: transform .7s ease; }
 .lw-brand .lw .lw-glass__btn:hover::after { transform: translateX(120%); }
+.lwf__trust { display: none !important; }
