@@ -112,9 +112,45 @@
             "heading": "Help",
             "menu": "footer"
           }
+        },
+        "badge_1": {
+          "type": "badge",
+          "settings": {
+            "icon": "shield",
+            "title": "90-day guarantee",
+            "text": "Love it or your money back"
+          }
+        },
+        "badge_2": {
+          "type": "badge",
+          "settings": {
+            "icon": "truck",
+            "title": "Free shipping",
+            "text": "On 2+ bottles"
+          }
+        },
+        "badge_3": {
+          "type": "badge",
+          "settings": {
+            "icon": "flask",
+            "title": "Clinically dosed",
+            "text": "80% silymarin standard"
+          }
+        },
+        "badge_4": {
+          "type": "badge",
+          "settings": {
+            "icon": "leaf",
+            "title": "Clean formula",
+            "text": "No fillers or blends"
+          }
         }
       },
       "block_order": [
+        "badge_1",
+        "badge_2",
+        "badge_3",
+        "badge_4",
         "menu_shop",
         "menu_help"
       ],
@@ -125,8 +161,8 @@
         "contact_email": "",
         "contact_note": "Mon to Fri, 9am to 5pm EST. We reply within 24 hours.",
         "show_newsletter": true,
-        "news_heading": "Get 10% off your first order",
-        "news_text": "Liver tips, new launches and member-only offers. No spam.",
+        "news_heading": "Feel lighter. Get 10% off.",
+        "news_text": "Join the LiverWell list for liver tips, new launches and member-only offers. No spam, ever.",
         "news_placeholder": "Your email",
         "news_button": "Join",
         "news_success": "Thanks for joining! Check your inbox.",
@@ -137,7 +173,10 @@
         "bg_2": "#2f5a3a",
         "fg": "#fafaf5",
         "accent": "#d9f28b",
-        "padding_top": 72
+        "padding_top": 72,
+        "show_wordmark": true,
+        "wordmark": "",
+        "rounded": true
       }
     }
   },

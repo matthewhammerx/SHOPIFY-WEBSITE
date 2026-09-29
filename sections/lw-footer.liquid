@@ -1,15 +1,50 @@
 {%- liquid
   assign menus = section.blocks | where: 'type', 'menu'
+  assign badges = section.blocks | where: 'type', 'badge'
+  assign brand = section.settings.brand_name | default: shop.name
 -%}
-<footer class="lwf" style="--lwf-bg: {{ section.settings.bg }}; --lwf-bg2: {{ section.settings.bg_2 }}; --lwf-fg: {{ section.settings.fg }}; --lwf-accent: {{ section.settings.accent }}; --lwf-pt: {{ section.settings.padding_top }}px;">
+<footer class="lwf{% if section.settings.rounded %} lwf--rounded{% endif %}" style="--lwf-bg: {{ section.settings.bg }}; --lwf-bg2: {{ section.settings.bg_2 }}; --lwf-fg: {{ section.settings.fg }}; --lwf-accent: {{ section.settings.accent }}; --lwf-pt: {{ section.settings.padding_top }}px;">
   <div class="lwf__wrap">
+    {%- if badges.size > 0 -%}
+      <ul class="lwf__trust">
+        {%- for block in badges -%}
+          <li class="lwf__badge" {{ block.shopify_attributes }}>
+            <span class="lwf__badgeicon">{% render 'lw-icon', icon: block.settings.icon %}</span>
+            <span><strong>{{ block.settings.title }}</strong>{%- if block.settings.text != blank -%}<small>{{ block.settings.text }}</small>{%- endif -%}</span>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+
+    {%- if section.settings.show_newsletter -%}
+      <div class="lwf__news">
+        <div>
+          <p class="lwf__newshead">{{ section.settings.news_heading }}</p>
+          {%- if section.settings.news_text != blank -%}<p class="lwf__newstext">{{ section.settings.news_text }}</p>{%- endif -%}
+        </div>
+        {%- form 'customer', id: 'LwFooterNewsletter', class: 'lwf__form' -%}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          {%- if form.posted_successfully? -%}
+            <p class="lwf__ok">{{ section.settings.news_success }}</p>
+          {%- else -%}
+            <div class="lwf__field">
+              <label class="lwf__sr" for="LwFooterEmail">Email</label>
+              <input id="LwFooterEmail" type="email" name="contact[email]" placeholder="{{ section.settings.news_placeholder }}" autocomplete="email" required>
+              <button type="submit">{{ section.settings.news_button }}</button>
+            </div>
+            {%- if form.errors -%}<p class="lwf__err">{{ form.errors.translated_fields.email | capitalize }} {{ form.errors.messages.email }}</p>{%- endif -%}
+          {%- endif -%}
+        {%- endform -%}
+      </div>
+    {%- endif -%}
+
     <div class="lwf__top">
       <div class="lwf__brand">
         <a class="lwf__logo" href="{{ routes.root_url }}" style="--lwf-logo-w: {{ section.settings.logo_width }}px;">
           {%- if section.settings.logo != blank -%}
             {{ section.settings.logo | image_url: width: 400 | image_tag: loading: 'lazy', alt: shop.name }}
           {%- else -%}
-            {{ section.settings.brand_name | default: shop.name }}
+            {{ brand }}
           {%- endif -%}
         </a>
         {%- if section.settings.tagline != blank -%}<p class="lwf__tagline">{{ section.settings.tagline }}</p>{%- endif -%}
@@ -41,30 +76,10 @@
           </div>
         {%- endif -%}
       </div>
-
-      {%- if section.settings.show_newsletter -%}
-        <div class="lwf__news">
-          <p class="lwf__newshead">{{ section.settings.news_heading }}</p>
-          {%- if section.settings.news_text != blank -%}<p class="lwf__newstext">{{ section.settings.news_text }}</p>{%- endif -%}
-          {%- form 'customer', id: 'LwFooterNewsletter', class: 'lwf__form' -%}
-            <input type="hidden" name="contact[tags]" value="newsletter">
-            {%- if form.posted_successfully? -%}
-              <p class="lwf__ok">{{ section.settings.news_success }}</p>
-            {%- else -%}
-              <div class="lwf__field">
-                <label class="lwf__sr" for="LwFooterEmail">Email</label>
-                <input id="LwFooterEmail" type="email" name="contact[email]" placeholder="{{ section.settings.news_placeholder }}" autocomplete="email" required>
-                <button type="submit">{{ section.settings.news_button }}</button>
-              </div>
-              {%- if form.errors -%}<p class="lwf__err">{{ form.errors.translated_fields.email | capitalize }} {{ form.errors.messages.email }}</p>{%- endif -%}
-            {%- endif -%}
-          {%- endform -%}
-        </div>
-      {%- endif -%}
     </div>
 
     <div class="lwf__bottom">
-      <p class="lwf__copy">&copy; {{ 'now' | date: '%Y' }} {{ section.settings.brand_name | default: shop.name }}</p>
+      <p class="lwf__copy">&copy; {{ 'now' | date: '%Y' }} {{ brand }}</p>
       {%- if section.settings.show_policies and shop.policies.size > 0 -%}
         <ul class="lwf__policies">
           {%- for policy in shop.policies -%}{%- if policy != blank -%}<li><a href="{{ policy.url }}">{{ policy.title }}</a></li>{%- endif -%}{%- endfor -%}
@@ -79,11 +94,12 @@
 
     {%- if section.settings.disclaimer != blank -%}<div class="lwf__legal">{{ section.settings.disclaimer }}</div>{%- endif -%}
   </div>
+  {%- if section.settings.show_wordmark -%}<div class="lwf__wordmark" aria-hidden="true">{{ section.settings.wordmark | default: brand }}</div>{%- endif -%}
 </footer>
 
 {% schema %}
 {
-  "name": "LW · Footer",
+  "name": "LW \u00b7 Footer",
   "tag": "section",
   "class": "lw-section-footer",
   "settings": [
@@ -168,13 +184,13 @@
       "type": "text",
       "id": "news_heading",
       "label": "Heading",
-      "default": "Get 10% off your first order"
+      "default": "Feel lighter. Get 10% off."
     },
     {
       "type": "text",
       "id": "news_text",
       "label": "Text",
-      "default": "Liver tips, new launches and member-only offers. No spam."
+      "default": "Join the LiverWell list for liver tips, new launches and member-only offers. No spam, ever."
     },
     {
       "type": "text",
@@ -214,7 +230,29 @@
       "type": "richtext",
       "id": "disclaimer",
       "label": "Small print",
-      "default": "<p>†These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease. Individual results may vary.</p>"
+      "default": "<p>\u2020These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease. Individual results may vary.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Style"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_wordmark",
+      "label": "Show big wordmark at the bottom",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "wordmark",
+      "label": "Wordmark text",
+      "info": "Leave empty to use the brand name."
+    },
+    {
+      "type": "checkbox",
+      "id": "rounded",
+      "label": "Rounded top corners",
+      "default": true
     },
     {
       "type": "header",
@@ -274,12 +312,110 @@
           "default": "footer"
         }
       ]
+    },
+    {
+      "type": "badge",
+      "name": "Trust badge",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "default": "shield",
+          "options": [
+            {
+              "value": "shield",
+              "label": "Shield"
+            },
+            {
+              "value": "truck",
+              "label": "Truck"
+            },
+            {
+              "value": "flask",
+              "label": "Lab flask"
+            },
+            {
+              "value": "award",
+              "label": "Award"
+            },
+            {
+              "value": "leaf",
+              "label": "Leaf"
+            },
+            {
+              "value": "refresh",
+              "label": "Refresh"
+            },
+            {
+              "value": "factory",
+              "label": "Factory"
+            },
+            {
+              "value": "vegan",
+              "label": "Vegan"
+            },
+            {
+              "value": "heart",
+              "label": "Heart"
+            },
+            {
+              "value": "lock",
+              "label": "Lock"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "90-day money-back guarantee"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text"
+        }
+      ]
     }
   ],
   "presets": [
     {
-      "name": "LW · Footer",
+      "name": "LW \u00b7 Footer",
       "blocks": [
+        {
+          "type": "badge",
+          "settings": {
+            "icon": "shield",
+            "title": "90-day guarantee",
+            "text": "Love it or your money back"
+          }
+        },
+        {
+          "type": "badge",
+          "settings": {
+            "icon": "truck",
+            "title": "Free shipping",
+            "text": "On 2+ bottles"
+          }
+        },
+        {
+          "type": "badge",
+          "settings": {
+            "icon": "flask",
+            "title": "Third-party tested",
+            "text": "Purity and potency"
+          }
+        },
+        {
+          "type": "badge",
+          "settings": {
+            "icon": "leaf",
+            "title": "Clean formula",
+            "text": "No fillers or blends"
+          }
+        },
         {
           "type": "menu",
           "settings": {
@@ -298,7 +434,9 @@
     }
   ],
   "enabled_on": {
-    "groups": ["footer"]
+    "groups": [
+      "footer"
+    ]
   }
 }
 {% endschema %}
