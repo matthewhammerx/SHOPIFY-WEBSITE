@@ -137,7 +137,7 @@
             "subscription_sub": "Delivered every 30 days. Skip, pause or cancel anytime.",
             "gifts_label": "Gifts unlocked",
             "gifts_locked_text": "Locked",
-            "show_delivery": true,
+            "show_delivery": false,
             "delivery_text": "Order today for delivery by",
             "delivery_days": 3,
             "ships_from": "Ships from US 🇺🇸",
