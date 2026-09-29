@@ -464,3 +464,8 @@
 .lw-slider__nav--round .lw-slider__arrows button { width: 44px; height: 44px; background: transparent; border: 1px solid #9aa096; color: #5c615c; }
 .lw-slider__nav--round .lw-slider__arrows svg { width: 16px; height: 16px; }
 .lw-slider__dots[hidden] { display: none; }
+.lw-gallery__slides, .lw-slider__track { cursor: grab; -webkit-user-select: none; user-select: none; touch-action: pan-x pan-y; overscroll-behavior-x: contain; }
+.lw-gallery__slides img, .lw-slider__track img { -webkit-user-drag: none; }
+
+/* More breathing room between the main image and the thumbnail row */
+.lw-gallery__thumbs { margin-top: 14px; }

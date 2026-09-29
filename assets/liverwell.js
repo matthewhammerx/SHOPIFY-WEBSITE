@@ -412,10 +412,50 @@
     if (home) document.querySelectorAll('[data-lw-ugc-slot] [data-lw-ugc-from="' + home.dataset.lwUgcHome + '"]').forEach((n) => n.remove());
   });
 
+  /* ------------------------------------------------------------------ */
+  /* Mouse drag-to-swipe for scroll-snap strips (touch swipes natively)  */
+  /* ------------------------------------------------------------------ */
+  function initDrag(root) {
+    root.querySelectorAll('.lw-gallery__slides, .lw-slider__track').forEach((el) => {
+      if (el._lwDrag) return; el._lwDrag = true;
+      let down = false, moved = false, startX = 0, startLeft = 0;
+      el.addEventListener('dragstart', (e) => e.preventDefault());
+      el.addEventListener('pointerdown', (e) => {
+        if (e.pointerType !== 'mouse' || e.button !== 0) return;
+        down = true; moved = false; startX = e.clientX; startLeft = el.scrollLeft;
+      });
+      window.addEventListener('pointermove', (e) => {
+        if (!down) return;
+        const dx = e.clientX - startX;
+        if (!moved && Math.abs(dx) > 5) {
+          moved = true;
+          el.style.scrollSnapType = 'none'; el.style.scrollBehavior = 'auto'; el.style.cursor = 'grabbing';
+        }
+        if (moved) el.scrollLeft = startLeft - dx;
+      });
+      window.addEventListener('pointerup', () => {
+        if (!down) return;
+        down = false;
+        if (!moved) return;
+        // snap to the nearest item in the drag direction
+        const items = Array.from(el.children);
+        const step = items[1] ? items[1].offsetLeft - items[0].offsetLeft : el.clientWidth;
+        const delta = el.scrollLeft - startLeft;
+        let idx = Math.round(startLeft / step) + (Math.abs(delta) > step * 0.15 ? Math.sign(delta) : 0);
+        idx = Math.max(0, Math.min(idx, Math.round((el.scrollWidth - el.clientWidth) / step)));
+        el.style.cursor = '';
+        el.scrollTo({ left: idx * step, behavior: 'smooth' });
+        setTimeout(() => { el.style.scrollSnapType = ''; el.style.scrollBehavior = ''; }, 450);
+      });
+      // swallow the click that ends a drag (e.g. on a video card)
+      el.addEventListener('click', (e) => { if (moved) { e.stopPropagation(); e.preventDefault(); moved = false; } }, true);
+    });
+  }
+
   function initAll(root) {
     root = root || document;
     placeUgc();
-    initGallery(root); initSliders(root); initVideos(root); initObservers(root);
+    initGallery(root); initSliders(root); initDrag(root); initVideos(root); initObservers(root);
     initDelivery(root); initLoadMore(root); initCountdown(root); initSticky();
   }
 
