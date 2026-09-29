@@ -1248,3 +1248,9 @@
 .lw-brand .section-header.shopify-section-header-sticky .header::after { animation: lw-pill-pop .45s cubic-bezier(.34, 1.56, .64, 1) both; }
 @keyframes lw-pill-pop { 0% { transform: scale(.9); opacity: .4; } 100% { transform: scale(1); opacity: 1; } }
 @media (prefers-reduced-motion: reduce) { .lw-brand .section-header.shopify-section-header-sticky .header__heading-link, .lw-brand .section-header.shopify-section-header-sticky .header__icons, .lw-brand .section-header.shopify-section-header-sticky .header__inline-menu, .lw-brand .section-header.shopify-section-header-sticky .header::after { animation: none; } }
+/* Header right side: a bit more breathing room between Shop Now, cart and menu */
+.lw-brand .header__icons .lw-header-cta { margin-right: 6px; }
+@media (max-width: 989px) {
+  .lw-brand .section-header header-drawer { padding-left: 8px; padding-right: 6px; }
+  .lw-brand .header__icons { padding-right: 2px; }
+}
