@@ -1,0 +1,362 @@
+<section class="lw lw-section lw-glass" style="--lw-pt: {{ section.settings.padding_top }}px; --lw-pb: {{ section.settings.padding_bottom }}px; --lw-fg: {{ section.settings.fg }}; --lw-gold: {{ section.settings.accent }}; --lw-bg-grad: linear-gradient(160deg, {{ section.settings.bg }} 0%, {{ section.settings.bg_2 }} 100%); --lw-side-d: {{ section.settings.side_desktop }}px; --lw-side-m: {{ section.settings.side_mobile }}px;">
+  {%- if section.settings.image != blank -%}<div class="lw-glass__bgimg" style="opacity: {{ section.settings.image_opacity | divided_by: 100.0 }};">{{ section.settings.image | image_url: width: 2000 | image_tag: loading: 'lazy', alt: '' }}</div>{%- endif -%}
+  <div class="lw-wrap lw-glass__wrap">
+    <div class="lw-head lw-center">
+      {%- if section.settings.eyebrow != blank -%}<span class="lw-glass__eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+      <h2 class="lw-h lw-h--lg">{{ section.settings.heading }}</h2>
+      {%- if section.settings.text != blank -%}<div class="lw-sub lw-rte">{{ section.settings.text }}</div>{%- endif -%}
+      {%- if section.settings.button_label != blank -%}<a class="lw-btn lw-glass__btn" href="{{ section.settings.button_link | default: '#lw-product' }}">{{ section.settings.button_label }}</a>{%- endif -%}
+    </div>
+    <div class="lw-glass__grid" style="--lw-cols: {{ section.blocks.size | at_most: 4 | at_least: 1 }};">
+      {%- for block in section.blocks -%}
+        <div class="lw-glass__card lw-reveal" {{ block.shopify_attributes }}>
+          <h3 class="lw-glass__title">{{ block.settings.title }}</h3>
+          <div class="lw-glass__value">
+            {%- if block.settings.value != blank -%}
+              <span {% if section.settings.animate_numbers %}data-lw-count="{{ block.settings.value }}"{% endif %} data-suffix="{{ block.settings.suffix | escape }}">{{ block.settings.value }}{{ block.settings.suffix }}</span>
+            {%- else -%}
+              {% render 'lw-icon', icon: block.settings.icon %}
+            {%- endif -%}
+          </div>
+          <p class="lw-glass__text">{{ block.settings.text }}</p>
+        </div>
+      {%- endfor -%}
+    </div>
+    {%- if section.settings.footnote != blank -%}<div class="lw-glass__foot lw-rte">{{ section.settings.footnote }}</div>{%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "LW · Glass benefit cards",
+  "tag": "section",
+  "class": "lw-section-glass",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Feel Better. Every Day."
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link",
+      "info": "Empty = scroll to buy box"
+    },
+    {
+      "type": "richtext",
+      "id": "footnote",
+      "label": "Footnote (small text under cards)"
+    },
+    {
+      "type": "checkbox",
+      "id": "animate_numbers",
+      "label": "Count up numbers (if a card has a number)",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "color",
+      "id": "bg",
+      "label": "Gradient start",
+      "default": "#0b5a47"
+    },
+    {
+      "type": "color",
+      "id": "bg_2",
+      "label": "Gradient end",
+      "default": "#01261d"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Background image (optional)"
+    },
+    {
+      "type": "range",
+      "id": "image_opacity",
+      "label": "Image opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 25
+    },
+    {
+      "type": "color",
+      "id": "fg",
+      "label": "Text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "accent",
+      "label": "Icon / number color",
+      "default": "#e7c77d"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "side_desktop",
+      "label": "Left/right space on desktop",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "side_mobile",
+      "label": "Left/right space on mobile",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Card",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "More Energy"
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon (shown when no number)",
+          "default": "bolt",
+          "options": [
+            {
+              "value": "liver",
+              "label": "Liver"
+            },
+            {
+              "value": "shield",
+              "label": "Shield"
+            },
+            {
+              "value": "bolt",
+              "label": "Bolt"
+            },
+            {
+              "value": "leaf",
+              "label": "Leaf"
+            },
+            {
+              "value": "heart",
+              "label": "Heart"
+            },
+            {
+              "value": "brain",
+              "label": "Brain"
+            },
+            {
+              "value": "gut",
+              "label": "Gut"
+            },
+            {
+              "value": "flask",
+              "label": "Flask"
+            },
+            {
+              "value": "microscope",
+              "label": "Microscope"
+            },
+            {
+              "value": "check",
+              "label": "Check"
+            },
+            {
+              "value": "check-circle",
+              "label": "Check Circle"
+            },
+            {
+              "value": "x-circle",
+              "label": "X Circle"
+            },
+            {
+              "value": "star",
+              "label": "Star"
+            },
+            {
+              "value": "truck",
+              "label": "Truck"
+            },
+            {
+              "value": "gift",
+              "label": "Gift"
+            },
+            {
+              "value": "lock",
+              "label": "Lock"
+            },
+            {
+              "value": "refresh",
+              "label": "Refresh"
+            },
+            {
+              "value": "globe",
+              "label": "Globe"
+            },
+            {
+              "value": "sparkle",
+              "label": "Sparkle"
+            },
+            {
+              "value": "droplet",
+              "label": "Droplet"
+            },
+            {
+              "value": "sun",
+              "label": "Sun"
+            },
+            {
+              "value": "moon",
+              "label": "Moon"
+            },
+            {
+              "value": "scale",
+              "label": "Scale"
+            },
+            {
+              "value": "award",
+              "label": "Award"
+            },
+            {
+              "value": "capsule",
+              "label": "Capsule"
+            },
+            {
+              "value": "clock",
+              "label": "Clock"
+            },
+            {
+              "value": "smile",
+              "label": "Smile"
+            },
+            {
+              "value": "flame",
+              "label": "Flame"
+            },
+            {
+              "value": "wine",
+              "label": "Wine"
+            },
+            {
+              "value": "thumbs-up",
+              "label": "Thumbs Up"
+            },
+            {
+              "value": "vegan",
+              "label": "Vegan"
+            },
+            {
+              "value": "factory",
+              "label": "Factory"
+            },
+            {
+              "value": "filter",
+              "label": "Filter"
+            },
+            {
+              "value": "plus",
+              "label": "Plus"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "value",
+          "label": "Number (optional, e.g. 92)",
+          "info": "Only use numbers you can back up (e.g. your own customer survey). Leave empty to show the icon."
+        },
+        {
+          "type": "text",
+          "id": "suffix",
+          "label": "Number suffix",
+          "default": "%"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text",
+          "default": "Steady, natural energy without the crash.†"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "LW · Glass benefit cards",
+      "blocks": [
+        {
+          "type": "card"
+        },
+        {
+          "type": "card"
+        },
+        {
+          "type": "card"
+        },
+        {
+          "type": "card"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

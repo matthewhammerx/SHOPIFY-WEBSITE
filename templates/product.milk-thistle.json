@@ -1534,6 +1534,74 @@
         "show_price": true,
         "rating_text": "4.9 | Loved by thousands"
       }
+    },
+    "glass_benefits": {
+      "type": "lw-glass-cards",
+      "blocks": {
+        "card_1": {
+          "type": "card",
+          "settings": {
+            "title": "Liver Support",
+            "icon": "liver",
+            "value": "",
+            "suffix": "%",
+            "text": "Silymarin helps protect liver cells from daily stress.†"
+          }
+        },
+        "card_2": {
+          "type": "card",
+          "settings": {
+            "title": "Easier Digestion",
+            "icon": "gut",
+            "value": "",
+            "suffix": "%",
+            "text": "Less bloating and smoother digestion after meals.†"
+          }
+        },
+        "card_3": {
+          "type": "card",
+          "settings": {
+            "title": "Steady Energy",
+            "icon": "bolt",
+            "value": "",
+            "suffix": "%",
+            "text": "Natural, all-day energy. No caffeine, no crash.†"
+          }
+        },
+        "card_4": {
+          "type": "card",
+          "settings": {
+            "title": "Glowing Skin",
+            "icon": "sparkle",
+            "value": "",
+            "suffix": "%",
+            "text": "Clearer skin as your body rebalances from within.†"
+          }
+        }
+      },
+      "block_order": [
+        "card_1",
+        "card_2",
+        "card_3",
+        "card_4"
+      ],
+      "settings": {
+        "eyebrow": "Why it works",
+        "heading": "Feel Better. <em>Every Day.</em>",
+        "text": "<p>Six clinically studied ingredients, one capsule a day. Standardized to 80% silymarin and third-party tested, so every capsule delivers what the label promises.</p>",
+        "button_label": "Try Risk-Free Today",
+        "footnote": "<p>†These statements have not been evaluated by the Food and Drug Administration. Individual results may vary.</p>",
+        "animate_numbers": true,
+        "bg": "#0b5a47",
+        "bg_2": "#01261d",
+        "image_opacity": 25,
+        "fg": "#ffffff",
+        "accent": "#e7c77d",
+        "side_desktop": 40,
+        "side_mobile": 20,
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
     }
   },
   "order": [
@@ -1544,6 +1612,7 @@
     "ingredients",
     "reviews_stories",
     "benefits_product",
+    "glass_benefits",
     "benefit_cards",
     "ticker_mid",
     "timeline",
