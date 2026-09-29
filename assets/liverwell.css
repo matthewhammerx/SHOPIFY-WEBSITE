@@ -1616,3 +1616,19 @@ cart-drawer:not(.active) .cart-drawer__overlay { background: transparent !import
   .lw-mega__all { color: #2e9254 !important; }
   .lw-mega__all:hover { color: #1f7a47 !important; }
 }
+
+/* Mobile menu → "Shop" sub-screen: fills the whole menu card in cream (no blue bar / tiny scroll box) */
+.lw-brand .menu-drawer__inner-container, .lw-brand .menu-drawer__navigation-container, .lw-brand .menu-drawer__navigation,
+.lw-brand .menu-drawer__menu, .lw-brand .menu-drawer__menu > li, .lw-brand .menu-drawer__menu details { position: static !important; }
+.lw-brand .menu-drawer { position: fixed; }
+.js .lw-brand .menu-drawer__submenu, .lw-brand .menu-drawer__submenu {
+  position: absolute !important; inset: 0 !important; width: auto !important; height: auto !important; z-index: 5;
+  background: #fafaf5 !important; color: #16301f !important; border: 0 !important; border-radius: inherit; overflow-y: auto !important; padding: 10px 8px 16px; }
+.lw-brand .menu-drawer__inner-submenu { height: auto !important; overflow: visible !important; }
+.lw-brand .menu-drawer__submenu .menu-drawer__close-button {
+  display: flex !important; align-items: center; gap: 10px; width: auto; margin: 6px 12px 8px !important; padding: 10px 16px !important; border-radius: 999px;
+  background: rgba(46, 146, 84, .1) !important; color: #1f7a47 !important; font-family: var(--lw-font-body) !important; font-size: 15px !important; font-weight: 600; letter-spacing: normal !important; }
+.lw-brand .menu-drawer__submenu .menu-drawer__close-button .icon { width: 16px; height: 16px; }
+.lw-brand .menu-drawer__submenu .menu-drawer__menu-item { color: #16301f !important; background: transparent !important; }
+.lw-brand .menu-drawer__submenu .menu-drawer__menu-item:hover, .lw-brand .menu-drawer__submenu .menu-drawer__menu-item--active { color: #2e9254 !important; }
+.lw-brand .menu-drawer__submenu::-webkit-scrollbar { display: none; }
