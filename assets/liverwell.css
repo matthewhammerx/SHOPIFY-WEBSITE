@@ -1639,3 +1639,23 @@ cart-drawer:not(.active) .cart-drawer__overlay { background: transparent !import
 .lw-brand details.menu-opening > .menu-drawer .menu-drawer__utility-links { animation-fill-mode: backwards !important; }
 .lw-brand .menu-drawer__submenu .menu-drawer__menu > li { animation: none !important; }
 .lw-brand .menu-drawer__submenu { z-index: 20 !important; }
+
+/* Header pills: ONE height everywhere (44px) — logo pill no longer grows with the logo image */
+.lw-brand { --lw-pill-h: 44px; }
+.lw-brand .header__heading-link, .lw-brand .header__heading-link.media {
+  height: var(--lw-pill-h) !important; min-height: 0 !important; max-height: var(--lw-pill-h) !important; padding: 0 18px !important;
+  width: auto !important; display: inline-flex !important; align-items: center; box-sizing: border-box; }
+.lw-brand .header__heading-link.media { --ratio-percent: 0 !important; }
+.lw-brand .header__heading-link.media::before, .lw-brand .header__heading-link.media::after { display: none !important; content: none !important; }
+.lw-brand .header__heading-link img, .lw-brand .header__heading-logo {
+  position: static !important; height: 24px !important; width: auto !important; max-width: 160px !important; max-height: none !important; object-fit: contain; transform: none !important; }
+.lw-brand .header__heading-link .h2 { font-size: 22px !important; line-height: 1 !important; }
+.lw-brand .header__heading-logo-wrapper { width: auto !important; display: inline-flex; align-items: center; }
+.lw-brand .header__inline-menu, .lw-brand .header__icons { height: var(--lw-pill-h) !important; min-height: 0 !important; box-sizing: border-box; }
+.lw-brand .header__icons { padding: 3px !important; }
+.lw-brand .header__icons .header__icon, .lw-brand header-drawer .header__icon--menu { width: 38px !important; height: 38px !important; }
+@media (max-width: 989px) {
+  .lw-brand .section-header .header::after { height: var(--lw-pill-h) !important; }
+  .lw-brand .header__heading-link img, .lw-brand .header__heading-logo { height: 22px !important; }
+  .lw-brand .header__heading-link, .lw-brand .header__heading-link.media { padding: 0 16px !important; }
+}
