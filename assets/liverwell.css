@@ -545,3 +545,5 @@
 .lw-glass__wrap { position: relative; z-index: 2; }
 /* Darken the background media itself too, so "Overlay darkness" always works */
 .lw-glass__bgimg video, .lw-glass__bgimg img { filter: brightness(calc(1 - var(--lw-dark, 0) * 0.85)); }
+/* The theme hides every empty <div> (div:empty { display: none }); the overlay is intentionally empty */
+.lw-glass__overlay { display: block !important; }
