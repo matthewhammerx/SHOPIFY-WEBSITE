@@ -1350,3 +1350,9 @@
 .lw-brand .lw-sticky .lw-btn [data-lw-price] { color: #2e9254; }
 @media (max-width: 749px) { .lw-brand .lw-sticky .lw-btn .lw-sticky__sep, .lw-brand .lw-sticky .lw-btn [data-lw-price] { display: none; } }
 body.lw-brand .lw-sticky.lw .lw-btn.lw-btn[data-lw-sticky-btn] { background: #fafaf5 !important; color: #16301f !important; }
+
+/* Brand sticky ATC: floating glass bar at the BOTTOM; header always stays */
+.lw-brand .lw-sticky { top: auto; bottom: calc(12px + env(safe-area-inset-bottom)); transform: translateY(140%) scale(.96); }
+.lw-brand .lw-sticky.is-visible { transform: none; }
+.lw-brand.lw-sticky-on .section-header { opacity: 1; pointer-events: auto; }
+@media (max-width: 749px) { .lw-brand .lw-sticky { bottom: calc(10px + env(safe-area-inset-bottom)); } }
