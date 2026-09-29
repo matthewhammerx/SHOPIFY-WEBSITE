@@ -1397,3 +1397,5 @@ body.lw-brand .lw-sticky.lw .lw-btn.lw-btn[data-lw-sticky-btn] { background: #fa
 @media (min-width: 750px) {
   .lw-brand .lw-sticky, .lw-brand .lw-sticky.is-visible { left: auto !important; right: 20px !important; bottom: calc(24px + env(safe-area-inset-bottom)) !important; max-width: 560px !important; padding: 8px !important; }
 }
+/* iOS Safari samples the root canvas colour for its toolbars: make it match the page */
+html:has(body.lw-brand), body.lw-brand { background-color: #fafaf5; }
