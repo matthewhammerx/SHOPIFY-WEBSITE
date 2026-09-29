@@ -1459,3 +1459,15 @@ cart-drawer #CartDrawer-Checkout { border-radius: 999px !important; background: 
   box-shadow: 0 12px 26px -10px rgba(22, 160, 95, .55) !important; font-family: var(--lw-font-body) !important; letter-spacing: -0.005em !important; }
 cart-drawer #CartDrawer-Checkout::after, cart-drawer #CartDrawer-Checkout::before { box-shadow: none !important; }
 cart-drawer .drawer__footer { border-top: 1px solid #e4ecdf !important; }
+/* Cart fixes: equal side spacing (centered), close button inside the card, green item prices */
+cart-drawer .cart-drawer__body { padding: 0 14px !important; }
+cart-drawer .cart-drawer__body > *, cart-drawer .meow-free-shipping, cart-drawer .cart-timer, cart-drawer .cart-drawer-item {
+  margin-left: 0 !important; margin-right: 0 !important; width: auto !important; max-width: 100% !important; box-sizing: border-box; }
+cart-drawer .meow-free-shipping { margin-top: 12px !important; }
+cart-drawer .meow-free-shipping__inner { padding-left: 16px !important; padding-right: 16px !important; }
+cart-drawer .cart-timer { text-align: center; }
+cart-drawer .drawer__header { padding: 16px 18px !important; }
+cart-drawer .drawer__close { top: 50% !important; right: 14px !important; transform: translateY(-50%) !important; min-width: 0 !important; min-height: 0 !important; width: 40px !important; height: 40px !important; justify-content: center !important; }
+cart-drawer .drawer__close svg { width: 16px; height: 16px; }
+cart-drawer .cart-item .price, cart-drawer .cart-item .regular-price, cart-drawer .cart-item [class*="accent-color"], cart-drawer .cart-item__totals, cart-drawer .cart-item__totals * { color: #2e9254 !important; }
+cart-drawer .cart-item .compare-price, cart-drawer .cart-item__old-price { color: #8a948c !important; }
