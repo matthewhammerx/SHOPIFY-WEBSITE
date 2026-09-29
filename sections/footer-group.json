@@ -11,6 +11,95 @@
   "name": "t:sections.footer.name",
   "type": "footer",
   "sections": {
+    "lw_footer": {
+      "type": "lw-footer",
+      "blocks": {
+        "badge_1": {
+          "type": "badge",
+          "settings": {
+            "icon": "shield",
+            "title": "90-day guarantee",
+            "text": "Love it or your money back"
+          }
+        },
+        "badge_2": {
+          "type": "badge",
+          "settings": {
+            "icon": "truck",
+            "title": "Free shipping",
+            "text": "On 2+ bottles"
+          }
+        },
+        "badge_3": {
+          "type": "badge",
+          "settings": {
+            "icon": "flask",
+            "title": "Clinically dosed",
+            "text": "80% silymarin standard"
+          }
+        },
+        "badge_4": {
+          "type": "badge",
+          "settings": {
+            "icon": "leaf",
+            "title": "Clean formula",
+            "text": "No fillers or blends"
+          }
+        },
+        "menu_shop": {
+          "type": "menu",
+          "settings": {
+            "heading": "Shop",
+            "menu": "main-menu"
+          }
+        },
+        "menu_help": {
+          "type": "menu",
+          "settings": {
+            "heading": "Help",
+            "menu": "footer"
+          }
+        }
+      },
+      "block_order": [
+        "badge_1",
+        "badge_2",
+        "badge_3",
+        "badge_4",
+        "menu_shop",
+        "menu_help"
+      ],
+      "settings": {
+        "logo": "shopify://shop_images/ChatGPT_Image_Sep_29_2026_03_56_46_PM.png",
+        "logo_width": 150,
+        "brand_name": "LiverWell",
+        "tagline": "Complete liver support in one daily capsule. Clinically dosed, fully transparent.",
+        "instagram": "",
+        "tiktok": "",
+        "facebook": "",
+        "contact_heading": "Contact",
+        "contact_email": "",
+        "contact_note": "Mon to Fri, 9am to 5pm EST. We reply within 24 hours.",
+        "show_newsletter": true,
+        "news_heading": "Feel lighter. Get 10% off.",
+        "news_text": "Join the LiverWell list for liver tips, new launches and member-only offers. No spam, ever.",
+        "news_placeholder": "Your email",
+        "news_button": "Join",
+        "news_success": "Thanks for joining! Check your inbox.",
+        "show_policies": true,
+        "show_payment": true,
+        "disclaimer": "<p>†These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease. Individual results may vary. Consult your healthcare provider before starting any supplement, especially if you are pregnant, nursing, taking medication, or have a medical condition.</p>",
+        "show_wordmark": true,
+        "wordmark": "",
+        "wordmark_width": 100,
+        "rounded": true,
+        "bg": "#16301f",
+        "bg_2": "#2f5a3a",
+        "fg": "#fafaf5",
+        "accent": "#d9f28b",
+        "padding_top": 72
+      }
+    },
     "footer": {
       "type": "footer",
       "blocks": {
@@ -61,6 +150,7 @@
         "24f208fd-0898-43eb-af23-d74f8420ab37",
         "text_CQQeEm"
       ],
+      "disabled": true,
       "settings": {
         "color_scheme": "custom",
         "enable_follow_on_shop": false,
@@ -74,17 +164,17 @@
         "margin_top": 0,
         "padding_top": 32,
         "padding_bottom": 20,
-        "custom_colors_background": "#007F00",
+        "custom_colors_background": "#007f00",
         "custom_gradient_background": "",
         "custom_colors_text": "#ffffff",
         "custom_colors_solid_button_background": "#ffffff",
         "custom_colors_solid_button_text": "#121212",
         "custom_colors_outline_button": "#ffffff"
-      },
-      "disabled": true
+      }
     },
     "custom_liquid_T3Jt6t": {
       "type": "custom-liquid",
+      "disabled": true,
       "name": "t:sections.custom-liquid.presets.name",
       "settings": {
         "display_id": false,
@@ -93,90 +183,6 @@
         "color_scheme": "accent-1",
         "padding_top": 0,
         "padding_bottom": 0
-      },
-      "disabled": true
-    },
-    "lw_footer": {
-      "type": "lw-footer",
-      "blocks": {
-        "menu_shop": {
-          "type": "menu",
-          "settings": {
-            "heading": "Shop",
-            "menu": "main-menu"
-          }
-        },
-        "menu_help": {
-          "type": "menu",
-          "settings": {
-            "heading": "Help",
-            "menu": "footer"
-          }
-        },
-        "badge_1": {
-          "type": "badge",
-          "settings": {
-            "icon": "shield",
-            "title": "90-day guarantee",
-            "text": "Love it or your money back"
-          }
-        },
-        "badge_2": {
-          "type": "badge",
-          "settings": {
-            "icon": "truck",
-            "title": "Free shipping",
-            "text": "On 2+ bottles"
-          }
-        },
-        "badge_3": {
-          "type": "badge",
-          "settings": {
-            "icon": "flask",
-            "title": "Clinically dosed",
-            "text": "80% silymarin standard"
-          }
-        },
-        "badge_4": {
-          "type": "badge",
-          "settings": {
-            "icon": "leaf",
-            "title": "Clean formula",
-            "text": "No fillers or blends"
-          }
-        }
-      },
-      "block_order": [
-        "badge_1",
-        "badge_2",
-        "badge_3",
-        "badge_4",
-        "menu_shop",
-        "menu_help"
-      ],
-      "settings": {
-        "brand_name": "LiverWell",
-        "tagline": "Complete liver support in one daily capsule. Clinically dosed, fully transparent.",
-        "contact_heading": "Contact",
-        "contact_email": "",
-        "contact_note": "Mon to Fri, 9am to 5pm EST. We reply within 24 hours.",
-        "show_newsletter": true,
-        "news_heading": "Feel lighter. Get 10% off.",
-        "news_text": "Join the LiverWell list for liver tips, new launches and member-only offers. No spam, ever.",
-        "news_placeholder": "Your email",
-        "news_button": "Join",
-        "news_success": "Thanks for joining! Check your inbox.",
-        "show_policies": true,
-        "show_payment": true,
-        "disclaimer": "<p>†These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease. Individual results may vary. Consult your healthcare provider before starting any supplement, especially if you are pregnant, nursing, taking medication, or have a medical condition.</p>",
-        "bg": "#16301f",
-        "bg_2": "#2f5a3a",
-        "fg": "#fafaf5",
-        "accent": "#d9f28b",
-        "padding_top": 72,
-        "show_wordmark": true,
-        "wordmark": "",
-        "rounded": true
       }
     }
   },
