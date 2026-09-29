@@ -878,3 +878,25 @@
 .lw-brand .lw-guar__seal svg, .lw-brand .lw-guar__eyebrow { color: #009370 !important; }
 .lw-brand .lw-delivery__dot { width: 10px; height: 10px; background: #00b386; }
 .lw-brand .lw-stats .lw-h em, .lw-brand .lw-bprod .lw-h em, .lw-brand .lw-glass .lw-h em, .lw-brand .lw-cmps .lw-h em, .lw-brand .lw-cmp .lw-h em { color: #d9f28b !important; }
+
+/* Brand template: lighter mix (not all dark) + Hers-style rounded shapes */
+.lw-brand .lw-bprod .lw-h em { color: #009370 !important; }
+.lw-brand .lw-bprod__icon .lw-icon { color: #009370; }
+.lw-brand .lw-bprod__visual img { filter: drop-shadow(0 24px 32px rgba(9, 89, 70, .18)); }
+/* Colored bands float as rounded panels */
+.lw-brand .lw-stats, .lw-brand .lw-bprod, .lw-brand .lw-cmps, .lw-brand .lw-glass,
+.lw-brand .lw-section[style*="#f0f4ea"] { margin: 16px; border-radius: 36px; overflow: hidden; }
+/* Rounder cards, images and controls */
+.lw-brand .lw-ingr, .lw-brand .lw-review, .lw-brand .lw-reason, .lw-brand .lw-bcard, .lw-brand .lw-science__item, .lw-brand .lw-facts__label,
+.lw-brand .lw-glass__card, .lw-brand .lw-cmps__panel { border-radius: 28px; }
+.lw-brand .lw-ingr__img, .lw-brand .lw-reason__img, .lw-brand .lw-tl__img, .lw-brand .lw-gallery__main, .lw-brand .lw-vid, .lw-brand .lw-bcard__img { border-radius: 22px; }
+.lw-brand .lw-offer, .lw-brand .lw-gifts, .lw-brand .lw-stock, .lw-brand .lw-benefit-grid, .lw-brand .lw-sub-toggle { border-radius: 20px; }
+.lw-brand .lw-acc details { border-radius: 18px; }
+.lw-brand .lw-gallery__thumb { border-radius: 14px; }
+.lw-brand .lw-cmps__us--first { border-radius: 20px 20px 0 0; }
+.lw-brand .lw-cmps__us--last { border-radius: 0 0 20px 20px; }
+@media (max-width: 749px) {
+  .lw-brand .lw-stats, .lw-brand .lw-bprod, .lw-brand .lw-cmps, .lw-brand .lw-glass,
+  .lw-brand .lw-section[style*="#f0f4ea"] { margin: 8px; border-radius: 26px; }
+  .lw-brand .lw-ingr, .lw-brand .lw-review, .lw-brand .lw-reason, .lw-brand .lw-bcard, .lw-brand .lw-glass__card, .lw-brand .lw-cmps__panel { border-radius: 22px; }
+}
