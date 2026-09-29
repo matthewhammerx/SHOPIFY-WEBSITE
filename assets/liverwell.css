@@ -1280,3 +1280,11 @@
 .lw-brand .lw-menu-card__btn { font-size: 14px; font-weight: 600; color: #d9f28b; margin-top: 2px; }
 .lw-brand .menu-drawer__utility-links { background: transparent; margin: 0 12px; padding: 14px 8px 0; border-top: 1px solid rgba(22, 48, 31, .1); }
 .lw-brand .menu-drawer__account { font-family: var(--lw-font-body); color: #16301f; font-size: 15px; }
+/* Menu fixes: close button sits inside the card, no theme letter-spacing leak */
+.lw-brand .menu-drawer, .lw-brand .menu-drawer * { letter-spacing: normal; }
+.lw-brand .menu-drawer__menu-item { letter-spacing: -0.025em; }
+.lw-brand .menu-drawer__title { letter-spacing: .12em; }
+.lw-brand .menu-drawer__title-and-close-btn { padding: 10px 10px 4px 20px; }
+.lw-brand .menu-drawer__close-btn { position: static; margin: 0; width: 40px; height: 40px; padding: 0; flex: none; border: 1px solid rgba(22, 48, 31, .08); }
+.lw-brand .menu-drawer__close-btn svg { width: 16px; height: 16px; }
+.lw-brand .lw-menu-card__badge { letter-spacing: .01em; }
