@@ -456,6 +456,9 @@
     {%- endif -%}
 
     <div class="header__icons">
+      {%- if section.settings.lw_cta_label != blank -%}
+        <a class="lw-header-cta" href="{{ section.settings.lw_cta_link | default: '/products/milk-thistle' }}">{{ section.settings.lw_cta_label }}</a>
+      {%- endif -%}
       <details-modal class="header__search">
         <details>
           <summary class="header__icon header__icon--search header__icon--summary link focus-inset modal__toggle" aria-haspopup="dialog" aria-label="{{ 'general.search.search' | t }}">
@@ -1070,6 +1073,22 @@
       "unit": "px",
       "label": "t:sections.all.padding.padding_bottom",
       "default": 20
+    },
+    {
+      "type": "header",
+      "content": "LiverWell button"
+    },
+    {
+      "type": "text",
+      "id": "lw_cta_label",
+      "label": "Header button label",
+      "info": "Pill button next to the cart (Seed-style). Leave empty to hide."
+    },
+    {
+      "type": "url",
+      "id": "lw_cta_link",
+      "label": "Header button link",
+      "info": "Defaults to /products/milk-thistle."
     }
   ]
 }

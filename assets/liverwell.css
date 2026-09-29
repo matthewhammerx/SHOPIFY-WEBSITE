@@ -1172,3 +1172,18 @@
     radial-gradient(55% 65% at 88% 18%, rgba(255,255,255,.95) 0%, rgba(255,255,255,0) 60%),
     radial-gradient(50% 55% at 5% 95%, rgba(95,143,85,.22) 0%, rgba(95,143,85,0) 65%),
     linear-gradient(180deg, #eef6e9 0%, #e2eed9 100%); }
+
+/* ===== Header (brand pages): Seed-style — logo left, pill CTA, frosted sticky ===== */
+.lw-header-cta { display: none; }
+.lw-brand .lw-header-cta { display: inline-flex; align-items: center; justify-content: center; min-height: 40px; padding: 8px 20px; margin-right: 8px; border-radius: 999px;
+  background: #16301f; color: #fff !important; font-family: var(--lw-font-body); font-size: 15px; font-weight: 500; letter-spacing: -0.01em; text-decoration: none; white-space: nowrap; transition: transform .15s, background .15s; }
+.lw-brand .lw-header-cta:hover { background: #2f5a3a; transform: translateY(-1px); }
+.lw-brand .header__heading .h2 { font-size: 26px; }
+.lw-brand .header__inline-menu .list-menu__item, .lw-brand .header__menu-item { font-family: var(--lw-font-body); color: #16301f; letter-spacing: -0.005em; font-size: 15px; }
+.lw-brand .header__menu-item:hover span { text-decoration-color: #2e9254; }
+.lw-brand .shopify-section-header-sticky .header-wrapper { background: rgba(250, 250, 245, .82); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); }
+.lw-brand.lw-tpl-index .shopify-section-header-sticky .header-wrapper { background: rgba(238, 246, 233, .82); }
+@media (max-width: 749px) {
+  .lw-brand .lw-header-cta { min-height: 36px; padding: 6px 16px; font-size: 14px; margin-right: 4px; }
+  .lw-brand .header__heading .h2 { font-size: 22px; }
+}
