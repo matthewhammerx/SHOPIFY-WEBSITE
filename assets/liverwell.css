@@ -1678,3 +1678,7 @@ cart-drawer:not(.active) .cart-drawer__overlay { background: transparent !import
   .lw-brand .header__heading-link img, .lw-brand .header__heading-logo {
     width: var(--lw-logo-w-m, 100px) !important; max-width: var(--lw-logo-w-m, 100px) !important; height: auto !important; }
 }
+/* Selected offer: single clean gradient border (the theme's inset ring + focus outline made a double line) */
+.lw-brand .lw-offer.is-selected { box-shadow: 0 10px 26px -12px rgba(22, 160, 95, .45) !important; outline: none !important; }
+.lw-offer, .lw-offer:focus, .lw-offer:focus-within, .lw-offer input:focus { outline: none !important; }
+.lw-offer:has(input:focus-visible) { outline: 2px solid rgba(46, 146, 84, .45) !important; outline-offset: 3px; }
