@@ -14,7 +14,8 @@
         "note": "90-day money-back guarantee",
         "overlay": 35,
         "height": 85,
-        "fg": "#16301f"
+        "fg": "#16301f",
+        "product": "milk-thistle"
       }
     },
     "intro": {
@@ -142,7 +143,8 @@
         "text": "Most liver supplements only do one thing. LiverWell supports the full cycle.",
         "bg": "#fafaf5",
         "padding_top": 32,
-        "padding_bottom": 96
+        "padding_bottom": 96,
+        "product": "milk-thistle"
       }
     },
     "science": {

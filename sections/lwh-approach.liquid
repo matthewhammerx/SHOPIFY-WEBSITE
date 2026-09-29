@@ -14,8 +14,16 @@
           {%- endfor -%}
         </ol>
       </div>
-      <div class="lwh-approach__img">
-        {%- if section.settings.image != blank -%}{{ section.settings.image | image_url: width: 1200 | image_tag: loading: 'lazy', sizes: '(min-width: 990px) 45vw, 90vw', widths: '500, 800, 1200', alt: '' }}{%- else -%}{{ 'product-2' | placeholder_svg_tag: 'lw-placeholder' }}{%- endif -%}
+      <div class="lwh-approach__img{% if section.settings.image == blank %} lwh-approach__img--soft{% endif %}">
+        {%- liquid
+          assign aimg = section.settings.image
+          assign aimg_class = 'lwh-approach__photo'
+          if aimg == blank and section.settings.product != blank
+            assign aimg = section.settings.product.featured_image
+            assign aimg_class = 'lwh-approach__product'
+          endif
+        -%}
+        {%- if aimg != blank -%}{{ aimg | image_url: width: 1200 | image_tag: loading: 'lazy', sizes: '(min-width: 990px) 45vw, 90vw', widths: '500, 800, 1200', alt: '', class: aimg_class }}{%- else -%}<span class="lwh-tile__icon">{% render 'lw-icon', icon: 'liver' %}</span>{%- endif -%}
       </div>
     </div>
   </div>
@@ -49,6 +57,11 @@
       "type": "image_picker",
       "id": "image",
       "label": "Image (product / bottles)"
+    },
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Product (its photo is used if no image)"
     },
     {
       "type": "color",

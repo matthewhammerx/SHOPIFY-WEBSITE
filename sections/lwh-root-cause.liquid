@@ -7,7 +7,7 @@
     <div class="lwh-cause__grid">
       {%- for block in section.blocks -%}
         <article class="lwh-cause lw-reveal" {{ block.shopify_attributes }}>
-          <div class="lwh-cause__img">{%- if block.settings.image != blank -%}{{ block.settings.image | image_url: width: 900 | image_tag: loading: 'lazy', sizes: '(min-width: 990px) 33vw, 90vw', widths: '400, 600, 900', alt: block.settings.title }}{%- else -%}{{ 'lifestyle-1' | placeholder_svg_tag: 'lw-placeholder' }}{%- endif -%}</div>
+          <div class="lwh-cause__img{% if block.settings.image == blank %} lwh-tile lwh-tile--{{ forloop.index | modulo: 3 }}{% endif %}">{%- if block.settings.image != blank -%}{{ block.settings.image | image_url: width: 900 | image_tag: loading: 'lazy', sizes: '(min-width: 990px) 33vw, 90vw', widths: '400, 600, 900', alt: block.settings.title }}{%- else -%}<span class="lwh-tile__icon">{% render 'lw-icon', icon: block.settings.icon %}</span>{%- endif -%}</div>
           <div class="lwh-cause__body">
             <span class="lwh-cause__icon">{% render 'lw-icon', icon: block.settings.icon %}</span>
             <h3 class="lwh-h lwh-h--sm">{{ block.settings.title }}</h3>

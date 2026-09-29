@@ -687,3 +687,74 @@
 .lw-tpl-index .lw-cmp .lw-h em, .lw-tpl-index .lw-glass .lw-h em { color: #d9f28b; }
 .lw-tpl-index .lw .lw-ingr__name, .lw-tpl-index .lw .lw-acc summary { font-family: var(--lw-font-body); font-weight: 600; }
 .lw-tpl-index .lw .lw-ingr__dose { background: #16301f; }
+
+/* ==========================================================================
+   Soft style (Hers-inspired): homepage + any template with "soft" in its name
+   Rounder shapes, soft sage/mint pastels, gentle shadows. LiverWell green stays.
+   ========================================================================== */
+.lw-soft { --lw-mint: #e4efdc; --lw-radius: 22px; --lw-radius-lg: 30px; --soft-sage: #e7efe1; --soft-mint: #eef5e9; --soft-cream: #fbf8f1; --soft-shadow: 0 12px 32px rgba(22, 48, 31, .07); }
+
+/* Clean headings on soft templates too */
+.lw-soft .lw .lw-h { font-family: var(--lw-font-body); font-weight: 500; letter-spacing: -0.025em; }
+.lw-soft .lw .lw-ingr__name, .lw-soft .lw .lw-acc summary, .lw-soft .lw .lw-offer__title, .lw-soft .lw .lw-reason__title, .lw-soft .lw .lw-bcard__title, .lw-soft .lw .lw-review__title, .lw-soft .lw .lw-pdp__title { font-family: var(--lw-font-body); font-weight: 600; letter-spacing: -0.015em; }
+.lw-soft .lw .lw-pdp__title { font-weight: 500; letter-spacing: -0.025em; }
+
+/* Colored full-width sections become rounded floating panels */
+.lw-soft .lw-stats, .lw-soft .lw-bprod, .lw-soft .lw-cmp, .lw-soft .lw-glass, .lw-soft .lwh-dark, .lw-soft .lwh-science,
+.lw-soft .lw-guar, .lw-soft .lw-bundle, .lw-soft .lw-faq, .lw-soft .lw-section[style*="#f1f0e8"], .lw-soft .lw-section[style*="#f7f8f5"] {
+  margin: 14px; border-radius: 36px; overflow: hidden;
+}
+@media (max-width: 749px) {
+  .lw-soft .lw-stats, .lw-soft .lw-bprod, .lw-soft .lw-cmp, .lw-soft .lw-glass, .lw-soft .lwh-dark, .lw-soft .lwh-science,
+  .lw-soft .lw-guar, .lw-soft .lw-bundle, .lw-soft .lw-faq, .lw-soft .lw-section[style*="#f1f0e8"], .lw-soft .lw-section[style*="#f7f8f5"] { margin: 8px; border-radius: 26px; }
+}
+
+/* Cards, images and controls: rounder + soft shadow */
+.lw-soft .lw-ingr, .lw-soft .lw-review, .lw-soft .lw-reason, .lw-soft .lw-bcard, .lw-soft .lw-science__item, .lw-soft .lw-facts__label { border-radius: 28px; box-shadow: var(--soft-shadow); border-color: transparent; }
+.lw-soft .lw-ingr__img, .lw-soft .lw-reason__img, .lw-soft .lw-tl__img, .lw-soft .lw-gallery__main, .lw-soft .lw-vid, .lw-soft .lw-bcard__img { border-radius: 22px; }
+.lw-soft .lw-offer { border-radius: 22px; }
+.lw-soft .lw-offer__badge { border-radius: 999px; }
+.lw-soft .lw-gifts, .lw-soft .lw-stock, .lw-soft .lw-benefit-grid, .lw-soft .lw-sub-toggle { border-radius: 22px; }
+.lw-soft .lw-acc details { border-radius: 20px; border-color: transparent; background: #fff; box-shadow: 0 2px 10px rgba(22,48,31,.05); }
+.lw-soft .lw-atc, .lw-soft .lw-btn { border-radius: 999px; }
+.lw-soft .lw-gallery__thumb { border-radius: 14px; }
+.lw-soft .lw-rating, .lw-soft .lw-tag, .lw-soft .lw-pill, .lw-soft .lw-ingr__dose, .lw-soft .lw-tl__label, .lw-soft .lw-reason__label { border-radius: 999px; }
+.lw-soft .lw-tl__label { padding-left: 22px; }
+.lw-soft .lw-cmp__col { border-radius: 22px; overflow: hidden; }
+.lw-soft .lw-glass__card { border-radius: 28px; }
+.lw-soft .lw-facts__label { border: 0; padding: 24px 26px; }
+.lw-soft .lw-facts__label h3 { border-bottom-color: #cfd9c9; }
+.lw-soft .lw-facts__serv { border-bottom-width: 6px; border-radius: 0; }
+
+/* Homepage soft touches */
+.lw-soft .lwh-hero--split .lwh-hero__frame { background: linear-gradient(135deg, #eef5e8 0%, #e2ecd9 100%); border-radius: 40px; }
+.lw-soft .lwh-hero__visual { position: relative; }
+.lwh-blob { position: absolute; width: min(78%, 460px); aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #ffffff 0%, #f3f8ef 45%, rgba(243,248,239,0) 72%); z-index: 0; }
+.lwh-hero__visual img { position: relative; z-index: 1; }
+.lw-soft .lwh-eyebrow { background: var(--soft-sage); color: #2f5a3a; padding: 7px 14px; border-radius: 999px; letter-spacing: .1em; }
+.lw-soft .lwh-dark .lwh-eyebrow { background: rgba(255,255,255,.1); color: #d9f28b; }
+.lw-soft .lwh-pcard { border-radius: 32px; }
+.lw-soft .lwh-feature { border-radius: 26px; }
+.lw-soft .lwh-cause__img { border-radius: 30px; }
+.lw-soft .lwh-panel { border-radius: 40px; box-shadow: var(--soft-shadow); }
+.lw-soft .lwh-cta { border-radius: 36px; }
+.lw-soft .lwh-glasspanel { border-radius: 32px; }
+.lw-soft .lwh-statbox { border-radius: 999px; }
+.lw-soft .lwh-cause__icon { border-radius: 999px; }
+
+/* "No photo yet" tiles: soft pastel with a big icon instead of grey boxes */
+.lwh-tile { display: grid !important; place-items: center; }
+.lwh-tile--1 { background: linear-gradient(145deg, #eaf3e3, #d9e8cf) !important; }
+.lwh-tile--2 { background: linear-gradient(145deg, #f3f5e6, #e4ebcf) !important; }
+.lwh-tile--0 { background: linear-gradient(145deg, #e6f0ea, #d2e3d8) !important; }
+.lwh-tile__icon { width: 96px; height: 96px; border-radius: 50%; background: rgba(255,255,255,.7); display: grid; place-items: center; color: #2f5a3a; box-shadow: 0 10px 30px rgba(22,48,31,.08); }
+.lwh-tile__icon .lw-icon { width: 44px; height: 44px; }
+.lwh-approach__img--soft { background: linear-gradient(145deg, #eef5e8, #dde9d4) !important; }
+.lwh-approach__img .lwh-approach__product { object-fit: contain !important; padding: 32px; }
+.lw-soft .lw-placeholder { background: linear-gradient(145deg, #eef5e8, #dde9d4); }
+.lw-soft svg.lw-placeholder > * { opacity: 0; }
+
+/* Soft: fixes */
+.lw-soft main, .lw-soft #MainContent { background: #fafaf5; }
+.lwh-approach__copy .lwh-eyebrow, .lwh-glasspanel__points .lwh-eyebrow { justify-self: start; width: max-content; max-width: 100%; }
+.lw-soft .lw .lw-tl__label, .lw-soft .lw .lw-pill, .lw-soft .lw .lw-reason__label, .lw-soft .lw .lw-ingr__dose, .lw-soft .lw .lw-btn, .lw-soft .lw .lw-atc, .lw-soft .lw .lw-cmp__head, .lw-soft .lw .lw-glass__title, .lw-soft .lw .lw-bprod__icon, .lw-soft .lw .lw-gallery__tile, .lw-soft .lw .lw-stat__num, .lw-soft .lw .lw-science__num, .lw-soft .lw .lw-offer__now, .lw-soft .lw .lw-buy__now { font-family: var(--lw-font-body); font-weight: 600; letter-spacing: -0.01em; }

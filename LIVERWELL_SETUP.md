@@ -27,6 +27,12 @@ In the theme editor, customer videos are their own section, **LW · Customer vid
   - *Inside product area*: the videos appear under the product image on desktop and after Add to Cart on phones, like Resilia.
   - *Full-width row below the product.*
 
+## Homepage
+The homepage (`templates/index.json`) uses the **LW Home** sections, with Uvola's content and a light Seed-style look. Your previous homepage is saved as the page template **old-homepage**.
+
+## Soft style (Hers-inspired)
+The homepage, and any template with **"soft"** in its name, gets a softer look: rounder panels, pastel sage and mint, and gentle shadows. **product.milk-thistle-soft** is a copy of your product page in this style, so you can compare it with the original **milk-thistle** template. To use it, pick **milk-thistle-soft** as the product's theme template.
+
 ## Fonts
 The theme includes Clash Grotesk and Satoshi, the fonts Resilia uses. They're free (Fontshare ITF license) and there's nothing to buy or install. The LiverWell sections ignore your theme's global font and letter-spacing settings, so they always look the same.
 

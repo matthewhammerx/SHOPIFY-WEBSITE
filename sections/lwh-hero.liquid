@@ -35,8 +35,15 @@
       </div>
       {%- unless has_media -%}
         <div class="lwh-hero__visual">
-          {%- if section.settings.product_image != blank -%}
-            {{ section.settings.product_image | image_url: width: 1200 | image_tag: loading: 'eager', sizes: '(min-width: 990px) 45vw, 90vw', widths: '500, 800, 1200', alt: section.settings.product_image.alt }}
+          {%- liquid
+            assign himg = section.settings.product_image
+            if himg == blank and section.settings.product != blank
+              assign himg = section.settings.product.featured_image
+            endif
+          -%}
+          <span class="lwh-blob" aria-hidden="true"></span>
+          {%- if himg != blank -%}
+            {{ himg | image_url: width: 1200 | image_tag: loading: 'eager', sizes: '(min-width: 990px) 45vw, 90vw', widths: '500, 800, 1200', alt: himg.alt }}
           {%- else -%}
             {{ 'product-1' | placeholder_svg_tag: 'lw-placeholder' }}
           {%- endif -%}
@@ -145,6 +152,11 @@
       "step": 5,
       "unit": "%",
       "default": 35
+    },
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Product (image used when no background / product image)"
     },
     {
       "type": "image_picker",
