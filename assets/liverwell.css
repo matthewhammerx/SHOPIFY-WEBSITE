@@ -1573,3 +1573,5 @@ cart-drawer:not(.active) .cart-drawer__overlay { background: transparent !import
 /* keep the logo vertically centred in the header / logo pill */
 .header__heading, .header__heading-link { display: flex; align-items: center; }
 .lw-brand .header__heading-link { justify-content: center; }
+/* Desktop menu links: a bit bolder */
+@media (min-width: 990px) { .header__inline-menu .header__menu-item, .header__inline-menu .header__menu-item span { font-weight: 500 !important; } }
