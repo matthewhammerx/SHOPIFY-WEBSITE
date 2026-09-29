@@ -1,8 +1,8 @@
 <section class="lw lw-section lw-glass" style="--lw-pt: {{ section.settings.padding_top }}px; --lw-pb: {{ section.settings.padding_bottom }}px; --lw-fg: {{ section.settings.fg }}; --lw-gold: {{ section.settings.accent }}; --lw-bg-grad: linear-gradient(160deg, {{ section.settings.bg }} 0%, {{ section.settings.bg_2 }} 100%); --lw-side-d: {{ section.settings.side_desktop }}px; --lw-side-m: {{ section.settings.side_mobile }}px;">
   {%- if section.settings.bg_video != blank -%}
-    <div class="lw-glass__bgimg">{{ section.settings.bg_video | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, controls: false, preload: 'metadata', image_size: '1600x' }}</div>
+    <div class="lw-glass__bgimg" style="--lw-dark: {{ section.settings.overlay_opacity | divided_by: 100.0 }};">{{ section.settings.bg_video | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, controls: false, preload: 'metadata', image_size: '1600x' }}</div>
   {%- elsif section.settings.bg_image != blank -%}
-    <div class="lw-glass__bgimg">{{ section.settings.bg_image | image_url: width: 2400 | image_tag: loading: 'lazy', sizes: '100vw', widths: '800, 1200, 1600, 2400', alt: '' }}</div>
+    <div class="lw-glass__bgimg" style="--lw-dark: {{ section.settings.overlay_opacity | divided_by: 100.0 }};">{{ section.settings.bg_image | image_url: width: 2400 | image_tag: loading: 'lazy', sizes: '100vw', widths: '800, 1200, 1600, 2400', alt: '' }}</div>
   {%- endif -%}
   {%- if section.settings.bg_video != blank or section.settings.bg_image != blank -%}
     <div class="lw-glass__overlay" style="background: {{ section.settings.overlay_color }}; opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};"></div>

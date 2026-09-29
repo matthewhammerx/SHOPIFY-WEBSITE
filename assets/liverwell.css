@@ -543,3 +543,5 @@
 .lw-glass__overlay { z-index: 1; }
 .lw-glass::before { z-index: 1; }
 .lw-glass__wrap { position: relative; z-index: 2; }
+/* Darken the background media itself too, so "Overlay darkness" always works */
+.lw-glass__bgimg video, .lw-glass__bgimg img { filter: brightness(calc(1 - var(--lw-dark, 0) * 0.85)); }
