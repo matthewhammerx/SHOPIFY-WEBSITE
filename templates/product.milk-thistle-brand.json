@@ -144,9 +144,9 @@
             "atc_label": "Add To Cart",
             "show_atc_price": true,
             "after_add": "drawer",
-            "note_1": "Free shipping on 2+ bottles",
-            "note_2": "90-Day Money-Back Guarantee",
-            "notes_only_subscription": false,
+            "note_1": "Refills Ship Every 30 Days",
+            "note_2": "Stop or Cancel Anytime",
+            "notes_only_subscription": true,
             "trust_1": "",
             "trust_2": "",
             "trust_3": ""
