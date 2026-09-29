@@ -680,12 +680,13 @@
         "them_label": "Other Brands",
         "button_label": "Try Risk-Free Today",
         "button_link": "",
-        "bg": "#243015",
-        "bg_2": "#151b0c",
+        "bg": "#1e3a26",
+        "bg_2": "#122619",
         "fg": "#ffffff",
         "us_bg": "#5c6b2e",
         "padding_top": 80,
-        "padding_bottom": 64
+        "padding_bottom": 64,
+        "layout": "seed"
       }
     },
     "reviews": {

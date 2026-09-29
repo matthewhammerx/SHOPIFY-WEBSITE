@@ -1,5 +1,39 @@
 {%- assign rows = section.blocks | where: 'type', 'row' -%}
 {%- assign points = section.blocks | where: 'type', 'point' -%}
+{%- if section.settings.layout == 'seed' -%}
+<section class="lw lw-section lw-cmps" style="--lw-pt: {{ section.settings.padding_top }}px; --lw-pb: {{ section.settings.padding_bottom }}px; --lw-fg: {{ section.settings.fg }}; --cmps-bg: {{ section.settings.bg }}; --cmps-bg2: {{ section.settings.bg_2 }};">
+  {%- if section.settings.bg_image != blank -%}<div class="lw-cmps__bgimg">{{ section.settings.bg_image | image_url: width: 2000 | image_tag: loading: 'lazy', alt: '' }}</div>{%- endif -%}
+  <div class="lw-wrap lw-cmps__wrap">
+    <h2 class="lw-h lw-h--lg lw-cmps__title">{{ section.settings.heading }}</h2>
+    <div class="lw-cmps__panel">
+      <div class="lw-cmps__table" role="table">
+        <div class="lw-cmps__row lw-cmps__row--head" role="row">
+          <span role="columnheader"></span>
+          <span class="lw-cmps__us lw-cmps__us--first" role="columnheader">
+            {%- if section.settings.us_image != blank -%}{{ section.settings.us_image | image_url: width: 240 | image_tag: loading: 'lazy', class: 'lw-cmps__logo', alt: section.settings.us_label }}{%- else -%}<span class="lw-cmps__badge">{{ section.settings.us_label }}</span>{%- endif -%}
+          </span>
+          <span class="lw-cmps__them" role="columnheader">{{ section.settings.them_label }}</span>
+        </div>
+        {%- for block in rows -%}
+          <div class="lw-cmps__row" role="row" {{ block.shopify_attributes }}>
+            <span class="lw-cmps__label" role="cell">{{ block.settings.us_text }}</span>
+            <span class="lw-cmps__us{% if forloop.last %} lw-cmps__us--last{% endif %}" role="cell"><span class="lw-cmps__dot" aria-label="Yes"></span></span>
+            <span class="lw-cmps__them" role="cell">{{ block.settings.them_text }}</span>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+    {%- if points.size > 0 or section.settings.button_label != blank -%}
+      <div class="lw-cmps__foot">
+        <ul class="lw-cmps__points">
+          {%- for block in points -%}<li {{ block.shopify_attributes }}><span class="lw-cmps__check">{% render 'lw-icon', icon: 'check' %}</span><span><strong>{{ block.settings.bold }}</strong> {{ block.settings.text }}</span></li>{%- endfor -%}
+        </ul>
+        {%- if section.settings.button_label != blank -%}<a class="lw-btn lw-cmps__btn" href="{{ section.settings.button_link | default: '#lw-product' }}">{{ section.settings.button_label }}</a>{%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+{%- else -%}
 <section class="lw lw-section lw-cmp" style="--lw-pt: {{ section.settings.padding_top }}px; --lw-pb: {{ section.settings.padding_bottom }}px; --lw-fg: {{ section.settings.fg }}; --lw-bg-grad: linear-gradient(180deg, {{ section.settings.bg }} 0%, {{ section.settings.bg_2 }} 100%); --lw-us-bg: {{ section.settings.us_bg }};">
   <div class="lw-wrap lw-cmp__grid">
     <div class="lw-cmp__table">
@@ -23,6 +57,7 @@
     </div>
   </div>
 </section>
+{%- endif -%}
 
 {% schema %}
 {
@@ -30,6 +65,27 @@
   "tag": "section",
   "class": "lw-section-comparison",
   "settings": [
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "default": "classic",
+      "options": [
+        {
+          "value": "classic",
+          "label": "Classic (two columns + list)"
+        },
+        {
+          "value": "seed",
+          "label": "Clean table (glass panel)"
+        }
+      ]
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background image (clean table layout)"
+    },
     {
       "type": "inline_richtext",
       "id": "heading",

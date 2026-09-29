@@ -768,3 +768,51 @@
 .lw-soft .lw-reason__label, .lw-soft .lw-pill { background: #2f5a3a !important; }
 .lw-soft .lw-guar__seal svg { color: #2f5a3a !important; }
 .lw-soft .lw-guar__eyebrow { color: #2f5a3a !important; }
+
+/* ===== Comparison · clean table (Seed-style glass panel) ===== */
+.lw-cmps { position: relative; overflow: hidden; color: var(--lw-fg, #fff); background: radial-gradient(120% 90% at 50% 0%, var(--cmps-bg, #1e3a26) 0%, var(--cmps-bg2, #122619) 70%); }
+.lw-cmps__bgimg { position: absolute; inset: 0; z-index: 0; }
+.lw-cmps__bgimg img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.lw-cmps__bgimg::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10, 22, 14, .55), rgba(10, 22, 14, .8)); }
+.lw-cmps__wrap { position: relative; z-index: 1; max-width: 980px; }
+.lw-cmps .lw-cmps__title { text-align: center; color: inherit; margin: 0 0 40px; font-weight: 500; letter-spacing: -0.02em; }
+.lw-cmps__panel { border-radius: 32px; padding: 36px 40px; background: rgba(255, 255, 255, .07); border: 1px solid rgba(255, 255, 255, .16); -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px); box-shadow: 0 30px 80px -40px rgba(0, 0, 0, .55), inset 0 1px 0 rgba(255, 255, 255, .12); }
+.lw-cmps__row { display: grid; grid-template-columns: minmax(0, 1.4fr) 160px minmax(0, 1fr); align-items: stretch; }
+.lw-cmps__row > * { min-width: 0; display: flex; align-items: center; padding: 18px 16px; }
+.lw-cmps__row + .lw-cmps__row > .lw-cmps__label, .lw-cmps__row + .lw-cmps__row > .lw-cmps__them { border-top: 1px solid rgba(255, 255, 255, .12); }
+.lw-cmps__row--head > * { padding-top: 22px; padding-bottom: 22px; }
+.lw-cmps__label { padding-left: 4px; font-size: 17px; font-weight: 500; line-height: 1.35; }
+.lw-cmps__us { justify-content: center; background: rgba(255, 255, 255, .13); }
+.lw-cmps__us--first { border-radius: 22px 22px 0 0; }
+.lw-cmps__us--last { border-radius: 0 0 22px 22px; }
+.lw-cmps__them { justify-content: center; text-align: center; font-size: 15px; line-height: 1.35; opacity: .82; }
+.lw-cmps__row--head .lw-cmps__them { opacity: 1; font-weight: 700; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; }
+.lw-cmps__badge { display: inline-block; padding: 8px 16px; border-radius: 999px; border: 1px solid rgba(255, 255, 255, .55); font-weight: 700; font-size: 14px; letter-spacing: .02em; white-space: nowrap; }
+.lw-cmps__logo { max-width: 110px; max-height: 44px; width: auto; height: auto; display: block; object-fit: contain; }
+.lw-cmps__dot { width: 22px; height: 22px; border-radius: 50%; background: #fff; box-shadow: 0 0 0 6px rgba(255, 255, 255, .12); flex: none; }
+.lw-cmps__foot { max-width: 760px; margin: 44px auto 0; text-align: center; }
+.lw-cmps__points { list-style: none; margin: 0 0 32px; padding: 0; display: grid; gap: 14px; text-align: left; }
+.lw-cmps__points li { display: flex; gap: 14px; align-items: flex-start; font-size: 16px; line-height: 1.5; color: rgba(255, 255, 255, .85); }
+.lw-cmps__points strong { color: #fff; font-weight: 700; }
+.lw-cmps__check { flex: none; width: 26px; height: 26px; margin-top: 1px; border-radius: 50%; background: #d9f28b; color: #16301f; display: inline-flex; align-items: center; justify-content: center; }
+.lw-cmps__check svg { width: 14px; height: 14px; }
+.lw .lw-cmps__btn { display: inline-flex; min-width: 280px; justify-content: center; border-radius: 999px; background: #fafaf5; color: #16301f; border-color: #fafaf5; }
+.lw .lw-cmps__btn:hover { background: #d9f28b; border-color: #d9f28b; color: #16301f; }
+.lw-cmps .lw-h em { color: #d9f28b !important; }
+@media (max-width: 749px) {
+  .lw-cmps .lw-cmps__title { margin-bottom: 26px; }
+  .lw-cmps__panel { border-radius: 24px; padding: 14px 12px; }
+  .lw-cmps__row { grid-template-columns: minmax(0, 1.25fr) 72px minmax(0, 1fr); }
+  .lw-cmps__row > * { padding: 14px 8px; }
+  .lw-cmps__label { font-size: 14px; padding-left: 4px; }
+  .lw-cmps__them { font-size: 12.5px; }
+  .lw-cmps__row--head .lw-cmps__them { font-size: 10.5px; letter-spacing: .06em; }
+  .lw-cmps__us--first { border-radius: 16px 16px 0 0; }
+  .lw-cmps__us--last { border-radius: 0 0 16px 16px; }
+  .lw-cmps__badge { padding: 6px 8px; font-size: 11px; white-space: normal; text-align: center; }
+  .lw-cmps__logo { max-width: 60px; max-height: 32px; }
+  .lw-cmps__dot { width: 16px; height: 16px; box-shadow: 0 0 0 4px rgba(255, 255, 255, .12); }
+  .lw-cmps__foot { margin-top: 30px; }
+  .lw-cmps__points li { font-size: 15px; }
+  .lw .lw-cmps__btn { width: 100%; min-width: 0; }
+}
