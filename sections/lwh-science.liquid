@@ -1,0 +1,154 @@
+<section class="lw lwh lwh-science" id="lwh-science" style="--lw-pt: {{ section.settings.padding_top }}px; --lw-pb: {{ section.settings.padding_bottom }}px;">
+  
+    {%- if section.settings.bg_video != blank -%}
+      <div class="lwh-media">{{ section.settings.bg_video | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, controls: false, preload: 'metadata', image_size: '1600x' }}</div>
+    {%- elsif section.settings.bg_image != blank -%}
+      <div class="lwh-media{% if section.settings.bg_image_mobile != blank %} lwh-media--has-mobile{% endif %}">
+        {{ section.settings.bg_image | image_url: width: 2400 | image_tag: loading: 'eager', sizes: '100vw', widths: '800, 1200, 1600, 2400', class: 'lwh-media__desk', alt: '' }}
+        {%- if section.settings.bg_image_mobile != blank -%}{{ section.settings.bg_image_mobile | image_url: width: 1200 | image_tag: loading: 'eager', sizes: '100vw', widths: '600, 900, 1200', class: 'lwh-media__mob', alt: '' }}{%- endif -%}
+      </div>
+    {%- endif -%}
+  {%- unless section.settings.bg_video != blank or section.settings.bg_image != blank -%}<div class="lwh-media lwh-science__fallback"></div>{%- endunless -%}
+  <div class="lwh-wrap lwh-science__inner">
+    <div class="lwh-glasspanel">
+      <div class="lwh-glasspanel__copy">
+        <h2 class="lwh-h lwh-h--lg">{{ section.settings.heading }}</h2>
+        {%- if section.settings.text != blank -%}<p class="lwh-lead">{{ section.settings.text }}</p>{%- endif -%}
+        {%- if section.settings.stat_value != blank -%}
+          <div class="lwh-statbox">
+            <span>{{ section.settings.stat_label }}</span>
+            <strong data-lw-count="{{ section.settings.stat_value }}" data-suffix="{{ section.settings.stat_suffix | escape }}">{{ section.settings.stat_value }}{{ section.settings.stat_suffix }}</strong>
+          </div>
+        {%- endif -%}
+        {%- if section.settings.footnote != blank -%}<p class="lwh-note">{{ section.settings.footnote }}</p>{%- endif -%}
+      </div>
+      <ul class="lwh-glasspanel__points">
+        {%- for block in section.blocks -%}
+          <li {{ block.shopify_attributes }}><span class="lwh-eyebrow">{{ block.settings.title }}</span><p>{{ block.settings.text }}</p></li>
+        {%- endfor -%}
+      </ul>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "LW Home · Science panel",
+  "tag": "section",
+  "class": "lwh-section-science",
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Most milk thistle is underdosed. LiverWell isn't."
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Text",
+      "default": "Silymarin is the active compound in milk thistle. Most brands use 50 to 65%. We standardize to 80%, the threshold used in clinical studies."
+    },
+    {
+      "type": "text",
+      "id": "stat_label",
+      "label": "Stat label",
+      "default": "Silymarin concentration"
+    },
+    {
+      "type": "text",
+      "id": "stat_value",
+      "label": "Stat number (count-up)",
+      "default": "80"
+    },
+    {
+      "type": "text",
+      "id": "stat_suffix",
+      "label": "Stat suffix",
+      "default": "%"
+    },
+    {
+      "type": "text",
+      "id": "footnote",
+      "label": "Footnote"
+    },
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "video",
+      "id": "bg_video",
+      "label": "Background video",
+      "info": "Plays muted on loop. Used instead of the image if both are set."
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background image"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background image (mobile, optional)"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    }
+  ],
+  "blocks": [
+    {
+      "type": "point",
+      "name": "Point",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Label",
+          "default": "Support"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "LW Home · Science panel",
+      "blocks": [
+        {
+          "type": "point"
+        },
+        {
+          "type": "point"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

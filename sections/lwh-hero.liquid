@@ -1,0 +1,177 @@
+{%- liquid
+  assign has_media = false
+  if section.settings.bg_video != blank or section.settings.bg_image != blank
+    assign has_media = true
+  endif
+-%}
+<section class="lw lwh lwh-hero{% if has_media %} lwh-hero--media{% else %} lwh-hero--split{% endif %}" style="--lwh-fg: {{ section.settings.fg }}; --lwh-hero-h: {{ section.settings.height }}vh;">
+  <div class="lwh-hero__frame">
+    
+    {%- if section.settings.bg_video != blank -%}
+      <div class="lwh-media">{{ section.settings.bg_video | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, controls: false, preload: 'metadata', image_size: '1600x' }}</div>
+    {%- elsif section.settings.bg_image != blank -%}
+      <div class="lwh-media{% if section.settings.bg_image_mobile != blank %} lwh-media--has-mobile{% endif %}">
+        {{ section.settings.bg_image | image_url: width: 2400 | image_tag: loading: 'eager', sizes: '100vw', widths: '800, 1200, 1600, 2400', class: 'lwh-media__desk', alt: '' }}
+        {%- if section.settings.bg_image_mobile != blank -%}{{ section.settings.bg_image_mobile | image_url: width: 1200 | image_tag: loading: 'eager', sizes: '100vw', widths: '600, 900, 1200', class: 'lwh-media__mob', alt: '' }}{%- endif -%}
+      </div>
+    {%- endif -%}
+    {%- if has_media and section.settings.overlay > 0 -%}<div class="lwh-hero__shade" style="opacity: {{ section.settings.overlay | divided_by: 100.0 }};"></div>{%- endif -%}
+    <div class="lwh-wrap lwh-hero__inner">
+      <div class="lwh-hero__copy">
+        {%- if section.settings.rating != blank -%}<div class="lwh-rating">{% render 'lw-stars', count: 5 %}<span>{{ section.settings.rating }}</span></div>{%- endif -%}
+        <h1 class="lwh-h lwh-h--xl">{{ section.settings.heading }}</h1>
+        {%- if section.settings.text != blank -%}<p class="lwh-lead">{{ section.settings.text }}</p>{%- endif -%}
+        {%- if section.settings.pill_1 != blank or section.settings.pill_2 != blank -%}
+          <div class="lwh-pills">
+            {%- if section.settings.pill_1 != blank -%}<span class="lwh-pill">{% render 'lw-icon', icon: 'check-circle' %}{{ section.settings.pill_1 }}</span>{%- endif -%}
+            {%- if section.settings.pill_2 != blank -%}<span class="lwh-pill">{% render 'lw-icon', icon: 'check-circle' %}{{ section.settings.pill_2 }}</span>{%- endif -%}
+          </div>
+        {%- endif -%}
+        <div class="lwh-actions">
+          {%- if section.settings.button_label != blank -%}<a class="lwh-btn" href="{{ section.settings.button_link | default: routes.all_products_collection_url }}">{{ section.settings.button_label }}</a>{%- endif -%}
+          {%- if section.settings.link_label != blank -%}<a class="lwh-link" href="{{ section.settings.link_url | default: '#lwh-science' }}">{{ section.settings.link_label }}</a>{%- endif -%}
+        </div>
+        {%- if section.settings.note != blank -%}<p class="lwh-note">{% render 'lw-icon', icon: 'shield' %}{{ section.settings.note }}</p>{%- endif -%}
+      </div>
+      {%- unless has_media -%}
+        <div class="lwh-hero__visual">
+          {%- if section.settings.product_image != blank -%}
+            {{ section.settings.product_image | image_url: width: 1200 | image_tag: loading: 'eager', sizes: '(min-width: 990px) 45vw, 90vw', widths: '500, 800, 1200', alt: section.settings.product_image.alt }}
+          {%- else -%}
+            {{ 'product-1' | placeholder_svg_tag: 'lw-placeholder' }}
+          {%- endif -%}
+        </div>
+      {%- endunless -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "LW Home · Hero",
+  "tag": "section",
+  "class": "lwh-section-hero",
+  "settings": [
+    {
+      "type": "text",
+      "id": "rating",
+      "label": "Rating line",
+      "default": "Rated Excellent by our customers"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Complete liver support in <em>one daily capsule.</em>",
+      "info": "Tip: make words italic to highlight them in the accent color."
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Text",
+      "default": "Unlike basic milk thistle supplements, our premium formula supports your body's processing systems from multiple angles."
+    },
+    {
+      "type": "text",
+      "id": "pill_1",
+      "label": "Pill 1",
+      "default": "6 Active Ingredients"
+    },
+    {
+      "type": "text",
+      "id": "pill_2",
+      "label": "Pill 2",
+      "default": "80% Silymarin"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button",
+      "default": "Shop Milk Thistle"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "text",
+      "id": "link_label",
+      "label": "Secondary link",
+      "default": "See the science"
+    },
+    {
+      "type": "url",
+      "id": "link_url",
+      "label": "Secondary link URL",
+      "info": "Empty = scroll to the science section"
+    },
+    {
+      "type": "text",
+      "id": "note",
+      "label": "Small note",
+      "default": "90-day money-back guarantee"
+    },
+    {
+      "type": "header",
+      "content": "Visual"
+    },
+    {
+      "type": "paragraph",
+      "content": "Add a background video or image for a full-width hero (Seed style). Without one, the hero shows the product image on the right."
+    },
+    {
+      "type": "video",
+      "id": "bg_video",
+      "label": "Background video",
+      "info": "Plays muted on loop. Used instead of the image if both are set."
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background image"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background image (mobile, optional)"
+    },
+    {
+      "type": "range",
+      "id": "overlay",
+      "label": "Light fade behind text (over video/image)",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 35
+    },
+    {
+      "type": "image_picker",
+      "id": "product_image",
+      "label": "Product image (when no background)"
+    },
+    {
+      "type": "range",
+      "id": "height",
+      "label": "Height with background (desktop)",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "vh",
+      "default": 85
+    },
+    {
+      "type": "color",
+      "id": "fg",
+      "label": "Text color",
+      "default": "#16301f"
+    }
+  ],
+  "presets": [
+    {
+      "name": "LW Home · Hero"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,127 @@
+<section class="lw lwh lw-section" style="--lw-pt: {{ section.settings.padding_top }}px; --lw-pb: {{ section.settings.padding_bottom }}px; --lwh-bg: {{ section.settings.bg }};">
+  <div class="lwh-wrap">
+    {%- if section.settings.heading != blank -%}<h2 class="lwh-h lwh-h--lg" style="margin-bottom: 36px;">{{ section.settings.heading }}</h2>{%- endif -%}
+    <div class="lwh-cta__grid">
+      {%- for block in section.blocks -%}
+        <a class="lwh-cta" href="{{ block.settings.link | default: routes.all_products_collection_url }}" style="--lwh-card-bg: {{ block.settings.bg }};" {{ block.shopify_attributes }}>
+          {%- if block.settings.video != blank -%}
+            <span class="lwh-media">{{ block.settings.video | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, controls: false, preload: 'metadata', image_size: '1200x' }}</span>
+          {%- elsif block.settings.image != blank -%}
+            <span class="lwh-media">{{ block.settings.image | image_url: width: 1400 | image_tag: loading: 'lazy', sizes: '(min-width: 990px) 50vw, 100vw', widths: '600, 900, 1400', alt: '' }}</span>
+          {%- endif -%}
+          <span class="lwh-cta__shade"></span>
+          <span class="lwh-cta__body">
+            <span class="lwh-h lwh-h--md">{{ block.settings.title }}</span>
+            {%- if block.settings.text != blank -%}<span class="lwh-cta__text">{{ block.settings.text }}</span>{%- endif -%}
+            <span class="lwh-btn lwh-btn--light">{{ block.settings.button }}</span>
+          </span>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "LW Home · CTA cards",
+  "tag": "section",
+  "class": "lwh-section-cta",
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "color",
+      "id": "bg",
+      "label": "Background",
+      "default": "#fafaf5"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Card",
+      "limit": 2,
+      "settings": [
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "color",
+          "id": "bg",
+          "label": "Color (no image)",
+          "default": "#2f5a3a"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Support your liver, daily."
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text"
+        },
+        {
+          "type": "text",
+          "id": "button",
+          "label": "Button",
+          "default": "Shop Now"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "LW Home · CTA cards",
+      "blocks": [
+        {
+          "type": "card"
+        },
+        {
+          "type": "card"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,322 @@
+<section class="lw lwh lwh-dark lw-section" style="--lw-pt: {{ section.settings.padding_top }}px; --lw-pb: {{ section.settings.padding_bottom }}px; --lwh-bg: {{ section.settings.bg }};">
+  <div class="lwh-wrap">
+    <div class="lwh-split-head">
+      <h2 class="lwh-h lwh-h--lg">{{ section.settings.heading }}</h2>
+      <div class="lwh-split-head__side">
+        {%- if section.settings.text != blank -%}<p class="lwh-lead">{{ section.settings.text }}</p>{%- endif -%}
+        {%- if section.settings.link_label != blank -%}<a class="lwh-link lwh-link--light" href="{{ section.settings.link_url | default: routes.all_products_collection_url }}">{{ section.settings.link_label }} →</a>{%- endif -%}
+      </div>
+    </div>
+    <div class="lwh-intro__grid">
+      {%- liquid
+        assign p = section.settings.product
+      -%}
+      <a class="lwh-pcard" href="{% if p != blank %}{{ p.url }}{% else %}{{ routes.all_products_collection_url }}{% endif %}">
+        {%- if section.settings.badge != blank -%}<span class="lwh-badge">{{ section.settings.badge }}</span>{%- endif -%}
+        {%- if section.settings.tag != blank -%}<span class="lwh-tag">{{ section.settings.tag }}</span>{%- endif -%}
+        <span class="lwh-pcard__title">{% if section.settings.card_title != blank %}{{ section.settings.card_title }}{% elsif p != blank %}{{ p.title }}{% else %}Milk Thistle Support{% endif %}</span>
+        <span class="lwh-pcard__img">
+          {%- if section.settings.card_image != blank -%}{{ section.settings.card_image | image_url: width: 800 | image_tag: loading: 'lazy', alt: '' }}
+          {%- elsif p != blank and p.featured_image -%}{{ p.featured_image | image_url: width: 800 | image_tag: loading: 'lazy', alt: p.title }}
+          {%- else -%}{{ 'product-1' | placeholder_svg_tag: 'lw-placeholder' }}{%- endif -%}
+        </span>
+        <span class="lwh-btn lwh-btn--small">{{ section.settings.card_button }}</span>
+        {%- if p != blank -%}<span class="lwh-pcard__price">From {{ p.price_min | money }}</span>{%- endif -%}
+      </a>
+      <div class="lwh-intro__features">
+        {%- for block in section.blocks -%}
+          <div class="lwh-feature" {{ block.shopify_attributes }}>
+            <span class="lwh-feature__icon">{% render 'lw-icon', icon: block.settings.icon %}</span>
+            <div><strong>{{ block.settings.title }}</strong><p>{{ block.settings.text }}</p></div>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "LW Home · Intro + product",
+  "tag": "section",
+  "class": "lwh-section-intro",
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Powerful formula. Simple routine."
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Text",
+      "default": "Science-backed liver support that fits into your morning, with ingredients dosed at the levels research uses."
+    },
+    {
+      "type": "text",
+      "id": "link_label",
+      "label": "Link",
+      "default": "Shop now"
+    },
+    {
+      "type": "url",
+      "id": "link_url",
+      "label": "Link URL"
+    },
+    {
+      "type": "header",
+      "content": "Product card"
+    },
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Product"
+    },
+    {
+      "type": "text",
+      "id": "badge",
+      "label": "Badge",
+      "default": "Bestseller"
+    },
+    {
+      "type": "text",
+      "id": "tag",
+      "label": "Small tag",
+      "default": "LW-01"
+    },
+    {
+      "type": "text",
+      "id": "card_title",
+      "label": "Card title (empty = product title)",
+      "default": "Milk Thistle Support"
+    },
+    {
+      "type": "image_picker",
+      "id": "card_image",
+      "label": "Card image (empty = product image)"
+    },
+    {
+      "type": "text",
+      "id": "card_button",
+      "label": "Card button",
+      "default": "Shop Now"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg",
+      "label": "Background",
+      "default": "#16301f"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "default": "flask",
+          "options": [
+            {
+              "value": "liver",
+              "label": "Liver"
+            },
+            {
+              "value": "shield",
+              "label": "Shield"
+            },
+            {
+              "value": "bolt",
+              "label": "Bolt"
+            },
+            {
+              "value": "leaf",
+              "label": "Leaf"
+            },
+            {
+              "value": "heart",
+              "label": "Heart"
+            },
+            {
+              "value": "brain",
+              "label": "Brain"
+            },
+            {
+              "value": "gut",
+              "label": "Gut"
+            },
+            {
+              "value": "flask",
+              "label": "Flask"
+            },
+            {
+              "value": "microscope",
+              "label": "Microscope"
+            },
+            {
+              "value": "check",
+              "label": "Check"
+            },
+            {
+              "value": "check-circle",
+              "label": "Check Circle"
+            },
+            {
+              "value": "x-circle",
+              "label": "X Circle"
+            },
+            {
+              "value": "star",
+              "label": "Star"
+            },
+            {
+              "value": "truck",
+              "label": "Truck"
+            },
+            {
+              "value": "gift",
+              "label": "Gift"
+            },
+            {
+              "value": "lock",
+              "label": "Lock"
+            },
+            {
+              "value": "refresh",
+              "label": "Refresh"
+            },
+            {
+              "value": "globe",
+              "label": "Globe"
+            },
+            {
+              "value": "sparkle",
+              "label": "Sparkle"
+            },
+            {
+              "value": "droplet",
+              "label": "Droplet"
+            },
+            {
+              "value": "sun",
+              "label": "Sun"
+            },
+            {
+              "value": "moon",
+              "label": "Moon"
+            },
+            {
+              "value": "scale",
+              "label": "Scale"
+            },
+            {
+              "value": "award",
+              "label": "Award"
+            },
+            {
+              "value": "capsule",
+              "label": "Capsule"
+            },
+            {
+              "value": "clock",
+              "label": "Clock"
+            },
+            {
+              "value": "smile",
+              "label": "Smile"
+            },
+            {
+              "value": "flame",
+              "label": "Flame"
+            },
+            {
+              "value": "wine",
+              "label": "Wine"
+            },
+            {
+              "value": "thumbs-up",
+              "label": "Thumbs Up"
+            },
+            {
+              "value": "vegan",
+              "label": "Vegan"
+            },
+            {
+              "value": "factory",
+              "label": "Factory"
+            },
+            {
+              "value": "filter",
+              "label": "Filter"
+            },
+            {
+              "value": "plus",
+              "label": "Plus"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "80% silymarin"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "The research standard."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "LW Home · Intro + product",
+      "blocks": [
+        {
+          "type": "feature"
+        },
+        {
+          "type": "feature"
+        },
+        {
+          "type": "feature"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

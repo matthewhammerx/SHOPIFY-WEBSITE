@@ -1,0 +1,121 @@
+<section class="lw lwh lw-section" style="--lw-pt: {{ section.settings.padding_top }}px; --lw-pb: {{ section.settings.padding_bottom }}px; --lwh-bg: {{ section.settings.bg }};">
+  <div class="lwh-wrap">
+    <div class="lwh-panel lwh-approach">
+      <div class="lwh-approach__copy">
+        {%- if section.settings.eyebrow != blank -%}<span class="lwh-eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+        <h2 class="lwh-h lwh-h--lg">{{ section.settings.heading }}</h2>
+        {%- if section.settings.text != blank -%}<p class="lwh-lead">{{ section.settings.text }}</p>{%- endif -%}
+        <ol class="lwh-steps">
+          {%- for block in section.blocks -%}
+            <li class="lwh-step lw-reveal" {{ block.shopify_attributes }}>
+              <span class="lwh-step__num">{{ forloop.index | prepend: '0' }}</span>
+              <div><h3 class="lwh-h lwh-h--sm">{{ block.settings.title }}</h3><p>{{ block.settings.text }}</p></div>
+            </li>
+          {%- endfor -%}
+        </ol>
+      </div>
+      <div class="lwh-approach__img">
+        {%- if section.settings.image != blank -%}{{ section.settings.image | image_url: width: 1200 | image_tag: loading: 'lazy', sizes: '(min-width: 990px) 45vw, 90vw', widths: '500, 800, 1200', alt: '' }}{%- else -%}{{ 'product-2' | placeholder_svg_tag: 'lw-placeholder' }}{%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "LW Home · Approach",
+  "tag": "section",
+  "class": "lwh-section-approach",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "The LiverWell approach"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Support. Clear. Protect."
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Text",
+      "default": "Most liver supplements only do one thing. LiverWell supports the full cycle."
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image (product / bottles)"
+    },
+    {
+      "type": "color",
+      "id": "bg",
+      "label": "Background",
+      "default": "#fafaf5"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "limit": 5,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Support"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "LW Home · Approach",
+      "blocks": [
+        {
+          "type": "step"
+        },
+        {
+          "type": "step"
+        },
+        {
+          "type": "step"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
