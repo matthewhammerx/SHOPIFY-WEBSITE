@@ -534,3 +534,12 @@
 .lw-glass__overlay { position: absolute; inset: 0; pointer-events: none; }
 .lw-glass__wrap { z-index: 1; }
 .lw-glass__visual .lw-bprod__rings { inset: 0; }
+
+/* Explicit layers so the overlay always sits above a background video
+   (the theme gives every <video> position:relative + z-index:0) */
+.lw-glass { isolation: isolate; }
+.lw-glass__bgimg { z-index: 0; overflow: hidden; }
+.lw-glass__bgimg video, .lw-glass__bgimg img { position: absolute !important; inset: 0; z-index: 0 !important; }
+.lw-glass__overlay { z-index: 1; }
+.lw-glass::before { z-index: 1; }
+.lw-glass__wrap { position: relative; z-index: 2; }
