@@ -1542,7 +1542,6 @@ cart-drawer .drawer__inner-empty .button { border-radius: 999px !important; back
 cart-drawer .drawer__inner-empty .button::after, cart-drawer .drawer__inner-empty .button::before { box-shadow: none !important; }
 
 /* Header (brand pages): active menu link = green text + soft pill, not the theme's blue box */
-.lw-brand .header__active-menu-item-v2 { background: rgba(46, 146, 84, .12) !important; color: #16301f !important; border-radius: 999px !important; padding: 4px 12px !important; font-weight: 600; }
 .lw-brand .header__menu-item:hover .header__active-menu-item-v2 { text-decoration: none; }
 /* Right pill on desktop: evenly spaced round icon buttons that fill the pill */
 @media (min-width: 990px) {
@@ -1574,3 +1573,6 @@ cart-drawer:not(.active) .cart-drawer__overlay { background: transparent !import
 @media (min-width: 990px) { .header__inline-menu .header__menu-item, .header__inline-menu .header__menu-item span { font-weight: 500 !important; } }
 /* Header height is now controlled by Theme editor → Header → Top/Bottom padding. Trim the theme's logo padding. */
 .header__heading-link { padding-top: 2px !important; padding-bottom: 2px !important; }
+/* Active menu link (current page): green pill, white text — replaces the theme's blue box */
+.header__active-menu-item-v2 { color: #fff !important; font-weight: 600 !important; padding: 0 .9em !important; }
+.header__active-menu-item-v2::before { background: linear-gradient(135deg, #2e9254 0%, #1f7a47 100%) !important; border-radius: 999px !important; transform: scaleY(1.55) !important; }
