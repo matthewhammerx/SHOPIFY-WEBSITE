@@ -847,7 +847,7 @@
 .lw-brand {
   --lw-green: #16301f; --lw-green-dark: #0f2216; --lw-deep: #0f2216; --lw-accent: #2f5a3a;
   --lw-mint: #e7efe1; --lw-mint-strong: #d6e4cc; --lw-beige: #f0f4ea; --lw-cream: #fafaf5;
-  --lw-text: #16301f; --lw-muted: #5b6b5f; --lw-border: #dde4d6; --lw-red: #b8452f; --lw-gold: #d9f28b;
+  --lw-text: #16301f; --lw-muted: #5b6b5f; --lw-border: #dde4d6; --lw-gold: #d9f28b;
   --lw-font-head: 'Satoshi', system-ui, -apple-system, 'Segoe UI', sans-serif;
 }
 .lw-brand main, .lw-brand #MainContent { background: #fafaf5; }
@@ -859,13 +859,10 @@
 /* Buttons: forest pills, sentence case */
 .lw-brand .lw .lw-btn, .lw-brand .lw .lw-atc, .lw-brand .lw-glass__btn { text-transform: none; letter-spacing: -0.005em; font-weight: 500; }
 .lw-brand .lw .lw-btn--cream { background: #d9f28b; border-color: #d9f28b; color: #16301f; }
-/* Buy box: calmer urgency + brand accents */
+/* Buy box: brand accents (red urgency kept) */
 .lw-brand .lw-buy__badge { background: #d9f28b; color: #16301f; border-radius: 999px; text-transform: none; letter-spacing: 0; padding: 5px 12px; }
-.lw-brand .lw-stock { color: #16301f; }
-.lw-brand .lw-stock__bar span { background: linear-gradient(90deg, #2f5a3a, #16301f); }
 .lw-brand .lw-sub-toggle { border: 1px solid var(--lw-border); background: #fff; }
 .lw-brand .lw-gifts__label { border-color: #16301f; background: #fafaf5; }
-.lw-brand .lw-gift__name { color: #2f5a3a; }
 .lw-brand .lw-delivery { border-block-style: solid; border-color: var(--lw-border); }
 /* Dark bands: forest gradient, no dashed rings */
 .lw-brand .lw-bprod__rings { display: none; }
