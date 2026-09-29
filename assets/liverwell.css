@@ -1575,3 +1575,5 @@ cart-drawer:not(.active) .cart-drawer__overlay { background: transparent !import
 .lw-brand .header__heading-link { justify-content: center; }
 /* Desktop menu links: a bit bolder */
 @media (min-width: 990px) { .header__inline-menu .header__menu-item, .header__inline-menu .header__menu-item span { font-weight: 500 !important; } }
+/* Header height is now controlled by Theme editor → Header → Top/Bottom padding. Trim the theme's logo padding. */
+.header__heading-link { padding-top: 2px !important; padding-bottom: 2px !important; }
