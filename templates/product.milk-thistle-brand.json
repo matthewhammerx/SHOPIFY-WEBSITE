@@ -69,7 +69,7 @@
         "border": true,
         "bg": "#fafaf5",
         "fg": "#16301f",
-        "icon_color": "#2f5a3a"
+        "icon_color": "#009370"
       }
     },
     "main": {
@@ -465,7 +465,7 @@
         "side_mobile": 24,
         "max_width": 1240,
         "animate_numbers": true,
-        "bg": "#16301f",
+        "bg": "#095946",
         "fg": "#ffffff",
         "padding_top": 56,
         "padding_bottom": 56
@@ -540,7 +540,7 @@
         "button_link": "",
         "bg": "#f0f4ea",
         "fg": "#16301f",
-        "accent": "#2f5a3a",
+        "accent": "#009370",
         "padding_top": 64,
         "padding_bottom": 64
       }
@@ -635,7 +635,7 @@
         "strip_repeat": 2,
         "bg": "#f0f4ea",
         "fg": "#16301f",
-        "accent": "#2f5a3a",
+        "accent": "#009370",
         "padding_top": 64,
         "padding_bottom": 64
       }
@@ -750,13 +750,13 @@
         "image_position": "right",
         "show_rings": false,
         "animate_numbers": true,
-        "bg": "#1e3a26",
-        "bg_2": "#122619",
+        "bg": "#0b5a47",
+        "bg_2": "#01261d",
         "bg_video": "shopify://files/videos/f6faa8b06aba4747a6c8d415d93387fe.HD-720p-3.0Mbps-56404788.mp4",
-        "overlay_color": "#16301f",
+        "overlay_color": "#005813",
         "overlay_opacity": 55,
         "fg": "#ffffff",
-        "accent": "#d9f28b",
+        "accent": "#4bc54c",
         "side_desktop": 40,
         "side_mobile": 20,
         "padding_top": 80,
@@ -810,7 +810,7 @@
         "text": "<p>Six ingredients. One capsule a day. Decades of research and <strong>2,000 years of traditional use</strong> behind every serving.</p>",
         "bg": "#f0f4ea",
         "fg": "#16301f",
-        "accent": "#2f5a3a",
+        "accent": "#009370",
         "padding_top": 64,
         "padding_bottom": 64
       }
@@ -875,7 +875,7 @@
         "border": false,
         "bg": "#fafaf5",
         "fg": "#16301f",
-        "icon_color": "#2f5a3a"
+        "icon_color": "#009370"
       }
     },
     "timeline": {
@@ -923,7 +923,7 @@
         "button_link": "",
         "bg": "#fafaf5",
         "fg": "#16301f",
-        "accent": "#2f5a3a",
+        "accent": "#009370",
         "padding_top": 64,
         "padding_bottom": 64
       }
@@ -982,7 +982,7 @@
         "button_link": "",
         "bg": "#f0f4ea",
         "fg": "#16301f",
-        "accent": "#2f5a3a",
+        "accent": "#009370",
         "padding_top": 64,
         "padding_bottom": 64
       }
@@ -1115,7 +1115,7 @@
         "button_link": "",
         "bg": "#f0f4ea",
         "fg": "#16301f",
-        "seal_color": "#2f5a3a"
+        "seal_color": "#009370"
       }
     },
     "videos": {
@@ -1178,7 +1178,7 @@
         "columns": 6,
         "bg": "#fafaf5",
         "fg": "#16301f",
-        "accent": "#2f5a3a",
+        "accent": "#009370",
         "padding_top": 64,
         "padding_bottom": 64
       }
@@ -1231,7 +1231,7 @@
         "footnote": "†Figures refer to published research on the ingredients, not clinical trials of this product.",
         "bg": "#fafaf5",
         "fg": "#16301f",
-        "accent": "#2f5a3a",
+        "accent": "#009370",
         "padding_top": 64,
         "padding_bottom": 64
       }
@@ -1360,7 +1360,7 @@
         "trust_3": "",
         "bg": "#f0f4ea",
         "fg": "#16301f",
-        "accent": "#2f5a3a",
+        "accent": "#009370",
         "padding_top": 64,
         "padding_bottom": 64
       }
@@ -1451,7 +1451,7 @@
         "more_label": "Load More Reviews",
         "bg": "#fafaf5",
         "fg": "#16301f",
-        "accent": "#2f5a3a",
+        "accent": "#009370",
         "padding_top": 64,
         "padding_bottom": 64
       }
@@ -1525,7 +1525,7 @@
         "other": "",
         "bg": "#f0f4ea",
         "fg": "#16301f",
-        "accent": "#2f5a3a",
+        "accent": "#009370",
         "padding_top": 64,
         "padding_bottom": 64
       }
@@ -1600,7 +1600,7 @@
         "schema_markup": true,
         "bg": "#f0f4ea",
         "fg": "#16301f",
-        "accent": "#2f5a3a",
+        "accent": "#009370",
         "padding_top": 64,
         "padding_bottom": 64
       }
