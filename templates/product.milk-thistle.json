@@ -1410,6 +1410,11 @@
         "show_price": true,
         "rating_text": "4.9 | Loved by thousands"
       }
+    },
+    "main_product_original": {
+      "type": "main-product",
+      "disabled": true,
+      "settings": {}
     }
   },
   "order": [
@@ -1432,6 +1437,7 @@
     "review_list",
     "facts",
     "faq",
-    "sticky"
+    "sticky",
+    "main_product_original"
   ]
 }
