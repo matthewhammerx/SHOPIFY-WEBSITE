@@ -754,7 +754,7 @@
         "bg_2": "#16301f",
         "bg_video": "shopify://files/videos/f6faa8b06aba4747a6c8d415d93387fe.HD-720p-3.0Mbps-56404788.mp4",
         "overlay_color": "#1f4a2c",
-        "overlay_opacity": 72,
+        "overlay_opacity": 65,
         "fg": "#ffffff",
         "accent": "#d9f28b",
         "side_desktop": 40,
@@ -1089,6 +1089,7 @@
         "point_11"
       ],
       "settings": {
+        "layout": "seed",
         "heading": "How LiverWell® Compares To Other Brands",
         "us_label": "LiverWell",
         "them_label": "Other Brands",
@@ -1099,8 +1100,7 @@
         "fg": "#ffffff",
         "us_bg": "#5c6b2e",
         "padding_top": 80,
-        "padding_bottom": 64,
-        "layout": "seed"
+        "padding_bottom": 64
       }
     },
     "guarantee": {
@@ -1607,10 +1607,9 @@
     },
     "sticky": {
       "type": "lw-sticky-atc",
-      "disabled": false,
       "settings": {
-        "product": "",
-        "label": "Add to Cart",
+        "product": "milk-thistle",
+        "label": "Claim My Offer",
         "show_price": true,
         "rating_text": "4.9 | Loved by thousands",
         "action": "scroll"
