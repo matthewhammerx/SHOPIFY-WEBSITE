@@ -1126,3 +1126,7 @@
 .lw-brand .lw-tl__list--progress::after { background: linear-gradient(180deg, #5f8f55 0%, #2f5a3a 100%); }
 .lw-brand .lw-tl__list--progress .lw-tl__step.is-active::before { background: #3d6b45 !important; box-shadow: 0 0 0 3px #fafaf5, 0 0 0 6px rgba(61, 107, 69, .18); }
 .lw-brand .lw-tl__list--progress .lw-tl__step.is-active .lw-tl__label { background: linear-gradient(120deg, #2f5a3a 0%, #3d6b45 50%, #5f8f55 100%) !important; box-shadow: 0 8px 20px -10px rgba(22, 48, 31, .55); }
+/* Brand timeline lit state = our leafy accent green (same as prices/stars/highlights), a step deeper than the CTA */
+.lw-brand .lw-tl__list--progress::after { background: linear-gradient(180deg, #2e9254 0%, #1f7a47 100%); }
+.lw-brand .lw-tl__list--progress .lw-tl__step.is-active::before { background: #2e9254 !important; box-shadow: 0 0 0 3px #fafaf5, 0 0 0 6px rgba(46, 146, 84, .18); }
+.lw-brand .lw-tl__list--progress .lw-tl__step.is-active .lw-tl__label { background: linear-gradient(120deg, #237d49 0%, #2e9254 60%, #38a162 100%) !important; box-shadow: 0 8px 20px -10px rgba(35, 125, 73, .55); }
