@@ -1424,3 +1424,5 @@ html:has(body.lw-brand), body.lw-brand { background-color: #fafaf5; }
 /* Sticky ATC: 6px triggered Safari's white bar again, 26px was clear — use 18px */
 .lw-brand .lw-sticky, .lw-brand .lw-sticky.is-visible { height: calc(100svh - 18px) !important; }
 @media (min-width: 750px) { .lw-brand .lw-sticky, .lw-brand .lw-sticky.is-visible { height: calc(100svh - 20px) !important; } }
+/* Sticky ATC: 18px worked — try 12px */
+@media (max-width: 749px) { .lw-brand .lw-sticky, .lw-brand .lw-sticky.is-visible { height: calc(100svh - 12px) !important; } }
