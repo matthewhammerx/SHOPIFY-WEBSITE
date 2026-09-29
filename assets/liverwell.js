@@ -334,15 +334,24 @@
     const target = document.querySelector('lw-buy-box[data-main]') || document.querySelector('lw-buy-box');
     if (!target || !io) return;
     let visible = true;
-    new IntersectionObserver((entries) => {
-      entries.forEach((e) => {
-        visible = e.isIntersecting;
-        const pastTop = e.boundingClientRect.top < 0;
-        bar.classList.toggle('is-visible', !visible && pastTop);
-      });
-    }).observe(target);
+    const watch = target.querySelector('.lw-atc, [type="submit"]') || target;
+    let ticking = false;
+    const check = () => {
+      ticking = false;
+      const on = watch.getBoundingClientRect().bottom < 0;
+      if (on === visible) return;
+      visible = on;
+      bar.classList.toggle('is-visible', on);
+      document.body.classList.toggle('lw-sticky-on', on);
+    };
+    visible = null;
+    window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(check); } }, { passive: true });
+    window.addEventListener('resize', check);
+    check();
     bar.querySelector('[data-lw-sticky-btn]').addEventListener('click', (e) => {
       e.preventDefault();
+      const atc = target.querySelector('.lw-atc, [type="submit"]');
+      if (bar.dataset.action === 'add' && atc && !atc.disabled) { atc.click(); return; }
       target.scrollIntoView({ behavior: 'smooth', block: 'center' });
     });
     document.addEventListener('lw:offer-change', (e) => {

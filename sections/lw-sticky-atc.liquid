@@ -5,21 +5,21 @@
   endif
 -%}
 {%- if lw_product != blank -%}
-<div class="lw lw-sticky" data-lw-sticky>
+<div class="lw lw-sticky" data-lw-sticky data-action="{{ section.settings.action }}">
   <div class="lw-sticky__inner">
     <div class="lw-sticky__img">{%- if lw_product.featured_image -%}{{ lw_product.featured_image | image_url: width: 120 | image_tag: loading: 'lazy', alt: '' }}{%- endif -%}</div>
     <div class="lw-sticky__info">
       <div class="lw-sticky__title">{{ lw_product.title }}</div>
       <div class="lw-sticky__rating">{% render 'lw-stars', count: 5 %}<span>{{ section.settings.rating_text }}</span></div>
     </div>
-    <a href="#lw-product" class="lw-btn" data-lw-sticky-btn>{{ section.settings.label }}{% if section.settings.show_price %} · <span data-lw-price>{{ lw_product.price | money }}</span>{% endif %}</a>
+    <a href="#lw-product" class="lw-btn" data-lw-sticky-btn>{{ section.settings.label }}{% if section.settings.show_price %}<span class="lw-sticky__sep"> · </span><span data-lw-price>{{ lw_product.price | money }}</span>{% endif %}</a>
   </div>
 </div>
 {%- endif -%}
 
 {% schema %}
 {
-  "name": "LW · Sticky add to cart",
+  "name": "LW \u00b7 Sticky add to cart",
   "tag": "div",
   "class": "lw-section-sticky",
   "settings": [
@@ -50,11 +50,27 @@
       "id": "rating_text",
       "label": "Rating text",
       "default": "4.9 | Loved by thousands"
+    },
+    {
+      "type": "select",
+      "id": "action",
+      "label": "Button action",
+      "default": "scroll",
+      "options": [
+        {
+          "value": "scroll",
+          "label": "Scroll to offers"
+        },
+        {
+          "value": "add",
+          "label": "Add selected offer to cart"
+        }
+      ]
     }
   ],
   "presets": [
     {
-      "name": "LW · Sticky add to cart"
+      "name": "LW \u00b7 Sticky add to cart"
     }
   ]
 }

@@ -1322,3 +1322,31 @@
   .lw-brand details.menu-opening > .menu-drawer * { animation: none !important; }
   .lw-acc details .lw-acc__body { animation: none !important; }
 }
+
+/* ===== Brand: floating glass add-to-cart pill (Seed-style), takes the header's place at the top ===== */
+.lw-brand .lw-sticky { top: 12px; bottom: auto; left: 12px; right: 12px; max-width: 760px; margin: 0 auto; padding: 8px 8px 8px 8px; border-radius: 999px;
+  background: rgba(47, 90, 58, .72); -webkit-backdrop-filter: blur(20px) saturate(1.4); backdrop-filter: blur(20px) saturate(1.4);
+  border: 1px solid rgba(255,255,255,.18); box-shadow: 0 18px 40px -16px rgba(22, 48, 31, .55);
+  transform: translateY(-140%) scale(.96); opacity: 0; transition: transform .5s cubic-bezier(.22, 1, .36, 1), opacity .3s ease; z-index: 60; }
+.lw-brand .lw-sticky.is-visible { transform: none; opacity: 1; }
+.lw-brand .lw-sticky__inner { gap: 12px; }
+.lw-brand .lw-sticky__img { display: block; width: 48px; height: 48px; border-radius: 999px; background: rgba(255,255,255,.18); }
+.lw-brand .lw-sticky__img img { object-fit: contain; }
+.lw-brand .lw-sticky__info { display: block; color: #fff; }
+.lw-brand .lw-sticky__title { font-family: var(--lw-font-body); font-weight: 500; font-size: 17px; letter-spacing: -0.015em; }
+.lw-brand .lw-sticky__rating { display: none; }
+.lw-brand .lw-sticky .lw-btn { width: auto; min-height: 48px; padding: 10px 22px; background: #fafaf5 !important; color: #16301f !important; box-shadow: none; font-weight: 600; white-space: nowrap; }
+.lw-brand .lw-sticky .lw-btn::after { display: none; }
+/* hide the header pills while the ATC pill is showing */
+.lw-brand.lw-sticky-on .section-header { opacity: 0; pointer-events: none; transition: opacity .25s ease; }
+.lw-brand .section-header { transition: opacity .25s ease; }
+@media (max-width: 749px) {
+  .lw-brand .lw-sticky { top: 10px; left: 10px; right: 10px; padding: 6px; }
+  .lw-brand .lw-sticky__img { width: 42px; height: 42px; }
+  .lw-brand .lw-sticky__title { font-size: 15px; }
+  .lw-brand .lw-sticky .lw-btn { min-height: 42px; padding: 8px 16px; font-size: 14px; }
+}
+.lw-brand .lw-sticky .lw-btn.lw-btn, .lw-brand .lw-sticky .lw-btn:hover { background: #fafaf5 !important; color: #16301f !important; box-shadow: 0 4px 12px -6px rgba(0,0,0,.25); }
+.lw-brand .lw-sticky .lw-btn [data-lw-price] { color: #2e9254; }
+@media (max-width: 749px) { .lw-brand .lw-sticky .lw-btn .lw-sticky__sep, .lw-brand .lw-sticky .lw-btn [data-lw-price] { display: none; } }
+body.lw-brand .lw-sticky.lw .lw-btn.lw-btn[data-lw-sticky-btn] { background: #fafaf5 !important; color: #16301f !important; }

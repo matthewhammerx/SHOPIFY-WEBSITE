@@ -1607,12 +1607,13 @@
     },
     "sticky": {
       "type": "lw-sticky-atc",
-      "disabled": true,
+      "disabled": false,
       "settings": {
         "product": "",
-        "label": "Claim My Offer",
+        "label": "Add to Cart",
         "show_price": true,
-        "rating_text": "4.9 | Loved by thousands"
+        "rating_text": "4.9 | Loved by thousands",
+        "action": "add"
       }
     }
   },
