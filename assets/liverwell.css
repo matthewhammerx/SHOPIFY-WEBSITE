@@ -1362,3 +1362,20 @@ body.lw-brand .lw-sticky.lw .lw-btn.lw-btn[data-lw-sticky-btn] { background: #fa
   .lw-brand .lw-sticky__inner { max-width: none; }
 }
 @media (min-width: 750px) { .lw-brand .lw-sticky { width: auto; max-width: 560px; } .lw-brand .lw-sticky__info { flex: 0 1 auto; } .lw-brand .lw-sticky__title { padding-right: 6px; } }
+
+/* Sticky ATC: Safari tints its toolbar from bottom-fixed bars. Make the fixed layer a transparent
+   full-screen overlay and float the glass pill inside it, so the toolbar stays fully transparent. */
+.lw-brand .lw-sticky, .lw-brand .lw-sticky.is-visible {
+  inset: 0 !important; top: 0 !important; bottom: 0 !important; left: 0 !important; right: 0 !important; width: auto !important; max-width: none !important; margin: 0 !important;
+  padding: 0 !important; background: transparent !important; border: 0 !important; box-shadow: none !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important;
+  border-radius: 0 !important; transform: none !important; opacity: 1 !important; pointer-events: none; }
+.lw-brand .lw-sticky__inner {
+  position: absolute; left: 10px; right: 10px; bottom: calc(10px + env(safe-area-inset-bottom)); max-width: 760px; margin: 0 auto; pointer-events: auto;
+  padding: 6px; border-radius: 999px; background: rgba(47, 90, 58, .72); -webkit-backdrop-filter: blur(20px) saturate(1.4); backdrop-filter: blur(20px) saturate(1.4);
+  border: 1px solid rgba(255,255,255,.18); box-shadow: 0 18px 40px -16px rgba(22, 48, 31, .55);
+  transform: translateY(160%) scale(.96); opacity: 0; transition: transform .5s cubic-bezier(.22, 1, .36, 1), opacity .3s ease; }
+.lw-brand .lw-sticky.is-visible .lw-sticky__inner { transform: none; opacity: 1; }
+.lw-brand .lw-sticky:not(.is-visible) .lw-sticky__inner { pointer-events: none; }
+@media (min-width: 750px) {
+  .lw-brand .lw-sticky__inner { left: auto; right: 20px; bottom: calc(20px + env(safe-area-inset-bottom)); width: auto; max-width: 560px; padding: 8px; }
+}
