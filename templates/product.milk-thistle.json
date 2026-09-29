@@ -410,8 +410,8 @@
     "ingredients": {
       "type": "lw-ingredients",
       "settings": {
-        "heading": "Every Capsule Is Packed With <em>Essentials</em>",
-        "text": "6 active ingredients. Perfect dosages.",
+        "heading": "6 Active Ingredients <em>Doing Different Jobs</em>",
+        "text": "Every capsule is packed with essentials. Perfect dosages.",
         "columns": 3,
         "bg": "#f7f8f5",
         "fg": "#111511",
