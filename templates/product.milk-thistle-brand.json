@@ -1609,7 +1609,7 @@
       "type": "lw-sticky-atc",
       "settings": {
         "product": "milk-thistle",
-        "label": "Claim My Offer",
+        "label": "Start My Journey",
         "show_price": false,
         "rating_text": "4.9 | Loved by thousands",
         "action": "scroll"
