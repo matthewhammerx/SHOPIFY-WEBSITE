@@ -198,7 +198,7 @@
             "bottles": 3,
             "badge": "Best Value",
             "badge_color": "",
-            "default_selected": false,
+            "default_selected": true,
             "gifts": 3,
             "extra_title": "FREE Liver Reset Guide + FREE Shipping",
             "extra_text": "Our 30-day liver-friendly meal & habit plan ($19.99 value)",
@@ -350,6 +350,9 @@
       ],
       "settings": {
         "product": "milk-thistle",
+        "show_arrows": false,
+        "thumbs_desktop": true,
+        "thumbs_mobile": false,
         "bg": "#ffffff"
       }
     },
