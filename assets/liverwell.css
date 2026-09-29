@@ -1541,3 +1541,16 @@ cart-drawer .cart__login-paragraph a { color: #2e9254 !important; text-decoratio
 cart-drawer .drawer__inner-empty .button { border-radius: 999px !important; background: linear-gradient(135deg, #34c77b 0%, #16a05f 55%, #0f8a52 100%) !important; color: #fff !important;
   box-shadow: 0 12px 26px -10px rgba(22, 160, 95, .55) !important; font-family: var(--lw-font-body) !important; letter-spacing: -0.005em !important; padding: 0 30px !important; min-height: 50px; border: 0 !important; }
 cart-drawer .drawer__inner-empty .button::after, cart-drawer .drawer__inner-empty .button::before { box-shadow: none !important; }
+
+/* Header (brand pages): active menu link = green text + soft pill, not the theme's blue box */
+.lw-brand .header__active-menu-item-v2 { background: rgba(46, 146, 84, .12) !important; color: #16301f !important; border-radius: 999px !important; padding: 4px 12px !important; font-weight: 600; }
+.lw-brand .header__menu-item:hover .header__active-menu-item-v2 { text-decoration: none; }
+/* Right pill on desktop: evenly spaced round icon buttons that fill the pill */
+@media (min-width: 990px) {
+  .lw-brand .header__icons { gap: 2px; padding: 5px !important; min-height: 0 !important; height: 52px; box-sizing: border-box; align-items: center; }
+  .lw-brand .header__icons .header__icon { width: 42px !important; height: 42px !important; border-radius: 999px; display: grid !important; place-items: center; margin: 0 !important; padding: 0 !important; transition: background .2s ease; }
+  .lw-brand .header__icons .header__icon:hover { background: rgba(22, 48, 31, .07); }
+  .lw-brand .header__icons .header__icon .icon, .lw-brand .header__icons .header__icon svg { width: 20px; height: 20px; }
+  .lw-brand .header__icons .header__search, .lw-brand .header__icons details-modal { display: contents; }
+  .lw-brand .header__heading-link, .lw-brand .header__inline-menu { height: 52px; min-height: 0 !important; box-sizing: border-box; }
+}
