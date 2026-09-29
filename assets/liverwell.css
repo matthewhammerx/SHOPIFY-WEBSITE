@@ -1120,3 +1120,5 @@
 .lw-brand .lw-stats .lw-btn--cream::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,.55) 50%, transparent 70%); transform: translateX(-120%); transition: transform .7s ease; }
 .lw-brand .lw-stats .lw-btn--cream:hover { transform: translateY(-1px); box-shadow: 0 14px 30px -8px rgba(217, 242, 139, .7); }
 .lw-brand .lw-stats .lw-btn--cream:hover::after { transform: translateX(120%); }
+/* Brand: glass section overlay = same sage→forest glow as the other green panels (video still shows through) */
+.lw-brand .lw-glass__overlay { background: radial-gradient(circle at 15% 12%, #6a9a5e 0%, #2f5a3a 45%, #16301f 100%) !important; }
