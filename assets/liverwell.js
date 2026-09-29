@@ -284,7 +284,12 @@
   function initObservers(root) {
     root.querySelectorAll('[data-lw-count], [data-lw-width], .lw-reveal').forEach((el) => {
       if (el._lwObs) return; el._lwObs = true;
-      if (io && !(window.Shopify && window.Shopify.designMode)) io.observe(el);
+      if (el.dataset.lwCount && io) {
+        const dec = (el.dataset.lwCount.split('.')[1] || '').length;
+        el.textContent = (el.dataset.prefix || '') + (0).toFixed(dec) + (el.dataset.suffix || '');
+      }
+      // counters animate in the theme editor too; reveal effects show instantly there
+      if (io && (!(window.Shopify && window.Shopify.designMode) || el.dataset.lwCount)) io.observe(el);
       else {
         if (el.dataset.lwWidth) el.style.width = el.dataset.lwWidth;
         el.classList.add('is-in');

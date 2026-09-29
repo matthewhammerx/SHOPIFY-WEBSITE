@@ -1,10 +1,10 @@
 <section class="lw lw-section lw-stats" style="--lw-pt: {{ section.settings.padding_top }}px; --lw-pb: {{ section.settings.padding_bottom }}px; --lw-bg: {{ section.settings.bg }}; --lw-fg: {{ section.settings.fg }}; --lw-img-opacity: {{ section.settings.image_opacity | divided_by: 100.0 }};">
   {%- if section.settings.image != blank -%}<div class="lw-stats__bgimg">{{ section.settings.image | image_url: width: 1800 | image_tag: loading: 'lazy', alt: '' }}</div>{%- endif -%}
-  <div class="lw-wrap lw-stats__grid">
+  <div class="lw-wrap lw-stats__grid" style="--lw-side-d: {{ section.settings.side_desktop }}px; --lw-side-m: {{ section.settings.side_mobile }}px; max-width: {{ section.settings.max_width }}px;">
     <div class="lw-stats__nums">
       {%- for block in section.blocks -%}
         <div class="lw-stat" {{ block.shopify_attributes }}>
-          <div class="lw-stat__num" data-lw-count="{{ block.settings.number }}" data-prefix="{{ block.settings.prefix | escape }}" data-suffix="{{ block.settings.suffix | escape }}">{{ block.settings.prefix }}{{ block.settings.number }}{{ block.settings.suffix }}</div>
+          <div class="lw-stat__num" {% if section.settings.animate_numbers %}data-lw-count="{{ block.settings.number }}"{% endif %} data-prefix="{{ block.settings.prefix | escape }}" data-suffix="{{ block.settings.suffix | escape }}">{{ block.settings.prefix }}{{ block.settings.number }}{{ block.settings.suffix }}</div>
           <div class="lw-stat__label">{{ block.settings.label }}</div>
         </div>
       {%- endfor -%}
@@ -63,6 +63,50 @@
       "step": 5,
       "unit": "%",
       "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Side spacing"
+    },
+    {
+      "type": "range",
+      "id": "side_desktop",
+      "label": "Left/right space on desktop",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "side_mobile",
+      "label": "Left/right space on mobile",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Max content width (desktop)",
+      "min": 900,
+      "max": 1600,
+      "step": 20,
+      "unit": "px",
+      "default": 1240
+    },
+    {
+      "type": "header",
+      "content": "Numbers"
+    },
+    {
+      "type": "checkbox",
+      "id": "animate_numbers",
+      "label": "Count up numbers when scrolled into view",
+      "default": true
     },
     {
       "type": "header",

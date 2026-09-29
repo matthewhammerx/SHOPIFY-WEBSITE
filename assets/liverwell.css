@@ -480,3 +480,7 @@
 @media (max-width: 989px) {
   .lw-pdp__left { display: contents; }
 }
+
+/* Stats banner side spacing (editable per device) */
+.lw-stats .lw-stats__grid { padding-left: var(--lw-side-d, 20px); padding-right: var(--lw-side-d, 20px); box-sizing: border-box; }
+@media (max-width: 749px) { .lw-stats .lw-stats__grid { padding-left: var(--lw-side-m, 20px); padding-right: var(--lw-side-m, 20px); max-width: none !important; } }
