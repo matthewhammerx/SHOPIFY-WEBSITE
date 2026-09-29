@@ -469,3 +469,14 @@
 
 /* More breathing room between the main image and the thumbnail row */
 .lw-gallery__thumbs { margin-top: 14px; }
+
+/* Left column (images + customer videos): one column on desktop, sticky while scrolling */
+@media (min-width: 990px) {
+  .lw-pdp__grid { grid-template-areas: "left info"; grid-template-rows: auto; }
+  .lw-pdp__left { grid-area: left; display: grid; gap: 32px; align-self: start; min-width: 0; }
+  .lw-pdp__left > .lw-pdp__gallery, .lw-pdp__left > .lw-pdp__ugc { grid-area: auto; }
+  .lw-pdp__left--sticky { position: sticky; top: var(--lw-left-top, var(--lw-sticky-offset, 24px)); }
+}
+@media (max-width: 989px) {
+  .lw-pdp__left { display: contents; }
+}

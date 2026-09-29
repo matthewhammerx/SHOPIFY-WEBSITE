@@ -452,10 +452,27 @@
     });
   }
 
+  /* ------------------------------------------------------------------ */
+  /* Sticky left column: if taller than the screen, stick by its bottom  */
+  /* ------------------------------------------------------------------ */
+  function initStickyLeft(root) {
+    root.querySelectorAll('.lw-pdp__left--sticky').forEach((col) => {
+      if (col._lw) return; col._lw = true;
+      const update = () => {
+        const offset = parseFloat(getComputedStyle(col).getPropertyValue('--lw-sticky-offset')) || 24;
+        const top = Math.min(offset, window.innerHeight - col.offsetHeight - 16);
+        col.style.setProperty('--lw-left-top', top + 'px');
+      };
+      update();
+      window.addEventListener('resize', update);
+      if ('ResizeObserver' in window) new ResizeObserver(update).observe(col);
+    });
+  }
+
   function initAll(root) {
     root = root || document;
     placeUgc();
-    initGallery(root); initSliders(root); initDrag(root); initVideos(root); initObservers(root);
+    initGallery(root); initSliders(root); initDrag(root); initStickyLeft(root); initVideos(root); initObservers(root);
     initDelivery(root); initLoadMore(root); initCountdown(root); initSticky();
   }
 

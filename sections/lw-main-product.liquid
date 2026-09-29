@@ -7,6 +7,7 @@
 -%}
 <section class="lw lw-pdp" id="lw-product" style="--lw-bg: {{ section.settings.bg }};">
   <div class="lw-wrap lw-pdp__grid">
+    <div class="lw-pdp__left{% if section.settings.sticky_left %} lw-pdp__left--sticky{% endif %}" style="--lw-sticky-offset: {{ section.settings.sticky_offset }}px;">
     <div class="lw-pdp__media lw-pdp__gallery">
       <div class="lw-gallery" data-lw-gallery>
         <div class="lw-gallery__stage{% if tiles.size > 0 %} lw-gallery__stage--tiles{% endif %}">
@@ -64,6 +65,9 @@
         {%- endif -%}
       </div>
 
+    </div>
+    {%- comment -%} The "LW · Customer videos" section moves its carousel in here (see liverwell.js) {%- endcomment -%}
+    <div class="lw-pdp__ugc" data-lw-ugc-slot></div>
     </div>
 
     <div class="lw-pdp__info">
@@ -137,8 +141,6 @@
       {%- endfor -%}
     </div>
 
-    {%- comment -%} The "LW · Customer videos" section moves its carousel in here (see liverwell.js) {%- endcomment -%}
-    <div class="lw-pdp__ugc" data-lw-ugc-slot></div>
   </div>
 </section>
 
@@ -179,6 +181,27 @@
       "id": "product",
       "label": "Product",
       "info": "Leave empty on product pages – uses the current product. Set it when using this section on a landing page."
+    },
+    {
+      "type": "header",
+      "content": "Desktop layout"
+    },
+    {
+      "type": "checkbox",
+      "id": "sticky_left",
+      "label": "Keep images & videos in view while scrolling (desktop)",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "sticky_offset",
+      "label": "Space from top when stuck",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 24,
+      "info": "Increase if your header stays fixed at the top and covers the images."
     },
     {
       "type": "header",
