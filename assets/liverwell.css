@@ -1517,3 +1517,11 @@ cart-drawer .cart-item .compare-price, cart-drawer .cart-item__old-price { color
 /* Sliders scroll sideways only — never up/down inside the track (it was stealing page scroll) */
 .lw-slider__track, .lw-gallery__slides { overflow-y: hidden !important; overscroll-behavior-y: auto; touch-action: pan-x pan-y pinch-zoom; }
 .lw-brand .lw-slider__track { padding-bottom: 28px; margin-bottom: -28px; }
+/* Benefit cards: same smooth open/close as the FAQ */
+.lw-bcard { overflow: hidden; }
+.lw-bcard[open] .lw-bcard__body { animation: lw-acc-in .4s ease both; }
+.lw-bcard.is-closing .lw-bcard__body { animation: lw-acc-out .25s ease both; }
+.lw-bcard .lw-acc__plus::before, .lw-bcard .lw-acc__plus::after { transition: transform .35s cubic-bezier(.4, 0, .2, 1); }
+.lw-bcard__toggle { transition: background .25s ease, border-color .25s ease; }
+.lw-bcard[open] .lw-bcard__toggle { background: #16301f; border-color: #16301f; color: #fff; }
+@media (prefers-reduced-motion: reduce) { .lw-bcard .lw-bcard__body { animation: none !important; } }

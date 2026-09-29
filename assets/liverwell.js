@@ -537,10 +537,10 @@
   /* ------------------------------------------------------------------ */
   function initAccordions(root) {
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    root.querySelectorAll('.lw-acc details').forEach((d) => {
+    root.querySelectorAll('.lw-acc details, details.lw-bcard').forEach((d) => {
       if (d._lw) return; d._lw = true;
       const summary = d.querySelector('summary');
-      const body = d.querySelector('.lw-acc__body');
+      const body = d.querySelector('.lw-acc__body, .lw-bcard__body');
       if (!summary || !body || reduce) return;
       summary.addEventListener('click', (e) => {
         e.preventDefault();
