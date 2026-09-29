@@ -94,7 +94,13 @@
 
     {%- if section.settings.disclaimer != blank -%}<div class="lwf__legal">{{ section.settings.disclaimer }}</div>{%- endif -%}
   </div>
-  {%- if section.settings.show_wordmark -%}<div class="lwf__wordmark" aria-hidden="true">{{ section.settings.wordmark | default: brand }}</div>{%- endif -%}
+  {%- if section.settings.show_wordmark -%}
+    {%- if section.settings.wordmark_image != blank -%}
+      <div class="lwf__wordmark-img" aria-hidden="true" style="--lwf-wm-w: {{ section.settings.wordmark_width }}%;">{{ section.settings.wordmark_image | image_url: width: 2400 | image_tag: loading: 'lazy', alt: '', sizes: '100vw', widths: '800, 1200, 1800, 2400' }}</div>
+    {%- else -%}
+      <div class="lwf__wordmark" aria-hidden="true">{{ section.settings.wordmark | default: brand }}</div>
+    {%- endif -%}
+  {%- endif -%}
 </footer>
 
 {% schema %}
@@ -247,6 +253,22 @@
       "id": "wordmark",
       "label": "Wordmark text",
       "info": "Leave empty to use the brand name."
+    },
+    {
+      "type": "image_picker",
+      "id": "wordmark_image",
+      "label": "Wordmark image",
+      "info": "Optional. Replaces the text, e.g. your logo as a transparent PNG or SVG."
+    },
+    {
+      "type": "range",
+      "id": "wordmark_width",
+      "label": "Wordmark image width",
+      "min": 30,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
     },
     {
       "type": "checkbox",
