@@ -547,11 +547,31 @@
     });
   }
 
+  /* ------------------------------------------------------------------ */
+  /* CTA buttons (#lw-product / #lw-offers) scroll to the bundle offers  */
+  /* ------------------------------------------------------------------ */
+  function initOfferLinks() {
+    if (document._lwOfferLinks) return; document._lwOfferLinks = true;
+    document.addEventListener('click', (e) => {
+      const a = e.target.closest && e.target.closest('a[href]');
+      if (!a) return;
+      const href = a.getAttribute('href') || '';
+      if (!/#lw-(product|offers)$/.test(href)) return;
+      const hrefPath = href.split('#')[0];
+      if (hrefPath && hrefPath !== location.pathname && hrefPath !== location.href.split('#')[0]) return;
+      const offers = document.querySelector('lw-buy-box[data-main] .lw-offers') || document.querySelector('.lw-offers') || document.querySelector('lw-buy-box');
+      if (!offers) return;
+      e.preventDefault();
+      const top = offers.getBoundingClientRect().top + window.scrollY - 90;
+      window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+    });
+  }
+
   function initAll(root) {
     root = root || document;
     placeUgc();
     initGallery(root); initSliders(root); initDrag(root); initStickyLeft(root); initVideos(root); initObservers(root);
-    initDelivery(root); initLoadMore(root); initCountdown(root); initSticky(); initTimeline(root); initAccordions(root);
+    initDelivery(root); initLoadMore(root); initCountdown(root); initSticky(); initTimeline(root); initAccordions(root); initOfferLinks();
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => initAll());
