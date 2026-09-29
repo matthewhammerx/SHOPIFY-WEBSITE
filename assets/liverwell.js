@@ -474,11 +474,42 @@
     });
   }
 
+  /* ------------------------------------------------------------------ */
+  /* Timeline: line runs dot-to-dot and fills green as you scroll        */
+  /* ------------------------------------------------------------------ */
+  function initTimeline(root) {
+    root.querySelectorAll('.lw-tl__list').forEach((list) => {
+      if (list._lw) return; list._lw = true;
+      const steps = [...list.querySelectorAll('.lw-tl__step')];
+      if (!steps.length) return;
+      const DOT = 19; // dot centre, px from the top of each step
+      let ticking = false;
+      const update = () => {
+        ticking = false;
+        const start = steps[0].offsetTop + DOT;
+        const end = steps[steps.length - 1].offsetTop + DOT;
+        const len = Math.max(0, end - start);
+        const trigger = window.innerHeight * 0.6 - list.getBoundingClientRect().top;
+        const fill = Math.min(len, Math.max(0, trigger - start));
+        list.style.setProperty('--tl-start', start + 'px');
+        list.style.setProperty('--tl-len', len + 'px');
+        list.style.setProperty('--tl-fill', fill + 'px');
+        steps.forEach((st) => st.classList.toggle('is-active', st.offsetTop + DOT <= trigger));
+        list.classList.add('lw-tl__list--progress');
+      };
+      const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
+      update();
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll);
+      if ('ResizeObserver' in window) new ResizeObserver(onScroll).observe(list);
+    });
+  }
+
   function initAll(root) {
     root = root || document;
     placeUgc();
     initGallery(root); initSliders(root); initDrag(root); initStickyLeft(root); initVideos(root); initObservers(root);
-    initDelivery(root); initLoadMore(root); initCountdown(root); initSticky();
+    initDelivery(root); initLoadMore(root); initCountdown(root); initSticky(); initTimeline(root);
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => initAll());

@@ -1010,3 +1010,11 @@
   .lw-brand .lw-tl__list { margin-top: 12px; }
   .lw-brand .lw-tl__intro > .lw-btn { margin-top: 16px; }
 }
+
+/* Brand: timeline fills green on scroll (Resilia-style). Line runs from the first dot to the last. */
+.lw-brand .lw-tl__list--progress::before { top: var(--tl-start); bottom: auto; height: var(--tl-len); background: #16301f !important; }
+.lw-brand .lw-tl__list--progress::after { content: ""; position: absolute; left: 5px; top: var(--tl-start); width: 2px; height: var(--tl-fill, 0); background: #1fa463; transition: height .15s linear; }
+.lw-brand .lw-tl__list--progress .lw-tl__step::before { background: #16301f !important; transition: background .3s, transform .3s; z-index: 1; }
+.lw-brand .lw-tl__list--progress .lw-tl__label { background: #16301f !important; color: #fff; border-color: #16301f; transition: background .35s, border-color .35s; }
+.lw-brand .lw-tl__list--progress .lw-tl__step.is-active::before { background: #1fa463 !important; transform: scale(1.15); }
+.lw-brand .lw-tl__list--progress .lw-tl__step.is-active .lw-tl__label { background: var(--lw-grad) !important; border-color: transparent; }
