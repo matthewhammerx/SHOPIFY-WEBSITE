@@ -514,3 +514,23 @@
   .lw-glass__text { font-size: 13px; }
 }
 .lw-glass .lw-h em { color: var(--lw-gold); }
+
+/* Glass cards with product image: image right/left on desktop, below on mobile */
+.lw-glass__layout--img { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 48px; align-items: center; }
+.lw-glass__layout--left .lw-glass__visual { order: -1; }
+.lw-glass__layout--img .lw-glass__head { margin-left: 0; margin-right: 0; text-align: left; justify-items: start; }
+.lw-glass__layout--img .lw-glass__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.lw-glass__visual { position: relative; display: grid; place-items: center; min-height: 360px; }
+.lw-glass__visual img { position: relative; max-height: 520px; width: auto; max-width: 100%; object-fit: contain; filter: drop-shadow(0 30px 40px rgba(0,0,0,.35)); }
+.lw-glass__visual .lw-bprod__rings span { border-color: rgba(255,255,255,.22); }
+@media (max-width: 989px) {
+  .lw-glass__layout--img { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  .lw-glass__layout--left .lw-glass__visual { order: 0; }
+  .lw-glass__layout--img .lw-glass__head { text-align: center; justify-items: center; margin-left: auto; margin-right: auto; }
+  .lw-glass__visual { min-height: 260px; }
+  .lw-glass__visual img { max-height: 340px; }
+}
+.lw-glass__bgimg video, .lw-glass__bgimg img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.lw-glass__overlay { position: absolute; inset: 0; pointer-events: none; }
+.lw-glass__wrap { z-index: 1; }
+.lw-glass__visual .lw-bprod__rings { inset: 0; }

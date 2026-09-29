@@ -1,28 +1,51 @@
 <section class="lw lw-section lw-glass" style="--lw-pt: {{ section.settings.padding_top }}px; --lw-pb: {{ section.settings.padding_bottom }}px; --lw-fg: {{ section.settings.fg }}; --lw-gold: {{ section.settings.accent }}; --lw-bg-grad: linear-gradient(160deg, {{ section.settings.bg }} 0%, {{ section.settings.bg_2 }} 100%); --lw-side-d: {{ section.settings.side_desktop }}px; --lw-side-m: {{ section.settings.side_mobile }}px;">
-  {%- if section.settings.image != blank -%}<div class="lw-glass__bgimg" style="opacity: {{ section.settings.image_opacity | divided_by: 100.0 }};">{{ section.settings.image | image_url: width: 2000 | image_tag: loading: 'lazy', alt: '' }}</div>{%- endif -%}
+  {%- if section.settings.bg_video != blank -%}
+    <div class="lw-glass__bgimg">{{ section.settings.bg_video | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, controls: false, preload: 'metadata', image_size: '1600x' }}</div>
+  {%- elsif section.settings.bg_image != blank -%}
+    <div class="lw-glass__bgimg">{{ section.settings.bg_image | image_url: width: 2400 | image_tag: loading: 'lazy', sizes: '100vw', widths: '800, 1200, 1600, 2400', alt: '' }}</div>
+  {%- endif -%}
+  {%- if section.settings.bg_video != blank or section.settings.bg_image != blank -%}
+    <div class="lw-glass__overlay" style="background: {{ section.settings.overlay_color }}; opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};"></div>
+  {%- endif -%}
+  {%- liquid
+    assign img = section.settings.image
+    if img == blank and product
+      assign img = product.featured_image
+    endif
+  -%}
   <div class="lw-wrap lw-glass__wrap">
-    <div class="lw-head lw-center">
-      {%- if section.settings.eyebrow != blank -%}<span class="lw-glass__eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
-      <h2 class="lw-h lw-h--lg">{{ section.settings.heading }}</h2>
-      {%- if section.settings.text != blank -%}<div class="lw-sub lw-rte">{{ section.settings.text }}</div>{%- endif -%}
-      {%- if section.settings.button_label != blank -%}<a class="lw-btn lw-glass__btn" href="{{ section.settings.button_link | default: '#lw-product' }}">{{ section.settings.button_label }}</a>{%- endif -%}
-    </div>
-    <div class="lw-glass__grid" style="--lw-cols: {{ section.blocks.size | at_most: 4 | at_least: 1 }};">
-      {%- for block in section.blocks -%}
-        <div class="lw-glass__card lw-reveal" {{ block.shopify_attributes }}>
-          <h3 class="lw-glass__title">{{ block.settings.title }}</h3>
-          <div class="lw-glass__value">
-            {%- if block.settings.value != blank -%}
-              <span {% if section.settings.animate_numbers %}data-lw-count="{{ block.settings.value }}"{% endif %} data-suffix="{{ block.settings.suffix | escape }}">{{ block.settings.value }}{{ block.settings.suffix }}</span>
-            {%- else -%}
-              {% render 'lw-icon', icon: block.settings.icon %}
-            {%- endif -%}
-          </div>
-          <p class="lw-glass__text">{{ block.settings.text }}</p>
+    <div class="lw-glass__layout{% if img != blank and section.settings.show_image %} lw-glass__layout--img lw-glass__layout--{{ section.settings.image_position }}{% endif %}">
+      <div class="lw-glass__main">
+        <div class="lw-head lw-glass__head">
+          {%- if section.settings.eyebrow != blank -%}<span class="lw-glass__eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+          <h2 class="lw-h lw-h--lg">{{ section.settings.heading }}</h2>
+          {%- if section.settings.text != blank -%}<div class="lw-sub lw-rte">{{ section.settings.text }}</div>{%- endif -%}
+          {%- if section.settings.button_label != blank -%}<a class="lw-btn lw-glass__btn" href="{{ section.settings.button_link | default: '#lw-product' }}">{{ section.settings.button_label }}</a>{%- endif -%}
         </div>
-      {%- endfor -%}
+        <div class="lw-glass__grid" style="--lw-cols: {{ section.blocks.size | at_most: 4 | at_least: 1 }};">
+          {%- for block in section.blocks -%}
+            <div class="lw-glass__card lw-reveal" {{ block.shopify_attributes }}>
+              <h3 class="lw-glass__title">{{ block.settings.title }}</h3>
+              <div class="lw-glass__value">
+                {%- if block.settings.value != blank -%}
+                  <span {% if section.settings.animate_numbers %}data-lw-count="{{ block.settings.value }}"{% endif %} data-suffix="{{ block.settings.suffix | escape }}">{{ block.settings.value }}{{ block.settings.suffix }}</span>
+                {%- else -%}
+                  {% render 'lw-icon', icon: block.settings.icon %}
+                {%- endif -%}
+              </div>
+              <p class="lw-glass__text">{{ block.settings.text }}</p>
+            </div>
+          {%- endfor -%}
+        </div>
+        {%- if section.settings.footnote != blank -%}<div class="lw-glass__foot lw-rte">{{ section.settings.footnote }}</div>{%- endif -%}
+      </div>
+      {%- if img != blank and section.settings.show_image -%}
+        <div class="lw-glass__visual">
+          {%- if section.settings.show_rings -%}<div class="lw-bprod__rings" aria-hidden="true"><span></span><span></span><span></span></div>{%- endif -%}
+          {{ img | image_url: width: 1200 | image_tag: loading: 'lazy', sizes: '(min-width: 990px) 40vw, 90vw', widths: '400, 600, 800, 1200', alt: img.alt }}
+        </div>
+      {%- endif -%}
     </div>
-    {%- if section.settings.footnote != blank -%}<div class="lw-glass__foot lw-rte">{{ section.settings.footnote }}</div>{%- endif -%}
   </div>
 </section>
 
@@ -65,6 +88,44 @@
       "label": "Footnote (small text under cards)"
     },
     {
+      "type": "header",
+      "content": "Product image"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_image",
+      "label": "Show product image",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Product image",
+      "info": "Defaults to the product photo. A bottle on a transparent background (PNG) looks best."
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Image position on desktop",
+      "default": "right",
+      "options": [
+        {
+          "value": "right",
+          "label": "Right"
+        },
+        {
+          "value": "left",
+          "label": "Left"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rings",
+      "label": "Show circle lines behind image",
+      "default": true
+    },
+    {
       "type": "checkbox",
       "id": "animate_numbers",
       "label": "Count up numbers (if a card has a number)",
@@ -87,19 +148,31 @@
       "default": "#01261d"
     },
     {
+      "type": "video",
+      "id": "bg_video",
+      "label": "Background video (optional)",
+      "info": "Plays muted on loop. Used instead of the image if both are set."
+    },
+    {
       "type": "image_picker",
-      "id": "image",
+      "id": "bg_image",
       "label": "Background image (optional)"
     },
     {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "Overlay color (over video/image)",
+      "default": "#01261d"
+    },
+    {
       "type": "range",
-      "id": "image_opacity",
-      "label": "Image opacity",
+      "id": "overlay_opacity",
+      "label": "Overlay darkness",
       "min": 0,
       "max": 100,
       "step": 5,
       "unit": "%",
-      "default": 25
+      "default": 60
     },
     {
       "type": "color",
