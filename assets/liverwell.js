@@ -358,7 +358,7 @@
         requestAnimationFrame(() => requestAnimationFrame(() => bar.classList.add('is-visible')));
       } else {
         bar.classList.remove('is-visible');
-        bar._hideT = setTimeout(() => { if (!visible) bar.classList.remove('is-shown'); }, 700);
+        bar._hideT = setTimeout(() => { if (!visible) bar.classList.remove('is-shown'); }, 1000);
       }
     };
     visible = null;

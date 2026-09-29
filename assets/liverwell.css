@@ -1490,3 +1490,10 @@ cart-drawer .cart-item .compare-price, cart-drawer .cart-item__old-price { color
   .lw-brand .lw-sticky .lw-sticky__img { transform: none !important; }
   .lw-brand .lw-sticky .lw-sticky__info, .lw-brand .lw-sticky .lw-btn { opacity: 1; }
 }
+/* Sticky ATC animation: smoother — softer easing, no bounce, overlapping phases */
+.lw-brand .lw-sticky .lw-sticky__inner, .lw-brand .lw-sticky.is-visible .lw-sticky__inner {
+  transform: scale(.6); will-change: transform, clip-path, opacity;
+  transition: --lw-r .55s cubic-bezier(.65, 0, .35, 1), transform .4s cubic-bezier(.4, 0, .2, 1) .42s, opacity .35s ease .45s; }
+.lw-brand .lw-sticky.is-shown.is-visible .lw-sticky__inner {
+  transition: transform .5s cubic-bezier(.22, 1, .36, 1), opacity .4s ease, --lw-r .8s cubic-bezier(.65, 0, .35, 1) .28s; }
+.lw-brand .lw-sticky .lw-sticky__info, .lw-brand .lw-sticky .lw-btn { opacity: calc(var(--lw-r) * 1.8 - .8); }
