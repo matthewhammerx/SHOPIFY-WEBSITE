@@ -66,7 +66,7 @@
       "settings": {
         "speed": 40,
         "repeat": 2,
-        "border": false,
+        "border": true,
         "bg": "#ffffff",
         "fg": "#111511",
         "icon_color": "#009370"
