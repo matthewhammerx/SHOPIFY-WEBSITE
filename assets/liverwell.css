@@ -1135,3 +1135,27 @@
 .lw-brand .lw .lw-glass__btn::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,.55) 50%, transparent 70%); transform: translateX(-120%); transition: transform .7s ease; }
 .lw-brand .lw .lw-glass__btn:hover::after { transform: translateX(120%); }
 .lwf__trust { display: none !important; }
+
+/* ===== Homepage hero polish (brand) ===== */
+.lw-brand .lwh-hero--split .lwh-hero__frame { background: radial-gradient(60% 70% at 85% 25%, rgba(255,255,255,.9) 0%, rgba(255,255,255,0) 60%), linear-gradient(160deg, #eef6e9 0%, #e1edd8 100%); }
+/* quieter proof pills: white, green check */
+.lw-brand .lwh-pill { background: rgba(255,255,255,.75); border: 1px solid #d6e6cf; color: #16301f; font-weight: 500; }
+.lw-brand .lwh-pill .lw-icon { color: #2e9254; }
+/* product shot sits in a soft rounded frame with depth */
+.lw-brand .lwh-hero__visual img, .lw-brand .lwh-hero__visual svg { border-radius: 24px; filter: drop-shadow(0 24px 40px rgba(22, 48, 31, .14)); }
+@media (max-width: 989px) {
+  /* mobile: headline → image → text → proof → CTA (image no longer a full screen down) */
+  .lw-brand .lwh-hero--split .lwh-hero__inner { display: flex; flex-direction: column; align-items: stretch; padding-top: 32px; padding-bottom: 36px; }
+  .lw-brand .lwh-hero--split .lwh-hero__copy { display: contents; }
+  .lw-brand .lwh-hero--split .lwh-rating { order: 1; margin-bottom: 14px; }
+  .lw-brand .lwh-hero--split .lwh-h { order: 2; font-size: clamp(34px, 9.5vw, 44px); }
+  .lw-brand .lwh-hero--split .lwh-hero__visual { order: 3; padding: 22px 0 20px; }
+  .lw-brand .lwh-hero--split .lwh-hero__visual img, .lw-brand .lwh-hero--split .lwh-hero__visual svg { max-height: 380px; width: auto; max-width: 100%; object-fit: contain; }
+  .lw-brand .lwh-hero--split .lwh-lead { order: 4; font-size: 16px; }
+  .lw-brand .lwh-hero--split .lwh-pills { order: 5; margin-top: 16px; }
+  .lw-brand .lwh-hero--split .lwh-pill { font-size: 13px; padding: 6px 12px; }
+  .lw-brand .lwh-hero--split .lwh-actions { order: 6; flex-direction: column; align-items: stretch; gap: 14px; margin-top: 22px; text-align: center; }
+  .lw-brand .lwh-hero--split .lwh-actions .lwh-btn { width: 100%; }
+  .lw-brand .lwh-hero--split .lwh-link { align-self: center; }
+  .lw-brand .lwh-hero--split .lwh-note { order: 7; justify-content: center; margin-top: 14px; }
+}
