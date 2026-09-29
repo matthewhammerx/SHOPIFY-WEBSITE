@@ -67,9 +67,9 @@
         "speed": 40,
         "repeat": 2,
         "border": true,
-        "bg": "#ffffff",
-        "fg": "#111511",
-        "icon_color": "#009370"
+        "bg": "#fafaf5",
+        "fg": "#16301f",
+        "icon_color": "#2f5a3a"
       }
     },
     "main": {
@@ -355,7 +355,7 @@
         "show_arrows": false,
         "thumbs_desktop": true,
         "thumbs_mobile": false,
-        "bg": "#ffffff"
+        "bg": "#fafaf5"
       }
     },
     "customer_videos": {
@@ -465,7 +465,7 @@
         "side_mobile": 24,
         "max_width": 1240,
         "animate_numbers": true,
-        "bg": "#095946",
+        "bg": "#16301f",
         "fg": "#ffffff",
         "padding_top": 56,
         "padding_bottom": 56
@@ -538,9 +538,9 @@
         "mobile_slider": true,
         "button_label": "",
         "button_link": "",
-        "bg": "#f7f8f5",
-        "fg": "#111511",
-        "accent": "#009370",
+        "bg": "#f0f4ea",
+        "fg": "#16301f",
+        "accent": "#2f5a3a",
         "padding_top": 64,
         "padding_bottom": 64
       }
@@ -633,9 +633,9 @@
         "verified_label": "Verified customer",
         "speed": 50,
         "strip_repeat": 2,
-        "bg": "#f1f0e8",
-        "fg": "#111511",
-        "accent": "#009370",
+        "bg": "#f0f4ea",
+        "fg": "#16301f",
+        "accent": "#2f5a3a",
         "padding_top": 64,
         "padding_bottom": 64
       }
@@ -682,8 +682,8 @@
       "settings": {
         "heading": "Feel Better. Every Day.",
         "text": "From smoother digestion to steadier energy, here's what LiverWell does every morning.",
-        "bg": "#0a5a47",
-        "bg_2": "#002a21",
+        "bg": "#1e3a26",
+        "bg_2": "#122619",
         "fg": "#ffffff",
         "padding_top": 64,
         "padding_bottom": 64
@@ -748,15 +748,15 @@
         "footnote": "",
         "show_image": true,
         "image_position": "right",
-        "show_rings": true,
+        "show_rings": false,
         "animate_numbers": true,
-        "bg": "#0b5a47",
-        "bg_2": "#01261d",
+        "bg": "#1e3a26",
+        "bg_2": "#122619",
         "bg_video": "shopify://files/videos/f6faa8b06aba4747a6c8d415d93387fe.HD-720p-3.0Mbps-56404788.mp4",
-        "overlay_color": "#005813",
+        "overlay_color": "#16301f",
         "overlay_opacity": 55,
         "fg": "#ffffff",
-        "accent": "#4bc54c",
+        "accent": "#d9f28b",
         "side_desktop": 40,
         "side_mobile": 20,
         "padding_top": 80,
@@ -808,9 +808,9 @@
       "settings": {
         "heading": "<em>Real Benefits.</em> Backed by Research.",
         "text": "<p>Six ingredients. One capsule a day. Decades of research and <strong>2,000 years of traditional use</strong> behind every serving.</p>",
-        "bg": "#f1f0e8",
-        "fg": "#111511",
-        "accent": "#009370",
+        "bg": "#f0f4ea",
+        "fg": "#16301f",
+        "accent": "#2f5a3a",
         "padding_top": 64,
         "padding_bottom": 64
       }
@@ -873,9 +873,9 @@
         "speed": 40,
         "repeat": 2,
         "border": false,
-        "bg": "#ffffff",
-        "fg": "#111511",
-        "icon_color": "#009370"
+        "bg": "#fafaf5",
+        "fg": "#16301f",
+        "icon_color": "#2f5a3a"
       }
     },
     "timeline": {
@@ -921,9 +921,9 @@
         "text": "<p>LiverWell® is built for daily use, not quick fixes. Here's how things tend to shift once it's part of your routine.</p>",
         "button_label": "Start My Journey →",
         "button_link": "",
-        "bg": "#ffffff",
-        "fg": "#111511",
-        "accent": "#009370",
+        "bg": "#fafaf5",
+        "fg": "#16301f",
+        "accent": "#2f5a3a",
         "padding_top": 64,
         "padding_bottom": 64
       }
@@ -980,9 +980,9 @@
         "label_prefix": "Reason",
         "button_label": "Try Risk-Free Today",
         "button_link": "",
-        "bg": "#f1f0e8",
-        "fg": "#111511",
-        "accent": "#009370",
+        "bg": "#f0f4ea",
+        "fg": "#16301f",
+        "accent": "#2f5a3a",
         "padding_top": 64,
         "padding_bottom": 64
       }
@@ -1113,9 +1113,9 @@
         "text": "<p>If you don't feel lighter, clearer, and more energized, we'll refund every cent. No questions. No hassle. Just results, or your money back.</p>",
         "button_label": "",
         "button_link": "",
-        "bg": "#f1f0e8",
-        "fg": "#111511",
-        "seal_color": "#009370"
+        "bg": "#f0f4ea",
+        "fg": "#16301f",
+        "seal_color": "#2f5a3a"
       }
     },
     "videos": {
@@ -1176,9 +1176,9 @@
         "heading": "Real People. <em>Real Results.</em>",
         "text": "Hear it in their own words.",
         "columns": 6,
-        "bg": "#ffffff",
-        "fg": "#111511",
-        "accent": "#009370",
+        "bg": "#fafaf5",
+        "fg": "#16301f",
+        "accent": "#2f5a3a",
         "padding_top": 64,
         "padding_bottom": 64
       }
@@ -1229,9 +1229,9 @@
         "heading": "Backed by Research. <em>Built on Results.</em>",
         "text": "Silymarin, the active compound in milk thistle, is one of the most studied liver-support ingredients in the world.",
         "footnote": "†Figures refer to published research on the ingredients, not clinical trials of this product.",
-        "bg": "#ffffff",
-        "fg": "#111511",
-        "accent": "#009370",
+        "bg": "#fafaf5",
+        "fg": "#16301f",
+        "accent": "#2f5a3a",
         "padding_top": 64,
         "padding_bottom": 64
       }
@@ -1358,9 +1358,9 @@
         "trust_1": "",
         "trust_2": "",
         "trust_3": "",
-        "bg": "#f1f0e8",
-        "fg": "#111511",
-        "accent": "#009370",
+        "bg": "#f0f4ea",
+        "fg": "#16301f",
+        "accent": "#2f5a3a",
         "padding_top": 64,
         "padding_bottom": 64
       }
@@ -1449,9 +1449,9 @@
         "verified_label": "Verified customer",
         "initial": 4,
         "more_label": "Load More Reviews",
-        "bg": "#ffffff",
-        "fg": "#111511",
-        "accent": "#009370",
+        "bg": "#fafaf5",
+        "fg": "#16301f",
+        "accent": "#2f5a3a",
         "padding_top": 64,
         "padding_bottom": 64
       }
@@ -1523,9 +1523,9 @@
         "servings": "30",
         "footnote": "* Percent Daily Values are based on a 2,000 calorie diet. † Daily Value not established.",
         "other": "",
-        "bg": "#f7f8f5",
-        "fg": "#111511",
-        "accent": "#009370",
+        "bg": "#f0f4ea",
+        "fg": "#16301f",
+        "accent": "#2f5a3a",
         "padding_top": 64,
         "padding_bottom": 64
       }
@@ -1598,9 +1598,9 @@
         "contact": "<p>Still have questions? <a href=\"/pages/contact\">Contact our team</a> — we reply within 24 hours.</p><p><em>†These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease. Individual results may vary.</em></p>",
         "open_first": false,
         "schema_markup": true,
-        "bg": "#f1f0e8",
-        "fg": "#111511",
-        "accent": "#009370",
+        "bg": "#f0f4ea",
+        "fg": "#16301f",
+        "accent": "#2f5a3a",
         "padding_top": 64,
         "padding_bottom": 64
       }
