@@ -1,0 +1,931 @@
+{
+  "sections": {
+    "main": {
+      "type": "lw-main-product",
+      "blocks": {
+        "rating_1": {
+          "type": "rating",
+          "settings": {
+            "text": "Rated 4.9 | Loved by thousands",
+            "show_avatars": true
+          }
+        },
+        "eyebrow_2": {
+          "type": "eyebrow",
+          "settings": {
+            "text": "Our Top Rated Liver Support Formula"
+          }
+        },
+        "title_3": {
+          "type": "title",
+          "settings": {
+            "title": "A Lighter, Clearer You Starts With Your Liver"
+          }
+        },
+        "text_4": {
+          "type": "text",
+          "settings": {
+            "use_product_description": false,
+            "text": "<p>Science backed 80% silymarin formula that supports liver function, eases bloating, and boosts energy.†</p>"
+          }
+        },
+        "benefits_5": {
+          "type": "benefits",
+          "settings": {
+            "icon_1": "liver",
+            "text_1": "Liver Support†",
+            "icon_2": "gut",
+            "text_2": "Helps Digestion†",
+            "icon_3": "bolt",
+            "text_3": "Boosts Energy†",
+            "icon_4": "leaf",
+            "text_4": "Reduces Bloating†",
+            "icon_5": "shield",
+            "text_5": "Gut Wellness†",
+            "icon_6": "sparkle",
+            "text_6": "Glowing Skin†"
+          }
+        },
+        "stock_6": {
+          "type": "stock",
+          "settings": {
+            "percent": 93,
+            "text": "[percent]% Sold"
+          }
+        },
+        "buy_box_7": {
+          "type": "buy_box",
+          "settings": {
+            "app_bundles": false,
+            "show_price_header": true,
+            "sale_badge_text": "FALL SALE - Save [amount]",
+            "enable_subscription": true,
+            "subscription_default": false,
+            "subscription_label": "Subscribe & Save an extra 15%",
+            "subscription_sub": "Delivered every 30 days. Skip, pause or cancel anytime.",
+            "gifts_label": "Gifts unlocked",
+            "gifts_locked_text": "Locked",
+            "show_delivery": true,
+            "delivery_text": "Order today for delivery by",
+            "delivery_days": 3,
+            "ships_from": "Ships from US 🇺🇸",
+            "atc_label": "Add To Cart",
+            "show_atc_price": true,
+            "after_add": "drawer",
+            "note_1": "Free shipping on 2+ bottles",
+            "note_2": "90-Day Money-Back Guarantee",
+            "notes_only_subscription": false,
+            "trust_1": "",
+            "trust_2": "",
+            "trust_3": ""
+          }
+        },
+        "offer_10": {
+          "type": "offer",
+          "settings": {
+            "title": "Buy One",
+            "subtitle": "[per_unit] per bottle",
+            "variant_position": 1,
+            "quantity": 1,
+            "bottles": 1,
+            "badge": "",
+            "badge_color": "",
+            "default_selected": false,
+            "gifts": 0,
+            "extra_title": "",
+            "extra_text": "",
+            "discount_code": "",
+            "discount_percent": 0
+          }
+        },
+        "offer_9": {
+          "type": "offer",
+          "settings": {
+            "title": "Buy 2 Get 1 Free Gift",
+            "subtitle": "[per_unit] per bottle",
+            "variant_position": 2,
+            "quantity": 1,
+            "bottles": 2,
+            "badge": "Most Popular",
+            "badge_color": "",
+            "default_selected": true,
+            "gifts": 2,
+            "extra_title": "FREE Shipping ($4.95 value)",
+            "extra_text": "Ships in discreet packaging",
+            "discount_code": "",
+            "discount_percent": 0
+          }
+        },
+        "offer_8": {
+          "type": "offer",
+          "settings": {
+            "title": "Buy 3 Get 2 Free Gifts",
+            "subtitle": "[per_unit] per bottle",
+            "variant_position": 3,
+            "quantity": 1,
+            "bottles": 3,
+            "badge": "Best Value",
+            "badge_color": "",
+            "default_selected": true,
+            "gifts": 3,
+            "extra_title": "FREE Liver Reset Guide + FREE Shipping",
+            "extra_text": "Our 30-day liver-friendly meal & habit plan ($19.99 value)",
+            "discount_code": "",
+            "discount_percent": 0
+          }
+        },
+        "gift_11": {
+          "type": "gift",
+          "settings": {
+            "title": "FREE Shipping",
+            "value": "$4.95",
+            "icon": "truck",
+            "gift_product": ""
+          }
+        },
+        "gift_12": {
+          "type": "gift",
+          "settings": {
+            "title": "FREE Liver Reset Guide",
+            "value": "$19.99",
+            "icon": "gift",
+            "gift_product": ""
+          }
+        },
+        "gift_13": {
+          "type": "gift",
+          "settings": {
+            "title": "FREE Anti-Bloat Blueprint",
+            "value": "$19.99",
+            "icon": "gift",
+            "gift_product": ""
+          }
+        },
+        "collapsible_14": {
+          "type": "collapsible",
+          "settings": {
+            "heading": "What is milk thistle?",
+            "icon": "none",
+            "content": "<p>Milk thistle is a plant-based supplement known for its active compound silymarin, which supports liver function, reduced fatigue, and many other health benefits.†</p>",
+            "page": "",
+            "open": false
+          }
+        },
+        "collapsible_15": {
+          "type": "collapsible",
+          "settings": {
+            "heading": "Does it actually work?",
+            "icon": "none",
+            "content": "<p>This formula supports your gut with natural ingredients. Milk Thistle helps your liver function, while Inositol and Turmeric help to reduce bloating and give you steady energy.†</p>",
+            "page": "",
+            "open": false
+          }
+        },
+        "collapsible_16": {
+          "type": "collapsible",
+          "settings": {
+            "heading": "How long before I see results?",
+            "icon": "none",
+            "content": "<p>Some people notice changes within days, but results build with consistent use:</p><ul><li><strong>Days 1 to 14</strong> — lighter digestion, less bloating, steadier energy</li><li><strong>Week 3 to 6</strong> — clearer skin, stronger hair, reduced brain fog</li><li><strong>Month 2+</strong> — your liver is supported, and you feel transformed†</li></ul>",
+            "page": "",
+            "open": false
+          }
+        },
+        "collapsible_17": {
+          "type": "collapsible",
+          "settings": {
+            "heading": "How to use",
+            "icon": "none",
+            "content": "<p>Take 1 capsule daily with water, preferably with a meal. For added support, take at the same time each day to keep your system balanced!</p>",
+            "page": "",
+            "open": false
+          }
+        },
+        "collapsible_18": {
+          "type": "collapsible",
+          "settings": {
+            "heading": "What is the best time to take this?",
+            "icon": "none",
+            "content": "<p>The best time to take Milk Thistle is in the morning so you can have a strong start to your day!</p>",
+            "page": "",
+            "open": false
+          }
+        },
+        "collapsible_19": {
+          "type": "collapsible",
+          "settings": {
+            "heading": "Is this just for men?",
+            "icon": "none",
+            "content": "<p>No, this formula is effective for both men and women who want digestive support and increased vitality.†</p>",
+            "page": "",
+            "open": false
+          }
+        },
+        "collapsible_20": {
+          "type": "collapsible",
+          "settings": {
+            "heading": "Do I need to change my diet or quit drinking to see results?",
+            "icon": "none",
+            "content": "<p>No, you don't need to overhaul your lifestyle to support your liver. Of course, healthy habits will always help, but LiverWell is designed to fit into your daily routine as-is.</p>",
+            "page": "",
+            "open": false
+          }
+        },
+        "collapsible_21": {
+          "type": "collapsible",
+          "settings": {
+            "heading": "About Your Free Gifts",
+            "icon": "none",
+            "content": "<p><strong>Liver Reset Guide</strong> – a 30-day plan of simple liver-friendly meals and habits.</p><p><strong>Anti-Bloat Blueprint</strong> – practical tips to reduce bloating and support digestion.</p><p>Free items are digital and delivered by email with your first order.</p>",
+            "page": "",
+            "open": false
+          }
+        },
+        "collapsible_22": {
+          "type": "collapsible",
+          "settings": {
+            "heading": "Do You Offer a Guarantee?",
+            "icon": "none",
+            "content": "<p>Yes. Every order is protected by our 90-day money-back guarantee. If you don't feel lighter, clearer, and more energized, we'll refund every cent.</p>",
+            "page": "",
+            "open": false
+          }
+        }
+      },
+      "block_order": [
+        "rating_1",
+        "eyebrow_2",
+        "title_3",
+        "text_4",
+        "benefits_5",
+        "stock_6",
+        "buy_box_7",
+        "offer_10",
+        "offer_9",
+        "offer_8",
+        "gift_11",
+        "gift_12",
+        "gift_13",
+        "collapsible_14",
+        "collapsible_15",
+        "collapsible_16",
+        "collapsible_17",
+        "collapsible_18",
+        "collapsible_19",
+        "collapsible_20",
+        "collapsible_21",
+        "collapsible_22"
+      ],
+      "settings": {
+        "product": "milk-thistle",
+        "sticky_left": true,
+        "sticky_offset": 24,
+        "show_arrows": false,
+        "thumbs_desktop": true,
+        "thumbs_mobile": false,
+        "bg": "#ffffff"
+      }
+    },
+    "customer_videos": {
+      "type": "lw-ugc",
+      "blocks": {
+        "clip_1": {
+          "type": "clip",
+          "settings": {
+            "caption": "I was skeptical…",
+            "show_on": "both"
+          }
+        },
+        "clip_2": {
+          "type": "clip",
+          "settings": {
+            "caption": "Week 3 update",
+            "show_on": "both"
+          }
+        },
+        "clip_3": {
+          "type": "clip",
+          "settings": {
+            "caption": "My honest review",
+            "show_on": "both"
+          }
+        },
+        "clip_4": {
+          "type": "clip",
+          "settings": {
+            "caption": "No more bloat",
+            "show_on": "both"
+          }
+        }
+      },
+      "block_order": [
+        "clip_1",
+        "clip_2",
+        "clip_3",
+        "clip_4"
+      ],
+      "settings": {
+        "heading": "What our customers are saying:",
+        "position": "media",
+        "show_desktop": true,
+        "show_mobile": false,
+        "columns_desktop": 3,
+        "columns_mobile": 2,
+        "show_arrows": true,
+        "show_dots": false,
+        "padding_top": 0,
+        "padding_bottom": 32
+      }
+    },
+    "root_cause": {
+      "type": "lwh-root-cause",
+      "blocks": {
+        "card_1": {
+          "type": "card",
+          "settings": {
+            "icon": "bolt",
+            "title": "Energy & Mental Clarity",
+            "text": "Your liver plays an important role in how your body processes nutrients and stores energy."
+          }
+        },
+        "card_2": {
+          "type": "card",
+          "settings": {
+            "icon": "gut",
+            "title": "Digestive Balance",
+            "text": "The liver works closely with the digestive system, which helps your body digest foods as part of normal digestion."
+          }
+        },
+        "card_3": {
+          "type": "card",
+          "settings": {
+            "icon": "shield",
+            "title": "Everyday Support",
+            "text": "Your liver is constantly performing essential functions that help maintain your body's internal balance."
+          }
+        }
+      },
+      "block_order": [
+        "card_1",
+        "card_2",
+        "card_3"
+      ],
+      "settings": {
+        "eyebrow": "The root cause",
+        "heading": "Why your liver matters.",
+        "bg": "#fafaf5",
+        "padding_top": 88,
+        "padding_bottom": 56
+      }
+    },
+    "approach": {
+      "type": "lwh-approach",
+      "blocks": {
+        "step_1": {
+          "type": "step",
+          "settings": {
+            "title": "Support",
+            "text": "Milk thistle at 80% silymarin helps support the liver for everyday balance.†"
+          }
+        },
+        "step_2": {
+          "type": "step",
+          "settings": {
+            "title": "Clear",
+            "text": "Inositol, pueraria and L-methionine support your body's natural processing and elimination.†"
+          }
+        },
+        "step_3": {
+          "type": "step",
+          "settings": {
+            "title": "Protect",
+            "text": "Vitamin C and turmeric provide antioxidant support to help shield the body from daily stress.†"
+          }
+        }
+      },
+      "block_order": [
+        "step_1",
+        "step_2",
+        "step_3"
+      ],
+      "settings": {
+        "eyebrow": "The LiverWell approach",
+        "heading": "Support. Clear. <em>Protect.</em>",
+        "text": "Most liver supplements only do one thing. LiverWell supports the full cycle.",
+        "bg": "#fafaf5",
+        "padding_top": 32,
+        "padding_bottom": 96
+      }
+    },
+    "science": {
+      "type": "lwh-science",
+      "blocks": {
+        "point_1": {
+          "type": "point",
+          "settings": {
+            "title": "Standardized extract",
+            "text": "Every batch of milk thistle is standardized to 80% silymarin, the concentration most referenced in milk thistle research."
+          }
+        },
+        "point_2": {
+          "type": "point",
+          "settings": {
+            "title": "Full transparency",
+            "text": "No proprietary blends. Every ingredient and dose is on the label."
+          }
+        }
+      },
+      "block_order": [
+        "point_1",
+        "point_2"
+      ],
+      "settings": {
+        "heading": "Most milk thistle is underdosed. <em>LiverWell isn't.</em>",
+        "text": "Silymarin is the active compound in milk thistle. Most brands use 50 to 65%. We standardize to 80%, the threshold used in clinical studies.",
+        "stat_label": "Silymarin concentration",
+        "stat_value": "80",
+        "stat_suffix": "%",
+        "padding_top": 96,
+        "padding_bottom": 96
+      }
+    },
+    "ingredients": {
+      "type": "lw-ingredients",
+      "blocks": {
+        "ingredient_1": {
+          "type": "ingredient",
+          "settings": {
+            "dose": "300mg",
+            "name": "Milk Thistle Extract (80% Silymarin)",
+            "text": "The hero ingredient. Dosed at the exact level shown in research to help support your liver and protect it from daily stress.†"
+          }
+        },
+        "ingredient_2": {
+          "type": "ingredient",
+          "settings": {
+            "dose": "200mg",
+            "name": "Inositol",
+            "text": "Supports healthy blood sugar metabolism and helps your liver process fats as part of its natural function.†"
+          }
+        },
+        "ingredient_3": {
+          "type": "ingredient",
+          "settings": {
+            "dose": "68mg",
+            "name": "Pueraria Extract (10% Puerarin)",
+            "text": "Traditionally used to support liver function and help reduce oxidative stress on overworked cells.†"
+          }
+        },
+        "ingredient_4": {
+          "type": "ingredient",
+          "settings": {
+            "dose": "10mg",
+            "name": "L-Methionine",
+            "text": "A key amino acid that supports your body's natural waste removal and processing.†"
+          }
+        },
+        "ingredient_5": {
+          "type": "ingredient",
+          "settings": {
+            "dose": "10mg",
+            "name": "Vitamin C",
+            "text": "An essential antioxidant that supports immune function and helps shield liver cells from free radical damage.†"
+          }
+        },
+        "ingredient_6": {
+          "type": "ingredient",
+          "settings": {
+            "dose": "4mg",
+            "name": "Turmeric Extract (95% Curcuminoids)",
+            "text": "A powerful antioxidant that supports liver health and helps comfort the body.†"
+          }
+        }
+      },
+      "block_order": [
+        "ingredient_1",
+        "ingredient_2",
+        "ingredient_3",
+        "ingredient_4",
+        "ingredient_5",
+        "ingredient_6"
+      ],
+      "settings": {
+        "heading": "6 ingredients. <em>Premium strength.</em>",
+        "text": "Every capsule is packed with essentials. Perfect dosages.",
+        "columns": 3,
+        "mobile_slider": true,
+        "button_label": "",
+        "button_link": "",
+        "bg": "#f7f8f5",
+        "fg": "#111511",
+        "accent": "#009370",
+        "padding_top": 64,
+        "padding_bottom": 64
+      }
+    },
+    "timeline": {
+      "type": "lw-timeline",
+      "blocks": {
+        "step_1": {
+          "type": "step",
+          "settings": {
+            "label": "Days 1–14: Clearing Out†",
+            "points": "Gut begins its natural cleansing process\nBloating begins to ease after meals\nDigestion feels smoother"
+          }
+        },
+        "step_2": {
+          "type": "step",
+          "settings": {
+            "label": "Weeks 3–6: Energy Returns†",
+            "points": "Steady energy throughout the day\nBrain fog starts to lift\nSome customers notice steadier energy after meals"
+          }
+        },
+        "step_3": {
+          "type": "step",
+          "settings": {
+            "label": "Months 2–3: Deep Support†",
+            "points": "Your liver gets the prolonged support it's been craving\nStart feeling lighter\nYour body continues its natural elimination and cleansing process"
+          }
+        },
+        "step_4": {
+          "type": "step",
+          "settings": {
+            "label": "Months 4–6: Sustained Support†",
+            "points": "Your new energy levels are in full swing\nYou keep a weight baseline consistently\nYour liver gets the support it needs"
+          }
+        }
+      },
+      "block_order": [
+        "step_1",
+        "step_2",
+        "step_3",
+        "step_4"
+      ],
+      "settings": {
+        "heading": "The Journey: <em>Real Help Takes Time.</em>",
+        "text": "<p>LiverWell® is built for daily use, not quick fixes. Here's how things tend to shift once it's part of your routine.</p>",
+        "button_label": "Start My Journey →",
+        "button_link": "",
+        "bg": "#ffffff",
+        "fg": "#111511",
+        "accent": "#009370",
+        "padding_top": 64,
+        "padding_bottom": 64
+      }
+    },
+    "comparison": {
+      "type": "lw-comparison",
+      "blocks": {
+        "row_1": {
+          "type": "row",
+          "settings": {
+            "icon": "microscope",
+            "us_text": "80% Pure Silymarin",
+            "them_text": "50–65% Silymarin"
+          }
+        },
+        "row_2": {
+          "type": "row",
+          "settings": {
+            "icon": "shield",
+            "us_text": "Protects AND Strengthens†",
+            "them_text": "Protection Only"
+          }
+        },
+        "row_3": {
+          "type": "row",
+          "settings": {
+            "icon": "flask",
+            "us_text": "6 Active Ingredients",
+            "them_text": "Single Ingredient"
+          }
+        },
+        "row_4": {
+          "type": "row",
+          "settings": {
+            "icon": "gut",
+            "us_text": "Digestion & Gut Support†",
+            "them_text": "No Gut Support"
+          }
+        },
+        "row_5": {
+          "type": "row",
+          "settings": {
+            "icon": "droplet",
+            "us_text": "Blood Sugar Support†",
+            "them_text": "Not Included"
+          }
+        },
+        "row_6": {
+          "type": "row",
+          "settings": {
+            "icon": "leaf",
+            "us_text": "Naturally Sourced",
+            "them_text": "Synthetic Fillers"
+          }
+        },
+        "row_7": {
+          "type": "row",
+          "settings": {
+            "icon": "award",
+            "us_text": "90-Day Guarantee",
+            "them_text": "Limited or No Guarantee"
+          }
+        },
+        "point_8": {
+          "type": "point",
+          "settings": {
+            "bold": "Clinically-Studied Ingredients —",
+            "text": "Milk thistle standardized to 80% silymarin, the concentration used in research."
+          }
+        },
+        "point_9": {
+          "type": "point",
+          "settings": {
+            "bold": "Liver + Gut Support —",
+            "text": "Built to support liver function, digestion and energy together, not just one piece.†"
+          }
+        },
+        "point_10": {
+          "type": "point",
+          "settings": {
+            "bold": "Clean & Transparent —",
+            "text": "No fillers, no proprietary blends, every dose on the label."
+          }
+        },
+        "point_11": {
+          "type": "point",
+          "settings": {
+            "bold": "Visible, Gradual Results —",
+            "text": "A daily ritual that keeps working, week after week.†"
+          }
+        }
+      },
+      "block_order": [
+        "row_1",
+        "row_2",
+        "row_3",
+        "row_4",
+        "row_5",
+        "row_6",
+        "row_7",
+        "point_8",
+        "point_9",
+        "point_10",
+        "point_11"
+      ],
+      "settings": {
+        "heading": "How LiverWell® Compares To Other Brands",
+        "us_label": "LiverWell",
+        "them_label": "Other Brands",
+        "button_label": "Try Risk-Free Today",
+        "button_link": "",
+        "bg": "#243015",
+        "bg_2": "#151b0c",
+        "fg": "#ffffff",
+        "us_bg": "#5c6b2e",
+        "padding_top": 80,
+        "padding_bottom": 64
+      }
+    },
+    "reviews": {
+      "type": "lw-review-list",
+      "blocks": {
+        "review_1": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "score": "4.9",
+            "title": "\"Finally stopped feeling bloated after every meal!\"",
+            "body": "I've dealt with bloating for years. About a week and a half into LiverWell my stomach felt calmer and I stopped dreading lunch. Easy to take, no aftertaste.",
+            "name": "Sample R.",
+            "tags": "Less Bloating, Better Digestion"
+          }
+        },
+        "review_2": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "score": "5.0",
+            "title": "\"My afternoon crash is gone.\"",
+            "body": "I used to hit a wall every day around 2pm. After a few weeks I noticed my energy stayed steady and my mornings felt so much easier.",
+            "name": "Sample M.",
+            "tags": "Steady Energy, Better Mornings"
+          }
+        },
+        "review_3": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "score": "4.9",
+            "title": "\"A clean product that actually works.\"",
+            "body": "I love that the label is fully transparent – 80% silymarin and no proprietary blends. I can feel the difference and I trust what I'm putting in my body.",
+            "name": "Sample K.",
+            "tags": "Clean Ingredients, Transparency"
+          }
+        },
+        "review_4": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "score": "5.0",
+            "title": "\"Part of my daily routine now.\"",
+            "body": "I enjoy a glass of wine on weekends and wanted to give my liver some support. LiverWell is now a staple next to my coffee every morning.",
+            "name": "Sample D.",
+            "tags": "Daily Support, Easy Routine"
+          }
+        },
+        "review_5": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "score": "5.0",
+            "title": "\"Clearer skin was a surprise bonus.\"",
+            "body": "I bought it for digestion but by the second month my skin looked brighter too. Already on my third order.",
+            "name": "Sample L.",
+            "tags": "Glowing Skin, Feeling Lighter"
+          }
+        },
+        "review_6": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "score": "4.8",
+            "title": "\"Worth it for the guarantee alone.\"",
+            "body": "The 90-day guarantee made it easy to try. Glad I did – I feel lighter and more focused.",
+            "name": "Sample J.",
+            "tags": "Risk-Free, More Focus"
+          }
+        }
+      },
+      "block_order": [
+        "review_1",
+        "review_2",
+        "review_3",
+        "review_4",
+        "review_5",
+        "review_6"
+      ],
+      "settings": {
+        "summary": "Rated 4.9 / 5 | Trusted by thousands",
+        "heading": "They Felt the Shift. You Will Too.",
+        "verified_label": "Verified customer",
+        "initial": 4,
+        "more_label": "Load More Reviews",
+        "bg": "#ffffff",
+        "fg": "#111511",
+        "accent": "#009370",
+        "padding_top": 64,
+        "padding_bottom": 64
+      }
+    },
+    "guarantee": {
+      "type": "lw-guarantee",
+      "settings": {
+        "days": "90",
+        "seal_label": "DAYS",
+        "eyebrow": "Feel the difference",
+        "heading": "[days]-Day Money Back Guarantee",
+        "text": "<p>If you don't feel lighter, clearer, and more energized, we'll refund every cent. No questions. No hassle. Just results, or your money back.</p>",
+        "button_label": "",
+        "button_link": "",
+        "bg": "#f1f0e8",
+        "fg": "#111511",
+        "seal_color": "#009370"
+      }
+    },
+    "faq": {
+      "type": "lw-faq",
+      "blocks": {
+        "question_1": {
+          "type": "question",
+          "settings": {
+            "question": "How long before I notice a difference?",
+            "answer": "<p>Most customers notice reduced bloating and smoother digestion within the first 1 to 2 weeks. Energy and clarity typically improve around weeks 3 to 6. For deeper liver support, 3 to 6 months of consistent use delivers the best results.†</p>"
+          }
+        },
+        "question_2": {
+          "type": "question",
+          "settings": {
+            "question": "Why should I choose the 2 or 3 bottle bundle?",
+            "answer": "<p>Liver support is a process, not an event. The first 1 to 2 months start the clear. Deep cellular support happens from months 2 to 6. Most customers who report the biggest changes committed to at least a few months — and bundles give you the best price per bottle.</p>"
+          }
+        },
+        "question_3": {
+          "type": "question",
+          "settings": {
+            "question": "What makes LiverWell different from other milk thistle supplements?",
+            "answer": "<p>Our milk thistle is standardized to 80% silymarin, the clinical threshold. We use 6 active ingredients that work together to support your body.</p>"
+          }
+        },
+        "question_4": {
+          "type": "question",
+          "settings": {
+            "question": "Will this work if I've tried other supplements before?",
+            "answer": "<p>Most liver supplements only address one piece of the problem. They either try to clear toxins or support liver health, but not both. LiverWell's 6-ingredient formula was built to support the full cycle. That's why customers who gave up on other products often see results with LiverWell.†</p>"
+          }
+        },
+        "question_5": {
+          "type": "question",
+          "settings": {
+            "question": "How do I take it?",
+            "answer": "<p>Take 1 capsule daily with water, preferably with a meal. For best results, take it at the same time each day.</p>"
+          }
+        },
+        "question_6": {
+          "type": "question",
+          "settings": {
+            "question": "Can I take it with other supplements or medications?",
+            "answer": "<p>LiverWell works well alongside most everyday supplements. Milk thistle may interact with certain medications (such as blood thinners, some diabetes medications and immunosuppressants), so if you take prescription medication, are pregnant or nursing, please consult your doctor first. If you're allergic to plants in the daisy family (ragweed, marigolds), check with your doctor before use.</p>"
+          }
+        },
+        "question_7": {
+          "type": "question",
+          "settings": {
+            "question": "What if it doesn't work for me?",
+            "answer": "<p>Every order is protected by our 90-day money-back guarantee. No questions, no hassle. If you don't feel the difference, we'll refund every cent.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "question_1",
+        "question_2",
+        "question_3",
+        "question_4",
+        "question_5",
+        "question_6",
+        "question_7"
+      ],
+      "settings": {
+        "heading": "Frequently Asked Questions",
+        "text": "Got questions? We've got answers.",
+        "contact": "<p>Still have questions? <a href=\"/pages/contact\">Contact our team</a> — we reply within 24 hours.</p><p><em>†These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease. Individual results may vary.</em></p>",
+        "open_first": false,
+        "schema_markup": true,
+        "bg": "#f1f0e8",
+        "fg": "#111511",
+        "accent": "#009370",
+        "padding_top": 64,
+        "padding_bottom": 64
+      }
+    },
+    "cta": {
+      "type": "lwh-cta-cards",
+      "blocks": {
+        "card_1": {
+          "type": "card",
+          "settings": {
+            "bg": "#2f5a3a",
+            "title": "Ready to feel lighter?",
+            "text": "Feel lighter, think clearer, and start the day with energy that holds.†",
+            "button": "Shop Now",
+            "link": "#lw-product"
+          }
+        },
+        "card_2": {
+          "type": "card",
+          "settings": {
+            "bg": "#16301f",
+            "title": "Try it risk-free for 90 days.",
+            "text": "If you don't feel the difference, we'll refund every cent.",
+            "button": "Get Started",
+            "link": "#lw-product"
+          }
+        }
+      },
+      "block_order": [
+        "card_1",
+        "card_2"
+      ],
+      "settings": {
+        "bg": "#fafaf5",
+        "padding_top": 32,
+        "padding_bottom": 96
+      }
+    },
+    "sticky": {
+      "type": "lw-sticky-atc",
+      "settings": {
+        "product": "",
+        "label": "Claim My Offer",
+        "show_price": true,
+        "rating_text": "4.9 | Loved by thousands"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "customer_videos",
+    "root_cause",
+    "approach",
+    "science",
+    "ingredients",
+    "timeline",
+    "comparison",
+    "reviews",
+    "guarantee",
+    "faq",
+    "cta",
+    "sticky"
+  ]
+}

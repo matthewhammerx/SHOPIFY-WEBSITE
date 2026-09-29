@@ -18,8 +18,12 @@
         {%- liquid
           assign aimg = section.settings.image
           assign aimg_class = 'lwh-approach__photo'
-          if aimg == blank and section.settings.product != blank
-            assign aimg = section.settings.product.featured_image
+          assign ap = section.settings.product
+          if ap == blank and product
+            assign ap = product
+          endif
+          if aimg == blank and ap != blank
+            assign aimg = ap.featured_image
             assign aimg_class = 'lwh-approach__product'
           endif
         -%}

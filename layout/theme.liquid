@@ -472,7 +472,7 @@
     <script src="{{ 'liverwell.js' | asset_url }}" defer="defer"></script>
   </head>
 
-  <body class="gradient lw-tpl-{{ template.name }}{% if template.name == 'index' or template.suffix contains 'soft' %} lw-soft{% endif %} link-btns--{{ settings.link_btn_hover }} action-btns--{{ settings.action_btn_hover }}"{% if is_rtl %} data-rtl="true"{% endif %}>
+  <body class="gradient lw-tpl-{{ template.name }}{% if template.name == 'index' or template.suffix contains 'soft' or template.suffix contains 'brand' %} lw-soft{% endif %} link-btns--{{ settings.link_btn_hover }} action-btns--{{ settings.action_btn_hover }}"{% if is_rtl %} data-rtl="true"{% endif %}>
     <a class="skip-to-content-link button visually-hidden" href="#MainContent">
       {{ 'accessibility.skip_to_text' | t }}
     </a>

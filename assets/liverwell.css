@@ -758,3 +758,13 @@
 .lw-soft main, .lw-soft #MainContent { background: #fafaf5; }
 .lwh-approach__copy .lwh-eyebrow, .lwh-glasspanel__points .lwh-eyebrow { justify-self: start; width: max-content; max-width: 100%; }
 .lw-soft .lw .lw-tl__label, .lw-soft .lw .lw-pill, .lw-soft .lw .lw-reason__label, .lw-soft .lw .lw-ingr__dose, .lw-soft .lw .lw-btn, .lw-soft .lw .lw-atc, .lw-soft .lw .lw-cmp__head, .lw-soft .lw .lw-glass__title, .lw-soft .lw .lw-bprod__icon, .lw-soft .lw .lw-gallery__tile, .lw-soft .lw .lw-stat__num, .lw-soft .lw .lw-science__num, .lw-soft .lw .lw-offer__now, .lw-soft .lw .lw-buy__now { font-family: var(--lw-font-body); font-weight: 600; letter-spacing: -0.01em; }
+
+/* Soft templates: one accent color family (sage/forest), lime on dark panels */
+.lw-soft .lw .lw-h em { color: #2f5a3a !important; }
+.lw-soft .lw-cmp .lw-h em, .lw-soft .lw-glass .lw-h em, .lw-soft .lw-stats .lw-h em, .lw-soft .lw-bprod .lw-h em { color: #d9f28b !important; }
+.lw-soft .lw-tl__label { background: #2f5a3a !important; }
+.lw-soft .lw-tl__list::before, .lw-soft .lw-tl__step::before { background: #2f5a3a !important; }
+.lw-soft .lw-tl__points .lw-icon, .lw-soft .lw-benefit-grid__item .lw-icon { color: #2f5a3a; }
+.lw-soft .lw-reason__label, .lw-soft .lw-pill { background: #2f5a3a !important; }
+.lw-soft .lw-guar__seal svg { color: #2f5a3a !important; }
+.lw-soft .lw-guar__eyebrow { color: #2f5a3a !important; }
