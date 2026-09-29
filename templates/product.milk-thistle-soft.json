@@ -1585,7 +1585,7 @@
       "settings": {
         "heading": "Frequently Asked Questions",
         "text": "Got questions? We've got answers.",
-        "contact": "<p>Still have questions? <a href=\"/pages/contact\">Contact our team</a> — we reply within 24 hours.</p><p><em>†These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease. Individual results may vary.</em></p>",
+        "contact": "<p>Still have questions? <a href=\"/pages/contact\">Contact our team</a> — we reply within 24 hours.</p>",
         "open_first": false,
         "schema_markup": true,
         "bg": "#f1f0e8",
