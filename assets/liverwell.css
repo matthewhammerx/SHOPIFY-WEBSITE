@@ -906,3 +906,6 @@
 @keyframes lw-stock-glow { 0%, 100% { box-shadow: 0 0 6px rgba(208, 46, 46, .35); } 50% { box-shadow: 0 0 16px rgba(208, 46, 46, .8); } }
 @keyframes lw-stock-shine { 0% { transform: translateX(-100%); } 60%, 100% { transform: translateX(100%); } }
 @media (prefers-reduced-motion: reduce) { .lw-brand .lw-stock__bar span, .lw-brand .lw-stock__bar span::after { animation: none; } }
+.lw-brand main, .lw-brand #MainContent { background: #f5f3ea; }
+.lw-brand .lw-slider__track { padding-bottom: 28px; margin-bottom: -28px; }
+.lw-brand .lw-guar__img > svg.lw-placeholder, .lw-brand .lw-guar__img > img { border-radius: 28px; }
