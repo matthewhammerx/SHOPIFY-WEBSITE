@@ -1018,3 +1018,10 @@
 .lw-brand .lw-tl__list--progress .lw-tl__label { background: #16301f !important; color: #fff; border-color: #16301f; transition: background .35s, border-color .35s; }
 .lw-brand .lw-tl__list--progress .lw-tl__step.is-active::before { background: #1fa463 !important; transform: scale(1.15); }
 .lw-brand .lw-tl__list--progress .lw-tl__step.is-active .lw-tl__label { background: var(--lw-grad) !important; border-color: transparent; }
+
+/* Brand timeline, our colors: not-yet-reached = soft mint, reached = brand green gradient */
+.lw-brand .lw-tl__list--progress::before { background: #cdebd6 !important; }
+.lw-brand .lw-tl__list--progress .lw-tl__step::before { background: #cdebd6 !important; box-shadow: 0 0 0 3px #fafaf5; }
+.lw-brand .lw-tl__list--progress .lw-tl__label { background: #e6f5ea !important; color: #147a48; border-color: #cdebd6; }
+.lw-brand .lw-tl__list--progress .lw-tl__step.is-active::before { background: #1fa463 !important; }
+.lw-brand .lw-tl__list--progress .lw-tl__step.is-active .lw-tl__label { background: var(--lw-grad) !important; color: #fff; border-color: transparent; }
