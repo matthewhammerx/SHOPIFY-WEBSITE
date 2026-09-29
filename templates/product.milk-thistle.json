@@ -350,6 +350,8 @@
       ],
       "settings": {
         "product": "milk-thistle",
+        "sticky_left": true,
+        "sticky_offset": 24,
         "show_arrows": false,
         "thumbs_desktop": true,
         "thumbs_mobile": false,
@@ -1525,6 +1527,7 @@
     },
     "sticky": {
       "type": "lw-sticky-atc",
+      "disabled": true,
       "settings": {
         "product": "",
         "label": "Claim My Offer",

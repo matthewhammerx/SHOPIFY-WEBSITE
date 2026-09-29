@@ -1,1 +1,102 @@
-{"name":"t:sections.footer.name","type":"footer","sections":{"footer":{"type":"footer","blocks":{"image_kxbRfw":{"type":"image","settings":{"image":"shopify:\/\/shop_images\/MEOWGICAL_27.png","image_width":50,"alignment":"center","url":"","width_desktop":3,"width_mobile":"2"}},"link_list_Ygw9VR":{"type":"link_list","settings":{"heading":"Quick links","menu":"footer","width_desktop":3,"width_mobile":"2"}},"24f208fd-0898-43eb-af23-d74f8420ab37":{"type":"email_signup","settings":{"heading":"Join Meowgical Club!","subtext":"<p>Vet insights, early access, and everything your pet needs to thrive -- straight to your inbox.<\/p>","button_type":"arrow","button_label":"Sign up","button_style_secondary":false,"width_desktop":5,"width_mobile":"2"}},"text_CQQeEm":{"type":"text","settings":{"heading":"Contact Us","subtext":"<p><strong>Email: <\/strong>info@meowgical.com<br\/><br\/><strong>Average Response Time: <\/strong>Under 12 Hours<br\/><br\/><strong>Operating Hours Available: <\/strong>Monday - Friday 9am - 5pm EST<\/p>","width_desktop":3,"width_mobile":"2"}}},"block_order":["image_kxbRfw","link_list_Ygw9VR","24f208fd-0898-43eb-af23-d74f8420ab37","text_CQQeEm"],"settings":{"color_scheme":"custom","enable_follow_on_shop":false,"show_social":false,"enable_country_selector":false,"enable_language_selector":true,"payment_enable":false,"enabled_payment_types":"","show_policy":false,"branding_text":"","margin_top":0,"padding_top":32,"padding_bottom":20,"custom_colors_background":"#203ba6","custom_gradient_background":"","custom_colors_text":"#ffffff","custom_colors_solid_button_background":"#ffffff","custom_colors_solid_button_text":"#121212","custom_colors_outline_button":"#ffffff"}},"custom_liquid_T3Jt6t":{"type":"custom-liquid","name":"t:sections.custom-liquid.presets.name","settings":{"display_id":false,"visibility":"always-display","custom_liquid":"<div class=\"meowgical-disclaimer-section\">\n  <div class=\"meowgical-disclaimer\">\n    The information on this site is not intended as a substitute for professional veterinary advice. Meowgical products are not intended to diagnose, treat, cure, or prevent any disease. If your pet has, or you suspect your pet has, any medical condition, consult your veterinarian before use. These statements have not been evaluated by the Food and Drug Administration. Individual results may vary based on your pet's age, health status, and diet. Not intended for human consumption.\n  <\/div>\n<\/div>\n\n<style>\n  .meowgical-disclaimer-section {\n    width: 100vw;\n    margin-left: calc(50% - 50vw);\n    background-color: #203BA6;\n    padding: 14px 0;\n  }\n\n  .meowgical-disclaimer {\n    max-width: 850px;\n    margin: 0 auto;\n    padding: 0 20px;\n    text-align: center;\n    font-size: 11px;\n    line-height: 1.5;\n    color: #EDEAED;\n  }\n\n  @media screen and (max-width: 749px) {\n    .meowgical-disclaimer-section {\n      padding: 12px 0;\n    }\n\n    .meowgical-disclaimer {\n      padding: 0 16px;\n      font-size: 10px;\n    }\n  }\n<\/style>","color_scheme":"accent-1","padding_top":0,"padding_bottom":0}}},"order":["footer","custom_liquid_T3Jt6t"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "name": "t:sections.footer.name",
+  "type": "footer",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "image_kxbRfw": {
+          "type": "image",
+          "settings": {
+            "image_width": 50,
+            "alignment": "center",
+            "url": "",
+            "width_desktop": 3,
+            "width_mobile": "2"
+          }
+        },
+        "link_list_Ygw9VR": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Quick links",
+            "menu": "footer",
+            "width_desktop": 3,
+            "width_mobile": "2"
+          }
+        },
+        "24f208fd-0898-43eb-af23-d74f8420ab37": {
+          "type": "email_signup",
+          "settings": {
+            "heading": "Join Meowgical Club!",
+            "subtext": "<p>Vet insights, early access, and everything your pet needs to thrive -- straight to your inbox.</p>",
+            "button_type": "arrow",
+            "button_label": "Sign up",
+            "button_style_secondary": false,
+            "width_desktop": 5,
+            "width_mobile": "2"
+          }
+        },
+        "text_CQQeEm": {
+          "type": "text",
+          "settings": {
+            "heading": "Contact Us",
+            "subtext": "<p><strong>Email: </strong>info@meowgical.com<br/><br/><strong>Average Response Time: </strong>Under 12 Hours<br/><br/><strong>Operating Hours Available: </strong>Monday - Friday 9am - 5pm EST</p>",
+            "width_desktop": 3,
+            "width_mobile": "2"
+          }
+        }
+      },
+      "block_order": [
+        "image_kxbRfw",
+        "link_list_Ygw9VR",
+        "24f208fd-0898-43eb-af23-d74f8420ab37",
+        "text_CQQeEm"
+      ],
+      "settings": {
+        "color_scheme": "custom",
+        "enable_follow_on_shop": false,
+        "show_social": false,
+        "enable_country_selector": false,
+        "enable_language_selector": true,
+        "payment_enable": false,
+        "enabled_payment_types": "",
+        "show_policy": false,
+        "branding_text": "",
+        "margin_top": 0,
+        "padding_top": 32,
+        "padding_bottom": 20,
+        "custom_colors_background": "#203ba6",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#ffffff",
+        "custom_colors_solid_button_background": "#ffffff",
+        "custom_colors_solid_button_text": "#121212",
+        "custom_colors_outline_button": "#ffffff"
+      }
+    },
+    "custom_liquid_T3Jt6t": {
+      "type": "custom-liquid",
+      "name": "t:sections.custom-liquid.presets.name",
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "custom_liquid": "<div class=\"meowgical-disclaimer-section\">\n  <div class=\"meowgical-disclaimer\">\n   † These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease.\n<br>\n* Individual results may vary. Testimonials and reviews reflect individual experiences and are not guaranteed outcomes.\n<br>\n‡ Consult your healthcare provider before starting any supplement regimen, especially if you are pregnant, nursing, taking medication, or have a medical condition.\n  </div>\n</div>\n\n<style>\n  .meowgical-disclaimer-section {\n    width: 100vw;\n    margin-left: calc(50% - 50vw);\n    background-color: #203BA6;\n    padding: 14px 0;\n  }\n\n  .meowgical-disclaimer {\n    max-width: 850px;\n    margin: 0 auto;\n    padding: 0 20px;\n    text-align: center;\n    font-size: 11px;\n    line-height: 1.5;\n    color: #EDEAED;\n  }\n\n  @media screen and (max-width: 749px) {\n    .meowgical-disclaimer-section {\n      padding: 12px 0;\n    }\n\n    .meowgical-disclaimer {\n      padding: 0 16px;\n      font-size: 10px;\n    }\n  }\n</style>",
+        "color_scheme": "accent-1",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    }
+  },
+  "order": [
+    "footer",
+    "custom_liquid_T3Jt6t"
+  ]
+}
