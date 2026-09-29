@@ -33,7 +33,7 @@
                 <div class="lw-gallery__slide">{{ 'product-1' | placeholder_svg_tag: 'lw-placeholder' }}</div>
               {%- endfor -%}
             </div>
-            {%- if lw_product.media.size > 1 -%}
+            {%- if lw_product.media.size > 1 and section.settings.show_arrows -%}
               <button type="button" class="lw-gallery__arrow lw-gallery__arrow--prev" aria-label="Previous image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m15 6-6 6 6 6"/></svg></button>
               <button type="button" class="lw-gallery__arrow lw-gallery__arrow--next" aria-label="Next image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m9 6 6 6-6 6"/></svg></button>
             {%- endif -%}
@@ -54,10 +54,10 @@
           {%- endif -%}
         </div>
         {%- if lw_product.media.size > 1 -%}
-          <div class="lw-gallery__thumbs">
+          <div class="lw-gallery__thumbs{% unless section.settings.thumbs_mobile %} lw-hide-mobile{% endunless %}{% unless section.settings.thumbs_desktop %} lw-hide-desktop{% endunless %}">
             {%- for media in lw_product.media -%}
               <button type="button" class="lw-gallery__thumb{% if forloop.first %} is-active{% endif %}" aria-label="Show media {{ forloop.index }}">
-                {{ media.preview_image | image_url: width: 160 | image_tag: loading: 'lazy', alt: '' }}
+                {{ media.preview_image | image_url: width: 300 | image_tag: loading: 'lazy', alt: '' }}
               </button>
             {%- endfor -%}
           </div>
@@ -179,6 +179,28 @@
       "id": "product",
       "label": "Product",
       "info": "Leave empty on product pages – uses the current product. Set it when using this section on a landing page."
+    },
+    {
+      "type": "header",
+      "content": "Image gallery"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "Show arrow buttons on image",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "thumbs_desktop",
+      "label": "Show thumbnails on desktop",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "thumbs_mobile",
+      "label": "Show thumbnails on mobile",
+      "default": false
     },
     {
       "type": "color",
