@@ -900,3 +900,11 @@
   .lw-brand .lw-section[style*="#f0f4ea"] { margin: 8px; border-radius: 26px; }
   .lw-brand .lw-ingr, .lw-brand .lw-review, .lw-brand .lw-reason, .lw-brand .lw-bcard, .lw-brand .lw-glass__card, .lw-brand .lw-cmps__panel { border-radius: 22px; }
 }
+
+/* Brand template: glowing red urgency bar */
+.lw-brand .lw-stock__bar { overflow: visible; }
+.lw-brand .lw-stock__bar span { position: relative; overflow: hidden; box-shadow: 0 0 10px rgba(208, 46, 46, .55); animation: lw-stock-glow 1.8s ease-in-out infinite; }
+.lw-brand .lw-stock__bar span::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,.55) 50%, transparent 100%); transform: translateX(-100%); animation: lw-stock-shine 2.4s ease-in-out infinite; }
+@keyframes lw-stock-glow { 0%, 100% { box-shadow: 0 0 6px rgba(208, 46, 46, .35); } 50% { box-shadow: 0 0 16px rgba(208, 46, 46, .8); } }
+@keyframes lw-stock-shine { 0% { transform: translateX(-100%); } 60%, 100% { transform: translateX(100%); } }
+@media (prefers-reduced-motion: reduce) { .lw-brand .lw-stock__bar span, .lw-brand .lw-stock__bar span::after { animation: none; } }
