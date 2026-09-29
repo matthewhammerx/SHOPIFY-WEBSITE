@@ -1426,3 +1426,5 @@ html:has(body.lw-brand), body.lw-brand { background-color: #fafaf5; }
 @media (min-width: 750px) { .lw-brand .lw-sticky, .lw-brand .lw-sticky.is-visible { height: calc(100svh - 20px) !important; } }
 /* Sticky ATC: 18px worked — try 12px */
 @media (max-width: 749px) { .lw-brand .lw-sticky, .lw-brand .lw-sticky.is-visible { height: calc(100svh - 12px) !important; } }
+/* Sticky ATC: 12px worked — try 9px (6px turned Safari's bar white) */
+@media (max-width: 749px) { .lw-brand .lw-sticky, .lw-brand .lw-sticky.is-visible { height: calc(100svh - 9px) !important; } }
