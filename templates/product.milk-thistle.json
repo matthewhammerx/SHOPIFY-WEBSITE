@@ -461,6 +461,10 @@
         "button_label": "Try Risk-Free Today",
         "button_link": "",
         "image_opacity": 20,
+        "side_desktop": 80,
+        "side_mobile": 24,
+        "max_width": 1240,
+        "animate_numbers": true,
         "bg": "#095946",
         "fg": "#ffffff",
         "padding_top": 56,
@@ -674,6 +678,7 @@
         "benefit_3",
         "benefit_4"
       ],
+      "disabled": true,
       "settings": {
         "heading": "Feel Better. Every Day.",
         "text": "From smoother digestion to steadier energy, here's what LiverWell does every morning.",
@@ -682,6 +687,80 @@
         "fg": "#ffffff",
         "padding_top": 64,
         "padding_bottom": 64
+      }
+    },
+    "glass_benefits": {
+      "type": "lw-glass-cards",
+      "blocks": {
+        "card_1": {
+          "type": "card",
+          "settings": {
+            "title": "Liver Support",
+            "icon": "liver",
+            "value": "",
+            "suffix": "%",
+            "text": "Silymarin helps protect liver cells from daily stress.†"
+          }
+        },
+        "card_2": {
+          "type": "card",
+          "settings": {
+            "title": "Easier Digestion",
+            "icon": "gut",
+            "value": "",
+            "suffix": "%",
+            "text": "Less bloating and smoother digestion after meals.†"
+          }
+        },
+        "card_3": {
+          "type": "card",
+          "settings": {
+            "title": "Steady Energy",
+            "icon": "bolt",
+            "value": "",
+            "suffix": "%",
+            "text": "Natural, all-day energy. No caffeine, no crash.†"
+          }
+        },
+        "card_4": {
+          "type": "card",
+          "settings": {
+            "title": "Glowing Skin",
+            "icon": "sparkle",
+            "value": "",
+            "suffix": "%",
+            "text": "Clearer skin as your body rebalances from within.†"
+          }
+        }
+      },
+      "block_order": [
+        "card_1",
+        "card_2",
+        "card_3",
+        "card_4"
+      ],
+      "settings": {
+        "eyebrow": "",
+        "heading": "Feel Better. <em>Every Day.</em>",
+        "text": "<p>From smoother digestion to steadier energy, here's what LiverWell does every morning.</p>",
+        "button_label": "Try Risk-Free Today",
+        "button_link": "",
+        "footnote": "",
+        "show_image": true,
+        "image_position": "right",
+        "show_rings": true,
+        "animate_numbers": true,
+        "bg": "#0b5a47",
+        "bg_2": "#01261d",
+        "bg_video": "shopify://files/videos/f6faa8b06aba4747a6c8d415d93387fe.HD-720p-3.0Mbps-56404788.mp4",
+        "overlay_color": "#01261d",
+        "overlay_opacity": 100,
+        "fg": "#ffffff",
+        "accent": "#e7c77d",
+        "side_desktop": 40,
+        "side_mobile": 20,
+        "padding_top": 80,
+        "padding_bottom": 80
       }
     },
     "benefit_cards": {
@@ -1533,78 +1612,6 @@
         "label": "Claim My Offer",
         "show_price": true,
         "rating_text": "4.9 | Loved by thousands"
-      }
-    },
-    "glass_benefits": {
-      "type": "lw-glass-cards",
-      "blocks": {
-        "card_1": {
-          "type": "card",
-          "settings": {
-            "title": "Liver Support",
-            "icon": "liver",
-            "value": "",
-            "suffix": "%",
-            "text": "Silymarin helps protect liver cells from daily stress.†"
-          }
-        },
-        "card_2": {
-          "type": "card",
-          "settings": {
-            "title": "Easier Digestion",
-            "icon": "gut",
-            "value": "",
-            "suffix": "%",
-            "text": "Less bloating and smoother digestion after meals.†"
-          }
-        },
-        "card_3": {
-          "type": "card",
-          "settings": {
-            "title": "Steady Energy",
-            "icon": "bolt",
-            "value": "",
-            "suffix": "%",
-            "text": "Natural, all-day energy. No caffeine, no crash.†"
-          }
-        },
-        "card_4": {
-          "type": "card",
-          "settings": {
-            "title": "Glowing Skin",
-            "icon": "sparkle",
-            "value": "",
-            "suffix": "%",
-            "text": "Clearer skin as your body rebalances from within.†"
-          }
-        }
-      },
-      "block_order": [
-        "card_1",
-        "card_2",
-        "card_3",
-        "card_4"
-      ],
-      "settings": {
-        "eyebrow": "",
-        "heading": "Feel Better. <em>Every Day.</em>",
-        "text": "<p>From smoother digestion to steadier energy, here's what LiverWell does every morning.</p>",
-        "button_label": "Try Risk-Free Today",
-        "footnote": "",
-        "animate_numbers": true,
-        "bg": "#0b5a47",
-        "bg_2": "#01261d",
-        "fg": "#ffffff",
-        "accent": "#e7c77d",
-        "side_desktop": 40,
-        "side_mobile": 20,
-        "padding_top": 80,
-        "padding_bottom": 80,
-        "show_image": true,
-        "image_position": "right",
-        "show_rings": true,
-        "overlay_color": "#01261d",
-        "overlay_opacity": 60
       }
     }
   },
