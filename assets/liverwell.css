@@ -1428,3 +1428,34 @@ html:has(body.lw-brand), body.lw-brand { background-color: #fafaf5; }
 @media (max-width: 749px) { .lw-brand .lw-sticky, .lw-brand .lw-sticky.is-visible { height: calc(100svh - 12px) !important; } }
 /* Sticky ATC: 12px worked — try 9px (6px turned Safari's bar white) */
 @media (max-width: 749px) { .lw-brand .lw-sticky, .lw-brand .lw-sticky.is-visible { height: calc(100svh - 9px) !important; } }
+
+/* ===== Cart drawer: LiverWell look (all pages) ===== */
+/* mobile: full screen with side gutters + rounded corners */
+@media (max-width: 749px) {
+  html body cart-drawer .cart-drawer .drawer__inner {
+    top: calc(10px + env(safe-area-inset-top)) !important; bottom: calc(10px + env(safe-area-inset-bottom)) !important;
+    left: 10px !important; right: 10px !important; width: auto !important; max-width: none !important;
+    max-height: none !important; border-radius: 28px !important; }
+}
+html body cart-drawer .cart-drawer .drawer__inner { border-radius: 28px !important; border: 0 !important; background: #fafaf5 !important;
+  box-shadow: 0 30px 70px -20px rgba(22, 48, 31, .45) !important; font-family: var(--lw-font-body); }
+cart-drawer .cart-drawer__overlay { background: rgba(22, 48, 31, .35); -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); }
+cart-drawer .cart-drawer, cart-drawer .cart-drawer * { letter-spacing: normal; }
+cart-drawer .drawer__heading { font-family: var(--lw-font-body) !important; font-weight: 500 !important; font-size: 22px !important; letter-spacing: -0.02em !important; color: #16301f; }
+cart-drawer .drawer__close { width: 40px; height: 40px; border-radius: 999px; background: #fff; box-shadow: 0 4px 14px -6px rgba(22, 48, 31, .3); display: grid; place-items: center; }
+/* timer strip: forest pill instead of flat blue band */
+cart-drawer .cart-timer { margin: 0 12px var(--margin-bottom, 12px) !important; border-radius: 16px; background: linear-gradient(120deg, #2f5a3a, #16301f) !important; color: #fff !important; }
+cart-drawer .cart-timer strong { color: #d9f28b; }
+/* free shipping bar: rounded card */
+cart-drawer .meow-free-shipping { margin: 8px 12px; border-radius: 18px; }
+/* line items: white rounded cards */
+cart-drawer .cart-drawer-item { background: #fff !important; border-radius: 20px; padding: 12px !important; margin: 0 12px 10px; box-shadow: 0 6px 20px -12px rgba(22, 48, 31, .25); }
+cart-drawer .cart-item__image { border-radius: 14px !important; }
+cart-drawer .cart-item__name { font-family: var(--lw-font-body) !important; font-weight: 600 !important; color: #16301f !important; letter-spacing: -0.01em !important; }
+cart-drawer .cart-item__final-price, cart-drawer .cart-drawer__clean-subtotal__final { color: #2e9254 !important; }
+cart-drawer .cart-quantity { border-radius: 999px !important; border-color: #dbe7d3 !important; background: #f3f7ef !important; }
+/* checkout: our green gradient pill with glow */
+cart-drawer #CartDrawer-Checkout { border-radius: 999px !important; background: linear-gradient(135deg, #34c77b 0%, #16a05f 55%, #0f8a52 100%) !important; color: #fff !important;
+  box-shadow: 0 12px 26px -10px rgba(22, 160, 95, .55) !important; font-family: var(--lw-font-body) !important; letter-spacing: -0.005em !important; }
+cart-drawer #CartDrawer-Checkout::after, cart-drawer #CartDrawer-Checkout::before { box-shadow: none !important; }
+cart-drawer .drawer__footer { border-top: 1px solid #e4ecdf !important; }
