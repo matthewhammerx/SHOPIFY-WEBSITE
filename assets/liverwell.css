@@ -1467,7 +1467,7 @@ cart-drawer .meow-free-shipping { margin-top: 12px !important; }
 cart-drawer .meow-free-shipping__inner { padding-left: 16px !important; padding-right: 16px !important; }
 cart-drawer .cart-timer { text-align: center; }
 cart-drawer .drawer__header { padding: 16px 18px !important; }
-cart-drawer .drawer__close { top: 50% !important; right: 14px !important; transform: translateY(-50%) !important; min-width: 0 !important; min-height: 0 !important; width: 40px !important; height: 40px !important; justify-content: center !important; }
+cart-drawer .drawer__header .drawer__close { top: 50% !important; right: 14px !important; transform: translateY(-50%) !important; min-width: 0 !important; min-height: 0 !important; width: 40px !important; height: 40px !important; justify-content: center !important; }
 cart-drawer .drawer__close svg { width: 16px; height: 16px; }
 cart-drawer .cart-item .price, cart-drawer .cart-item .regular-price, cart-drawer .cart-item [class*="accent-color"], cart-drawer .cart-item__totals, cart-drawer .cart-item__totals * { color: #2e9254 !important; }
 cart-drawer .cart-item .compare-price, cart-drawer .cart-item__old-price { color: #8a948c !important; }
@@ -1527,3 +1527,17 @@ cart-drawer .cart-item .compare-price, cart-drawer .cart-item__old-price { color
 @media (prefers-reduced-motion: reduce) { .lw-bcard .lw-bcard__body { animation: none !important; } }
 /* FAQ / buy-box accordions: same fade timing as the benefit cards */
 .lw-acc details[open] .lw-acc__body { animation: lw-acc-in .4s ease both; }
+/* Empty cart: no stray header at the bottom, close button top-right, LiverWell colours */
+cart-drawer.is-empty .drawer__header, cart-drawer.is-empty .drawer__footer { display: none !important; }
+cart-drawer.is-empty .drawer__inner-empty { background: #fafaf5 !important; position: relative; }
+cart-drawer .drawer__inner-empty .drawer__close { position: absolute !important; top: 16px !important; right: 16px !important; transform: none !important;
+  width: 40px !important; height: 40px !important; min-width: 0 !important; min-height: 0 !important; justify-content: center !important; border-radius: 999px; background: #fff; box-shadow: 0 4px 14px -6px rgba(22, 48, 31, .3); }
+cart-drawer .drawer__inner-empty .drawer__close svg { width: 16px; height: 16px; }
+cart-drawer .cart__empty-text, cart-drawer .cart__login-title { font-family: var(--lw-font-body) !important; color: #16301f !important; letter-spacing: -0.02em !important; font-weight: 500 !important; }
+cart-drawer .cart__empty-text { font-size: 28px !important; }
+cart-drawer .cart__login-title { font-size: 20px !important; }
+cart-drawer .cart__login-paragraph { font-family: var(--lw-font-body) !important; color: #5b6b5f !important; letter-spacing: normal !important; }
+cart-drawer .cart__login-paragraph a { color: #2e9254 !important; text-decoration: underline; text-underline-offset: 3px; }
+cart-drawer .drawer__inner-empty .button { border-radius: 999px !important; background: linear-gradient(135deg, #34c77b 0%, #16a05f 55%, #0f8a52 100%) !important; color: #fff !important;
+  box-shadow: 0 12px 26px -10px rgba(22, 160, 95, .55) !important; font-family: var(--lw-font-body) !important; letter-spacing: -0.005em !important; padding: 0 30px !important; min-height: 50px; border: 0 !important; }
+cart-drawer .drawer__inner-empty .button::after, cart-drawer .drawer__inner-empty .button::before { box-shadow: none !important; }
