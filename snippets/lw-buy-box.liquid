@@ -201,14 +201,18 @@
 
   {%- if bs.app_bundles -%}
     {%- assign form_id = 'LwProductForm-' | append: section.id -%}
-    {%- form 'product', lw_product, id: form_id, class: 'lw-buy__form', novalidate: 'novalidate' -%}
-      <input type="hidden" name="id" value="{{ current.id }}">
+    {%- comment -%} Dawn-standard markup so bundle/subscription apps (Kaching Bundles + Subscriptions) recognise and fill this form {%- endcomment -%}
+    <div class="product-form" data-section-id="{{ section.id }}">
+    {%- form 'product', lw_product, id: form_id, class: 'lw-buy__form form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+      <input type="hidden" name="id" value="{{ current.id }}" class="product-variant-id">
       <input type="hidden" name="quantity" value="1">
-      <button type="submit" name="add" class="lw-btn lw-atc" data-lw-atc {% unless current.available %}disabled{% endunless %}>
+      <input type="hidden" name="selling_plan" value="{{ current.selected_selling_plan_allocation.selling_plan.id }}" class="selected-selling-plan-id">
+      <button type="submit" name="add" class="lw-btn lw-atc product-form__submit" data-lw-atc {% unless current.available %}disabled{% endunless %}>
         <span class="lw-atc__label">{% if current.available %}{{ bs.atc_label | default: 'Add To Cart' }}{% else %}{{ 'products.product.sold_out' | t }}{% endif %}</span>
         <svg class="lw-atc__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16M14 6l6 6-6 6"/></svg>
       </button>
     {%- endform -%}
+    </div>
   {%- else -%}
   <button type="button" class="lw-btn lw-atc" data-lw-atc {% unless current.available %}disabled{% endunless %}>
     <span class="lw-atc__label">{% if current.available %}{{ bs.atc_label | default: 'Add To Cart' }}{% else %}{{ 'products.product.sold_out' | t }}{% endif %}</span>

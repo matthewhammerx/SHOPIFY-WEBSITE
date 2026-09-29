@@ -106,6 +106,9 @@
 
     async submitForm() {
       const fd = new FormData(this.form);
+      // bundle/subscription apps (e.g. Kaching) write id, quantity, selling_plan, properties or items[] into this form.
+      // An empty selling_plan makes Shopify reject the add, so drop it when no plan is chosen.
+      if (!fd.get('selling_plan')) fd.delete('selling_plan');
       await this.post(fd, null, null, Number(fd.get('id')));
     }
 
