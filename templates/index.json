@@ -20,11 +20,12 @@
         "button_label": "Support Your Liver Now",
         "button_link": "/products/milk-thistle",
         "link_label": "See the science",
+        "link_url": "",
         "note": "90-day money-back guarantee",
         "overlay": 35,
+        "product": "milk-thistle",
         "height": 85,
-        "fg": "#16301f",
-        "product": "milk-thistle"
+        "fg": "#16301f"
       }
     },
     "intro": {
@@ -150,10 +151,10 @@
         "eyebrow": "The LiverWell approach",
         "heading": "Support. Clear. <em>Protect.</em>",
         "text": "Most liver supplements only do one thing. LiverWell supports the full cycle.",
+        "product": "milk-thistle",
         "bg": "#fafaf5",
         "padding_top": 32,
-        "padding_bottom": 96,
-        "product": "milk-thistle"
+        "padding_bottom": 96
       }
     },
     "science": {
@@ -184,6 +185,7 @@
         "stat_label": "Silymarin concentration",
         "stat_value": "80",
         "stat_suffix": "%",
+        "footnote": "",
         "padding_top": 96,
         "padding_bottom": 96
       }
@@ -364,6 +366,7 @@
         "point_11"
       ],
       "settings": {
+        "layout": "seed",
         "heading": "How LiverWell® Compares To Other Brands",
         "us_label": "LiverWell",
         "them_label": "Other Brands",
@@ -374,8 +377,7 @@
         "fg": "#ffffff",
         "us_bg": "#5c6b2e",
         "padding_top": 80,
-        "padding_bottom": 64,
-        "layout": "seed"
+        "padding_bottom": 64
       }
     },
     "videos": {
@@ -676,6 +678,7 @@
         "card_2"
       ],
       "settings": {
+        "heading": "",
         "bg": "#fafaf5",
         "padding_top": 32,
         "padding_bottom": 96
