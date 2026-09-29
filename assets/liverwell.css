@@ -1233,3 +1233,18 @@
 @media (min-width: 990px) { .lw-brand .header__inline-menu { min-height: 50px; display: flex; align-items: center; } }
 @media (max-width: 989px) { .lw-brand .header__heading-link { min-height: 50px; } .lw-brand .header__icons { min-height: 0; } .lw-brand .header__icons .lw-header-cta { min-height: 38px; } }
 .lw-brand .header__heading-link, .lw-brand .header__icons, .lw-brand .header__inline-menu, .lw-brand .lw-header-cta, .lw-brand .header__icon { box-sizing: border-box; }
+
+/* ===== Header: clean at the top, pills "pop out" once you scroll (sticky state) ===== */
+.lw-brand .section-header:not(.shopify-section-header-sticky) .header__heading-link,
+.lw-brand .section-header:not(.shopify-section-header-sticky) .header__icons,
+.lw-brand .section-header:not(.shopify-section-header-sticky) .header__inline-menu,
+.lw-brand .section-header:not(.shopify-section-header-sticky) .header::after {
+  background: transparent; border-color: transparent; box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; }
+.lw-brand .section-header .header__heading-link, .lw-brand .section-header .header__icons, .lw-brand .section-header .header__inline-menu {
+  transition: background .35s ease, box-shadow .35s ease, border-color .35s ease; }
+.lw-brand .section-header.shopify-section-header-sticky .header__heading-link,
+.lw-brand .section-header.shopify-section-header-sticky .header__icons,
+.lw-brand .section-header.shopify-section-header-sticky .header__inline-menu,
+.lw-brand .section-header.shopify-section-header-sticky .header::after { animation: lw-pill-pop .45s cubic-bezier(.34, 1.56, .64, 1) both; }
+@keyframes lw-pill-pop { 0% { transform: scale(.9); opacity: .4; } 100% { transform: scale(1); opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .lw-brand .section-header.shopify-section-header-sticky .header__heading-link, .lw-brand .section-header.shopify-section-header-sticky .header__icons, .lw-brand .section-header.shopify-section-header-sticky .header__inline-menu, .lw-brand .section-header.shopify-section-header-sticky .header::after { animation: none; } }
