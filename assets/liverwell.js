@@ -84,7 +84,67 @@
       const unlocked = Number(d.gifts || 0);
       this.gifts.forEach((g, i) => g.classList.toggle('is-locked', i >= unlocked));
       if (this.atc) this.atc.disabled = d.available === 'false';
+      if (this.hasAttribute('data-kaching-sync')) this.syncKaching();
       document.dispatchEvent(new CustomEvent('lw:offer-change', { detail: { price, compare, box: this } }));
+    }
+
+    /* ---- Kaching sync: our offer cards drive the (hidden) Kaching widget ---- */
+    findKaching() {
+      const custom = this.dataset.kachingSelector;
+      const scope = this.closest('.shopify-section') || document;
+      const sels = [custom, 'kaching-bundles-block', 'kaching-bundles', '[class*="kaching-bundles"]', '[id*="kaching"]', '[class*="kaching"]'].filter(Boolean);
+      for (const sel of sels) {
+        let el = null;
+        try { el = scope.querySelector(sel) || document.querySelector(sel); } catch (e) {}
+        if (el && !this.contains(el)) {
+          // climb to the outermost Kaching element so we hide the whole widget
+          while (el.parentElement && el.parentElement !== scope && /kaching/i.test(el.parentElement.className + ' ' + el.parentElement.id + ' ' + el.parentElement.tagName)) el = el.parentElement;
+          return el;
+        }
+      }
+      return null;
+    }
+
+    kachingDeals(root) {
+      let opts = Array.from(root.querySelectorAll('input[type="radio"]'));
+      if (!opts.length) opts = Array.from(root.querySelectorAll('[class*="deal-bar"]:not([class*="deal-bar"] [class*="deal-bar"]), [class*="bundle-bar"], [data-deal-index], [role="radio"]'));
+      return opts;
+    }
+
+    syncKaching() {
+      if (!this.kaching || !this.kaching.isConnected) {
+        this.kaching = this.findKaching();
+        if (!this.kaching) {
+          // Kaching renders a moment after page load — keep looking for a few seconds
+          if (!this._kTries) this._kTries = 0;
+          if (this._kTries++ < 40) { clearTimeout(this._kT); this._kT = setTimeout(() => this.syncKaching(), 250); }
+          return;
+        }
+        this.kaching.classList.add('lw-kaching-hidden');
+        this.kaching.setAttribute('aria-hidden', 'true');
+      }
+      const idx = Math.max(0, this.offers.indexOf(this.selected));
+      const deals = this.kachingDeals(this.kaching);
+      const target = deals[idx] || deals[deals.length - 1];
+      if (target) {
+        const isInput = target.tagName === 'INPUT';
+        const already = isInput ? target.checked : (target.getAttribute('aria-checked') === 'true' || /selected|active/.test(target.className));
+        if (!already) {
+          if (isInput) { target.click(); target.dispatchEvent(new Event('change', { bubbles: true })); }
+          else target.click();
+        }
+      }
+      // subscription toggle follows ours
+      const subBox = this.kaching.querySelector('input[type="checkbox"]');
+      if (subBox && this.subInput && subBox.checked !== this.subscribing) { subBox.click(); subBox.dispatchEvent(new Event('change', { bubbles: true })); }
+      // keep our form's fallback id/quantity in line with the chosen offer (Kaching may overwrite them)
+      if (this.form) {
+        const d = this.selected.dataset;
+        const idIn = this.form.querySelector('[name="id"]'), qIn = this.form.querySelector('[name="quantity"]'), spIn = this.form.querySelector('[name="selling_plan"]');
+        if (idIn && d.variant) idIn.value = d.variant;
+        if (qIn) qIn.value = d.qty || 1;
+        if (spIn) spIn.value = this.subscribing && d.sellingPlan ? d.sellingPlan : '';
+      }
     }
 
     async addToCart() {

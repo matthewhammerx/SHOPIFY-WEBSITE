@@ -40,7 +40,7 @@
   endif
   assign default_gifts = default_gifts | default: 0
 -%}
-<lw-buy-box class="lw-buy" id="LwBuy-{{ section.id }}" {% if main %}data-main{% endif %} data-redirect="{{ bs.after_add | default: 'drawer' }}" {{ attrs }}>
+<lw-buy-box class="lw-buy" id="LwBuy-{{ section.id }}" {% if main %}data-main{% endif %} data-redirect="{{ bs.after_add | default: 'drawer' }}"{% if bs.kaching_sync and bs.app_bundles != true %} data-kaching-sync data-kaching-selector="{{ bs.kaching_selector | escape }}"{% endif %} {{ attrs }}>
   {%- unless bs.app_bundles -%}
   {%- if bs.show_price_header -%}
     <div class="lw-buy__price">
@@ -199,7 +199,7 @@
     </div>
   {%- endif -%}
 
-  {%- if bs.app_bundles -%}
+  {%- if bs.app_bundles or bs.kaching_sync -%}
     {%- assign form_id = 'LwProductForm-' | append: section.id -%}
     {%- comment -%} Dawn-standard markup so bundle/subscription apps (Kaching Bundles + Subscriptions) recognise and fill this form {%- endcomment -%}
     <div class="product-form" data-section-id="{{ section.id }}">
@@ -209,6 +209,9 @@
       <input type="hidden" name="selling_plan" value="{{ current.selected_selling_plan_allocation.selling_plan.id }}" class="selected-selling-plan-id">
       <button type="submit" name="add" class="lw-btn lw-atc product-form__submit" data-lw-atc {% unless current.available %}disabled{% endunless %}>
         <span class="lw-atc__label">{% if current.available %}{{ bs.atc_label | default: 'Add To Cart' }}{% else %}{{ 'products.product.sold_out' | t }}{% endif %}</span>
+        {%- if bs.kaching_sync and bs.show_atc_price -%}
+          <span class="lw-atc__price"><s data-lw-compare></s><span data-lw-price>{{ current.price | money }}</span></span>
+        {%- endif -%}
         <svg class="lw-atc__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16M14 6l6 6-6 6"/></svg>
       </button>
     {%- endform -%}

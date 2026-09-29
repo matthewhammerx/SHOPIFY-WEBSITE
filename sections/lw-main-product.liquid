@@ -1437,6 +1437,19 @@
           "info": "Hides the offer cards, gifts box, price row and subscribe toggle, and outputs a standard Shopify product form. Add the Kaching Bundles app block right above this buy box."
         },
         {
+          "type": "checkbox",
+          "id": "kaching_sync",
+          "label": "Kaching sync: our design, Kaching in the background",
+          "default": false,
+          "info": "Keeps these offer cards visible and hides the Kaching widget. Picking an offer here selects the same deal (1st = 1st, 2nd = 2nd…) in Kaching, and the subscribe toggle follows too. Leave 'Use a bundle app' OFF. Add the Kaching block anywhere in this section."
+        },
+        {
+          "type": "text",
+          "id": "kaching_selector",
+          "label": "Kaching widget selector (advanced)",
+          "info": "Leave empty unless the Kaching widget isn't found."
+        },
+        {
           "type": "header",
           "content": "Price header"
         },

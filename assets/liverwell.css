@@ -1682,3 +1682,5 @@ cart-drawer:not(.active) .cart-drawer__overlay { background: transparent !import
 .lw-brand .lw-offer.is-selected { box-shadow: 0 10px 26px -12px rgba(22, 160, 95, .45) !important; outline: none !important; }
 .lw-offer, .lw-offer:focus, .lw-offer:focus-within, .lw-offer input:focus { outline: none !important; }
 .lw-offer:has(input:focus-visible) { outline: 2px solid rgba(46, 146, 84, .45) !important; outline-offset: 3px; }
+/* Kaching sync: widget stays rendered (so it keeps working) but is invisible */
+.lw-kaching-hidden { position: absolute !important; left: -99999px !important; width: 1px !important; height: 1px !important; overflow: hidden !important; opacity: 0 !important; pointer-events: none !important; }
