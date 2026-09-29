@@ -1288,3 +1288,8 @@
 .lw-brand .menu-drawer__close-btn { position: static; margin: 0; width: 40px; height: 40px; padding: 0; flex: none; border: 1px solid rgba(22, 48, 31, .08); }
 .lw-brand .menu-drawer__close-btn svg { width: 16px; height: 16px; }
 .lw-brand .lw-menu-card__badge { letter-spacing: .01em; }
+/* Menu close button: theme makes the icon position:absolute; pin it to the exact center */
+.lw-brand .menu-drawer__close-btn { position: relative !important; display: block !important; }
+.lw-brand .menu-drawer__close-btn .icon, .lw-brand .menu-drawer__close-btn svg {
+  position: absolute !important; top: 50% !important; left: 50% !important; margin: 0 !important;
+  width: 16px !important; height: 16px !important; transform: translate(-50%, -50%) !important; visibility: visible !important; opacity: 1 !important; color: #16301f; }
