@@ -1130,3 +1130,7 @@
 .lw-brand .lw-tl__list--progress::after { background: linear-gradient(180deg, #2e9254 0%, #1f7a47 100%); }
 .lw-brand .lw-tl__list--progress .lw-tl__step.is-active::before { background: #2e9254 !important; box-shadow: 0 0 0 3px #fafaf5, 0 0 0 6px rgba(46, 146, 84, .18); }
 .lw-brand .lw-tl__list--progress .lw-tl__step.is-active .lw-tl__label { background: linear-gradient(120deg, #237d49 0%, #2e9254 60%, #38a162 100%) !important; box-shadow: 0 8px 20px -10px rgba(35, 125, 73, .55); }
+/* Brand: glass section CTA = same lime button as the stats panel (all dark panels use lime) */
+.lw-brand .lw .lw-glass__btn, .lw-brand .lw .lw-glass__btn:hover { background: linear-gradient(135deg, #eefab8 0%, #d9f28b 50%, #bfe36a 100%); color: #16301f !important; box-shadow: 0 10px 26px -8px rgba(217, 242, 139, .55); position: relative; overflow: hidden; isolation: isolate; }
+.lw-brand .lw .lw-glass__btn::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,.55) 50%, transparent 70%); transform: translateX(-120%); transition: transform .7s ease; }
+.lw-brand .lw .lw-glass__btn:hover::after { transform: translateX(120%); }
