@@ -204,6 +204,29 @@
             </nav>
           {% endif %}
 <!--                 end secondary nav -->
+          {%- liquid
+            assign lw_mp = section.settings.lw_menu_product
+            if lw_mp == blank
+              assign lw_mp = all_products['milk-thistle']
+            endif
+          -%}
+          {%- if lw_mp != blank and lw_mp.id -%}
+            <a class="lw-menu-card" href="{{ lw_mp.url }}">
+              <span class="lw-menu-card__img">
+                {%- if section.settings.lw_menu_image != blank -%}
+                  {{ section.settings.lw_menu_image | image_url: width: 300 | image_tag: loading: 'lazy', alt: lw_mp.title }}
+                {%- elsif lw_mp.featured_image -%}
+                  {{ lw_mp.featured_image | image_url: width: 300 | image_tag: loading: 'lazy', alt: lw_mp.title }}
+                {%- endif -%}
+              </span>
+              <span class="lw-menu-card__body">
+                {%- if section.settings.lw_menu_badge != blank -%}<span class="lw-menu-card__badge">{{ section.settings.lw_menu_badge }}</span>{%- endif -%}
+                <span class="lw-menu-card__title">{{ lw_mp.title }}</span>
+                <span class="lw-menu-card__price">{{ 'From' }} {{ lw_mp.price_min | money }}</span>
+                <span class="lw-menu-card__btn">{{ section.settings.lw_menu_button | default: 'Shop Now' }} &rarr;</span>
+              </span>
+            </a>
+          {%- endif -%}
           <div class="menu-drawer__utility-links">
             {%- if shop.customer_accounts_enabled -%}
               <a href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}" class="menu-drawer__account link focus-inset h5">
