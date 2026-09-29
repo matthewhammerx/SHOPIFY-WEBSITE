@@ -1108,3 +1108,8 @@
 /* Brand: glass section button uses the site's green gradient like every other main CTA */
 .lw-brand .lw .lw-glass__btn { background: var(--lw-grad); color: #fff !important; box-shadow: var(--lw-glow); }
 .lw-brand .lw .lw-glass__btn:hover { background: var(--lw-grad); transform: translateY(-1px); }
+
+/* Brand timeline: its own "lit" shade — deeper emerald → teal, darker than the CTA buttons */
+.lw-brand .lw-tl__list--progress::after { background: linear-gradient(180deg, #1d7a50 0%, #14806c 100%); width: 3px; left: 4.5px; border-radius: 3px; }
+.lw-brand .lw-tl__list--progress .lw-tl__step.is-active::before { background: #17775a !important; box-shadow: 0 0 0 3px #fafaf5, 0 0 0 6px rgba(23, 119, 90, .18); }
+.lw-brand .lw-tl__list--progress .lw-tl__step.is-active .lw-tl__label { background: linear-gradient(120deg, #1d6b47 0%, #177a60 55%, #138a74 100%) !important; box-shadow: 0 8px 20px -10px rgba(19, 110, 90, .6); }
