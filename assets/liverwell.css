@@ -1356,3 +1356,9 @@ body.lw-brand .lw-sticky.lw .lw-btn.lw-btn[data-lw-sticky-btn] { background: #fa
 .lw-brand .lw-sticky.is-visible { transform: none; }
 .lw-brand.lw-sticky-on .section-header { opacity: 1; pointer-events: auto; }
 @media (max-width: 749px) { .lw-brand .lw-sticky { bottom: calc(10px + env(safe-area-inset-bottom)); } }
+/* Desktop: sticky ATC sits compact in the bottom-right corner */
+@media (min-width: 750px) {
+  .lw-brand .lw-sticky { left: auto; right: 20px; bottom: calc(20px + env(safe-area-inset-bottom)); width: 440px; max-width: calc(100vw - 40px); margin: 0; }
+  .lw-brand .lw-sticky__inner { max-width: none; }
+}
+@media (min-width: 750px) { .lw-brand .lw-sticky { width: auto; max-width: 560px; } .lw-brand .lw-sticky__info { flex: 0 1 auto; } .lw-brand .lw-sticky__title { padding-right: 6px; } }
