@@ -453,6 +453,7 @@
       el.addEventListener('dragstart', (e) => e.preventDefault());
       el.addEventListener('pointerdown', (e) => {
         if (e.pointerType !== 'mouse' || e.button !== 0) return;
+        if (el.scrollWidth <= el.clientWidth + 2) return; // not a slider at this size (e.g. desktop grid)
         down = true; moved = false; startX = e.clientX; startLeft = el.scrollLeft;
       });
       window.addEventListener('pointermove', (e) => {
