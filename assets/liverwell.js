@@ -352,7 +352,7 @@
       e.preventDefault();
       const atc = target.querySelector('.lw-atc, [type="submit"]');
       if (bar.dataset.action === 'add' && atc && !atc.disabled) { atc.click(); return; }
-      target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      (atc || target).scrollIntoView({ behavior: 'smooth', block: 'center' });
     });
     document.addEventListener('lw:offer-change', (e) => {
       if (e.detail.box !== target) return;
