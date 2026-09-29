@@ -336,6 +336,14 @@
     let visible = true;
     const watch = target.querySelector('.lw-atc, [type="submit"]') || target;
     let ticking = false;
+    // circle -> pill animation: distance the thumbnail travels while the bar expands
+    const inner = bar.querySelector('.lw-sticky__inner');
+    const measure = () => {
+      if (!inner) return;
+      const c = parseFloat(getComputedStyle(inner).getPropertyValue('--lw-c')) || 54;
+      bar.style.setProperty('--lw-w', Math.max(0, inner.offsetWidth - c) + 'px');
+    };
+    window.addEventListener('resize', () => { if (bar.classList.contains('is-shown')) measure(); });
     const check = () => {
       ticking = false;
       const on = watch.getBoundingClientRect().bottom < 0;
@@ -346,10 +354,11 @@
       if (on) {
         // display first (Safari samples anything rendered at the bottom, even invisible), then animate in
         bar.classList.add('is-shown');
+        measure();
         requestAnimationFrame(() => requestAnimationFrame(() => bar.classList.add('is-visible')));
       } else {
         bar.classList.remove('is-visible');
-        bar._hideT = setTimeout(() => { if (!visible) bar.classList.remove('is-shown'); }, 420);
+        bar._hideT = setTimeout(() => { if (!visible) bar.classList.remove('is-shown'); }, 700);
       }
     };
     visible = null;

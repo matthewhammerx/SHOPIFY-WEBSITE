@@ -1471,3 +1471,22 @@ cart-drawer .drawer__close { top: 50% !important; right: 14px !important; transf
 cart-drawer .drawer__close svg { width: 16px; height: 16px; }
 cart-drawer .cart-item .price, cart-drawer .cart-item .regular-price, cart-drawer .cart-item [class*="accent-color"], cart-drawer .cart-item__totals, cart-drawer .cart-item__totals * { color: #2e9254 !important; }
 cart-drawer .cart-item .compare-price, cart-drawer .cart-item__old-price { color: #8a948c !important; }
+
+/* ===== Sticky ATC: appears as a product circle on the right, then expands into the pill (Seed-style) ===== */
+@property --lw-r { syntax: '<number>'; inherits: true; initial-value: 0; }
+.lw-brand .lw-sticky .lw-sticky__inner, .lw-brand .lw-sticky.is-visible .lw-sticky__inner {
+  --lw-c: 54px; --lw-r: 0;
+  opacity: 0; transform: scale(.35); transform-origin: calc(100% - var(--lw-c) / 2) 50%;
+  clip-path: inset(0 0 0 calc(var(--lw-w, 0px) * (1 - var(--lw-r))) round 999px);
+  transition: --lw-r .38s cubic-bezier(.4, 0, .2, 1), transform .3s cubic-bezier(.34, 1.4, .64, 1) .3s, opacity .2s ease .3s; }
+.lw-brand .lw-sticky.is-shown.is-visible .lw-sticky__inner {
+  --lw-r: 1; opacity: 1; transform: none;
+  transition: transform .38s cubic-bezier(.34, 1.4, .64, 1), opacity .2s ease, --lw-r .55s cubic-bezier(.22, 1, .36, 1) .3s; }
+.lw-brand .lw-sticky .lw-sticky__img { transform: translateX(calc(var(--lw-w, 0px) * (1 - var(--lw-r)))); position: relative; z-index: 1; }
+.lw-brand .lw-sticky .lw-sticky__info, .lw-brand .lw-sticky .lw-btn { opacity: calc(var(--lw-r) * 2.2 - 1.2); }
+@media (min-width: 750px) { .lw-brand .lw-sticky .lw-sticky__inner, .lw-brand .lw-sticky.is-visible .lw-sticky__inner { --lw-c: 66px; } }
+@media (prefers-reduced-motion: reduce) {
+  .lw-brand .lw-sticky .lw-sticky__inner, .lw-brand .lw-sticky.is-shown.is-visible .lw-sticky__inner { transition: opacity .2s ease !important; transform: none !important; clip-path: none !important; }
+  .lw-brand .lw-sticky .lw-sticky__img { transform: none !important; }
+  .lw-brand .lw-sticky .lw-sticky__info, .lw-brand .lw-sticky .lw-btn { opacity: 1; }
+}
