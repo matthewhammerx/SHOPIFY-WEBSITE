@@ -1632,3 +1632,10 @@ cart-drawer:not(.active) .cart-drawer__overlay { background: transparent !import
 .lw-brand .menu-drawer__submenu .menu-drawer__menu-item { color: #16301f !important; background: transparent !important; }
 .lw-brand .menu-drawer__submenu .menu-drawer__menu-item:hover, .lw-brand .menu-drawer__submenu .menu-drawer__menu-item--active { color: #2e9254 !important; }
 .lw-brand .menu-drawer__submenu::-webkit-scrollbar { display: none; }
+/* Menu stagger animation must not stay "in effect" after it ends (it turned each item into a containing
+   block / stacking context, trapping the Shop sub-screen and layering the product card above it) */
+.lw-brand details.menu-opening > .menu-drawer .menu-drawer__menu > li,
+.lw-brand details.menu-opening > .menu-drawer .lw-menu-card,
+.lw-brand details.menu-opening > .menu-drawer .menu-drawer__utility-links { animation-fill-mode: backwards !important; }
+.lw-brand .menu-drawer__submenu .menu-drawer__menu > li { animation: none !important; }
+.lw-brand .menu-drawer__submenu { z-index: 20 !important; }
