@@ -41,7 +41,6 @@
               assign himg = section.settings.product.featured_image
             endif
           -%}
-          <span class="lwh-blob" aria-hidden="true"></span>
           {%- if himg != blank -%}
             {{ himg | image_url: width: 1200 | image_tag: loading: 'eager', sizes: '(min-width: 990px) 45vw, 90vw', widths: '500, 800, 1200', alt: himg.alt }}
           {%- else -%}

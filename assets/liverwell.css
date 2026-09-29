@@ -816,3 +816,29 @@
   .lw-cmps__points li { font-size: 15px; }
   .lw .lw-cmps__btn { width: 100%; min-width: 0; }
 }
+
+/* ===== Soft templates: calmer corners + transparent product images ===== */
+.lwh-blob { display: none; }
+/* Section bands go back to full width (no floating rounded panels) */
+.lw-soft .lw-stats, .lw-soft .lw-bprod, .lw-soft .lw-cmp, .lw-soft .lw-glass, .lw-soft .lwh-dark, .lw-soft .lwh-science,
+.lw-soft .lw-guar, .lw-soft .lw-bundle, .lw-soft .lw-faq, .lw-soft .lw-section[style*="#f1f0e8"], .lw-soft .lw-section[style*="#f7f8f5"] { margin: 0; border-radius: 0; }
+.lw-soft .lwh-hero--split .lwh-hero__frame { margin: 0; border-radius: 0; }
+/* One modest radius for cards, a smaller one for images */
+.lw-soft { --lw-radius: 14px; --lw-radius-lg: 18px; }
+.lw-soft .lw-ingr, .lw-soft .lw-review, .lw-soft .lw-reason, .lw-soft .lw-bcard, .lw-soft .lw-science__item, .lw-soft .lw-facts__label,
+.lw-soft .lwh-pcard, .lw-soft .lwh-feature, .lw-soft .lwh-panel, .lw-soft .lwh-cta, .lw-soft .lwh-glasspanel, .lw-soft .lw-glass__card,
+.lw-soft .lw-offer, .lw-soft .lw-gifts, .lw-soft .lw-stock, .lw-soft .lw-benefit-grid, .lw-soft .lw-sub-toggle, .lw-soft .lw-cmp__col, .lw-cmps__panel { border-radius: 16px; }
+.lw-soft .lw-ingr__img, .lw-soft .lw-reason__img, .lw-soft .lw-tl__img, .lw-soft .lw-gallery__main, .lw-soft .lw-vid, .lw-soft .lw-bcard__img,
+.lw-soft .lwh-cause__img, .lw-soft .lwh-approach__img { border-radius: 12px; }
+.lw-soft .lw-acc details { border-radius: 12px; }
+.lw-soft .lw-gallery__thumb { border-radius: 8px; }
+.lw-soft .lwh-statbox { border-radius: 12px; }
+.lw-soft .lwh-cause__icon { border-radius: 10px; }
+.lw-cmps__us--first { border-radius: 12px 12px 0 0; }
+.lw-cmps__us--last { border-radius: 0 0 12px 12px; }
+/* When a real image is uploaded, drop the box behind it so transparent PNGs sit right on the page */
+.lw-soft .lwh-approach__img:has(img), .lw-soft .lw-ingr__img:has(img), .lw-soft .lwh-cause__img:has(img), .lw-soft .lwh-hero__visual:has(img) { background: transparent !important; box-shadow: none; }
+.lw-soft .lwh-approach__img:has(img) img { object-fit: contain; }
+@media (max-width: 749px) {
+  .lw-soft .lwh-panel, .lw-soft .lwh-glasspanel, .lw-cmps__panel { border-radius: 14px; }
+}
