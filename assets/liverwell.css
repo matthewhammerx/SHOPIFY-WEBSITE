@@ -1525,8 +1525,5 @@ cart-drawer .cart-item .compare-price, cart-drawer .cart-item__old-price { color
 .lw-bcard__toggle { transition: background .25s ease, border-color .25s ease; }
 .lw-bcard[open] .lw-bcard__toggle { background: #16301f; border-color: #16301f; color: #fff; }
 @media (prefers-reduced-motion: reduce) { .lw-bcard .lw-bcard__body { animation: none !important; } }
-/* FAQ / buy-box accordions: match the benefit cards exactly (fade timing + filled toggle when open) */
+/* FAQ / buy-box accordions: same fade timing as the benefit cards */
 .lw-acc details[open] .lw-acc__body { animation: lw-acc-in .4s ease both; }
-.lw-acc summary .lw-acc__plus { box-sizing: content-box; padding: 9px; margin: -9px -6px -9px 0; border-radius: 50%; border: 1px solid transparent; transition: background .25s ease, border-color .25s ease, color .25s ease; }
-.lw-acc summary .lw-acc__plus::before, .lw-acc summary .lw-acc__plus::after { left: 9px; top: 14px; }
-.lw-acc details[open] .lw-acc__plus { background: #16301f; border-color: #16301f; color: #fff; }
