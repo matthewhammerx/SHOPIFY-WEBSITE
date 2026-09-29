@@ -1554,3 +1554,11 @@ cart-drawer .drawer__inner-empty .button::after, cart-drawer .drawer__inner-empt
   .lw-brand .header__icons .header__search, .lw-brand .header__icons details-modal { display: contents; }
   .lw-brand .header__heading-link, .lw-brand .header__inline-menu { height: 52px; min-height: 0 !important; box-sizing: border-box; }
 }
+
+/* iOS Safari samples fixed elements even when invisible: strip background + blur from the menu and
+   cart layers whenever they're closed, so the bottom toolbar never stays blurred after closing */
+.lw-brand header-drawer > details:not([open]) > summary::before,
+.lw-brand header-drawer > details:not(.menu-opening) > summary::before { background: transparent !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+.lw-brand header-drawer > details:not(.menu-opening) > .menu-drawer { background: transparent !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important; box-shadow: none !important; border-color: transparent !important; }
+.lw-brand header-drawer .header__icon--menu::before { background: transparent !important; }
+cart-drawer:not(.active) .cart-drawer__overlay { background: transparent !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
