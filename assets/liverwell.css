@@ -1671,3 +1671,10 @@ cart-drawer:not(.active) .cart-drawer__overlay { background: transparent !import
 .lw-brand .lw-mrow__eyebrow { font-size: 13px; color: #5b6b5f; }
 .lw-brand .lw-mrow__title { font-size: 17px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.2; color: #16301f; }
 .lw-brand .menu-drawer__submenu .lw-mrow__all { display: block; text-align: right; margin: 14px 16px 4px; font-family: var(--lw-font-body); font-size: 15px; font-weight: 600; color: #2e9254 !important; text-decoration: underline; text-underline-offset: 5px; letter-spacing: normal; }
+/* Logo size follows Theme settings → Logo width / Mobile logo width, but always fits inside the 44px pill */
+.lw-brand .header__heading-link img, .lw-brand .header__heading-logo {
+  width: var(--lw-logo-w, 120px) !important; height: auto !important; max-width: var(--lw-logo-w, 120px) !important; max-height: calc(var(--lw-pill-h, 44px) - 10px) !important; }
+@media (max-width: 749px) {
+  .lw-brand .header__heading-link img, .lw-brand .header__heading-logo {
+    width: var(--lw-logo-w-m, 100px) !important; max-width: var(--lw-logo-w-m, 100px) !important; height: auto !important; }
+}
