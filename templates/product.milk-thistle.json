@@ -100,7 +100,7 @@
           "type": "text",
           "settings": {
             "use_product_description": false,
-            "text": "<p>Made with clinically studied milk thistle standardized to 80% silymarin plus 7 supporting botanicals to help support liver function, ease bloating, and restore natural energy.†</p>"
+            "text": "<p>Made with clinically studied milk thistle standardized to 80% silymarin plus 5 supporting ingredients to help support liver function, ease bloating, and restore natural energy.†</p>"
           }
         },
         "benefits_5": {
@@ -219,7 +219,7 @@
           "settings": {
             "heading": "Description",
             "icon": "none",
-            "content": "<p>LiverWell Milk Thistle is a daily liver support formula built around milk thistle extract standardized to 80% silymarin — the concentration used in clinical research — plus 7 supporting ingredients for digestion, energy, and antioxidant protection.†</p><p>No proprietary blends. No fillers. Third-party tested.</p>"
+            "content": "<p>LiverWell Milk Thistle is a daily liver support formula built around milk thistle extract standardized to 80% silymarin — the concentration used in clinical research — plus 5 supporting ingredients for digestion, energy, and antioxidant protection.†</p><p>No proprietary blends. No fillers. Third-party tested.</p>"
           }
         },
         "collapsible_15": {
@@ -368,7 +368,7 @@
         "stat_3": {
           "type": "stat",
           "settings": {
-            "number": "8",
+            "number": "6",
             "label": "Active ingredients, zero fillers"
           }
         },
@@ -391,9 +391,9 @@
     "ingredients": {
       "type": "lw-ingredients",
       "settings": {
-        "heading": "8 Active Ingredients <em>Doing Different Jobs</em>",
+        "heading": "6 Active Ingredients <em>Doing Different Jobs</em>",
         "text": "Every capsule is packed with essentials — at the doses that matter.",
-        "columns": 4,
+        "columns": 3,
         "bg": "#f7f8f5",
         "fg": "#111511",
         "accent": "#009370",
@@ -428,20 +428,12 @@
         "ingredient_4": {
           "type": "ingredient",
           "settings": {
-            "dose": "50mg",
-            "name": "Wormwood Extract",
-            "text": "A time-honored botanical that supports a balanced gut and natural digestive cleansing.†"
+            "dose": "10mg",
+            "name": "L-Methionine",
+            "text": "A key amino acid that supports your body's natural processing and waste removal.†"
           }
         },
         "ingredient_5": {
-          "type": "ingredient",
-          "settings": {
-            "dose": "50mg",
-            "name": "Clove Extract",
-            "text": "Supports comfortable digestion and works alongside wormwood for gut health.†"
-          }
-        },
-        "ingredient_6": {
           "type": "ingredient",
           "settings": {
             "dose": "10mg",
@@ -449,15 +441,7 @@
             "text": "An essential antioxidant that supports immune function and helps shield liver cells from free radicals.†"
           }
         },
-        "ingredient_7": {
-          "type": "ingredient",
-          "settings": {
-            "dose": "10mg",
-            "name": "L-Methionine",
-            "text": "A key amino acid that supports your body's natural processing and waste removal.†"
-          }
-        },
-        "ingredient_8": {
+        "ingredient_6": {
           "type": "ingredient",
           "settings": {
             "dose": "4mg",
@@ -472,9 +456,7 @@
         "ingredient_3",
         "ingredient_4",
         "ingredient_5",
-        "ingredient_6",
-        "ingredient_7",
-        "ingredient_8"
+        "ingredient_6"
       ]
     },
     "reviews_stories": {
@@ -620,7 +602,7 @@
       "type": "lw-benefit-cards",
       "settings": {
         "heading": "<em>Real Benefits.</em> Backed by Research.",
-        "text": "<p>Eight ingredients. Two capsules a day. Decades of research and <strong>2,000 years of traditional use</strong> behind every serving.</p>",
+        "text": "<p>Six ingredients. Two capsules a day. Decades of research and <strong>2,000 years of traditional use</strong> behind every serving.</p>",
         "bg": "#f1f0e8",
         "fg": "#111511",
         "accent": "#009370"
@@ -639,7 +621,7 @@
           "settings": {
             "title": "Digestion",
             "subtitle": "Gut comfort without the bloat.",
-            "content": "<p>Wormwood, clove and inositol support a balanced gut and smoother digestion after meals.†</p>"
+            "content": "<p>Milk thistle, inositol and turmeric support healthy digestion and help ease occasional bloating after meals.†</p>"
           }
         },
         "card_3": {
@@ -807,7 +789,7 @@
           "type": "reason",
           "settings": {
             "title": "Supports Liver AND Gut Together",
-            "text": "Why take three different supplements? LiverWell pairs milk thistle with 7 supporting ingredients for liver, digestion and energy in one daily formula.†"
+            "text": "Why take three different supplements? LiverWell pairs milk thistle with 5 supporting ingredients for liver, digestion and energy in one daily formula.†"
           }
         },
         "reason_3": {
@@ -865,7 +847,7 @@
           "type": "row",
           "settings": {
             "icon": "flask",
-            "us_text": "8 Active Ingredients",
+            "us_text": "6 Active Ingredients",
             "them_text": "Single Ingredient"
           }
         },
@@ -1034,7 +1016,7 @@
         "stat_3": {
           "type": "stat",
           "settings": {
-            "number": "8",
+            "number": "6",
             "text": "Active ingredients formulated for liver, gut and energy support.†"
           }
         },
@@ -1264,20 +1246,12 @@
         "row_1": {
           "type": "row",
           "settings": {
-            "name": "Vitamin C (as ascorbic acid)",
-            "amount": "10mg",
-            "dv": "11%"
-          }
-        },
-        "row_2": {
-          "type": "row",
-          "settings": {
             "name": "Milk Thistle Extract (seed) (80% Silymarin)",
             "amount": "300mg",
             "dv": "†"
           }
         },
-        "row_3": {
+        "row_2": {
           "type": "row",
           "settings": {
             "name": "Inositol",
@@ -1285,7 +1259,7 @@
             "dv": "†"
           }
         },
-        "row_4": {
+        "row_3": {
           "type": "row",
           "settings": {
             "name": "Pueraria Extract (root) (10% Puerarin)",
@@ -1293,23 +1267,7 @@
             "dv": "†"
           }
         },
-        "row_5": {
-          "type": "row",
-          "settings": {
-            "name": "Wormwood Extract (aerial)",
-            "amount": "50mg",
-            "dv": "†"
-          }
-        },
-        "row_6": {
-          "type": "row",
-          "settings": {
-            "name": "Clove Extract (bud)",
-            "amount": "50mg",
-            "dv": "†"
-          }
-        },
-        "row_7": {
+        "row_4": {
           "type": "row",
           "settings": {
             "name": "L-Methionine",
@@ -1317,7 +1275,15 @@
             "dv": "†"
           }
         },
-        "row_8": {
+        "row_5": {
+          "type": "row",
+          "settings": {
+            "name": "Vitamin C (as ascorbic acid)",
+            "amount": "10mg",
+            "dv": "11%"
+          }
+        },
+        "row_6": {
           "type": "row",
           "settings": {
             "name": "Turmeric Extract (root) (95% Curcuminoids)",
@@ -1332,9 +1298,7 @@
         "row_3",
         "row_4",
         "row_5",
-        "row_6",
-        "row_7",
-        "row_8"
+        "row_6"
       ]
     },
     "faq": {
@@ -1375,7 +1339,7 @@
           "type": "question",
           "settings": {
             "question": "What makes LiverWell different from other milk thistle supplements?",
-            "answer": "<p>Our milk thistle is standardized to 80% silymarin — the clinical threshold — and paired with 7 supporting ingredients for digestion and energy. No proprietary blends, no fillers, every batch third-party tested.</p>"
+            "answer": "<p>Our milk thistle is standardized to 80% silymarin — the clinical threshold — and paired with 5 supporting ingredients for digestion and energy. No proprietary blends, no fillers, every batch third-party tested.</p>"
           }
         },
         "question_5": {
