@@ -1418,3 +1418,6 @@ html:has(body.lw-brand), body.lw-brand { background-color: #fafaf5; }
   .lw-brand .lw-sticky, .lw-brand .lw-sticky.is-visible { height: calc(100svh - 24px) !important; }
   .lw-brand .lw-sticky .lw-sticky__inner, .lw-brand .lw-sticky.is-visible .lw-sticky__inner { left: auto; right: 20px; max-width: 560px; padding: 8px; }
 }
+/* Sticky ATC: sit just above Safari's buttons (lower than before) */
+.lw-brand .lw-sticky, .lw-brand .lw-sticky.is-visible { height: calc(100svh - 6px) !important; }
+@media (min-width: 750px) { .lw-brand .lw-sticky, .lw-brand .lw-sticky.is-visible { height: calc(100svh - 20px) !important; } }
