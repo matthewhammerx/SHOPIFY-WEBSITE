@@ -7,7 +7,7 @@
 {%- if lw_product != blank -%}
 <div class="lw lw-sticky" data-lw-sticky data-action="{{ section.settings.action }}">
   <div class="lw-sticky__inner">
-    <div class="lw-sticky__img">{%- if lw_product.featured_image -%}{{ lw_product.featured_image | image_url: width: 120 | image_tag: loading: 'lazy', alt: '' }}{%- endif -%}</div>
+    <div class="lw-sticky__img">{%- if section.settings.image != blank -%}{{ section.settings.image | image_url: width: 160 | image_tag: loading: 'lazy', alt: '' }}{%- elsif lw_product.featured_image -%}{{ lw_product.featured_image | image_url: width: 160 | image_tag: loading: 'lazy', alt: '' }}{%- endif -%}</div>
     <div class="lw-sticky__info">
       <div class="lw-sticky__title">{{ lw_product.title }}</div>
       <div class="lw-sticky__rating">{% render 'lw-stars', count: 5 %}<span>{{ section.settings.rating_text }}</span></div>
@@ -32,6 +32,12 @@
       "id": "product",
       "label": "Product",
       "info": "Leave empty on product pages."
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Thumbnail image",
+      "info": "Optional. Replaces the product image in the bar \u2014 a transparent bottle PNG looks best."
     },
     {
       "type": "text",
