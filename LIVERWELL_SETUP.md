@@ -45,7 +45,7 @@ Gifts are display-only by default. To add a real gift product, pick it in the gi
 
 ## 5. Before you launch (important)
 - **Reviews and customer names are samples** ("Sample R.", etc.). Replace them with genuine customer reviews, or connect a reviews app (the main section accepts app blocks). Publishing invented reviews as real ones breaks FTC rules.
-- **Check the formula.** The ingredients, doses and Supplement Facts panel follow your 6-ingredient formula (milk thistle 300mg, inositol 200mg, pueraria 68mg, L-methionine 10mg, vitamin C 10mg, turmeric 4mg). Make them match your actual label.
+- **Check the formula.** The ingredients, doses and Supplement Facts panel follow your 6-ingredient formula (1 capsule daily, 30 servings). Add your "Other ingredients" line in the Supplement Facts section — it is empty until you do. Make them match your actual label.
 - **Check the claims.** "Rated 4.9", "93% sold" and "FALL SALE" are placeholders you can edit. Only show numbers you can back up.
 - **Upload images and videos.** Grey boxes are placeholders for the gallery, ingredient photos, UGC videos, lifestyle shots and the guarantee image.
 - The FDA disclaimer (†) is at the bottom of the FAQ section. Keep it.
