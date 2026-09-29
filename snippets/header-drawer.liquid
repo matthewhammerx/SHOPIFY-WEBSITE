@@ -118,13 +118,28 @@
                                     </div>
                                   </details>
                                 {%- else -%}
-                                  <a href="{{ childlink.url }}" class="menu-drawer__menu-item link link--text list-menu__item focus-inset{% if childlink.current %} menu-drawer__menu-item--active{% endif %}"{% if childlink.current %} aria-current="page"{% endif %}>
-                                    {{ childlink.title | escape }}
+                                  {%- assign lw_p = nil -%}
+                                  {%- if childlink.type == 'product_link' -%}{%- assign lw_p = childlink.object -%}{%- endif -%}
+                                  <a href="{{ childlink.url }}" class="menu-drawer__menu-item link link--text list-menu__item focus-inset lw-mrow{% if childlink.current %} menu-drawer__menu-item--active{% endif %}"{% if childlink.current %} aria-current="page"{% endif %}>
+                                    <span class="lw-mrow__thumb">
+                                      {%- if lw_p and lw_p.featured_image -%}
+                                        {{ lw_p.featured_image | image_url: width: 160 | image_tag: loading: 'lazy', alt: '' }}
+                                      {%- elsif childlink.object.featured_image -%}
+                                        {{ childlink.object.featured_image | image_url: width: 160 | image_tag: loading: 'lazy', alt: '' }}
+                                      {%- elsif childlink.object.image -%}
+                                        {{ childlink.object.image | image_url: width: 160 | image_tag: loading: 'lazy', alt: '' }}
+                                      {%- endif -%}
+                                    </span>
+                                    <span class="lw-mrow__text">
+                                      {%- if forloop.first and section.settings.lw_menu_badge != blank -%}<span class="lw-mrow__badge">{{ section.settings.lw_menu_badge }}</span>{%- elsif lw_p -%}<span class="lw-mrow__eyebrow">From {{ lw_p.price_min | money }}</span>{%- endif -%}
+                                      <span class="lw-mrow__title">{{ childlink.title | escape }}</span>
+                                    </span>
                                   </a>
                                 {%- endif -%}
                               </li>
                             {%- endfor -%}
                           </ul>
+                          <a class="lw-mrow__all" href="{{ link.url | default: routes.all_products_collection_url }}">Shop All Products <span aria-hidden="true">&rarr;</span></a>
                         </div>
                       </div>
                     </details>
