@@ -1379,3 +1379,21 @@ body.lw-brand .lw-sticky.lw .lw-btn.lw-btn[data-lw-sticky-btn] { background: #fa
 @media (min-width: 750px) {
   .lw-brand .lw-sticky__inner { left: auto; right: 20px; bottom: calc(20px + env(safe-area-inset-bottom)); width: auto; max-width: 560px; padding: 8px; }
 }
+
+/* Sticky ATC v3 (brand): a real floating pill well above the bottom edge (like Seed) and
+   display:none when hidden, so iOS Safari never samples it and its toolbar stays glass. */
+.lw-brand .lw-sticky, .lw-brand .lw-sticky.is-visible {
+  display: none; inset: auto !important; top: auto !important; left: 12px !important; right: 12px !important;
+  bottom: calc(22px + env(safe-area-inset-bottom)) !important; width: auto !important; max-width: 760px !important; margin: 0 auto !important;
+  padding: 6px !important; border-radius: 999px !important; pointer-events: auto;
+  background: rgba(47, 90, 58, .72) !important; -webkit-backdrop-filter: blur(20px) saturate(1.4) !important; backdrop-filter: blur(20px) saturate(1.4) !important;
+  border: 1px solid rgba(255,255,255,.18) !important; box-shadow: 0 18px 40px -16px rgba(22, 48, 31, .55) !important;
+  opacity: 0 !important; transform: translateY(14px) scale(.97) !important; transition: transform .45s cubic-bezier(.22, 1, .36, 1), opacity .3s ease !important; }
+.lw-brand .lw-sticky.is-shown { display: block; }
+.lw-brand .lw-sticky.is-shown.is-visible { opacity: 1 !important; transform: none !important; }
+.lw-brand .lw-sticky__inner, .lw-brand .lw-sticky.is-visible .lw-sticky__inner {
+  position: static; left: auto; right: auto; bottom: auto; max-width: none; margin: 0; padding: 0; background: none; border: 0; box-shadow: none;
+  -webkit-backdrop-filter: none; backdrop-filter: none; border-radius: 0; transform: none; opacity: 1; pointer-events: auto; }
+@media (min-width: 750px) {
+  .lw-brand .lw-sticky, .lw-brand .lw-sticky.is-visible { left: auto !important; right: 20px !important; bottom: calc(24px + env(safe-area-inset-bottom)) !important; max-width: 560px !important; padding: 8px !important; }
+}

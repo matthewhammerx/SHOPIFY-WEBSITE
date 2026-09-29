@@ -341,8 +341,16 @@
       const on = watch.getBoundingClientRect().bottom < 0;
       if (on === visible) return;
       visible = on;
-      bar.classList.toggle('is-visible', on);
       document.body.classList.toggle('lw-sticky-on', on);
+      clearTimeout(bar._hideT);
+      if (on) {
+        // display first (Safari samples anything rendered at the bottom, even invisible), then animate in
+        bar.classList.add('is-shown');
+        requestAnimationFrame(() => requestAnimationFrame(() => bar.classList.add('is-visible')));
+      } else {
+        bar.classList.remove('is-visible');
+        bar._hideT = setTimeout(() => { if (!visible) bar.classList.remove('is-shown'); }, 420);
+      }
     };
     visible = null;
     window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(check); } }, { passive: true });
