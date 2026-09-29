@@ -446,3 +446,5 @@
 @media (min-width: 990px) { .lw-hide-desktop { display: none !important; } }
 @media (max-width: 989px) { .lw-hide-mobile { display: none !important; } }
 .lw-pdp__info .lw-ugc { margin-top: 8px; }
+.lw-pdp__ugc:empty { display: none; }
+.lw-ugc-home[hidden] { display: none !important; }

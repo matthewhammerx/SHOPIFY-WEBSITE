@@ -385,8 +385,36 @@
     });
   }
 
+  /* ------------------------------------------------------------------ */
+  /* Customer videos: move the "LW · Customer videos" carousel into the  */
+  /* product section's slot (under the image / after info on mobile).    */
+  /* ------------------------------------------------------------------ */
+  function placeUgc() {
+    const slot = document.querySelector('[data-lw-ugc-slot]');
+    document.querySelectorAll('[data-lw-ugc-home][data-position="media"]').forEach((home) => {
+      const ugc = home.querySelector('[data-lw-ugc-from]');
+      if (!slot || !ugc) return;
+      slot.querySelectorAll('[data-lw-ugc-from="' + home.dataset.lwUgcHome + '"]').forEach((old) => { if (old !== ugc) old.remove(); });
+      slot.appendChild(ugc);
+      home.hidden = true;
+    });
+  }
+  function returnUgc(root) {
+    // before the product section re-renders in the editor, send carousels back home
+    root.querySelectorAll('[data-lw-ugc-slot] [data-lw-ugc-from]').forEach((ugc) => {
+      const home = document.querySelector('[data-lw-ugc-home="' + ugc.dataset.lwUgcFrom + '"]');
+      if (home) { (home.firstElementChild || home).appendChild(ugc); home.hidden = false; } else ugc.remove();
+    });
+  }
+  document.addEventListener('shopify:section:unload', (e) => {
+    returnUgc(e.target);
+    const home = e.target.querySelector('[data-lw-ugc-home]');
+    if (home) document.querySelectorAll('[data-lw-ugc-slot] [data-lw-ugc-from="' + home.dataset.lwUgcHome + '"]').forEach((n) => n.remove());
+  });
+
   function initAll(root) {
     root = root || document;
+    placeUgc();
     initGallery(root); initSliders(root); initVideos(root); initObservers(root);
     initDelivery(root); initLoadMore(root); initCountdown(root); initSticky();
   }
