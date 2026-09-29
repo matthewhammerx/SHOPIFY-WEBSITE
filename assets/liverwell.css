@@ -1293,3 +1293,32 @@
 .lw-brand .menu-drawer__close-btn .icon, .lw-brand .menu-drawer__close-btn svg {
   position: absolute !important; top: 50% !important; left: 50% !important; margin: 0 !important;
   width: 16px !important; height: 16px !important; transform: translate(-50%, -50%) !important; visibility: visible !important; opacity: 1 !important; color: #16301f; }
+
+/* ===== Smooth motion: accordions + mobile menu ===== */
+.lw-acc details { overflow: hidden; }
+.lw-acc details[open] .lw-acc__body { animation: lw-acc-in .35s ease both; }
+.lw-acc details.is-closing .lw-acc__body { animation: lw-acc-out .25s ease both; }
+@keyframes lw-acc-in { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+@keyframes lw-acc-out { from { opacity: 1; } to { opacity: 0; } }
+.lw-acc summary .lw-acc__plus::before, .lw-acc summary .lw-acc__plus::after { transition: transform .35s cubic-bezier(.4, 0, .2, 1); }
+
+/* Menu: soft fade-in backdrop + card glides down and scales in, links stagger in */
+.lw-brand .menu-drawer { transition: transform .5s cubic-bezier(.22, 1, .36, 1), opacity .35s ease, visibility .35s !important; transform: translateY(-16px) scale(.96); transform-origin: top right; }
+.lw-brand details[open].menu-opening > .menu-drawer { transform: none; opacity: 1; }
+.lw-brand details.menu-opening > .menu-drawer .menu-drawer__menu > li,
+.lw-brand details.menu-opening > .menu-drawer .lw-menu-card,
+.lw-brand details.menu-opening > .menu-drawer .menu-drawer__utility-links { animation: lw-menu-item .5s cubic-bezier(.22, 1, .36, 1) both; }
+.lw-brand details.menu-opening > .menu-drawer .menu-drawer__menu > li:nth-child(1) { animation-delay: .06s; }
+.lw-brand details.menu-opening > .menu-drawer .menu-drawer__menu > li:nth-child(2) { animation-delay: .1s; }
+.lw-brand details.menu-opening > .menu-drawer .menu-drawer__menu > li:nth-child(3) { animation-delay: .14s; }
+.lw-brand details.menu-opening > .menu-drawer .menu-drawer__menu > li:nth-child(4) { animation-delay: .18s; }
+.lw-brand details.menu-opening > .menu-drawer .menu-drawer__menu > li:nth-child(n+5) { animation-delay: .22s; }
+.lw-brand details.menu-opening > .menu-drawer .lw-menu-card { animation-delay: .24s; }
+.lw-brand details.menu-opening > .menu-drawer .menu-drawer__utility-links { animation-delay: .3s; }
+@keyframes lw-menu-item { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+.lw-brand menu-drawer > details > summary::before, .lw-brand header-drawer > details > summary::before { transition: opacity .35s ease, visibility .35s !important; background: rgba(22, 48, 31, .35) !important; -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); }
+@media (prefers-reduced-motion: reduce) {
+  .lw-brand .menu-drawer { transition: opacity .2s !important; transform: none !important; }
+  .lw-brand details.menu-opening > .menu-drawer * { animation: none !important; }
+  .lw-acc details .lw-acc__body { animation: none !important; }
+}

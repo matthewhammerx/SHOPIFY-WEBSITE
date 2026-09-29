@@ -505,11 +505,44 @@
     });
   }
 
+  /* ------------------------------------------------------------------ */
+  /* Accordions: smooth open / close (height animation)                  */
+  /* ------------------------------------------------------------------ */
+  function initAccordions(root) {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    root.querySelectorAll('.lw-acc details').forEach((d) => {
+      if (d._lw) return; d._lw = true;
+      const summary = d.querySelector('summary');
+      const body = d.querySelector('.lw-acc__body');
+      if (!summary || !body || reduce) return;
+      summary.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (d._anim) d._anim.cancel();
+        const start = d.offsetHeight;
+        if (d.open) {
+          const end = summary.offsetHeight + (parseFloat(getComputedStyle(d).borderTopWidth) || 0) * 2;
+          d.classList.add('is-closing');
+          d._anim = d.animate({ height: [start + 'px', end + 'px'] }, { duration: 320, easing: 'cubic-bezier(.4, 0, .2, 1)' });
+          d._anim.onfinish = () => { d.open = false; d.classList.remove('is-closing'); d._anim = null; };
+        } else {
+          d.style.height = start + 'px';
+          d.open = true;
+          requestAnimationFrame(() => {
+            const end = d.scrollHeight + (parseFloat(getComputedStyle(d).borderTopWidth) || 0) * 2;
+            d.style.height = '';
+            d._anim = d.animate({ height: [start + 'px', end + 'px'] }, { duration: 380, easing: 'cubic-bezier(.4, 0, .2, 1)' });
+            d._anim.onfinish = () => { d._anim = null; };
+          });
+        }
+      });
+    });
+  }
+
   function initAll(root) {
     root = root || document;
     placeUgc();
     initGallery(root); initSliders(root); initDrag(root); initStickyLeft(root); initVideos(root); initObservers(root);
-    initDelivery(root); initLoadMore(root); initCountdown(root); initSticky(); initTimeline(root);
+    initDelivery(root); initLoadMore(root); initCountdown(root); initSticky(); initTimeline(root); initAccordions(root);
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => initAll());
