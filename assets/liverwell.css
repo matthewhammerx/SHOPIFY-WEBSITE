@@ -1194,3 +1194,42 @@
 /* hero slides up under the header so its glow shows behind the logo */
 .lw-brand.lw-tpl-index #MainContent > .shopify-section:first-child .lwh-hero { margin-top: calc(-1 * var(--header-height, 80px)); }
 .lw-brand.lw-tpl-index #MainContent > .shopify-section:first-child .lwh-hero__frame { padding-top: var(--header-height, 80px); }
+
+/* ===== Floating pill header (Seed / Grüns) on brand pages ===== */
+.lw-brand { --lw-pill-bg: rgba(250, 250, 245, .72); --lw-pill-border: 1px solid rgba(22, 48, 31, .08); --lw-pill-shadow: 0 8px 24px -12px rgba(22, 48, 31, .25); }
+/* the bar itself is invisible — only the pills show, even when sticky */
+.lw-brand .section-header .header-wrapper,
+.lw-brand .section-header.shopify-section-header-sticky .header-wrapper,
+.lw-brand.lw-tpl-index .section-header .header-wrapper,
+.lw-brand.lw-tpl-index .section-header.shopify-section-header-sticky .header-wrapper { background: transparent !important; box-shadow: none !important; border: 0 !important; -webkit-backdrop-filter: none; backdrop-filter: none; }
+.lw-brand .section-header .header { padding-top: 12px; padding-bottom: 12px; }
+/* left pill: logo */
+.lw-brand .header__heading-link { display: inline-flex; align-items: center; padding: 8px 20px; border-radius: 999px; background: var(--lw-pill-bg); border: var(--lw-pill-border); box-shadow: var(--lw-pill-shadow); -webkit-backdrop-filter: blur(16px) saturate(1.3); backdrop-filter: blur(16px) saturate(1.3); }
+.lw-brand .header__heading-link .h2 { line-height: 1.1; }
+/* right pill: Shop Now + cart (+ menu on mobile) */
+.lw-brand .header__icons { align-items: center; padding: 5px; border-radius: 999px; background: var(--lw-pill-bg); border: var(--lw-pill-border); box-shadow: var(--lw-pill-shadow); -webkit-backdrop-filter: blur(16px) saturate(1.3); backdrop-filter: blur(16px) saturate(1.3); }
+.lw-brand .header__icons .lw-header-cta { margin-right: 2px; }
+.lw-brand .header__icons .header__icon { width: 42px; height: 42px; }
+/* desktop: menu links in their own centered pill */
+@media (min-width: 990px) {
+  .lw-brand .header__inline-menu { justify-self: center; padding: 4px 10px; border-radius: 999px; background: var(--lw-pill-bg); border: var(--lw-pill-border); box-shadow: var(--lw-pill-shadow); -webkit-backdrop-filter: blur(16px) saturate(1.3); backdrop-filter: blur(16px) saturate(1.3); }
+  .lw-brand .header__icons { justify-self: end; }
+}
+/* mobile: logo left, ONE right pill (Shop Now + cart + menu) drawn behind both grid cells */
+@media (max-width: 989px) {
+  .lw-brand .section-header .header { grid-template-areas: "heading icons drawer"; grid-template-columns: 1fr auto auto; column-gap: 0; position: relative; isolation: isolate; }
+  .lw-brand .section-header .header::after { content: ""; grid-row: 1; grid-column: 2 / 4; align-self: center; height: 50px; z-index: -1; border-radius: 999px;
+    background: var(--lw-pill-bg); border: var(--lw-pill-border); box-shadow: var(--lw-pill-shadow); -webkit-backdrop-filter: blur(16px) saturate(1.3); backdrop-filter: blur(16px) saturate(1.3); }
+  .lw-brand .header__icons { background: none; border: 0; box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; padding: 0 0 0 5px; }
+  .lw-brand .section-header header-drawer { grid-area: drawer; margin: 0; justify-self: end; display: flex; align-items: center; padding-right: 4px; }
+  .lw-brand .section-header header-drawer .header__icon--menu { width: 40px; height: 40px; }
+}
+
+/* equal pill heights (50px) */
+.lw-brand .header__heading-link { min-height: 50px; padding-top: 0; padding-bottom: 0; }
+.lw-brand .header__icons { min-height: 50px; }
+.lw-brand .header__icons .header__icon { width: 40px; height: 40px; }
+.lw-brand .header__icons .lw-header-cta { min-height: 40px; }
+@media (min-width: 990px) { .lw-brand .header__inline-menu { min-height: 50px; display: flex; align-items: center; } }
+@media (max-width: 989px) { .lw-brand .header__heading-link { min-height: 50px; } .lw-brand .header__icons { min-height: 0; } .lw-brand .header__icons .lw-header-cta { min-height: 38px; } }
+.lw-brand .header__heading-link, .lw-brand .header__icons, .lw-brand .header__inline-menu, .lw-brand .lw-header-cta, .lw-brand .header__icon { box-sizing: border-box; }
