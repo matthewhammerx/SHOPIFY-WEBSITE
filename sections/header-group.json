@@ -125,7 +125,7 @@
         "sticky_header_type": "on-scroll-up",
         "show_line_separator": false,
         "color_scheme": "background-1",
-        "logo_link": "/home",
+        "logo_link": "/",
         "logo_position": "middle-left",
         "menu": "main-menu",
         "menu_type_desktop": "mega",
