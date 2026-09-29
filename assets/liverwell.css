@@ -1104,3 +1104,4 @@
 .lwf__wordmark-img { margin: 24px auto -4px; width: var(--lwf-wm-w, 100%); max-width: 1240px; padding: 0 20px; pointer-events: none; }
 .lwf__wordmark-img img { display: block; width: 100%; height: auto; }
 .lw-stats__nums { column-gap: 28px; } @media (max-width: 749px) { .lw-stats__nums { column-gap: 18px; } }
+.lwf__news:first-child { border-top: 0; padding-top: 0; }

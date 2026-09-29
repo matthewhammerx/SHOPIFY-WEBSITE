@@ -112,45 +112,9 @@
             "heading": "Help",
             "menu": "footer"
           }
-        },
-        "badge_1": {
-          "type": "badge",
-          "settings": {
-            "icon": "shield",
-            "title": "90-day guarantee",
-            "text": "Love it or your money back"
-          }
-        },
-        "badge_2": {
-          "type": "badge",
-          "settings": {
-            "icon": "truck",
-            "title": "Free shipping",
-            "text": "On 2+ bottles"
-          }
-        },
-        "badge_3": {
-          "type": "badge",
-          "settings": {
-            "icon": "flask",
-            "title": "Clinically dosed",
-            "text": "80% silymarin standard"
-          }
-        },
-        "badge_4": {
-          "type": "badge",
-          "settings": {
-            "icon": "leaf",
-            "title": "Clean formula",
-            "text": "No fillers or blends"
-          }
         }
       },
       "block_order": [
-        "badge_1",
-        "badge_2",
-        "badge_3",
-        "badge_4",
         "menu_shop",
         "menu_help"
       ],
