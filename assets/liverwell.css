@@ -969,3 +969,29 @@
 .lw-brand .lwh-dark .lwh-btn, .lw-brand .lwh-pcard .lwh-btn { background: #16301f; }
 .lw-brand .lw-stats .lw-h em, .lw-brand .lw-glass .lw-h em, .lw-brand .lw-cmps .lw-h em, .lw-brand .lw-cmp .lw-h em { color: #d9f28b !important; }
 .lw-brand .lwh-dark .lwh-h em, .lw-brand .lwh-glasspanel .lwh-h em, .lw-brand .lwh-science .lwh-h em, .lw-brand .lwh-dark .lwh-eyebrow { color: #d9f28b; }
+
+/* ===== Signature vibrant touches (Resilia pop + Hers gradients) — light areas only ===== */
+.lw-brand { --lw-grad: linear-gradient(135deg, #34c77b 0%, #16a05f 55%, #0f8a52 100%); --lw-grad-text: linear-gradient(100deg, #1fa463 0%, #12a38a 100%); --lw-glow: 0 10px 24px -8px rgba(22, 160, 95, .55); }
+/* 1. Buttons: bright gradient + glow + shine on hover */
+.lw-brand .lw-atc, .lw-brand .lw-btn:not(.lw-btn--cream):not(.lw-cmps__btn):not(.lw-glass__btn), .lw-brand .lwh-btn:not(.lwh-btn--light) {
+  background: var(--lw-grad); color: #fff !important; box-shadow: var(--lw-glow); position: relative; overflow: hidden; isolation: isolate; }
+.lw-brand .lw-atc::after, .lw-brand .lw-btn:not(.lw-btn--cream):not(.lw-cmps__btn):not(.lw-glass__btn)::after, .lw-brand .lwh-btn:not(.lwh-btn--light)::after {
+  content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,.35) 50%, transparent 70%); transform: translateX(-120%); transition: transform .7s ease; }
+.lw-brand .lw-atc:hover::after, .lw-brand .lw-btn:not(.lw-btn--cream):not(.lw-cmps__btn):not(.lw-glass__btn):hover::after, .lw-brand .lwh-btn:not(.lwh-btn--light):hover::after { transform: translateX(120%); }
+.lw-brand .lw-atc:hover, .lw-brand .lw-btn:not(.lw-btn--cream):not(.lw-cmps__btn):not(.lw-glass__btn):hover, .lw-brand .lwh-btn:not(.lwh-btn--light):hover { background: var(--lw-grad); transform: translateY(-1px); box-shadow: 0 14px 28px -8px rgba(22, 160, 95, .65); }
+.lw-brand .lw-atc__price { background: rgba(255,255,255,.2); }
+/* buttons sitting on the big dark panels keep their look */
+.lw-brand .lwh-dark .lwh-btn, .lw-brand .lwh-pcard .lwh-btn { background: #16301f; box-shadow: none; }
+/* 2. Highlighted headline words: gradient text */
+.lw-brand .lw .lw-h em, .lw-brand .lwh-h em { background: var(--lw-grad-text); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.lw-brand .lw-stats .lw-h em, .lw-brand .lw-glass .lw-h em, .lw-brand .lw-cmps .lw-h em, .lw-brand .lw-cmp .lw-h em,
+.lw-brand .lwh-dark .lwh-h em, .lw-brand .lwh-glasspanel .lwh-h em, .lw-brand .lwh-science .lwh-h em { background: none; -webkit-text-fill-color: #d9f28b; }
+/* 3. Most Popular (selected) offer: gradient border + mint wash */
+.lw-brand .lw-offer.is-selected { border: 2px solid transparent; box-shadow: 0 10px 26px -12px rgba(22, 160, 95, .45);
+  background: linear-gradient(180deg, #eefaf2 0%, #ffffff 100%) padding-box, var(--lw-grad) border-box; }
+/* 4. Badges + labels: bright gradient */
+.lw-brand .lw-offer__badge, .lw-brand .lw-tl__label, .lw-brand .lw-reason__label, .lw-brand .lw-pill { background: var(--lw-grad) !important; color: #fff; }
+.lw-brand .lw-tl__list::before, .lw-brand .lw-tl__step::before { background: #1fa463 !important; }
+/* 5. Stars + small accents a touch brighter */
+.lw-brand .lw-stars, .lw-brand .lwh-rating .lw-stars { color: #1fa463; }
+.lw-brand .lw-offer__now, .lw-brand .lw-buy__now { color: #139158; }
