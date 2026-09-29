@@ -248,7 +248,7 @@
         "button_link": "",
         "bg": "#fafaf5",
         "fg": "#16301f",
-        "accent": "#2f5a3a",
+        "accent": "#2e9254",
         "padding_top": 64,
         "padding_bottom": 64
       }
@@ -429,7 +429,7 @@
         "columns": 6,
         "bg": "#fafaf5",
         "fg": "#16301f",
-        "accent": "#2f5a3a",
+        "accent": "#2e9254",
         "padding_top": 64,
         "padding_bottom": 64
       }
@@ -558,7 +558,7 @@
         "trust_3": "",
         "bg": "#fafaf5",
         "fg": "#16301f",
-        "accent": "#2f5a3a",
+        "accent": "#2e9254",
         "padding_top": 64,
         "padding_bottom": 64
       }
@@ -633,7 +633,7 @@
         "schema_markup": true,
         "bg": "#fafaf5",
         "fg": "#16301f",
-        "accent": "#2f5a3a",
+        "accent": "#2e9254",
         "padding_top": 64,
         "padding_bottom": 64
       }

@@ -950,3 +950,22 @@
 .lw-brand .lwh-pcard { background: #2f5a3a; }
 .lw-brand .lwh-science__fallback { background: radial-gradient(circle at 20% 20%, #5f8f55 0%, #2f5a3a 40%, #16301f 100%); }
 .lw-brand .lwh-dark { background: radial-gradient(circle at 15% 15%, #5f8f55 0%, #2f5a3a 42%, #16301f 100%); }
+
+/* ===== Brighter leafy-green accents on light areas (big green panels unchanged) ===== */
+.lw-brand { --lw-green: #2f8a55; --lw-green-dark: #256f44; --lw-accent: #35a063; --lw-mint: #e6f5ea; --lw-mint-strong: #cdebd6; }
+.lw-brand .lw .lw-h em { color: #2e9254 !important; }
+.lw-brand .lw-tl__label, .lw-brand .lw-reason__label, .lw-brand .lw-pill { background: #2f8a55 !important; }
+.lw-brand .lw-tl__list::before, .lw-brand .lw-tl__step::before { background: #35a063 !important; }
+.lw-brand .lw-tl__points .lw-icon, .lw-brand .lw-benefit-grid__item .lw-icon, .lw-brand .lw-bprod__icon .lw-icon { color: #35a063; }
+.lw-brand .lw-guar__seal svg, .lw-brand .lw-guar__eyebrow { color: #35a063 !important; }
+.lw-brand .lw-bprod .lw-h em { color: #2e9254 !important; }
+.lw-brand .lw-delivery__dot { background: #34c26b; }
+.lw-brand .lwh { --lwh-sage: #2e9254; }
+.lw-brand .lwh-btn { background: #2f8a55; }
+.lw-brand .lwh-btn:hover { background: #256f44; }
+.lw-brand .lwh-h em, .lw-brand .lwh-eyebrow { color: #2e9254; }
+/* keep the big green panels exactly as they were */
+.lw-brand .lwh-pcard { background: #2f5a3a; }
+.lw-brand .lwh-dark .lwh-btn, .lw-brand .lwh-pcard .lwh-btn { background: #16301f; }
+.lw-brand .lw-stats .lw-h em, .lw-brand .lw-glass .lw-h em, .lw-brand .lw-cmps .lw-h em, .lw-brand .lw-cmp .lw-h em { color: #d9f28b !important; }
+.lw-brand .lwh-dark .lwh-h em, .lw-brand .lwh-glasspanel .lwh-h em, .lw-brand .lwh-science .lwh-h em, .lw-brand .lwh-dark .lwh-eyebrow { color: #d9f28b; }
