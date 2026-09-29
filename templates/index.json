@@ -61,7 +61,7 @@
         "tag": "LW-01",
         "card_title": "Milk Thistle Support",
         "card_button": "Shop Now",
-        "bg": "#16301f",
+        "bg": "#095946",
         "padding_top": 88,
         "padding_bottom": 88
       }
@@ -102,7 +102,7 @@
       "settings": {
         "eyebrow": "The root cause",
         "heading": "Why your liver matters.",
-        "bg": "#fafaf5",
+        "bg": "#ffffff",
         "padding_top": 96,
         "padding_bottom": 64
       }
@@ -141,7 +141,7 @@
         "eyebrow": "The LiverWell approach",
         "heading": "Support. Clear. <em>Protect.</em>",
         "text": "Most liver supplements only do one thing. LiverWell supports the full cycle.",
-        "bg": "#fafaf5",
+        "bg": "#f5f3ea",
         "padding_top": 32,
         "padding_bottom": 96,
         "product": "milk-thistle"
@@ -246,8 +246,8 @@
         "mobile_slider": true,
         "button_label": "",
         "button_link": "",
-        "bg": "#f7f8f5",
-        "fg": "#111511",
+        "bg": "#ffffff",
+        "fg": "#16301f",
         "accent": "#009370",
         "padding_top": 64,
         "padding_bottom": 64
@@ -360,8 +360,8 @@
         "them_label": "Other Brands",
         "button_label": "Try Risk-Free Today",
         "button_link": "",
-        "bg": "#1e3a26",
-        "bg_2": "#122619",
+        "bg": "#0b5a47",
+        "bg_2": "#053a2d",
         "fg": "#ffffff",
         "us_bg": "#5c6b2e",
         "padding_top": 80,
@@ -427,8 +427,8 @@
         "heading": "Real people. <em>Real results.</em>",
         "text": "See how our customers are feeling with LiverWell.",
         "columns": 6,
-        "bg": "#ffffff",
-        "fg": "#111511",
+        "bg": "#f5f3ea",
+        "fg": "#16301f",
         "accent": "#009370",
         "padding_top": 64,
         "padding_bottom": 64
@@ -556,8 +556,8 @@
         "trust_1": "",
         "trust_2": "",
         "trust_3": "",
-        "bg": "#f1f0e8",
-        "fg": "#111511",
+        "bg": "#ffffff",
+        "fg": "#16301f",
         "accent": "#009370",
         "padding_top": 64,
         "padding_bottom": 64
@@ -631,8 +631,8 @@
         "contact": "<p>Still have questions? <a href=\"/pages/contact\">Contact our team</a> — we reply within 24 hours.</p><p><em>†These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease. Individual results may vary.</em></p>",
         "open_first": false,
         "schema_markup": true,
-        "bg": "#f1f0e8",
-        "fg": "#111511",
+        "bg": "#f5f3ea",
+        "fg": "#16301f",
         "accent": "#009370",
         "padding_top": 64,
         "padding_bottom": 64
@@ -644,7 +644,7 @@
         "card_1": {
           "type": "card",
           "settings": {
-            "bg": "#2f5a3a",
+            "bg": "#009370",
             "title": "Support your liver, daily.",
             "text": "Feel lighter, think clearer, and start the day with energy that holds.†",
             "button": "Shop Now",
@@ -654,7 +654,7 @@
         "card_2": {
           "type": "card",
           "settings": {
-            "bg": "#16301f",
+            "bg": "#095946",
             "title": "Try it risk-free for 90 days.",
             "text": "If you don't feel the difference, we'll refund every cent.",
             "button": "Get Started",
@@ -667,7 +667,7 @@
         "card_2"
       ],
       "settings": {
-        "bg": "#fafaf5",
+        "bg": "#ffffff",
         "padding_top": 32,
         "padding_bottom": 96
       }

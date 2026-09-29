@@ -909,3 +909,24 @@
 .lw-brand main, .lw-brand #MainContent { background: #f5f3ea; }
 .lw-brand .lw-slider__track { padding-bottom: 28px; margin-bottom: -28px; }
 .lw-brand .lw-guar__img > svg.lw-placeholder, .lw-brand .lw-guar__img > img { border-radius: 28px; }
+
+/* ===== Homepage gets the same brand tweaks (lw-brand on index) ===== */
+.lw-brand .lwh { --lwh-forest: #095946; --lwh-sage: #009370; --lwh-cream: #f5f3ea; }
+.lw-brand .lwh-btn:hover { background: #07493a; }
+.lw-brand .lwh-h em { color: #009370; }
+.lw-brand .lwh-dark .lwh-h em, .lw-brand .lwh-glasspanel .lwh-h em, .lw-brand .lwh-science .lwh-h em { color: #d9f28b; }
+.lw-brand .lwh-eyebrow { color: #009370; }
+.lw-brand .lwh-dark .lwh-eyebrow { color: #d9f28b; }
+.lw-brand .lwh-pcard { background: #0b6b53; }
+.lw-brand .lwh-science__fallback { background: radial-gradient(circle at 20% 20%, #20b389 0%, #0b6b53 42%, #053a2d 100%); }
+/* Feature sections float as rounded panels; light sections stay full width */
+.lw-brand .lwh-dark, .lw-brand .lwh-science { margin: 16px; border-radius: 36px; overflow: hidden; }
+@media (max-width: 749px) { .lw-brand .lwh-dark, .lw-brand .lwh-science { margin: 8px; border-radius: 26px; } }
+/* Rounder cards */
+.lw-brand .lwh-pcard, .lw-brand .lwh-cta, .lw-brand .lwh-glasspanel { border-radius: 28px; }
+.lw-brand .lwh-feature { border-radius: 24px; }
+.lw-brand .lwh-panel { border-radius: 32px; }
+.lw-brand .lwh-cause__img, .lw-brand .lwh-approach__img { border-radius: 22px; }
+.lw-brand .lwh-cause__icon { border-radius: 999px; }
+.lw-brand .lwh-statbox { border-radius: 999px; }
+@media (max-width: 749px) { .lw-brand .lwh-panel, .lw-brand .lwh-glasspanel, .lw-brand .lwh-pcard, .lw-brand .lwh-cta { border-radius: 22px; } }
