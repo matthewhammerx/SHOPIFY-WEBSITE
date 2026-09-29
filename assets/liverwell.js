@@ -544,22 +544,23 @@
       if (!summary || !body || reduce) return;
       summary.addEventListener('click', (e) => {
         e.preventDefault();
-        if (d._anim) d._anim.cancel();
+        // decide from the state the user asked for last (not d.open, which lags during a close animation)
+        const opening = d._want === undefined ? !d.open : !d._want;
+        d._want = opening;
+        const border = (parseFloat(getComputedStyle(d).borderTopWidth) || 0) * 2;
         const start = d.offsetHeight;
-        if (d.open) {
-          const end = summary.offsetHeight + (parseFloat(getComputedStyle(d).borderTopWidth) || 0) * 2;
+        if (d._anim) { d._anim.cancel(); d._anim = null; }
+        if (opening) {
+          d.classList.remove('is-closing');
+          d.open = true;
+          const end = d.scrollHeight + border;
+          d._anim = d.animate({ height: [start + 'px', end + 'px'] }, { duration: 380, easing: 'cubic-bezier(.4, 0, .2, 1)' });
+          d._anim.onfinish = () => { d._anim = null; d._want = undefined; };
+        } else {
+          const end = summary.offsetHeight + border;
           d.classList.add('is-closing');
           d._anim = d.animate({ height: [start + 'px', end + 'px'] }, { duration: 320, easing: 'cubic-bezier(.4, 0, .2, 1)' });
-          d._anim.onfinish = () => { d.open = false; d.classList.remove('is-closing'); d._anim = null; };
-        } else {
-          d.style.height = start + 'px';
-          d.open = true;
-          requestAnimationFrame(() => {
-            const end = d.scrollHeight + (parseFloat(getComputedStyle(d).borderTopWidth) || 0) * 2;
-            d.style.height = '';
-            d._anim = d.animate({ height: [start + 'px', end + 'px'] }, { duration: 380, easing: 'cubic-bezier(.4, 0, .2, 1)' });
-            d._anim.onfinish = () => { d._anim = null; };
-          });
+          d._anim.onfinish = () => { d.open = false; d.classList.remove('is-closing'); d._anim = null; d._want = undefined; };
         }
       });
     });
