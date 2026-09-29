@@ -305,7 +305,7 @@
       ]
     },
     "customer_videos": {
-      "type": "lw-customer-videos",
+      "type": "lw-ugc",
       "settings": {
         "heading": "What our customers are saying:",
         "position": "media",
@@ -319,40 +319,40 @@
         "padding_bottom": 32
       },
       "blocks": {
-        "video_1": {
-          "type": "video",
+        "clip_1": {
+          "type": "clip",
           "settings": {
-            "title": "I was skeptical…",
+            "caption": "I was skeptical…",
             "show_on": "both"
           }
         },
-        "video_2": {
-          "type": "video",
+        "clip_2": {
+          "type": "clip",
           "settings": {
-            "title": "Week 3 update",
+            "caption": "Week 3 update",
             "show_on": "both"
           }
         },
-        "video_3": {
-          "type": "video",
+        "clip_3": {
+          "type": "clip",
           "settings": {
-            "title": "My honest review",
+            "caption": "My honest review",
             "show_on": "both"
           }
         },
-        "video_4": {
-          "type": "video",
+        "clip_4": {
+          "type": "clip",
           "settings": {
-            "title": "No more bloat",
+            "caption": "No more bloat",
             "show_on": "both"
           }
         }
       },
       "block_order": [
-        "video_1",
-        "video_2",
-        "video_3",
-        "video_4"
+        "clip_1",
+        "clip_2",
+        "clip_3",
+        "clip_4"
       ]
     },
     "stats": {

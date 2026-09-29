@@ -33,7 +33,7 @@
               {%- else -%}
                 {{ 'lifestyle-1' | placeholder_svg_tag: 'lw-placeholder' }}
               {%- endif -%}
-              {%- if block.settings.title != blank -%}<span class="lw-vid__cap">{{ block.settings.title }}</span>{%- endif -%}
+              {%- if block.settings.caption != blank -%}<span class="lw-vid__cap">{{ block.settings.caption }}</span>{%- endif -%}
             </div>
           {%- endfor -%}
         </div>
@@ -54,10 +54,6 @@
   "class": "lw-section-ugc",
   "settings": [
     {
-      "type": "paragraph",
-      "content": "Keep this section directly under \"LW · Product (main)\". Add one Video block per customer video."
-    },
-    {
       "type": "text",
       "id": "heading",
       "label": "Heading",
@@ -71,11 +67,11 @@
       "options": [
         {
           "value": "media",
-          "label": "Inside product area: under the image (after Add to Cart on mobile)"
+          "label": "Under product image"
         },
         {
           "value": "below",
-          "label": "Full-width row below the product"
+          "label": "Full-width row"
         }
       ]
     },
@@ -148,12 +144,12 @@
   ],
   "blocks": [
     {
-      "type": "video",
+      "type": "clip",
       "name": "Video",
       "settings": [
         {
           "type": "text",
-          "id": "title",
+          "id": "caption",
           "label": "Caption sticker",
           "default": "My honest review"
         },
@@ -175,7 +171,7 @@
           "options": [
             {
               "value": "both",
-              "label": "Desktop and mobile"
+              "label": "Both"
             },
             {
               "value": "desktop",
@@ -195,16 +191,16 @@
       "name": "LW · Customer videos",
       "blocks": [
         {
-          "type": "video"
+          "type": "clip"
         },
         {
-          "type": "video"
+          "type": "clip"
         },
         {
-          "type": "video"
+          "type": "clip"
         },
         {
-          "type": "video"
+          "type": "clip"
         }
       ]
     }
