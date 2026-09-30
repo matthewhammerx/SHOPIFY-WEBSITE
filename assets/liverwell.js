@@ -50,6 +50,28 @@
       .catch(() => {});
   });
 
+  // Bundle gallery: the first product photo follows the picked offer (offer block "Gallery image")
+  document.addEventListener('lw:offer-change', (e) => {
+    const box = e.detail && e.detail.box;
+    if (!box || !box.selected) return;
+    const sec = box.closest('.shopify-section') || document;
+    const stacks = sec.querySelectorAll('[data-lw-bundle-media]');
+    if (!stacks.length) return;
+    const key = box.selected.dataset.block || '';
+    stacks.forEach((st) => {
+      const imgs = Array.from(st.querySelectorAll('[data-lw-bundle-img]'));
+      const hit = imgs.find((i) => i.dataset.lwBundleImg === key) || imgs.find((i) => i.dataset.lwBundleImg === 'default');
+      imgs.forEach((i) => i.classList.toggle('is-on', i === hit));
+      if (hit && hit.loading === 'lazy') hit.loading = 'eager';
+    });
+    // on a real change, bring the bundle photo into view
+    if (box._lwBundleKey !== undefined && box._lwBundleKey !== key) {
+      const slides = sec.querySelector('.lw-gallery__slides');
+      if (slides && slides.scrollLeft > 5) slides.scrollTo({ left: 0, behavior: 'smooth' });
+    }
+    box._lwBundleKey = key;
+  });
+
   class LwBuyBox extends HTMLElement {
     connectedCallback() {
       if (this._init) return;

@@ -98,7 +98,7 @@
           assign per_unit_money = per_unit | money
           assign subtitle = s.subtitle | replace: '[per_unit]', per_unit_money
         -%}
-        <label class="lw-offer{% if oi == default_index %} is-selected{% endif %}" data-lw-offer
+        <label class="lw-offer{% if oi == default_index %} is-selected{% endif %}" data-lw-offer data-block="{{ b.id }}"
           data-variant="{{ v.id }}" data-qty="{{ qty }}" data-gifts="{{ s.gifts | default: 0 }}" data-price="{{ price }}" data-compare="{{ compare }}"
           data-available="{{ v.available }}"
           {% if sub_price != '' %}data-sub-price="{{ sub_price }}" data-selling-plan="{{ plan_id }}"{% endif %}

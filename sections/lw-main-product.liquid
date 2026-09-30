@@ -4,6 +4,31 @@
     assign lw_product = section.settings.product
   endif
   assign tiles = section.blocks | where: 'type', 'tile'
+  assign offer_blocks = section.blocks | where: 'type', 'offer'
+  assign bundle_gallery = false
+  assign bundle_default = ''
+  for b in offer_blocks
+    if b.settings.gallery_image != blank
+      assign bundle_gallery = true
+    endif
+    if b.settings.default_selected and bundle_default == ''
+      assign bundle_default = b.id
+    endif
+  endfor
+  if bundle_default == '' and offer_blocks.size > 0
+    assign bundle_default = offer_blocks.first.id
+  endif
+  assign fallback_class = 'is-on'
+  for b in offer_blocks
+    if b.id == bundle_default and b.settings.gallery_image != blank
+      assign fallback_class = ''
+    endif
+  endfor
+  assign first_media = lw_product.media.first
+  assign media_offset = 0
+  if bundle_gallery
+    assign media_offset = 1
+  endif
 -%}
 <section class="lw lw-pdp" id="lw-product" style="--lw-bg: {{ section.settings.bg }};">
   <div class="lw-wrap lw-pdp__grid">
@@ -13,7 +38,28 @@
         <div class="lw-gallery__stage{% if tiles.size > 0 %} lw-gallery__stage--tiles{% endif %}">
           <div class="lw-gallery__main">
             <div class="lw-gallery__slides">
-              {%- for media in lw_product.media -%}
+              {%- if bundle_gallery -%}
+                {%- comment -%} Bundle slide: shows the picked offer's "Gallery image" (falls back to the first product image) {%- endcomment -%}
+                <div class="lw-gallery__slide lw-gallery__bundle" data-lw-bundle-media>
+                  {%- if first_media -%}
+                    {{ first_media.preview_image | image_url: width: 1100 | image_tag: loading: 'eager', sizes: '(min-width: 990px) 600px, 100vw', widths: '400, 600, 800, 1100', alt: first_media.alt, data-lw-bundle-img: 'default', class: fallback_class }}
+                  {%- endif -%}
+                  {%- for b in offer_blocks -%}
+                    {%- if b.settings.gallery_image != blank -%}
+                      {%- liquid
+                        assign bload = 'lazy'
+                        assign bclass = ''
+                        if b.id == bundle_default
+                          assign bload = 'eager'
+                          assign bclass = 'is-on'
+                        endif
+                      -%}
+                      {{ b.settings.gallery_image | image_url: width: 1100 | image_tag: loading: bload, sizes: '(min-width: 990px) 600px, 100vw', widths: '400, 600, 800, 1100', alt: b.settings.gallery_image.alt, data-lw-bundle-img: b.id, class: bclass }}
+                    {%- endif -%}
+                  {%- endfor -%}
+                </div>
+              {%- endif -%}
+              {%- for media in lw_product.media offset: media_offset -%}
                 <div class="lw-gallery__slide">
                   {%- liquid
                     assign load = 'lazy'
@@ -56,8 +102,16 @@
         </div>
         {%- if lw_product.media.size > 1 -%}
           <div class="lw-gallery__thumbs{% unless section.settings.thumbs_mobile %} lw-hide-mobile{% endunless %}{% unless section.settings.thumbs_desktop %} lw-hide-desktop{% endunless %}">
-            {%- for media in lw_product.media -%}
-              <button type="button" class="lw-gallery__thumb{% if forloop.first %} is-active{% endif %}" aria-label="Show media {{ forloop.index }}">
+            {%- if bundle_gallery -%}
+              <button type="button" class="lw-gallery__thumb lw-gallery__bundle is-active" aria-label="Show bundle image" data-lw-bundle-media>
+                {%- if first_media -%}{{ first_media.preview_image | image_url: width: 300 | image_tag: loading: 'lazy', alt: '', data-lw-bundle-img: 'default', class: fallback_class }}{%- endif -%}
+                {%- for b in offer_blocks -%}
+                  {%- if b.settings.gallery_image != blank -%}{%- if b.id == bundle_default -%}{%- assign bclass = 'is-on' -%}{%- else -%}{%- assign bclass = '' -%}{%- endif -%}{{ b.settings.gallery_image | image_url: width: 300 | image_tag: loading: 'lazy', alt: '', data-lw-bundle-img: b.id, class: bclass }}{%- endif -%}
+                {%- endfor -%}
+              </button>
+            {%- endif -%}
+            {%- for media in lw_product.media offset: media_offset -%}
+              <button type="button" class="lw-gallery__thumb{% if forloop.first and bundle_gallery == false %} is-active{% endif %}" aria-label="Show media {{ forloop.index }}">
                 {{ media.preview_image | image_url: width: 300 | image_tag: loading: 'lazy', alt: '' }}
               </button>
             {%- endfor -%}
@@ -1653,6 +1707,12 @@
           "type": "image_picker",
           "id": "image",
           "label": "Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "gallery_image",
+          "label": "Gallery image (when picked)",
+          "info": "Shown as the first product photo while this offer is selected (e.g. 2 bottles + gift for the 2-pack). Leave empty to show the normal first photo."
         },
         {
           "type": "range",
