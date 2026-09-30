@@ -157,7 +157,7 @@
         "offer_10": {
           "type": "offer",
           "settings": {
-            "title": "Buy One",
+            "title": "Buy One Get 1 Free",
             "subtitle": "[per_unit] per bottle",
             "variant_position": 1,
             "quantity": 1,
@@ -175,7 +175,7 @@
         "offer_9": {
           "type": "offer",
           "settings": {
-            "title": "Buy 2 Get 1 Free Gift",
+            "title": "Buy 2 Get 2 Free Gift",
             "subtitle": "[per_unit] per bottle",
             "variant_position": 1,
             "quantity": 1,
