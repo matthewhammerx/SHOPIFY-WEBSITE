@@ -23,6 +23,20 @@
     });
   }
 
+  function setText(n, t) { if (n.textContent !== t) n.textContent = t; }
+
+  // "$1,234.56" / "1.234,56 €" / "29,99" -> cents
+  function parseMoney(str) {
+    const m = String(str || '').replace(/\u00a0/g, ' ').match(/\d[\d.,\s']*/);
+    if (!m) return null;
+    let n = m[0].replace(/[\s']/g, '').replace(/[.,]$/, '');
+    const dec = n.match(/[.,](\d{1,2})$/);
+    let whole = dec ? n.slice(0, -dec[0].length) : n;
+    whole = whole.replace(/[.,]/g, '');
+    const cents = Number(whole) * 100 + (dec ? Number(dec[1].padEnd(2, '0')) : 0);
+    return isFinite(cents) ? Math.round(cents) : null;
+  }
+
   /* ------------------------------------------------------------------ */
   /* Buy box                                                             */
   /* ------------------------------------------------------------------ */
@@ -75,16 +89,25 @@
         const lbl = n.dataset.template || 'Save [amount]';
         n.textContent = lbl.replace('[amount]', formatMoney(save).replace(/[.,]00(?=\D*$)/, ''));
       });
-      // offer card prices when subscribing
+      // offer card prices (subscription / Kaching-synced)
       this.offers.forEach((el) => {
+        const p = this.subscribing && el.dataset.subPrice ? el.dataset.subPrice : el.dataset.price;
         const now = el.querySelector('[data-lw-offer-now]');
-        if (now) now.textContent = formatMoney(this.subscribing && el.dataset.subPrice ? el.dataset.subPrice : el.dataset.price);
+        if (now) setText(now, formatMoney(p));
+        if (!el.dataset.kSynced) return;
+        const was = el.querySelector('[data-lw-offer-was]');
+        const c = Number(el.dataset.compare) > Number(p) ? el.dataset.compare : '';
+        if (was) { setText(was, c ? formatMoney(c) : ''); was.hidden = !c; }
+        const per = el.querySelector('[data-lw-offer-per]');
+        if (per && per.dataset.tpl && per.dataset.tpl.includes('[per_unit]')) {
+          setText(per, per.dataset.tpl.replace('[per_unit]', formatMoney(Math.round(Number(p) / Math.max(1, Number(per.dataset.bottles) || 1)))));
+        }
       });
       this.querySelectorAll('[data-lw-sub-note]').forEach((n) => (n.hidden = !this.subscribing));
       const unlocked = Number(d.gifts || 0);
       this.gifts.forEach((g, i) => g.classList.toggle('is-locked', i >= unlocked));
       if (this.atc) this.atc.disabled = d.available === 'false';
-      if (this.hasAttribute('data-kaching-sync')) this.syncKaching();
+      if (this.hasAttribute('data-kaching-sync') && !this._kReading) this.syncKaching();
       document.dispatchEvent(new CustomEvent('lw:offer-change', { detail: { price, compare, box: this } }));
     }
 
@@ -126,6 +149,11 @@
           this._kObs.observe(this.closest('.shopify-section') || document.body, { childList: true, subtree: true });
         }
         this.kaching.setAttribute('aria-hidden', 'true');
+        if (this.hasAttribute('data-kaching-prices') && 'MutationObserver' in window) {
+          if (this._kpObs) this._kpObs.disconnect();
+          this._kpObs = new MutationObserver(() => { clearTimeout(this._kpT); this._kpT = setTimeout(() => this.readKaching(), 60); });
+          this._kpObs.observe(this.kaching, { childList: true, subtree: true, characterData: true });
+        }
       }
       const idx = Math.max(0, this.offers.indexOf(this.selected));
       const deals = this.kachingDeals(this.kaching);
@@ -149,6 +177,52 @@
         if (qIn) qIn.value = d.qty || 1;
         if (spIn) spIn.value = this.subscribing && d.sellingPlan ? d.sellingPlan : '';
       }
+      if (this.hasAttribute('data-kaching-prices')) { clearTimeout(this._kpT); this._kpT = setTimeout(() => this.readKaching(), 60); }
+    }
+
+    /* ---- Kaching prices -> our offer cards (their numbers, our styling) ---- */
+    readKaching() {
+      if (!this.kaching || !this.kaching.isConnected) return;
+      const deals = this.kachingDeals(this.kaching);
+      if (!deals.length) return;
+      const boxOf = (opt) => opt.closest('.kaching-bundles__bar, [class*="bundles__bar"]:not([class*="__bar-"]), label, [role="radio"]') || opt.parentElement;
+      const isStruck = (n) => !!n.closest('s, del, strike, [class*="full-price"], [class*="compare"], [class*="original"]') || /line-through/.test(getComputedStyle(n).textDecorationLine || '');
+      const moneyRe = /\d[\d.,\s']*\d|\d/;
+      let changed = false;
+      this.offers.forEach((el, i) => {
+        const opt = deals[i];
+        if (!opt) return;
+        const box = boxOf(opt);
+        if (!box) return;
+        let price = null, compare = null;
+        const priceEl = box.querySelector('[class*="bar-price"]:not([class*="full"]):not([class*="compare"]), [class*="__price"]:not([class*="full"]):not([class*="compare"])');
+        const compEl = box.querySelector('[class*="full-price"], [class*="compare"], s, del');
+        if (priceEl) price = parseMoney(priceEl.textContent);
+        if (compEl) compare = parseMoney(compEl.textContent);
+        if (price == null) {
+          // fallback: first money amount that isn't struck through
+          const walker = document.createTreeWalker(box, NodeFilter.SHOW_TEXT);
+          let t;
+          while ((t = walker.nextNode())) {
+            if (!/[$€£¥₹]|\d[.,]\d{2}/.test(t.nodeValue) || !moneyRe.test(t.nodeValue)) continue;
+            const v = parseMoney(t.nodeValue);
+            if (v == null) continue;
+            if (isStruck(t.parentElement)) { if (compare == null) compare = v; } else if (price == null) price = v;
+          }
+        }
+        if (price == null) return;
+        const key = this.subscribing && el.dataset.subPrice ? 'subPrice' : 'price';
+        if (String(price) !== el.dataset[key]) { el.dataset[key] = price; changed = true; }
+        const c = compare && compare > price ? String(compare) : '0';
+        if (c !== el.dataset.compare) { el.dataset.compare = c; changed = true; }
+        if (!el.dataset.kSynced) { el.dataset.kSynced = '1'; changed = true; }
+        if (this.hasAttribute('data-kaching-titles')) {
+          const tEl = box.querySelector('[class*="bar-title"], [class*="__title"]');
+          const ours = el.querySelector('.lw-offer__title');
+          if (tEl && ours && tEl.textContent.trim()) setText(ours, tEl.textContent.trim());
+        }
+      });
+      if (changed) { this._kReading = true; try { this.update(); } finally { this._kReading = false; } }
     }
 
     async addToCart() {
