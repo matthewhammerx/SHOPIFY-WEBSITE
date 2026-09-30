@@ -151,7 +151,7 @@
             "ships_from": "Ships from US 🇺🇸",
             "atc_label": "Add To Cart",
             "show_atc_price": true,
-            "after_add": "drawer",
+            "after_add": "checkout",
             "note_1": "Refills Ship Every 30 Days",
             "note_2": "Stop or Cancel Anytime",
             "notes_only_subscription": true,
