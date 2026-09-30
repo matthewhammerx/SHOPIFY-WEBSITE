@@ -132,8 +132,8 @@
         "buy_box_7": {
           "type": "buy_box",
           "settings": {
-            "app_bundles": false,
-            "kaching_sync": true,
+            "app_bundles": true,
+            "kaching_sync": false,
             "kaching_selector": "V1",
             "kaching_prices": true,
             "kaching_titles": true,
