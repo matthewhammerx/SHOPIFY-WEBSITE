@@ -96,9 +96,9 @@
       for (const sel of sels) {
         let el = null;
         try { el = scope.querySelector(sel) || document.querySelector(sel); } catch (e) {}
-        if (el && !this.contains(el)) {
+        if (el && !el.closest('[data-lw-offer], .lw-offers, .lw-gifts')) {
           // climb to the outermost Kaching element so we hide the whole widget
-          while (el.parentElement && el.parentElement !== scope && /kaching/i.test(el.parentElement.className + ' ' + el.parentElement.id + ' ' + el.parentElement.tagName)) el = el.parentElement;
+          while (el.parentElement && el.parentElement !== scope && el.parentElement !== this && !el.parentElement.matches('form') && /kaching/i.test(el.parentElement.className + ' ' + el.parentElement.id + ' ' + el.parentElement.tagName)) el = el.parentElement;
           return el;
         }
       }
@@ -121,6 +121,10 @@
           return;
         }
         this.kaching.classList.add('lw-kaching-hidden');
+        if (!this._kObs && 'MutationObserver' in window) {
+          this._kObs = new MutationObserver(() => { if (this.kaching && !this.kaching.isConnected) { this.kaching = null; this.syncKaching(); } });
+          this._kObs.observe(this.closest('.shopify-section') || document.body, { childList: true, subtree: true });
+        }
         this.kaching.setAttribute('aria-hidden', 'true');
       }
       const idx = Math.max(0, this.offers.indexOf(this.selected));
