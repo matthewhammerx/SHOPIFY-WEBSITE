@@ -210,6 +210,7 @@
         },
         "gift_11": {
           "type": "gift",
+          "disabled": true,
           "settings": {
             "title": "FREE Shipping",
             "value": "$4.95",
@@ -219,6 +220,7 @@
         },
         "gift_12": {
           "type": "gift",
+          "disabled": true,
           "settings": {
             "title": "FREE Liver Reset Guide",
             "value": "$19.99",
@@ -228,6 +230,7 @@
         },
         "gift_13": {
           "type": "gift",
+          "disabled": true,
           "settings": {
             "title": "FREE Anti-Bloat Blueprint",
             "value": "$19.99",
