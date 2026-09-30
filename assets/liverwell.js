@@ -113,25 +113,45 @@
 
     /* ---- Kaching sync: our offer cards drive the (hidden) Kaching widget ---- */
     findKaching() {
-      const custom = this.dataset.kachingSelector;
+      const custom = (this.dataset.kachingSelector || '').trim();
       const scope = this.closest('.shopify-section') || document;
-      const sels = [custom, 'kaching-bundles-block', 'kaching-bundles', '[class*="kaching-bundles"]', '[id*="kaching"]', '[class*="kaching"]'].filter(Boolean);
-      for (const sel of sels) {
-        let el = null;
-        try { el = scope.querySelector(sel) || document.querySelector(sel); } catch (e) {}
-        if (el && !el.closest('[data-lw-offer], .lw-offers, .lw-gifts') && !el.matches('form, .product-form') && !(this.atc && el.contains(this.atc))) {
-          // climb to the outermost Kaching element so we hide the whole widget
-          while (el.parentElement && el.parentElement !== scope && el.parentElement !== this && !el.parentElement.matches('form, .product-form') && !(this.atc && el.parentElement.contains(this.atc)) && /kaching/i.test(el.parentElement.className + ' ' + el.parentElement.id + ' ' + el.parentElement.tagName)) el = el.parentElement;
-          return el;
+      const sels = ['kaching-bundles-block', 'kaching-bundles', '[class*="kaching-bundles"]', '[id*="kaching"]', '[class*="kaching"]'];
+      if (custom && /^[.#\[a-z]/i.test(custom)) sels.unshift(custom);
+      const ok = (el) => el && !/^(SCRIPT|STYLE|LINK|META|TEMPLATE|NOSCRIPT|INPUT)$/.test(el.tagName)
+        && !el.closest('[data-lw-offer], .lw-offers, .lw-gifts') && !el.matches('form, .product-form') && !(this.atc && el.contains(this.atc));
+      const climb = (el) => {
+        // outermost Kaching element so we hide the whole widget
+        while (el.parentElement && el.parentElement !== scope && el.parentElement !== this && ok(el.parentElement) && /kaching/i.test(el.parentElement.className + ' ' + el.parentElement.id + ' ' + el.parentElement.tagName)) el = el.parentElement;
+        return el;
+      };
+      for (const root of [scope, document]) {
+        for (const sel of sels) {
+          let list = [];
+          try { list = Array.from(root.querySelectorAll(sel)); } catch (e) {}
+          for (const el of list) {
+            if (!ok(el)) continue;
+            const top = climb(el);
+            if (this.kachingDeals(top).length) {
+              if (!this._kLogged) { this._kLogged = true; console.info('[LiverWell] Kaching widget linked:', top, this.kachingDeals(top).length + ' deals'); }
+              return top;
+            }
+          }
         }
       }
       return null;
     }
 
+    kachingRoot(root) { return (root && root.shadowRoot) || root; }
+
     kachingDeals(root) {
-      let opts = Array.from(root.querySelectorAll('input[type="radio"]'));
-      if (!opts.length) opts = Array.from(root.querySelectorAll('[class*="deal-bar"]:not([class*="deal-bar"] [class*="deal-bar"]), [class*="bundle-bar"], [data-deal-index], [role="radio"]'));
-      return opts;
+      const hosts = [root, ...Array.from(root.querySelectorAll('*')).filter((n) => n.shadowRoot)];
+      for (const h of hosts) {
+        const r = this.kachingRoot(h);
+        let opts = Array.from(r.querySelectorAll('input[type="radio"]'));
+        if (!opts.length) opts = Array.from(r.querySelectorAll('.kaching-bundles__bar, [class*="deal-bar"]:not([class*="deal-bar"] [class*="deal-bar"]), [class*="bundle-bar"], [data-deal-index], [role="radio"]'));
+        if (opts.length) return opts;
+      }
+      return [];
     }
 
     syncKaching() {
@@ -140,7 +160,8 @@
         if (!this.kaching) {
           // Kaching renders a moment after page load — keep looking for a few seconds
           if (!this._kTries) this._kTries = 0;
-          if (this._kTries++ < 40) { clearTimeout(this._kT); this._kT = setTimeout(() => this.syncKaching(), 250); }
+          if (this._kTries++ < 60) { clearTimeout(this._kT); this._kT = setTimeout(() => this.syncKaching(), 250); }
+          else if (!this._kWarned) this._kWarned = true, console.warn('[LiverWell] Kaching widget not found on this page — is the Kaching Bundles block/embed showing a deal for this product?');
           return;
         }
         this.kaching.classList.add('lw-kaching-hidden');
@@ -152,7 +173,7 @@
         if (this.hasAttribute('data-kaching-prices') && 'MutationObserver' in window) {
           if (this._kpObs) this._kpObs.disconnect();
           this._kpObs = new MutationObserver(() => { clearTimeout(this._kpT); this._kpT = setTimeout(() => this.readKaching(), 60); });
-          this._kpObs.observe(this.kaching, { childList: true, subtree: true, characterData: true });
+          [this.kaching, this.kaching.shadowRoot].filter(Boolean).forEach((t) => this._kpObs.observe(t, { childList: true, subtree: true, characterData: true, attributes: true, attributeFilter: ['class', 'checked', 'aria-checked'] }));
         }
       }
       const idx = Math.max(0, this.offers.indexOf(this.selected));
@@ -167,7 +188,7 @@
         }
       }
       // subscription toggle follows ours
-      const subBox = this.kaching.querySelector('input[type="checkbox"]');
+      const subBox = this.kachingRoot(this.kaching).querySelector('input[type="checkbox"]');
       if (subBox && this.subInput && subBox.checked !== this.subscribing) { subBox.click(); subBox.dispatchEvent(new Event('change', { bubbles: true })); }
       // keep our form's fallback id/quantity in line with the chosen offer (Kaching may overwrite them)
       if (this.form) {
