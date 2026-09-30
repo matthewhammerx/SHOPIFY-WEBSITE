@@ -79,7 +79,11 @@
           "type": "rating",
           "settings": {
             "text": "Rated 4.9 | Loved by thousands",
-            "show_avatars": true
+            "show_avatars": true,
+            "avatar_1": "shopify://shop_images/hf_20260902_033720_e571900f-7268-4c91-9176-6075ca71faf1.png",
+            "avatar_2": "shopify://shop_images/hf_20260724_060713_4151b648-fff7-4163-a926-0fe76139263b.png",
+            "avatar_3": "shopify://shop_images/31.png",
+            "avatar_4": "shopify://shop_images/616043840_122104787721210876_2654775654088331384_n.jpg"
           }
         },
         "eyebrow_2": {
