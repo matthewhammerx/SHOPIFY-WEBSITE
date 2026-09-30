@@ -1685,7 +1685,9 @@ cart-drawer:not(.active) .cart-drawer__overlay { background: transparent !import
 /* Kaching sync: widget stays rendered (so it keeps working) but is invisible */
 .lw-kaching-hidden { position: absolute !important; left: -99999px !important; width: 1px !important; height: 1px !important; overflow: hidden !important; opacity: 0 !important; pointer-events: none !important; }
 /* Kaching sync: hide the Kaching widget immediately (it injects itself into our buy box / product form) */
-lw-buy-box[data-kaching-sync] [class*="kaching"]:not([class*="kaching"] *),
-lw-buy-box[data-kaching-sync] [id*="kaching"]:not([id*="kaching"] *),
-lw-buy-box[data-kaching-sync] kaching-bundles-block {
+lw-buy-box[data-kaching-sync] [class*="kaching"]:not(form):not(.product-form):not(:has([data-lw-atc])):not([class*="kaching"]:not(form):not(.product-form):not(:has([data-lw-atc])) *),
+lw-buy-box[data-kaching-sync] kaching-bundles-block:not(:has([data-lw-atc])) {
   position: absolute !important; left: -99999px !important; width: 1px !important; height: 1px !important; overflow: hidden !important; opacity: 0 !important; pointer-events: none !important; }
+
+/* never hide our Add To Cart, whatever class Kaching puts on the form */
+lw-buy-box[data-kaching-sync] form, lw-buy-box[data-kaching-sync] .product-form { position: static !important; left: auto !important; width: auto !important; height: auto !important; overflow: visible !important; opacity: 1 !important; pointer-events: auto !important; }

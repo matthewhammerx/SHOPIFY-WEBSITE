@@ -96,9 +96,9 @@
       for (const sel of sels) {
         let el = null;
         try { el = scope.querySelector(sel) || document.querySelector(sel); } catch (e) {}
-        if (el && !el.closest('[data-lw-offer], .lw-offers, .lw-gifts')) {
+        if (el && !el.closest('[data-lw-offer], .lw-offers, .lw-gifts') && !el.matches('form, .product-form') && !(this.atc && el.contains(this.atc))) {
           // climb to the outermost Kaching element so we hide the whole widget
-          while (el.parentElement && el.parentElement !== scope && el.parentElement !== this && !el.parentElement.matches('form') && /kaching/i.test(el.parentElement.className + ' ' + el.parentElement.id + ' ' + el.parentElement.tagName)) el = el.parentElement;
+          while (el.parentElement && el.parentElement !== scope && el.parentElement !== this && !el.parentElement.matches('form, .product-form') && !(this.atc && el.parentElement.contains(this.atc)) && /kaching/i.test(el.parentElement.className + ' ' + el.parentElement.id + ' ' + el.parentElement.tagName)) el = el.parentElement;
           return el;
         }
       }
