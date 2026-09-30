@@ -62,6 +62,7 @@
       const imgs = Array.from(st.querySelectorAll('[data-lw-bundle-img]'));
       const hit = imgs.find((i) => i.dataset.lwBundleImg === key) || imgs.find((i) => i.dataset.lwBundleImg === 'default');
       imgs.forEach((i) => i.classList.toggle('is-on', i === hit));
+      if (st.hidden !== !hit) st.hidden = !hit; // slot 2 hides when the offer has no 2nd photo
       if (hit && hit.loading === 'lazy') hit.loading = 'eager';
     });
     // on a real change, bring the bundle photo into view
@@ -368,15 +369,17 @@
     root.querySelectorAll('[data-lw-gallery]').forEach((g) => {
       if (g._lw) return; g._lw = true;
       const slides = g.querySelector('.lw-gallery__slides');
-      const thumbs = Array.from(g.querySelectorAll('.lw-gallery__thumb'));
+      const allThumbs = Array.from(g.querySelectorAll('.lw-gallery__thumb'));
       if (!slides) return;
+      // hidden bundle slots take no space, so only count visible slides/thumbs
+      const vis = (list) => list.filter((n) => !n.hidden);
       const go = (i) => {
-        const n = slides.children.length;
+        const n = vis(Array.from(slides.children)).length;
         i = (i + n) % n;
         slides.scrollTo({ left: slides.clientWidth * i, behavior: 'smooth' });
       };
       const current = () => Math.round(slides.scrollLeft / Math.max(1, slides.clientWidth));
-      thumbs.forEach((t, i) => t.addEventListener('click', () => go(i)));
+      allThumbs.forEach((t) => t.addEventListener('click', () => go(vis(allThumbs).indexOf(t))));
       const prev = g.querySelector('.lw-gallery__arrow--prev');
       const next = g.querySelector('.lw-gallery__arrow--next');
       if (prev) prev.addEventListener('click', () => go(current() - 1));
@@ -386,6 +389,7 @@
         clearTimeout(t);
         t = setTimeout(() => {
           const c = current();
+          const thumbs = vis(allThumbs);
           thumbs.forEach((th, i) => th.classList.toggle('is-active', i === c));
           const at = thumbs[c];
           if (at) at.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'smooth' });

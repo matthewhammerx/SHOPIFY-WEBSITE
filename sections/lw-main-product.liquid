@@ -24,6 +24,19 @@
       assign fallback_class = ''
     endif
   endfor
+  assign bundle_gallery2 = false
+  assign slot2_hidden = true
+  for b in offer_blocks
+    if b.settings.gallery_image_2 != blank
+      assign bundle_gallery2 = true
+      if b.id == bundle_default
+        assign slot2_hidden = false
+      endif
+    endif
+  endfor
+  if bundle_gallery == false
+    assign bundle_gallery2 = false
+  endif
   assign first_media = lw_product.media.first
   assign media_offset = 0
   if bundle_gallery
@@ -58,6 +71,16 @@
                     {%- endif -%}
                   {%- endfor -%}
                 </div>
+                {%- if bundle_gallery2 -%}
+                  <div class="lw-gallery__slide lw-gallery__bundle" data-lw-bundle-media="2"{% if slot2_hidden %} hidden{% endif %}>
+                    {%- for b in offer_blocks -%}
+                      {%- if b.settings.gallery_image_2 != blank -%}
+                        {%- if b.id == bundle_default -%}{%- assign bclass = 'is-on' -%}{%- else -%}{%- assign bclass = '' -%}{%- endif -%}
+                        {{ b.settings.gallery_image_2 | image_url: width: 1100 | image_tag: loading: 'lazy', sizes: '(min-width: 990px) 600px, 100vw', widths: '400, 600, 800, 1100', alt: b.settings.gallery_image_2.alt, data-lw-bundle-img: b.id, class: bclass }}
+                      {%- endif -%}
+                    {%- endfor -%}
+                  </div>
+                {%- endif -%}
               {%- endif -%}
               {%- for media in lw_product.media offset: media_offset -%}
                 <div class="lw-gallery__slide">
@@ -80,7 +103,7 @@
                 <div class="lw-gallery__slide">{{ 'product-1' | placeholder_svg_tag: 'lw-placeholder' }}</div>
               {%- endfor -%}
             </div>
-            {%- if lw_product.media.size > 1 and section.settings.show_arrows -%}
+            {%- if section.settings.show_arrows and lw_product.media.size > 1 or section.settings.show_arrows and bundle_gallery2 -%}
               <button type="button" class="lw-gallery__arrow lw-gallery__arrow--prev" aria-label="Previous image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m15 6-6 6 6 6"/></svg></button>
               <button type="button" class="lw-gallery__arrow lw-gallery__arrow--next" aria-label="Next image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m9 6 6 6-6 6"/></svg></button>
             {%- endif -%}
@@ -100,7 +123,7 @@
             </div>
           {%- endif -%}
         </div>
-        {%- if lw_product.media.size > 1 -%}
+        {%- if lw_product.media.size > 1 or bundle_gallery2 -%}
           <div class="lw-gallery__thumbs{% unless section.settings.thumbs_mobile %} lw-hide-mobile{% endunless %}{% unless section.settings.thumbs_desktop %} lw-hide-desktop{% endunless %}">
             {%- if bundle_gallery -%}
               <button type="button" class="lw-gallery__thumb lw-gallery__bundle is-active" aria-label="Show bundle image" data-lw-bundle-media>
@@ -109,6 +132,13 @@
                   {%- if b.settings.gallery_image != blank -%}{%- if b.id == bundle_default -%}{%- assign bclass = 'is-on' -%}{%- else -%}{%- assign bclass = '' -%}{%- endif -%}{{ b.settings.gallery_image | image_url: width: 300 | image_tag: loading: 'lazy', alt: '', data-lw-bundle-img: b.id, class: bclass }}{%- endif -%}
                 {%- endfor -%}
               </button>
+              {%- if bundle_gallery2 -%}
+                <button type="button" class="lw-gallery__thumb lw-gallery__bundle" aria-label="Show bundle image 2" data-lw-bundle-media="2"{% if slot2_hidden %} hidden{% endif %}>
+                  {%- for b in offer_blocks -%}
+                    {%- if b.settings.gallery_image_2 != blank -%}{%- if b.id == bundle_default -%}{%- assign bclass = 'is-on' -%}{%- else -%}{%- assign bclass = '' -%}{%- endif -%}{{ b.settings.gallery_image_2 | image_url: width: 300 | image_tag: loading: 'lazy', alt: '', data-lw-bundle-img: b.id, class: bclass }}{%- endif -%}
+                  {%- endfor -%}
+                </button>
+              {%- endif -%}
             {%- endif -%}
             {%- for media in lw_product.media offset: media_offset -%}
               <button type="button" class="lw-gallery__thumb{% if forloop.first and bundle_gallery == false %} is-active{% endif %}" aria-label="Show media {{ forloop.index }}">
@@ -1713,6 +1743,12 @@
           "id": "gallery_image",
           "label": "Gallery image (when picked)",
           "info": "Shown as the first product photo while this offer is selected (e.g. 2 bottles + gift for the 2-pack). Leave empty to show the normal first photo."
+        },
+        {
+          "type": "image_picker",
+          "id": "gallery_image_2",
+          "label": "Gallery image 2 (when picked)",
+          "info": "Optional second photo, shown right after the first one while this offer is selected."
         },
         {
           "type": "range",

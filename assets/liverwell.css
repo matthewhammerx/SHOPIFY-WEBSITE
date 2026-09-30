@@ -1708,3 +1708,4 @@ lw-buy-box.lw-k-pending[data-kaching-titles] .lw-offer__title { visibility: hidd
 .lw-gallery__bundle { position: relative; }
 .lw-gallery__bundle [data-lw-bundle-img] { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity .35s ease; }
 .lw-gallery__bundle [data-lw-bundle-img].is-on { opacity: 1; }
+.lw-gallery [data-lw-bundle-media][hidden] { display: none !important; }
