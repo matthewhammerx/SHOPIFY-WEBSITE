@@ -1685,8 +1685,8 @@ cart-drawer:not(.active) .cart-drawer__overlay { background: transparent !import
 /* Kaching sync: widget stays rendered (so it keeps working) but is invisible */
 .lw-kaching-hidden { position: absolute !important; left: -99999px !important; width: 1px !important; height: 1px !important; overflow: hidden !important; opacity: 0 !important; pointer-events: none !important; }
 /* Kaching sync: hide the Kaching widget immediately (it injects itself into our buy box / product form) */
-lw-buy-box[data-kaching-sync] [class*="kaching"]:not(form):not(.product-form):not(:has([data-lw-atc])):not([class*="kaching"]:not(form):not(.product-form):not(:has([data-lw-atc])) *),
-lw-buy-box[data-kaching-sync] kaching-bundles-block:not(:has([data-lw-atc])) {
+lw-buy-box[data-kaching-sync]:not(.lw-kaching-test) [class*="kaching"]:not(form):not(.product-form):not(:has([data-lw-atc])):not([class*="kaching"]:not(form):not(.product-form):not(:has([data-lw-atc])) *),
+lw-buy-box[data-kaching-sync]:not(.lw-kaching-test) kaching-bundles-block:not(:has([data-lw-atc])) {
   position: absolute !important; left: -99999px !important; width: 1px !important; height: 1px !important; overflow: hidden !important; opacity: 0 !important; pointer-events: none !important; }
 
 /* never hide our Add To Cart, whatever class Kaching puts on the form */
@@ -1700,3 +1700,6 @@ lw-buy-box.lw-k-pending [data-lw-offer-per],
 lw-buy-box.lw-k-pending [data-lw-price],
 lw-buy-box.lw-k-pending [data-lw-compare],
 lw-buy-box.lw-k-pending[data-kaching-titles] .lw-offer__title { visibility: hidden; }
+
+/* Kaching test mode (?lw_kaching=show) */
+.lw-kaching-debug { position: static !important; left: auto !important; width: auto !important; height: auto !important; overflow: visible !important; opacity: 1 !important; pointer-events: auto !important; outline: 2px dashed #e0457b; outline-offset: 6px; margin: 18px 0 !important; }

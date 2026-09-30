@@ -164,7 +164,9 @@
           else if (!this._kWarned) this._kWarned = true, console.warn('[LiverWell] Kaching widget not found on this page — is the Kaching Bundles block/embed showing a deal for this product?');
           return;
         }
-        this.kaching.classList.add('lw-kaching-hidden');
+        // test mode: add ?lw_kaching=show to the URL to see the Kaching widget follow our cards
+        if (/[?&]lw_kaching=show/.test(location.search)) { this.classList.add('lw-kaching-test'); this.kaching.classList.add('lw-kaching-debug'); console.info('[LiverWell] Kaching test mode: widget visible'); }
+        else this.kaching.classList.add('lw-kaching-hidden');
         if (!this._kObs && 'MutationObserver' in window) {
           this._kObs = new MutationObserver(() => { if (this.kaching && !this.kaching.isConnected) { this.kaching = null; this.syncKaching(); } });
           this._kObs.observe(this.closest('.shopify-section') || document.body, { childList: true, subtree: true });
@@ -179,6 +181,7 @@
       const idx = Math.max(0, this.offers.indexOf(this.selected));
       const deals = this.kachingDeals(this.kaching);
       const target = deals[idx] || deals[deals.length - 1];
+      if (/[?&]lw_kaching=show/.test(location.search)) console.info('[LiverWell] card ' + (idx + 1) + ' -> Kaching deal ' + (deals.indexOf(target) + 1) + ' of ' + deals.length);
       if (target) {
         const isInput = target.tagName === 'INPUT';
         const already = isInput ? target.checked : (target.getAttribute('aria-checked') === 'true' || /selected|active/.test(target.className));
@@ -191,7 +194,7 @@
       const subBox = this.kachingRoot(this.kaching).querySelector('input[type="checkbox"]');
       if (subBox && this.subInput && subBox.checked !== this.subscribing) { subBox.click(); subBox.dispatchEvent(new Event('change', { bubbles: true })); }
       // keep our form's fallback id/quantity in line with the chosen offer (Kaching may overwrite them)
-      if (this.form) {
+      if (this.form && !this.hasAttribute('data-kaching-prices')) {
         const d = this.selected.dataset;
         const idIn = this.form.querySelector('[name="id"]'), qIn = this.form.querySelector('[name="quantity"]'), spIn = this.form.querySelector('[name="selling_plan"]');
         if (idIn && d.variant) idIn.value = d.variant;
