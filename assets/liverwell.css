@@ -1691,3 +1691,12 @@ lw-buy-box[data-kaching-sync] kaching-bundles-block:not(:has([data-lw-atc])) {
 
 /* never hide our Add To Cart, whatever class Kaching puts on the form */
 lw-buy-box[data-kaching-sync] form, lw-buy-box[data-kaching-sync] .product-form { position: static !important; left: auto !important; width: auto !important; height: auto !important; overflow: visible !important; opacity: 1 !important; pointer-events: auto !important; }
+
+/* Kaching mirror: hide theme numbers until Kaching's deals are read */
+.lw-offer__per:empty { display: none; }
+lw-buy-box.lw-k-pending [data-lw-offer-now],
+lw-buy-box.lw-k-pending [data-lw-offer-was],
+lw-buy-box.lw-k-pending [data-lw-offer-per],
+lw-buy-box.lw-k-pending [data-lw-price],
+lw-buy-box.lw-k-pending [data-lw-compare],
+lw-buy-box.lw-k-pending[data-kaching-titles] .lw-offer__title { visibility: hidden; }

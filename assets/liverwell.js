@@ -107,6 +107,12 @@
       const unlocked = Number(d.gifts || 0);
       this.gifts.forEach((g, i) => g.classList.toggle('is-locked', i >= unlocked));
       if (this.atc) this.atc.disabled = d.available === 'false';
+      if (this.hasAttribute('data-kaching-prices') && !this._kPend) {
+        // hide theme prices until Kaching's are in (fallback: show after 4s)
+        this._kPend = true;
+        this.classList.add('lw-k-pending');
+        setTimeout(() => this.classList.remove('lw-k-pending'), 4000);
+      }
       if (this.hasAttribute('data-kaching-sync') && !this._kReading) this.syncKaching();
       document.dispatchEvent(new CustomEvent('lw:offer-change', { detail: { price, compare, box: this } }));
     }
@@ -217,11 +223,17 @@
         if (c !== el.dataset.compare) { el.dataset.compare = c; changed = true; }
         if (!el.dataset.kSynced) { el.dataset.kSynced = '1'; changed = true; }
         if (this.hasAttribute('data-kaching-titles')) {
-          const tEl = box.querySelector('[class*="bar-title"], [class*="__title"]');
+          const tEl = box.querySelector('[class*="bar-title"]:not([class*="subtitle"]), [class*="__title"]');
           const ours = el.querySelector('.lw-offer__title');
           if (tEl && ours && tEl.textContent.trim()) setText(ours, tEl.textContent.trim());
+          const sEl = box.querySelector('[class*="subtitle"]');
+          const per = el.querySelector('[data-lw-offer-per]');
+          if (sEl && per && !(per.dataset.tpl || '').includes('[per_unit]') && sEl.textContent.trim()) setText(per, sEl.textContent.trim());
         }
       });
+      // mirror the number of deals: extra cards with no Kaching deal are hidden
+      this.offers.forEach((el, i) => { const h = i >= deals.length; if (el.hidden !== h) el.hidden = h; });
+      this.classList.remove('lw-k-pending');
       if (changed) { this._kReading = true; try { this.update(); } finally { this._kReading = false; } }
     }
 
