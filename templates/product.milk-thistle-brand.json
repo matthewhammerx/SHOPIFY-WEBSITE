@@ -129,9 +129,11 @@
           "type": "buy_box",
           "settings": {
             "app_bundles": false,
+            "kaching_sync": true,
+            "kaching_selector": "",
             "show_price_header": true,
             "sale_badge_text": "FALL SALE - Save [amount]",
-            "enable_subscription": true,
+            "enable_subscription": false,
             "subscription_default": false,
             "subscription_label": "Subscribe & Save an extra 15%",
             "subscription_sub": "Delivered every 30 days. Skip, pause or cancel anytime.",
