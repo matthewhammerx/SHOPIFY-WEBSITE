@@ -130,7 +130,9 @@
           "settings": {
             "app_bundles": false,
             "kaching_sync": true,
-            "kaching_selector": "",
+            "kaching_selector": "V1",
+            "kaching_prices": true,
+            "kaching_titles": true,
             "show_price_header": true,
             "sale_badge_text": "FALL SALE - Save [amount]",
             "enable_subscription": false,

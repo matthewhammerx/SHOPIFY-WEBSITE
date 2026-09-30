@@ -40,7 +40,7 @@
   endif
   assign default_gifts = default_gifts | default: 0
 -%}
-<lw-buy-box class="lw-buy" id="LwBuy-{{ section.id }}" {% if main %}data-main{% endif %} data-redirect="{{ bs.after_add | default: 'drawer' }}"{% if bs.kaching_sync and bs.app_bundles != true %} data-kaching-sync data-kaching-selector="{{ bs.kaching_selector | escape }}"{% if bs.kaching_prices != false %} data-kaching-prices{% endif %}{% if bs.kaching_titles != false %} data-kaching-titles{% endif %}{% endif %} {{ attrs }}>
+<lw-buy-box class="lw-buy" id="LwBuy-{{ section.id }}" {% if main %}data-main{% endif %} data-redirect="{{ bs.after_add | default: 'drawer' }}"{% if bs.kaching_sync and bs.app_bundles != true %} data-kaching-sync data-kaching-selector="{{ bs.kaching_selector | escape }}"{% if bs.kaching_prices != false %} data-kaching-prices{% endif %}{% if bs.kaching_titles %} data-kaching-titles{% endif %}{% endif %} {{ attrs }}>
   {%- unless bs.app_bundles -%}
   {%- if bs.show_price_header -%}
     <div class="lw-buy__price">
@@ -118,7 +118,7 @@
             </div>
             <div>
               <div class="lw-offer__title">{{ s.title }}</div>
-              {%- if subtitle != blank or bs.kaching_sync -%}<div class="lw-offer__per" data-lw-offer-per data-tpl="{{ s.subtitle | escape }}" data-bottles="{{ bottles }}">{{ subtitle }}</div>{%- endif -%}
+              {%- if subtitle != blank -%}<div class="lw-offer__per" data-lw-offer-per data-tpl="{{ s.subtitle | escape }}" data-bottles="{{ bottles }}">{{ subtitle }}</div>{%- endif -%}
             </div>
             <div class="lw-offer__prices">
               <div class="lw-offer__now" data-lw-offer-now>{{ price | money }}</div>
