@@ -40,6 +40,16 @@
   /* ------------------------------------------------------------------ */
   /* Buy box                                                             */
   /* ------------------------------------------------------------------ */
+  // Coming back from checkout (back button) after a "Go straight to checkout" add: empty the cart
+  window.addEventListener('pageshow', () => {
+    let went = null;
+    try { went = sessionStorage.getItem('lw_went_checkout'); sessionStorage.removeItem('lw_went_checkout'); } catch (e) {}
+    if (!went) return;
+    fetch('/cart/clear.js', { method: 'POST', headers: { Accept: 'application/json' } })
+      .then(() => window.location.reload())
+      .catch(() => {});
+  });
+
   class LwBuyBox extends HTMLElement {
     connectedCallback() {
       if (this._init) return;
@@ -295,6 +305,10 @@
       if (contentType) headers['Content-Type'] = contentType;
       const cartUrl = (window.routes && window.routes.cart_url) || '/cart';
       try {
+        // "Go straight to checkout": the cart only ever holds this order (no stacking from back + re-add)
+        if (this.dataset.redirect === 'checkout') {
+          await fetch('/cart/clear.js', { method: 'POST', headers: { Accept: 'application/json' } }).catch(() => {});
+        }
         if (discount) {
           await fetch('/discount/' + encodeURIComponent(discount), { credentials: 'same-origin' }).catch(() => {});
         }
@@ -302,7 +316,7 @@
         const data = await res.json();
         if (!res.ok || data.status) throw new Error(data.description || data.message || 'Could not add to cart');
 
-        if (this.dataset.redirect === 'checkout') { window.location.href = '/checkout'; return; }
+        if (this.dataset.redirect === 'checkout') { try { sessionStorage.setItem('lw_went_checkout', '1'); } catch (e) {} window.location.href = '/checkout'; return; }
         if (drawer && typeof drawer.renderContents === 'function' && this.dataset.redirect !== 'cart') {
           data.id = data.id || variantId;
           try {
