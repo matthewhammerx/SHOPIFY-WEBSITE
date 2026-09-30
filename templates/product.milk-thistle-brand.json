@@ -165,6 +165,7 @@
           "settings": {
             "title": "Buy One Get 1 Free",
             "subtitle": "[per_unit] per bottle",
+            "gallery_image": "shopify://shop_images/ChatGPTImageSep30_2026_01_36_14AM.png",
             "variant_position": 1,
             "quantity": 1,
             "bottles": 1,
