@@ -545,7 +545,14 @@
         }
       }
     },
-    "content_for_index": []
+    "content_for_index": [],
+    "blocks": {
+      "2724325275511621162": {
+        "type": "shopify://apps/kaching-subscriptions/blocks/app-embed-block/1fa39fd7-f6a3-4bbc-9383-7d91d27b44f5",
+        "disabled": false,
+        "settings": {}
+      }
+    }
   },
   "presets": {
     "Default": {
