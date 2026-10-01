@@ -184,6 +184,7 @@
           "settings": {
             "title": "Buy 2 Get 2 Free Gift",
             "subtitle": "[per_unit] per bottle",
+            "gallery_image": "shopify://shop_images/IMG_8776.png",
             "gallery_image_2": "shopify://shop_images/IMG_8747_55f44f4d-47a4-4c29-a569-b3650a4c9cb4.png",
             "variant_position": 1,
             "quantity": 1,
