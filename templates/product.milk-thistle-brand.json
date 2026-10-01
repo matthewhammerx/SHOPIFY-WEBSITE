@@ -184,6 +184,7 @@
           "settings": {
             "title": "Buy 2 Get 2 Free Gift",
             "subtitle": "[per_unit] per bottle",
+            "gallery_image_2": "shopify://shop_images/IMG_8747.png",
             "variant_position": 1,
             "quantity": 1,
             "bottles": 3,
@@ -202,6 +203,7 @@
           "settings": {
             "title": "Buy 3 Get 2 Free Gifts",
             "subtitle": "[per_unit] per bottle",
+            "gallery_image_2": "shopify://shop_images/IMG_8747.png",
             "variant_position": 3,
             "quantity": 1,
             "bottles": 5,
@@ -265,6 +267,16 @@
             "open": false
           }
         },
+        "collapsible_21": {
+          "type": "collapsible",
+          "settings": {
+            "heading": "About Your Free Gifts",
+            "icon": "none",
+            "content": "<p><strong>Liver Reset Guide</strong> – a 30-day plan of simple liver-friendly meals and habits.</p><p><strong>Anti-Bloat Blueprint</strong> – practical tips to reduce bloating and support digestion.</p><p>Free items are digital and delivered by email with your first order.</p>",
+            "page": "",
+            "open": false
+          }
+        },
         "collapsible_16": {
           "type": "collapsible",
           "settings": {
@@ -281,16 +293,6 @@
             "heading": "Recommended Use",
             "icon": "none",
             "content": "<p>Take 1 capsule daily with water, preferably with a meal. Morning is best for a strong start to your day, and taking it at the same time each day keeps your system balanced.</p>",
-            "page": "",
-            "open": false
-          }
-        },
-        "collapsible_21": {
-          "type": "collapsible",
-          "settings": {
-            "heading": "About Your Free Gifts",
-            "icon": "none",
-            "content": "<p><strong>Liver Reset Guide</strong> – a 30-day plan of simple liver-friendly meals and habits.</p><p><strong>Anti-Bloat Blueprint</strong> – practical tips to reduce bloating and support digestion.</p><p>Free items are digital and delivered by email with your first order.</p>",
             "page": "",
             "open": false
           }
