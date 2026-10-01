@@ -84,7 +84,7 @@
         "subtext_spacing": 0,
         "text_gap": 2,
         "background_start": "#254c26",
-        "background_end": "#53C959",
+        "background_end": "#54B559",
         "gradient_angle": 145,
         "show_timer": true,
         "schedule_mode": "reset_daily",
