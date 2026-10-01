@@ -248,9 +248,9 @@
         "collapsible_14": {
           "type": "collapsible",
           "settings": {
-            "heading": "What is milk thistle?",
+            "heading": "Description",
             "icon": "none",
-            "content": "<p>Milk thistle is a plant-based supplement known for its active compound silymarin, which supports liver function, reduced fatigue, and many other health benefits.†</p>",
+            "content": "<p>Milk thistle is a plant-based supplement known for its active compound silymarin, which supports liver function, reduced fatigue, and many other health benefits.†</p><p>Our science-backed 80% silymarin formula pairs Milk Thistle with Inositol and Turmeric to support your liver, reduce bloating and give you steady energy.†</p>",
             "page": "",
             "open": false
           }
@@ -258,9 +258,9 @@
         "collapsible_15": {
           "type": "collapsible",
           "settings": {
-            "heading": "Does it actually work?",
+            "heading": "Why You Need Milk Thistle?",
             "icon": "none",
-            "content": "<p>This formula supports your gut with natural ingredients. Milk Thistle helps your liver function, while Inositol and Turmeric help to reduce bloating and give you steady energy.†</p>",
+            "content": "<p>Your liver filters everything you eat, drink and breathe. When it's overworked, you feel it: bloating, low energy, brain fog and dull skin. Milk Thistle gives it the daily support it needs.†</p><p>It's made for both men and women, and you don't need to overhaul your diet or quit drinking. Healthy habits always help, but it's designed to fit into your routine as-is.</p>",
             "page": "",
             "open": false
           }
@@ -268,9 +268,9 @@
         "collapsible_16": {
           "type": "collapsible",
           "settings": {
-            "heading": "How long before I see results?",
+            "heading": "Benefits",
             "icon": "none",
-            "content": "<p>Some people notice changes within days, but results build with consistent use:</p><ul><li><strong>Days 1 to 14</strong> — lighter digestion, less bloating, steadier energy</li><li><strong>Week 3 to 6</strong> — clearer skin, stronger hair, reduced brain fog</li><li><strong>Month 2+</strong> — your liver is supported, and you feel transformed†</li></ul>",
+            "content": "<ul><li><strong>Liver support</strong> — helps protect and support healthy liver function†</li><li><strong>Digestion</strong> — lighter digestion and less bloating†</li><li><strong>Energy &amp; clarity</strong> — steadier energy, reduced brain fog†</li><li><strong>Glowing skin</strong> — clearer skin and stronger hair over time†</li></ul><p><strong>When will I see results?</strong> Days 1 to 14: lighter digestion and steadier energy. Week 3 to 6: clearer skin, less brain fog. Month 2+: your liver is supported, and you feel transformed.†</p>",
             "page": "",
             "open": false
           }
@@ -278,39 +278,9 @@
         "collapsible_17": {
           "type": "collapsible",
           "settings": {
-            "heading": "How to use",
+            "heading": "Recommended Use",
             "icon": "none",
-            "content": "<p>Take 1 capsule daily with water, preferably with a meal. For added support, take at the same time each day to keep your system balanced!</p>",
-            "page": "",
-            "open": false
-          }
-        },
-        "collapsible_18": {
-          "type": "collapsible",
-          "settings": {
-            "heading": "What is the best time to take this?",
-            "icon": "none",
-            "content": "<p>The best time to take Milk Thistle is in the morning so you can have a strong start to your day!</p>",
-            "page": "",
-            "open": false
-          }
-        },
-        "collapsible_19": {
-          "type": "collapsible",
-          "settings": {
-            "heading": "Is this just for men?",
-            "icon": "none",
-            "content": "<p>No, this formula is effective for both men and women who want digestive support and increased vitality.†</p>",
-            "page": "",
-            "open": false
-          }
-        },
-        "collapsible_20": {
-          "type": "collapsible",
-          "settings": {
-            "heading": "Do I need to change my diet or quit drinking to see results?",
-            "icon": "none",
-            "content": "<p>No, you don't need to overhaul your lifestyle to support your liver. Of course, healthy habits will always help, but LiverWell is designed to fit into your daily routine as-is.</p>",
+            "content": "<p>Take 1 capsule daily with water, preferably with a meal. Morning is best for a strong start to your day, and taking it at the same time each day keeps your system balanced.</p>",
             "page": "",
             "open": false
           }
@@ -352,12 +322,9 @@
         "gift_13",
         "collapsible_14",
         "collapsible_15",
+        "collapsible_21",
         "collapsible_16",
         "collapsible_17",
-        "collapsible_18",
-        "collapsible_19",
-        "collapsible_20",
-        "collapsible_21",
         "collapsible_22"
       ],
       "settings": {
