@@ -412,7 +412,7 @@
         "heading": "What our customers are saying:",
         "position": "media",
         "show_desktop": true,
-        "show_mobile": false,
+        "show_mobile": true,
         "columns_desktop": 3,
         "columns_mobile": 2,
         "show_arrows": true,
