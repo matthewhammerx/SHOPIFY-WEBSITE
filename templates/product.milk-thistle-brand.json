@@ -227,12 +227,12 @@
             "default_selected": true,
             "gifts": 3,
             "extra_title": "6x Nülive Milk Thistle + Daily Liver Guide + Routine Tracker ($175.90 Value)",
-            "extra_text": "Our 30-day liver-friendly meal & habit plan ($19.99 value)",
+            "extra_text": "",
             "extra_divider": "PLUS FREE GIFT",
-            "extra_title_2": "PLUS FREE GIFT",
-            "extra_text_2": "",
-            "extra_title_3": "",
-            "extra_text_3": "dawe",
+            "extra_title_2": "FREE Daily Liver Wellness Guide ( 14.95 Value)",
+            "extra_text_2": "Premium Guide",
+            "extra_title_3": "FREE Nülive Routine Tracker ( $4.95 Value )",
+            "extra_text_3": "Routine Activities",
             "discount_code": "",
             "discount_percent": 0
           }
@@ -260,7 +260,7 @@
           "type": "gift",
           "settings": {
             "title": "30-Day Nülive Routine Tracker",
-            "value": "$4.99",
+            "value": "$4.95",
             "image": "shopify://shop_images/Nulive_14_6327bb1e-5775-49a2-8298-8409a08b7915.png",
             "icon": "gift",
             "gift_product": ""
