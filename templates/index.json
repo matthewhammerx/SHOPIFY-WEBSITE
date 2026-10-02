@@ -486,10 +486,10 @@
         "offer_2": {
           "type": "offer",
           "settings": {
-            "title": "Buy 2 Get 1 Free Gift",
+            "title": "Buy 2",
             "subtitle": "[per_unit] per bottle",
             "variant_position": 2,
-            "quantity": 1,
+            "quantity": 2,
             "bottles": 2,
             "badge": "Most Popular",
             "badge_color": "",
@@ -509,10 +509,10 @@
         "offer_1": {
           "type": "offer",
           "settings": {
-            "title": "Buy 3 Get 2 Free Gifts",
+            "title": "Buy 3",
             "subtitle": "[per_unit] per bottle",
             "variant_position": 3,
-            "quantity": 1,
+            "quantity": 3,
             "bottles": 3,
             "badge": "Best Value",
             "badge_color": "",
@@ -531,6 +531,7 @@
         },
         "gift_4": {
           "type": "gift",
+          "disabled": true,
           "settings": {
             "title": "FREE Shipping",
             "value": "$4.95",
@@ -540,6 +541,7 @@
         },
         "gift_5": {
           "type": "gift",
+          "disabled": true,
           "settings": {
             "title": "FREE Liver Reset Guide",
             "value": "$19.99",
@@ -549,6 +551,7 @@
         },
         "gift_6": {
           "type": "gift",
+          "disabled": true,
           "settings": {
             "title": "FREE Anti-Bloat Blueprint",
             "value": "$19.99",
@@ -585,7 +588,7 @@
         "subscription_sub": "Delivered every 30 days. Skip, pause or cancel anytime.",
         "gifts_label": "Gifts unlocked",
         "gifts_locked_text": "Locked",
-        "show_delivery": true,
+        "show_delivery": false,
         "delivery_text": "Order today for delivery by",
         "delivery_days": 3,
         "ships_from": "Ships from US 🇺🇸",
