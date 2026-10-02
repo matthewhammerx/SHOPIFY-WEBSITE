@@ -305,7 +305,8 @@
             "icon": "none",
             "content": "<p>✓ Supports healthy liver function†<br/>✓ Helps reduce bloating and support smoother digestion†<br/>✓ Supports steady daily energy and mental clarity†<br/>✓ Supports gut wellness and digestive comfort†<br/>✓ Provides antioxidant protection against everyday oxidative stress†<br/>✓ Supports healthy metabolic function†<br/>✓ Helps support clearer-looking skin over time†<br/>✓ Easy once-daily capsule<br/>✓ No proprietary blends or hidden doses</p>",
             "page": "",
-            "open": false
+            "open": false,
+            "checklist": true
           }
         },
         "collapsible_17": {

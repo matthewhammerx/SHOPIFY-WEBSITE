@@ -213,8 +213,16 @@
             <div class="lw-acc" {{ block.shopify_attributes }}>
               <details{% if block.settings.open %} open{% endif %}>
                 <summary><span class="lw-acc__title">{% if block.settings.icon != 'none' %}{% render 'lw-icon', icon: block.settings.icon %}{% endif %}{{ block.settings.heading }}</span><span class="lw-acc__plus" aria-hidden="true"></span></summary>
-                <div class="lw-acc__body lw-rte">
-                  {{ block.settings.content }}
+                <div class="lw-acc__body lw-rte{% if block.settings.checklist %} lw-acc__body--checks{% endif %}">
+                  {%- if block.settings.checklist and block.settings.content contains '<br' -%}
+                    {%- assign chk_lines = block.settings.content | replace: '<br>', '<br/>' | replace: '<br />', '<br/>' | remove: '<p>' | remove: '</p>' | split: '<br/>' -%}
+                    {%- for line in chk_lines -%}
+                      {%- assign l = line | remove: '✓' | remove: '✔' | remove: '✅' | strip -%}
+                      {%- if l != blank -%}<div class="lw-chk">{% render 'lw-icon', icon: 'check' %}<span>{{ l }}</span></div>{%- endif -%}
+                    {%- endfor -%}
+                  {%- else -%}
+                    {{ block.settings.content }}
+                  {%- endif -%}
                   {%- if block.settings.page != blank -%}{{ block.settings.page.content }}{%- endif -%}
                 </div>
               </details>
@@ -562,9 +570,18 @@
           "label": "Title weight",
           "default": "normal",
           "options": [
-            { "value": "normal", "label": "Normal" },
-            { "value": "semibold", "label": "Semi-bold" },
-            { "value": "bold", "label": "Bold" }
+            {
+              "value": "normal",
+              "label": "Normal"
+            },
+            {
+              "value": "semibold",
+              "label": "Semi-bold"
+            },
+            {
+              "value": "bold",
+              "label": "Bold"
+            }
           ]
         }
       ]
@@ -1574,7 +1591,22 @@
           "default": "FALL SALE - Save [amount]",
           "info": "[amount] = savings of the selected offer. Leave empty to hide."
         },
-        {"type": "select", "id": "save_rounding", "label": "Savings amount", "default": "up", "options": [{"value": "up", "label": "Rounded up ($72)"}, {"value": "exact", "label": "Exact ($71.96)"}]},
+        {
+          "type": "select",
+          "id": "save_rounding",
+          "label": "Savings amount",
+          "default": "up",
+          "options": [
+            {
+              "value": "up",
+              "label": "Rounded up ($72)"
+            },
+            {
+              "value": "exact",
+              "label": "Exact ($71.96)"
+            }
+          ]
+        },
         {
           "type": "header",
           "content": "Subscribe & save"
@@ -2218,6 +2250,13 @@
           "type": "richtext",
           "id": "content",
           "label": "Content"
+        },
+        {
+          "type": "checkbox",
+          "id": "checklist",
+          "label": "Green check list",
+          "default": false,
+          "info": "Shows each line (one per line, or a bullet list) with a green check."
         },
         {
           "type": "page",

@@ -1749,3 +1749,10 @@ lw-buy-box.lw-k-pending[data-kaching-titles] .lw-offer__title { visibility: hidd
 /* Product title weight option */
 .lw .lw-pdp__title.lw-pdp__title--semibold, .lw-brand .lw .lw-pdp__title.lw-pdp__title--semibold, .lw-soft .lw .lw-pdp__title.lw-pdp__title--semibold { font-weight: 600 !important; }
 .lw .lw-pdp__title.lw-pdp__title--bold, .lw-brand .lw .lw-pdp__title.lw-pdp__title--bold, .lw-soft .lw .lw-pdp__title.lw-pdp__title--bold { font-weight: 700 !important; letter-spacing: -0.02em; }
+
+/* Dropdown "Green check list" option */
+.lw-acc__body--checks .lw-chk { display: flex; align-items: flex-start; gap: 8px; margin: 0 0 7px; }
+.lw-acc__body--checks .lw-chk .lw-icon { flex: 0 0 18px; width: 18px; height: 18px; margin-top: 2px; color: #1fa463; stroke-width: 2.6; }
+.lw-acc__body--checks ul { list-style: none; padding-left: 0; }
+.lw-acc__body--checks ul li { position: relative; padding-left: 26px; margin-bottom: 7px; }
+.lw-acc__body--checks ul li::before { content: ""; position: absolute; left: 0; top: 3px; width: 18px; height: 18px; background: #1fa463; -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 12.5 4.5 4.5L19 7.5'/%3E%3C/svg%3E") center / contain no-repeat; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 12.5 4.5 4.5L19 7.5'/%3E%3C/svg%3E") center / contain no-repeat; }
