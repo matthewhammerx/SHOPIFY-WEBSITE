@@ -117,7 +117,9 @@
         n.hidden = !compare;
       });
       this.querySelectorAll('[data-lw-save]').forEach((n) => {
-        const save = compare ? Number(compare) - Number(price) : 0;
+        let save = compare ? Number(compare) - Number(price) : 0;
+        // "Rounded up" option: $71.96 -> $72
+        if (n.dataset.round !== 'exact') save = Math.ceil(save / 100) * 100;
         n.hidden = save <= 0;
         const lbl = n.dataset.template || 'Save [amount]';
         n.textContent = lbl.replace('[amount]', formatMoney(save).replace(/[.,]00(?=\D*$)/, ''));

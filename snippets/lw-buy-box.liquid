@@ -47,7 +47,7 @@
       <span class="lw-buy__now" data-lw-price>{{ current.price | money }}</span>
       <s class="lw-buy__was" data-lw-compare></s>
       {%- if bs.sale_badge_text != blank -%}
-        <span class="lw-buy__badge" data-lw-save data-template="{{ bs.sale_badge_text | escape }}" hidden></span>
+        <span class="lw-buy__badge" data-lw-save data-template="{{ bs.sale_badge_text | escape }}" data-round="{{ bs.save_rounding | default: 'up' }}" hidden></span>
       {%- endif -%}
     </div>
   {%- endif -%}
