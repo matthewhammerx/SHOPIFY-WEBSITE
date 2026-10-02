@@ -1739,3 +1739,6 @@ lw-buy-box.lw-k-pending[data-kaching-titles] .lw-offer__title { visibility: hidd
 .lw-imgsec__pic { display: block; max-width: var(--lw-imgsec-w, 640px); margin: 0 auto; }
 .lw-imgsec__img { display: block; width: 100%; height: auto; border-radius: 0 !important; }
 @media (max-width: 749px) { .lw-imgsec__pic { max-width: var(--lw-imgsec-wm, 100%); } }
+/* Timeline: softer phase pills (not CTA-strong) */
+.lw-brand .lw-tl__list--progress .lw-tl__label { background: #f0f5f1 !important; color: #5b7564; border: 1px solid #e0e9e2; box-shadow: none; }
+.lw-brand .lw-tl__list--progress .lw-tl__step.is-active .lw-tl__label { background: linear-gradient(120deg, #e3f5e9 0%, #d3eedc 100%) !important; color: #17603a; border-color: #bfe3cb; box-shadow: 0 6px 16px -10px rgba(35, 125, 73, .35); }
