@@ -444,9 +444,9 @@
           "type": "stat",
           "settings": {
             "prefix": "",
-            "number": "90",
-            "suffix": "-Day",
-            "label": "Money-back guarantee"
+            "number": "70,000",
+            "suffix": "+",
+            "label": "Bottles shipped"
           }
         }
       },
@@ -1260,8 +1260,8 @@
         "link": "",
         "max_width": 640,
         "width_mobile": 100,
-        "bg_top": "#FFFFFF",
-        "bg_bottom": "#FAFAF5",
+        "bg_top": "#ffffff",
+        "bg_bottom": "#fafaf5",
         "split": 70,
         "padding_top": 24,
         "padding_bottom": 0
