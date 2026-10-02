@@ -396,6 +396,7 @@
         "clip_3",
         "clip_4"
       ],
+      "disabled": true,
       "settings": {
         "heading": "What our customers are saying:",
         "position": "media",
