@@ -939,8 +939,8 @@
       "settings": {
         "speed": 40,
         "repeat": 2,
-        "border": true,
-        "bg": "#F7F8F2",
+        "border": false,
+        "bg": "#F9F9F4",
         "fg": "#16301f",
         "icon_color": "#2e9254"
       }
