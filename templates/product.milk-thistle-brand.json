@@ -832,6 +832,7 @@
         "card_1": {
           "type": "card",
           "settings": {
+            "image": "shopify://shop_images/Quiet_Kitchen_Table_Lunch-3.png",
             "title": "Liver",
             "subtitle": "Your body's filter, supported.",
             "content": "<p>Silymarin helps protect liver cells and supports your body's own antioxidant production, so your liver can keep up with daily demands.†</p>"
@@ -840,6 +841,7 @@
         "card_2": {
           "type": "card",
           "settings": {
+            "image": "shopify://shop_images/Gentle_stretch_beside_the_couch-2.png",
             "title": "Digestion",
             "subtitle": "Gut comfort without the bloat.",
             "content": "<p>Milk Thistle helps your liver function, while Inositol and Turmeric help to reduce bloating and give you steady energy.†</p>"
@@ -848,6 +850,7 @@
         "card_3": {
           "type": "card",
           "settings": {
+            "image": "shopify://shop_images/Candid_walk_along_the_park_path-4.png",
             "title": "Energy",
             "subtitle": "Steady, not wired.",
             "content": "<p>When your liver processes efficiently, energy follows. No caffeine, no crash — just steady support.†</p>"
@@ -856,6 +859,7 @@
         "card_4": {
           "type": "card",
           "settings": {
+            "image": "shopify://shop_images/Focused_man_typing_at_home-5.png",
             "title": "Clarity",
             "subtitle": "Focused, not foggy.",
             "content": "<p>Many customers notice clearer thinking and fewer afternoon slumps within a few weeks of consistent use.†</p>"
