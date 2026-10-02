@@ -940,7 +940,7 @@
         "speed": 40,
         "repeat": 2,
         "border": false,
-        "bg": "#F9F9F4",
+        "bg": "#f9f9f4",
         "fg": "#16301f",
         "icon_color": "#2e9254"
       }
@@ -989,7 +989,7 @@
         "text": "<p>LiverWell® is built for daily use, not quick fixes. Here's how things tend to shift once it's part of your routine.</p>",
         "button_label": "Start My Journey →",
         "button_link": "",
-        "bg": "#FFFFFF",
+        "bg": "#ffffff",
         "fg": "#16301f",
         "accent": "#2e9254",
         "padding_top": 64,
@@ -1251,6 +1251,20 @@
         "accent": "#2e9254",
         "padding_top": 64,
         "padding_bottom": 64
+      }
+    },
+    "bundle_image": {
+      "type": "lw-image",
+      "settings": {
+        "image": "shopify://shop_images/Nulive_Milk_Thistle_Bottle_Trio_f35cb191-fc10-44db-8016-39947d0c6a62.png",
+        "link": "",
+        "max_width": 640,
+        "width_mobile": 100,
+        "bg_top": "#FFFFFF",
+        "bg_bottom": "#FAFAF5",
+        "split": 70,
+        "padding_top": 24,
+        "padding_bottom": 0
       }
     },
     "bundle": {
@@ -1656,18 +1670,6 @@
         "show_price": false,
         "rating_text": "4.9 | Loved by thousands",
         "action": "scroll"
-      }
-    },
-    "bundle_image": {
-      "type": "lw-image",
-      "settings": {
-        "max_width": 640,
-        "width_mobile": 100,
-        "bg_top": "#fafaf5",
-        "bg_bottom": "#fafaf5",
-        "split": 70,
-        "padding_top": 24,
-        "padding_bottom": 0
       }
     }
   },
