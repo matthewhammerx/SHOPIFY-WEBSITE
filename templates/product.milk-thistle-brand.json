@@ -563,31 +563,75 @@
         },
         "photo_2": {
           "type": "photo",
-          "settings": {}
+          "settings": {
+            "image": "shopify://shop_images/Kitchen_Portrait_with_Milk_Thistle_Bottle-10.png"
+          }
+        },
+        "photo_3q6Yfz": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/Smiling_woman_with_milk_thistle_bottle-2.png"
+          }
         },
         "photo_3": {
           "type": "photo",
-          "settings": {}
+          "settings": {
+            "image": "shopify://shop_images/Playful_portrait_with_a_Milk_Thistle_bottle-8.png"
+          }
         },
         "photo_4": {
           "type": "photo",
-          "settings": {}
+          "settings": {
+            "image": "shopify://shop_images/Woman_holding_a_Milk_Thistle_bottle-11.png"
+          }
+        },
+        "photo_HyFRNJ": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/Woman_holding_milk_thistle_bottle-4.png"
+          }
         },
         "photo_5": {
           "type": "photo",
-          "settings": {}
+          "settings": {
+            "image": "shopify://shop_images/Man_Holding_Milk_Thistle_Bottle_beside_Refrigerator-1.png"
+          }
         },
         "photo_6": {
           "type": "photo",
-          "settings": {}
+          "settings": {
+            "image": "shopify://shop_images/Older_Woman_Holding_Milk_Thistle_Bottle-9.png"
+          }
         },
         "photo_7": {
           "type": "photo",
-          "settings": {}
+          "settings": {
+            "image": "shopify://shop_images/Home_selfie_holding_milk_thistle_bottle-5.png"
+          }
         },
         "photo_8": {
           "type": "photo",
-          "settings": {}
+          "settings": {
+            "image": "shopify://shop_images/Woman_Holding_Nulive_Milk_Thistle_Bottle-12.png"
+          }
+        },
+        "photo_cQnP4z": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/Kitchen_selfie_with_Nulive_Milk_Thistle_-13.png"
+          }
+        },
+        "photo_qki3hM": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/Couple_Examines_Milk_Thistle_Bottle-3.png"
+          }
+        },
+        "photo_E9DrJq": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/Older_woman_holding_Nulive_milk_thistle_bottle-6.png"
+          }
         },
         "review_9": {
           "type": "review",
@@ -626,12 +670,17 @@
       "block_order": [
         "photo_1",
         "photo_2",
+        "photo_3q6Yfz",
         "photo_3",
         "photo_4",
+        "photo_HyFRNJ",
         "photo_5",
         "photo_6",
         "photo_7",
         "photo_8",
+        "photo_cQnP4z",
+        "photo_qki3hM",
+        "photo_E9DrJq",
         "review_9",
         "review_10",
         "review_11"
