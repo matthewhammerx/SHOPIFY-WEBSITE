@@ -23,7 +23,7 @@
         "link_url": "",
         "note": "90-day money-back guarantee",
         "overlay": 35,
-        "product": "milk-thistle",
+        "product": "nulive-milk-thistle",
         "product_image": "shopify://shop_images/Nulive_19.png",
         "height": 85,
         "fg": "#16301f"
@@ -67,7 +67,7 @@
         "text": "Science-backed liver support that fits into your morning, with every ingredient dosed at the levels research uses.",
         "link_label": "Shop now",
         "link_url": "/products/milk-thistle",
-        "product": "milk-thistle",
+        "product": "nulive-milk-thistle",
         "badge": "Bestseller",
         "tag": "LW-01",
         "card_title": "Milk Thistle Support",
@@ -155,7 +155,7 @@
         "heading": "Support. Clear. <em>Protect.</em>",
         "text": "Most liver supplements only do one thing. LiverWell supports the full cycle.",
         "image": "shopify://shop_images/image.png",
-        "product": "milk-thistle",
+        "product": "nulive-milk-thistle",
         "bg": "#fafaf5",
         "padding_top": 32,
         "padding_bottom": 96
@@ -551,7 +551,7 @@
         "gift_6"
       ],
       "settings": {
-        "product": "milk-thistle",
+        "product": "nulive-milk-thistle",
         "heading": "<em>Start today.</em> Stock up and save.",
         "text": "Your liver works every day. So does LiverWell.",
         "show_stock": true,

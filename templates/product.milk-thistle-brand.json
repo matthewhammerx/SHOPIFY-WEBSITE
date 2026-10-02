@@ -349,7 +349,7 @@
         "collapsible_22"
       ],
       "settings": {
-        "product": "milk-thistle",
+        "product": "nulive-milk-thistle",
         "sticky_left": true,
         "sticky_offset": 24,
         "show_arrows": false,
@@ -1669,7 +1669,7 @@
     "sticky": {
       "type": "lw-sticky-atc",
       "settings": {
-        "product": "milk-thistle",
+        "product": "nulive-milk-thistle",
         "label": "Start My Journey",
         "show_price": false,
         "rating_text": "4.9 | Loved by thousands",

@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "meowgical_split_hero_qgJUUU": {
@@ -8,7 +17,7 @@
         "heading": "SuperTaurine",
         "text": "<p>Vet-approved, pure-taurine formulas made to support your cat's everyday wellbeing.</p>",
         "button_text": "SHOP NOW",
-        "button_link": "shopify://products/milk-thistle",
+        "button_link": "shopify://products/nulive-milk-thistle",
         "button_use_gradient": true,
         "button_gradient_1": "#2748dc",
         "button_gradient_2": "#6695de",
