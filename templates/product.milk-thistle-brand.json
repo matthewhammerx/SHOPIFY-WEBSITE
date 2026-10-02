@@ -1256,61 +1256,79 @@
     "bundle": {
       "type": "lw-bundle",
       "blocks": {
-        "offer_3": {
+        "boffer_10": {
           "type": "offer",
           "settings": {
-            "title": "Buy One",
+            "title": "Buy One Get 1 Free",
             "subtitle": "[per_unit] per bottle",
+            "image": "shopify://shop_images/Nulive_18.png",
             "variant_position": 1,
             "quantity": 1,
-            "bottles": 1,
+            "bottles": 2,
             "badge": "",
             "badge_color": "",
             "default_selected": false,
             "gifts": 0,
             "extra_title": "",
             "extra_text": "",
+            "extra_divider": "",
+            "extra_title_2": "",
+            "extra_text_2": "",
+            "extra_title_3": "",
+            "extra_text_3": "",
             "discount_code": "",
             "discount_percent": 0
           }
         },
-        "offer_2": {
+        "boffer_9": {
           "type": "offer",
           "settings": {
-            "title": "Buy 2 Get 1 Free Gift",
+            "title": "Buy 2 Get 2 Free Gift",
             "subtitle": "[per_unit] per bottle",
-            "variant_position": 2,
+            "image": "shopify://shop_images/Nulive_22.png",
+            "variant_position": 1,
             "quantity": 1,
-            "bottles": 2,
+            "bottles": 4,
             "badge": "Most Popular",
             "badge_color": "",
             "default_selected": true,
             "gifts": 2,
-            "extra_title": "FREE Shipping ($4.95 value)",
-            "extra_text": "Ships in discreet packaging",
+            "extra_title": "FREE Liver Wellness Guide ($14.95 value)",
+            "extra_text": "Premium Guide",
+            "extra_divider": "",
+            "extra_title_2": "",
+            "extra_text_2": "",
+            "extra_title_3": "",
+            "extra_text_3": "",
             "discount_code": "",
             "discount_percent": 0
           }
         },
-        "offer_1": {
+        "boffer_8": {
           "type": "offer",
           "settings": {
             "title": "Buy 3 Get 2 Free Gifts",
             "subtitle": "[per_unit] per bottle",
+            "image": "shopify://shop_images/Nulive_21.png",
             "variant_position": 3,
             "quantity": 1,
-            "bottles": 3,
-            "badge": "Best Value",
+            "bottles": 6,
+            "badge": "Free Shipping",
             "badge_color": "",
             "default_selected": false,
             "gifts": 3,
-            "extra_title": "FREE Liver Reset Guide + FREE Shipping",
-            "extra_text": "Our 30-day liver-friendly meal & habit plan ($19.99 value)",
+            "extra_title": "6x Nülive Milk Thistle + Daily Liver Guide + Routine Tracker ($175.90 Value)",
+            "extra_text": "",
+            "extra_divider": "PLUS FREE GIFT",
+            "extra_title_2": "FREE Daily Liver Wellness Guide ( 14.95 Value)",
+            "extra_text_2": "Premium Guide",
+            "extra_title_3": "FREE Nülive Routine Tracker ( $4.95 Value )",
+            "extra_text_3": "Daily Product Checklist",
             "discount_code": "",
             "discount_percent": 0
           }
         },
-        "gift_4": {
+        "bgift_11": {
           "type": "gift",
           "settings": {
             "title": "FREE Shipping",
@@ -1319,32 +1337,34 @@
             "gift_product": ""
           }
         },
-        "gift_5": {
+        "bgift_12": {
           "type": "gift",
           "settings": {
-            "title": "FREE Liver Reset Guide",
-            "value": "$19.99",
+            "title": "FREE Daily Liver Wellness Guide",
+            "value": "$14.95",
+            "image": "shopify://shop_images/Nulive_15.png",
             "icon": "gift",
             "gift_product": ""
           }
         },
-        "gift_6": {
+        "bgift_13": {
           "type": "gift",
           "settings": {
-            "title": "FREE Anti-Bloat Blueprint",
-            "value": "$19.99",
+            "title": "30-Day Nülive Routine Tracker",
+            "value": "$4.95",
+            "image": "shopify://shop_images/Nulive_14_6327bb1e-5775-49a2-8298-8409a08b7915.png",
             "icon": "gift",
             "gift_product": ""
           }
         }
       },
       "block_order": [
-        "offer_3",
-        "offer_2",
-        "offer_1",
-        "gift_4",
-        "gift_5",
-        "gift_6"
+        "boffer_10",
+        "boffer_9",
+        "boffer_8",
+        "bgift_11",
+        "bgift_12",
+        "bgift_13"
       ],
       "settings": {
         "product": "",
@@ -1356,22 +1376,22 @@
         "app_bundles": false,
         "show_price_header": true,
         "sale_badge_text": "FALL SALE - Save [amount]",
-        "enable_subscription": true,
+        "enable_subscription": false,
         "subscription_default": false,
         "subscription_label": "Subscribe & Save an extra 15%",
         "subscription_sub": "Delivered every 30 days. Skip, pause or cancel anytime.",
         "gifts_label": "Gifts unlocked",
         "gifts_locked_text": "Locked",
-        "show_delivery": true,
+        "show_delivery": false,
         "delivery_text": "Order today for delivery by",
         "delivery_days": 3,
         "ships_from": "Ships from US 🇺🇸",
         "atc_label": "Add To Cart",
         "show_atc_price": true,
-        "after_add": "drawer",
-        "note_1": "Free shipping on 2+ bottles",
-        "note_2": "90-Day Money-Back Guarantee",
-        "notes_only_subscription": false,
+        "after_add": "checkout",
+        "note_1": "Refills Ship Every 30 Days",
+        "note_2": "Stop or Cancel Anytime",
+        "notes_only_subscription": true,
         "trust_1": "",
         "trust_2": "",
         "trust_3": "",
@@ -1379,7 +1399,11 @@
         "fg": "#16301f",
         "accent": "#2e9254",
         "padding_top": 64,
-        "padding_bottom": 64
+        "padding_bottom": 64,
+        "kaching_sync": true,
+        "kaching_selector": "V1",
+        "kaching_prices": true,
+        "kaching_titles": true
       }
     },
     "review_list": {

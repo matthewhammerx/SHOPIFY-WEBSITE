@@ -140,7 +140,18 @@
       const unlocked = Number(d.gifts || 0);
       this.gifts.forEach((g, i) => g.classList.toggle('is-locked', i >= unlocked));
       if (this.atc) this.atc.disabled = d.available === 'false';
-      if (this.hasAttribute('data-kaching-sync') && !this._kReading) this.syncKaching();
+      if (this.hasAttribute('data-kaching-sync') && !this._kReading) {
+        // keep every Kaching-synced buy box on the page on the same offer (they share one Kaching widget)
+        if (!LwBuyBox._linking) {
+          LwBuyBox._linking = true;
+          const idx = this.offers.indexOf(sel);
+          document.querySelectorAll('lw-buy-box[data-kaching-sync]').forEach((o) => {
+            if (o !== this && o.offers && o.offers[idx] && o.selected !== o.offers[idx]) { o.offers[idx].querySelector('input').checked = true; o.update(); }
+          });
+          LwBuyBox._linking = false;
+        }
+        this.syncKaching();
+      }
       document.dispatchEvent(new CustomEvent('lw:offer-change', { detail: { price, compare, box: this } }));
     }
 
@@ -300,6 +311,13 @@
     }
 
     async submitForm() {
+      // a second Kaching-synced box (e.g. bottom of page) adds through the main box's form, which Kaching fills
+      const main = this.hasAttribute('data-kaching-sync') && !this.hasAttribute('data-main') ? document.querySelector('lw-buy-box[data-main][data-kaching-sync]') : null;
+      if (main && main !== this && main.form) {
+        if (this.atc) this.atc.classList.add('is-loading');
+        try { await main.submitForm(); } finally { if (this.atc) this.atc.classList.remove('is-loading'); }
+        return;
+      }
       const fd = new FormData(this.form);
       // bundle/subscription apps (e.g. Kaching) write id, quantity, selling_plan, properties or items[] into this form.
       // An empty selling_plan makes Shopify reject the add, so drop it when no plan is chosen.
