@@ -842,8 +842,8 @@
           "settings": {
             "image": "shopify://shop_images/Quiet_Kitchen_Table_Lunch-3.png",
             "title": "Liver",
-            "subtitle": "Your body's filter, supported.",
-            "content": "<p>Silymarin helps protect liver cells and supports your body's own antioxidant production, so your liver can keep up with daily demands.†</p>"
+            "subtitle": "Your body’s filter, supported.",
+            "content": "<p>Milk thistle’s 80% standardized silymarin helps support healthy liver function and antioxidant defenses — helping your liver handle everyday stress more efficiently.†</p>"
           }
         },
         "card_2": {
@@ -852,7 +852,7 @@
             "image": "shopify://shop_images/Gentle_stretch_beside_the_couch-2.png",
             "title": "Digestion",
             "subtitle": "Gut comfort without the bloat.",
-            "content": "<p>Milk Thistle helps your liver function, while Inositol and Turmeric help to reduce bloating and give you steady energy.†</p>"
+            "content": "<p>When your liver is properly supported, digestion works better too. Milk thistle, Inositol and Turmeric work together to support smoother digestion and less bloating after meals.†</p>"
           }
         },
         "card_3": {
@@ -861,7 +861,7 @@
             "image": "shopify://shop_images/Candid_walk_along_the_park_path-4.png",
             "title": "Energy",
             "subtitle": "Steady, not wired.",
-            "content": "<p>When your liver processes efficiently, energy follows. No caffeine, no crash — just steady support.†</p>"
+            "content": "<p>When your body processes nutrients efficiently, energy follows. Nülive® supports steady daily energy without caffeine, stimulants or the afternoon crash.†</p>"
           }
         },
         "card_4": {
@@ -870,7 +870,7 @@
             "image": "shopify://shop_images/Focused_man_typing_at_home-5.png",
             "title": "Clarity",
             "subtitle": "Focused, not foggy.",
-            "content": "<p>Many customers notice clearer thinking and fewer afternoon slumps within a few weeks of consistent use.†</p>"
+            "content": "<p>Better digestion and steadier energy can mean fewer sluggish afternoons and clearer thinking throughout the day — without relying on another cup of coffee.†</p>"
           }
         }
       },
@@ -882,7 +882,7 @@
       ],
       "settings": {
         "heading": "<em><strong>Real Benefits.</strong></em><strong> Backed by Research.</strong>",
-        "text": "<p>Six ingredients. One capsule a day. Decades of research and <strong>2,000 years of traditional use</strong> behind every serving.</p>",
+        "text": "<p>Six targeted ingredients. One daily capsule. Decades of research and <strong>2,000 years of traditional use</strong> behind every serving.†</p>",
         "bg": "#fafaf5",
         "fg": "#16301f",
         "accent": "#2e9254",
