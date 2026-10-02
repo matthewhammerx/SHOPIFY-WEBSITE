@@ -176,7 +176,7 @@
             if (!ok(el)) continue;
             const top = climb(el);
             if (this.kachingDeals(top).length) {
-              if (!this._kLogged) { this._kLogged = true; console.info('[LiverWell] Kaching widget linked:', top, this.kachingDeals(top).length + ' deals'); }
+              if (!this._kLogged) { this._kLogged = true; console.info('[Nülive] Kaching widget linked:', top, this.kachingDeals(top).length + ' deals'); }
               return top;
             }
           }
@@ -205,11 +205,11 @@
           // Kaching renders a moment after page load — keep looking for a few seconds
           if (!this._kTries) this._kTries = 0;
           if (this._kTries++ < 60) { clearTimeout(this._kT); this._kT = setTimeout(() => this.syncKaching(), 250); }
-          else if (!this._kWarned) this._kWarned = true, console.warn('[LiverWell] Kaching widget not found on this page — is the Kaching Bundles block/embed showing a deal for this product?');
+          else if (!this._kWarned) this._kWarned = true, console.warn('[Nülive] Kaching widget not found on this page — is the Kaching Bundles block/embed showing a deal for this product?');
           return;
         }
         // test mode: add ?lw_kaching=show to the URL to see the Kaching widget follow our cards
-        if (/[?&]lw_kaching=show/.test(location.search)) { this.classList.add('lw-kaching-test'); this.kaching.classList.add('lw-kaching-debug'); console.info('[LiverWell] Kaching test mode: widget visible'); }
+        if (/[?&]lw_kaching=show/.test(location.search)) { this.classList.add('lw-kaching-test'); this.kaching.classList.add('lw-kaching-debug'); console.info('[Nülive] Kaching test mode: widget visible'); }
         else this.kaching.classList.add('lw-kaching-hidden');
         if (!this._kObs && 'MutationObserver' in window) {
           this._kObs = new MutationObserver(() => { if (this.kaching && !this.kaching.isConnected) { this.kaching = null; this.syncKaching(); } });
@@ -225,7 +225,7 @@
       const idx = Math.max(0, this.offers.indexOf(this.selected));
       const deals = this.kachingDeals(this.kaching);
       const target = deals[idx] || deals[deals.length - 1];
-      if (/[?&]lw_kaching=show/.test(location.search)) console.info('[LiverWell] card ' + (idx + 1) + ' -> Kaching deal ' + (deals.indexOf(target) + 1) + ' of ' + deals.length);
+      if (/[?&]lw_kaching=show/.test(location.search)) console.info('[Nülive] card ' + (idx + 1) + ' -> Kaching deal ' + (deals.indexOf(target) + 1) + ' of ' + deals.length);
       if (target) {
         const isInput = target.tagName === 'INPUT';
         const already = isInput ? target.checked : (target.getAttribute('aria-checked') === 'true' || /selected|active/.test(target.className));

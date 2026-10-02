@@ -298,7 +298,7 @@
           "settings": {
             "heading": "Do I need to change my diet or quit drinking to see results?",
             "icon": "none",
-            "content": "<p>No, you don't need to overhaul your lifestyle to support your liver. Of course, healthy habits will always help, but LiverWell is designed to fit into your daily routine as-is.</p>",
+            "content": "<p>No, you don't need to overhaul your lifestyle to support your liver. Of course, healthy habits will always help, but Nülive is designed to fit into your daily routine as-is.</p>",
             "page": "",
             "open": false
           }
@@ -586,7 +586,7 @@
             "rating": 5,
             "score": "4.9",
             "title": "\"Finally stopped feeling bloated after every meal!\"",
-            "body": "I've dealt with bloating for years. About a week and a half into LiverWell my stomach felt calmer and I stopped dreading lunch. Easy to take, no aftertaste.",
+            "body": "I've dealt with bloating for years. About a week and a half into Nülive my stomach felt calmer and I stopped dreading lunch. Easy to take, no aftertaste.",
             "name": "Sample R.",
             "tags": "Less Bloating, Better Digestion"
           }
@@ -629,7 +629,7 @@
       ],
       "settings": {
         "heading": "Real Stories, <em>Real Results</em>",
-        "text": "See what our customers are saying about LiverWell",
+        "text": "See what our customers are saying about Nülive",
         "verified_label": "Verified customer",
         "speed": 50,
         "strip_repeat": 2,
@@ -681,7 +681,7 @@
       "disabled": true,
       "settings": {
         "heading": "Feel Better. Every Day.",
-        "text": "From smoother digestion to steadier energy, here's what LiverWell does every morning.",
+        "text": "From smoother digestion to steadier energy, here's what Nülive does every morning.",
         "bg": "#0a5a47",
         "bg_2": "#002a21",
         "fg": "#ffffff",
@@ -742,7 +742,7 @@
       "settings": {
         "eyebrow": "",
         "heading": "Feel Better. <em>Every Day.</em>",
-        "text": "<p>From smoother digestion to steadier energy, here's what LiverWell does every morning.</p>",
+        "text": "<p>From smoother digestion to steadier energy, here's what Nülive does every morning.</p>",
         "button_label": "Try Risk-Free Today",
         "button_link": "",
         "footnote": "",
@@ -918,7 +918,7 @@
       ],
       "settings": {
         "heading": "The Journey: <em>Real Help Takes Time.</em>",
-        "text": "<p>LiverWell® is built for daily use, not quick fixes. Here's how things tend to shift once it's part of your routine.</p>",
+        "text": "<p>Nülive® is built for daily use, not quick fixes. Here's how things tend to shift once it's part of your routine.</p>",
         "button_label": "Start My Journey →",
         "button_link": "",
         "bg": "#ffffff",
@@ -942,7 +942,7 @@
           "type": "reason",
           "settings": {
             "title": "Supports Liver AND Gut Together",
-            "text": "Why take three different supplements? LiverWell pairs milk thistle with 5 supporting ingredients for liver, digestion and energy in one daily formula.†"
+            "text": "Why take three different supplements? Nülive pairs milk thistle with 5 supporting ingredients for liver, digestion and energy in one daily formula.†"
           }
         },
         "reason_3": {
@@ -976,7 +976,7 @@
       ],
       "settings": {
         "badge": "5 Reasons Why",
-        "heading": "LiverWell® is Different From Everything You've Tried",
+        "heading": "Nülive® is Different From Everything You've Tried",
         "label_prefix": "Reason",
         "button_label": "Try Risk-Free Today",
         "button_link": "",
@@ -1089,8 +1089,8 @@
         "point_11"
       ],
       "settings": {
-        "heading": "How LiverWell® Compares To Other Brands",
-        "us_label": "LiverWell",
+        "heading": "How Nülive® Compares To Other Brands",
+        "us_label": "Nülive",
         "them_label": "Other Brands",
         "button_label": "Try Risk-Free Today",
         "button_link": "",
@@ -1331,7 +1331,7 @@
       "settings": {
         "product": "",
         "heading": "<em>Share the benefits.</em> Stock up. Save more.",
-        "text": "Your liver works every day — and so does LiverWell®. Stock up for the whole household and save.",
+        "text": "Your liver works every day — and so does Nülive®. Stock up for the whole household and save.",
         "show_stock": true,
         "stock_percent": 93,
         "stock_text": "[percent]% Sold",
@@ -1373,7 +1373,7 @@
             "rating": 5,
             "score": "4.9",
             "title": "\"Finally stopped feeling bloated after every meal!\"",
-            "body": "I've dealt with bloating for years. About a week and a half into LiverWell my stomach felt calmer and I stopped dreading lunch. Easy to take, no aftertaste.",
+            "body": "I've dealt with bloating for years. About a week and a half into Nülive my stomach felt calmer and I stopped dreading lunch. Easy to take, no aftertaste.",
             "name": "Sample R.",
             "tags": "Less Bloating, Better Digestion"
           }
@@ -1406,7 +1406,7 @@
             "rating": 5,
             "score": "5.0",
             "title": "\"Part of my daily routine now.\"",
-            "body": "I enjoy a glass of wine on weekends and wanted to give my liver some support. LiverWell is now a staple next to my coffee every morning.",
+            "body": "I enjoy a glass of wine on weekends and wanted to give my liver some support. Nülive is now a staple next to my coffee every morning.",
             "name": "Sample D.",
             "tags": "Daily Support, Easy Routine"
           }
@@ -1549,7 +1549,7 @@
         "question_3": {
           "type": "question",
           "settings": {
-            "question": "What makes LiverWell different from other milk thistle supplements?",
+            "question": "What makes Nülive different from other milk thistle supplements?",
             "answer": "<p>Our milk thistle is standardized to 80% silymarin, the clinical threshold. We use 6 active ingredients that work together to support your body.</p>"
           }
         },
@@ -1557,7 +1557,7 @@
           "type": "question",
           "settings": {
             "question": "Will this work if I've tried other supplements before?",
-            "answer": "<p>Most liver supplements only address one piece of the problem. They either try to clear toxins or support liver health, but not both. LiverWell's 6-ingredient formula was built to support the full cycle. That's why customers who gave up on other products often see results with LiverWell.†</p>"
+            "answer": "<p>Most liver supplements only address one piece of the problem. They either try to clear toxins or support liver health, but not both. Nülive's 6-ingredient formula was built to support the full cycle. That's why customers who gave up on other products often see results with Nülive.†</p>"
           }
         },
         "question_5": {
@@ -1571,7 +1571,7 @@
           "type": "question",
           "settings": {
             "question": "Can I take it with other supplements or medications?",
-            "answer": "<p>LiverWell works well alongside most everyday supplements. Milk thistle may interact with certain medications (such as blood thinners, some diabetes medications and immunosuppressants), so if you take prescription medication, are pregnant or nursing, please consult your doctor first. If you're allergic to plants in the daisy family (ragweed, marigolds), check with your doctor before use.</p>"
+            "answer": "<p>Nülive works well alongside most everyday supplements. Milk thistle may interact with certain medications (such as blood thinners, some diabetes medications and immunosuppressants), so if you take prescription medication, are pregnant or nursing, please consult your doctor first. If you're allergic to plants in the daisy family (ragweed, marigolds), check with your doctor before use.</p>"
           }
         },
         "question_7": {

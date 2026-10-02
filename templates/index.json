@@ -151,9 +151,9 @@
         "step_3"
       ],
       "settings": {
-        "eyebrow": "The LiverWell approach",
+        "eyebrow": "The Nülive approach",
         "heading": "Support. Clear. <em>Protect.</em>",
-        "text": "Most liver supplements only do one thing. LiverWell supports the full cycle.",
+        "text": "Most liver supplements only do one thing. Nülive supports the full cycle.",
         "image": "shopify://shop_images/image.png",
         "product": "nulive-milk-thistle",
         "bg": "#fafaf5",
@@ -184,7 +184,7 @@
         "point_2"
       ],
       "settings": {
-        "heading": "Most milk thistle is underdosed. <em>LiverWell isn't.</em>",
+        "heading": "Most milk thistle is underdosed. <em>Nülive isn't.</em>",
         "text": "Silymarin is the active compound in milk thistle. Most brands use 50 to 65%. We standardize to 80%, the threshold used in clinical studies.",
         "stat_label": "Silymarin concentration",
         "stat_value": "80",
@@ -378,8 +378,8 @@
       ],
       "settings": {
         "layout": "seed",
-        "heading": "How LiverWell® Compares To Other Brands",
-        "us_label": "LiverWell",
+        "heading": "How Nülive® Compares To Other Brands",
+        "us_label": "Nülive",
         "them_label": "Other Brands",
         "button_label": "Try Risk-Free Today",
         "button_link": "",
@@ -448,7 +448,7 @@
       "disabled": true,
       "settings": {
         "heading": "Real people. <em>Real results.</em>",
-        "text": "See how our customers are feeling with LiverWell.",
+        "text": "See how our customers are feeling with Nülive.",
         "columns": 6,
         "bg": "#fafaf5",
         "fg": "#16301f",
@@ -571,7 +571,7 @@
       "settings": {
         "product": "nulive-milk-thistle",
         "heading": "<em>Start today.</em> Stock up and save.",
-        "text": "Your liver works every day. So does LiverWell.",
+        "text": "Your liver works every day. So does Nülive.",
         "show_stock": true,
         "stock_percent": 93,
         "stock_text": "[percent]% Sold",
@@ -628,7 +628,7 @@
         "question_3": {
           "type": "question",
           "settings": {
-            "question": "What makes LiverWell different from other milk thistle supplements?",
+            "question": "What makes Nülive different from other milk thistle supplements?",
             "answer": "<p>Our milk thistle is standardized to 80% silymarin, the clinical threshold. We use 6 active ingredients that work together to support your body.</p>"
           }
         },
@@ -636,7 +636,7 @@
           "type": "question",
           "settings": {
             "question": "Will this work if I've tried other supplements before?",
-            "answer": "<p>Most liver supplements only address one piece of the problem. They either try to clear toxins or support liver health, but not both. LiverWell's 6-ingredient formula was built to support the full cycle. That's why customers who gave up on other products often see results with LiverWell.†</p>"
+            "answer": "<p>Most liver supplements only address one piece of the problem. They either try to clear toxins or support liver health, but not both. Nülive's 6-ingredient formula was built to support the full cycle. That's why customers who gave up on other products often see results with Nülive.†</p>"
           }
         },
         "question_5": {
@@ -650,7 +650,7 @@
           "type": "question",
           "settings": {
             "question": "Can I take it with other supplements or medications?",
-            "answer": "<p>LiverWell works well alongside most everyday supplements. Milk thistle may interact with certain medications (such as blood thinners, some diabetes medications and immunosuppressants), so if you take prescription medication, are pregnant or nursing, please consult your doctor first. If you're allergic to plants in the daisy family (ragweed, marigolds), check with your doctor before use.</p>"
+            "answer": "<p>Nülive works well alongside most everyday supplements. Milk thistle may interact with certain medications (such as blood thinners, some diabetes medications and immunosuppressants), so if you take prescription medication, are pregnant or nursing, please consult your doctor first. If you're allergic to plants in the daisy family (ragweed, marigolds), check with your doctor before use.</p>"
           }
         },
         "question_7": {
