@@ -939,7 +939,7 @@
       "settings": {
         "speed": 40,
         "repeat": 2,
-        "border": false,
+        "border": true,
         "bg": "#fafaf5",
         "fg": "#16301f",
         "icon_color": "#2e9254"
@@ -984,6 +984,7 @@
         "step_4"
       ],
       "settings": {
+        "image": "shopify://shop_images/Family_laughter_on_a_leafy_park_path.png",
         "heading": "The Journey: <em>Real Help Takes Time.</em>",
         "text": "<p>LiverWell® is built for daily use, not quick fixes. Here's how things tend to shift once it's part of your routine.</p>",
         "button_label": "Start My Journey →",
