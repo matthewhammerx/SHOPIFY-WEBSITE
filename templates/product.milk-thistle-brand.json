@@ -1657,6 +1657,18 @@
         "rating_text": "4.9 | Loved by thousands",
         "action": "scroll"
       }
+    },
+    "bundle_image": {
+      "type": "lw-image",
+      "settings": {
+        "max_width": 640,
+        "width_mobile": 100,
+        "bg_top": "#fafaf5",
+        "bg_bottom": "#fafaf5",
+        "split": 70,
+        "padding_top": 24,
+        "padding_bottom": 0
+      }
     }
   },
   "order": [
@@ -1675,6 +1687,7 @@
     "comparison",
     "guarantee",
     "videos",
+    "bundle_image",
     "bundle",
     "review_list",
     "facts",

@@ -1,0 +1,45 @@
+{%- liquid
+  assign img = section.settings.image
+  assign img_m = section.settings.image_mobile | default: img
+  assign split = section.settings.split
+-%}
+{%- if img != blank or request.design_mode -%}
+<section class="lw lw-imgsec" style="--lw-imgsec-top: {{ section.settings.bg_top | default: 'transparent' }}; --lw-imgsec-bottom: {{ section.settings.bg_bottom | default: 'transparent' }}; --lw-imgsec-split: {{ split }}%; --lw-imgsec-w: {{ section.settings.max_width }}px; --lw-imgsec-wm: {{ section.settings.width_mobile }}%; padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;">
+  <div class="lw-wrap">
+    {%- if section.settings.link != blank -%}<a class="lw-imgsec__link" href="{{ section.settings.link }}">{%- endif -%}
+    {%- if img != blank -%}
+      <picture class="lw-imgsec__pic">
+        {%- if section.settings.image_mobile != blank -%}
+          <source media="(max-width: 749px)" srcset="{{ img_m | image_url: width: 900 }}">
+        {%- endif -%}
+        {{ img | image_url: width: 1600 | image_tag: loading: 'lazy', sizes: '(min-width: 750px) 900px, 100vw', widths: '500, 800, 1100, 1600', alt: img.alt, class: 'lw-imgsec__img' }}
+      </picture>
+    {%- else -%}
+      <div class="lw-imgsec__pic">{{ 'product-1' | placeholder_svg_tag: 'lw-imgsec__img lw-placeholder' }}</div>
+    {%- endif -%}
+    {%- if section.settings.link != blank -%}</a>{%- endif -%}
+  </div>
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "LW · Image",
+  "tag": "section",
+  "class": "lw-section-image",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Image", "info": "Tip: a transparent PNG (product cut-out) looks best." },
+    { "type": "image_picker", "id": "image_mobile", "label": "Mobile image (optional)" },
+    { "type": "url", "id": "link", "label": "Link (optional)" },
+    { "type": "range", "id": "max_width", "label": "Max width (desktop)", "min": 200, "max": 1400, "step": 20, "unit": "px", "default": 640 },
+    { "type": "range", "id": "width_mobile", "label": "Width (mobile)", "min": 40, "max": 100, "step": 5, "unit": "%", "default": 100 },
+    { "type": "header", "content": "Background" },
+    { "type": "color", "id": "bg_top", "label": "Top color", "default": "#ffffff" },
+    { "type": "color", "id": "bg_bottom", "label": "Bottom color", "default": "#fafaf5", "info": "Match the next section so the product 'sits' on it (like Resilia)." },
+    { "type": "range", "id": "split", "label": "Where the bottom color starts", "min": 0, "max": 100, "step": 5, "unit": "%", "default": 70 },
+    { "type": "range", "id": "padding_top", "label": "Padding top", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 24 },
+    { "type": "range", "id": "padding_bottom", "label": "Padding bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 0 }
+  ],
+  "presets": [{ "name": "LW · Image" }]
+}
+{% endschema %}
