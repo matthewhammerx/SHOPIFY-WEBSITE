@@ -689,6 +689,7 @@
         "card_1": {
           "type": "card",
           "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_Oct_2_2026_01_11_11_PM-5.png",
             "bg": "#2f5a3a",
             "title": "Support your liver, daily.",
             "text": "Feel lighter, think clearer, and start the day with energy that holds.†",
@@ -699,7 +700,7 @@
         "card_2": {
           "type": "card",
           "settings": {
-            "image": "shopify://shop_images/IMG_8776.png",
+            "image": "shopify://shop_images/ChatGPT_Image_Oct_2_2026_01_10_19_PM-3.png",
             "bg": "#16301f",
             "title": "Try it risk-free for 90 days.",
             "text": "If you don't feel the difference, we'll refund every cent.",
