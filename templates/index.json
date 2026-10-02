@@ -12,7 +12,7 @@
     "hero": {
       "type": "lwh-hero",
       "settings": {
-        "rating": "Rated Excellent by our customers",
+        "rating": "4.9/5  •  75,000+ Happy Customers",
         "heading": "Complete liver support in <em>one daily capsule.</em>",
         "text": "Unlike basic milk thistle supplements, our premium formula supports your body's processing systems from multiple angles.",
         "pill_1": "6 Active Ingredients",
@@ -474,6 +474,11 @@
             "gifts": 0,
             "extra_title": "",
             "extra_text": "",
+            "extra_divider": "",
+            "extra_title_2": "",
+            "extra_text_2": "",
+            "extra_title_3": "",
+            "extra_text_3": "",
             "discount_code": "",
             "discount_percent": 0
           }
@@ -492,6 +497,11 @@
             "gifts": 2,
             "extra_title": "FREE Shipping ($4.95 value)",
             "extra_text": "Ships in discreet packaging",
+            "extra_divider": "",
+            "extra_title_2": "",
+            "extra_text_2": "",
+            "extra_title_3": "",
+            "extra_text_3": "",
             "discount_code": "",
             "discount_percent": 0
           }
@@ -510,6 +520,11 @@
             "gifts": 3,
             "extra_title": "FREE Liver Reset Guide + FREE Shipping",
             "extra_text": "Our 30-day liver-friendly meal & habit plan ($19.99 value)",
+            "extra_divider": "",
+            "extra_title_2": "",
+            "extra_text_2": "",
+            "extra_title_3": "",
+            "extra_text_3": "",
             "discount_code": "",
             "discount_percent": 0
           }
@@ -558,6 +573,10 @@
         "stock_percent": 93,
         "stock_text": "[percent]% Sold",
         "app_bundles": false,
+        "kaching_sync": false,
+        "kaching_selector": "",
+        "kaching_prices": true,
+        "kaching_titles": false,
         "show_price_header": true,
         "sale_badge_text": "FALL SALE - Save [amount]",
         "enable_subscription": true,
