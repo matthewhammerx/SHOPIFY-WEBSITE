@@ -457,7 +457,7 @@
         "stat_4"
       ],
       "settings": {
-        "heading": "Clinically Studied. More Energy. <em>A&nbsp;Happier Liver.</em>†",
+        "heading": "<strong>Clinically Studied. More Energy. </strong><em><strong>A&nbsp;Happier Liver.</strong></em><strong>†</strong>",
         "text": "When traditional botanicals meet modern research, the results speak for themselves.",
         "button_label": "Try Risk-Free Today",
         "button_link": "",
@@ -539,7 +539,7 @@
         "ingredient_6"
       ],
       "settings": {
-        "heading": "6 Active Ingredients <em>Doing Different Jobs</em>",
+        "heading": "<strong>6 Active Ingredients </strong><em><strong>Doing Different Jobs</strong></em>",
         "text": "Every capsule is packed with essentials. Perfect dosages.",
         "columns": 3,
         "mobile_slider": true,
@@ -690,7 +690,7 @@
         "review_11"
       ],
       "settings": {
-        "heading": "Real Stories, <em>Real Results</em>",
+        "heading": "<strong>Real Stories, </strong><em><strong>Real Results</strong></em>",
         "text": "See what our customers are saying about LiverWell",
         "verified_label": "Verified customer",
         "speed": 50,
@@ -803,7 +803,7 @@
       ],
       "settings": {
         "eyebrow": "",
-        "heading": "Feel Better. <em>Every Day.</em>",
+        "heading": "<strong>Feel Better. </strong><em><strong>Every Day.</strong></em>",
         "text": "<p>From smoother digestion to steadier energy, here's what LiverWell does every morning.</p>",
         "button_label": "Try Risk-Free Today",
         "button_link": "",
@@ -873,7 +873,7 @@
         "card_4"
       ],
       "settings": {
-        "heading": "<em>Real Benefits.</em> Backed by Research.",
+        "heading": "<em><strong>Real Benefits.</strong></em><strong> Backed by Research.</strong>",
         "text": "<p>Six ingredients. One capsule a day. Decades of research and <strong>2,000 years of traditional use</strong> behind every serving.</p>",
         "bg": "#fafaf5",
         "fg": "#16301f",
@@ -985,7 +985,7 @@
       ],
       "settings": {
         "image": "shopify://shop_images/Joyful_family_swing_on_the_park_path_1.png",
-        "heading": "The Journey: <em>Real Help Takes Time.</em>",
+        "heading": "<strong>The Journey: </strong><em><strong>Real Help Takes Time.</strong></em>",
         "text": "<p>LiverWell® is built for daily use, not quick fixes. Here's how things tend to shift once it's part of your routine.</p>",
         "button_label": "Start My Journey →",
         "button_link": "",
@@ -1049,7 +1049,7 @@
       ],
       "settings": {
         "badge": "5 Reasons Why",
-        "heading": "LiverWell® is Different From Everything You've Tried",
+        "heading": "<strong>LiverWell® is Different From Everything You've Tried</strong>",
         "label_prefix": "Reason",
         "button_label": "Try Risk-Free Today",
         "button_link": "",
@@ -1163,7 +1163,7 @@
       ],
       "settings": {
         "layout": "seed",
-        "heading": "How LiverWell® Compares To Other Brands",
+        "heading": "<strong>How LiverWell® Compares To Other Brands</strong>",
         "us_label": "LiverWell",
         "them_label": "Other Brands",
         "button_label": "Try Risk-Free Today",
@@ -1509,7 +1509,7 @@
       ],
       "settings": {
         "summary": "Rated 4.9 / 5 | Trusted by 70,000+",
-        "heading": "They Felt the Shift. You Will Too.",
+        "heading": "<strong>They Felt the Shift. You Will Too.</strong>",
         "verified_label": "Verified customer",
         "initial": 4,
         "more_label": "Load More Reviews",
