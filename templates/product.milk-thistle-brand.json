@@ -232,7 +232,7 @@
           "type": "gift",
           "settings": {
             "title": "FREE Daily Liver Wellness Guide",
-            "value": "$19.99",
+            "value": "$14.99",
             "icon": "gift",
             "gift_product": ""
           }
@@ -240,8 +240,8 @@
         "gift_13": {
           "type": "gift",
           "settings": {
-            "title": "FREE Anti-Bloat Blueprint",
-            "value": "$19.99",
+            "title": "30-Day Nülive Routine Tracker",
+            "value": "$4.99",
             "icon": "gift",
             "gift_product": ""
           }
