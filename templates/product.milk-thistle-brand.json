@@ -1002,6 +1002,7 @@
         "reason_1": {
           "type": "reason",
           "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_Oct_2_2026_01_13_43_PM-1.png",
             "title": "Clinically-Dosed, Not Underdosed",
             "text": "Most brands use 50–65% silymarin. Ours is standardized to 80% — the threshold used in clinical research — at 300mg per serving."
           }
@@ -1009,6 +1010,7 @@
         "reason_2": {
           "type": "reason",
           "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_Oct_2_2026_01_13_43_PM-2.png",
             "title": "Supports Liver AND Gut Together",
             "text": "Why take three different supplements? LiverWell pairs milk thistle with 5 supporting ingredients for liver, digestion and energy in one daily formula.†"
           }
@@ -1016,6 +1018,7 @@
         "reason_3": {
           "type": "reason",
           "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_Oct_2_2026_01_13_44_PM-3.png",
             "title": "Full Transparency, No Blends",
             "text": "Every ingredient and dose is on the label. No proprietary blends, no fillers, no hidden extras."
           }
@@ -1023,6 +1026,7 @@
         "reason_4": {
           "type": "reason",
           "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_Oct_2_2026_01_13_45_PM-4.png",
             "title": "Third-Party Tested",
             "text": "Every batch is tested for purity and potency and made in a GMP-certified facility."
           }
@@ -1030,6 +1034,7 @@
         "reason_5": {
           "type": "reason",
           "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_Oct_2_2026_01_13_46_PM-5.png",
             "title": "Built for Daily Use, Not Quick Fixes",
             "text": "Real support takes time. That's why we give you a full 90 days to try it — or your money back."
           }
