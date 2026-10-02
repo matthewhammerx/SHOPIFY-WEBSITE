@@ -52,13 +52,6 @@
             "heading": "Shop",
             "menu": "main-menu"
           }
-        },
-        "menu_help": {
-          "type": "menu",
-          "settings": {
-            "heading": "Help",
-            "menu": "footer"
-          }
         }
       },
       "block_order": [
@@ -66,8 +59,7 @@
         "badge_2",
         "badge_3",
         "badge_4",
-        "menu_shop",
-        "menu_help"
+        "menu_shop"
       ],
       "settings": {
         "logo": "shopify://shop_images/ChatGPT_Image_Sep_29_2026_04_01_22_PM.png",
