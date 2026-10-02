@@ -573,6 +573,12 @@
             "image": "shopify://shop_images/Smiling_woman_with_milk_thistle_bottle-2.png"
           }
         },
+        "photo_5": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/Man_Holding_Milk_Thistle_Bottle_beside_Refrigerator-1.png"
+          }
+        },
         "photo_3": {
           "type": "photo",
           "settings": {
@@ -589,12 +595,6 @@
           "type": "photo",
           "settings": {
             "image": "shopify://shop_images/Woman_holding_milk_thistle_bottle-4.png"
-          }
-        },
-        "photo_5": {
-          "type": "photo",
-          "settings": {
-            "image": "shopify://shop_images/Man_Holding_Milk_Thistle_Bottle_beside_Refrigerator-1.png"
           }
         },
         "photo_6": {
@@ -671,10 +671,10 @@
         "photo_1",
         "photo_2",
         "photo_3q6Yfz",
+        "photo_5",
         "photo_3",
         "photo_4",
         "photo_HyFRNJ",
-        "photo_5",
         "photo_6",
         "photo_7",
         "photo_8",
