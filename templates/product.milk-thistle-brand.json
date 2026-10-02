@@ -1181,6 +1181,7 @@
         "text": "<p>If you don't feel lighter, clearer, and more energized, we'll refund every cent. No questions. No hassle. Just results, or your money back.</p>",
         "button_label": "",
         "button_link": "",
+        "image": "shopify://shop_images/Refined_90-day_guarantee_seal.png",
         "bg": "#fafaf5",
         "fg": "#16301f",
         "seal_color": "#2e9254"
@@ -1347,7 +1348,7 @@
       ],
       "settings": {
         "product": "",
-        "heading": "<em>Share the benefits.</em> Stock up. Save more.",
+        "heading": "<em><strong>Share the benefits.</strong></em><strong> Stock up. Save more.</strong>",
         "text": "Your liver works every day — and so does LiverWell®. Stock up for the whole household and save.",
         "show_stock": true,
         "stock_percent": 93,
