@@ -95,7 +95,8 @@
         "title_3": {
           "type": "title",
           "settings": {
-            "title": "Feel Lighter. Think Clearer. Support Your Liver Daily."
+            "title": "A Healthier Liver Starts Here",
+            "weight": "semibold"
           }
         },
         "text_4": {
