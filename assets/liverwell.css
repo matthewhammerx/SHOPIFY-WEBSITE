@@ -1729,5 +1729,5 @@ lw-buy-box.lw-k-pending[data-kaching-titles] .lw-offer__title { visibility: hidd
 /* gift separators: small circle with a plus (Resilia) */
 .lw-gifts__sep { width: 18px; height: 18px; flex: 0 0 18px; display: grid; place-items: center; border: 1px solid #b9c2b5; background: #fff; color: #2e9254; }
 /* Benefit cards: square thumbnails */
-.lw-bcard summary { grid-template-columns: 78px 1fr auto; }
-.lw-bcard__img, .lw-brand .lw-bcard__img, .lw-soft .lw-bcard__img { width: 78px; height: 78px; border-radius: 16px; }
+.lw-bcard summary { grid-template-columns: 86px 1fr auto; }
+.lw-bcard__img, .lw-brand .lw-bcard__img, .lw-soft .lw-bcard__img { width: 86px; height: 74px; border-radius: 16px; }
