@@ -883,13 +883,14 @@
       "settings": {
         "heading": "<em><strong>Real Benefits.</strong></em><strong> Backed by Research.</strong>",
         "text": "<p>Six targeted ingredients. One daily capsule. Decades of research and <strong>2,000 years of traditional use</strong> behind every serving.†</p>",
+        "show_button": true,
+        "button_label": "Try Risk-Free Today",
+        "button_link": "",
         "bg": "#fafaf5",
         "fg": "#16301f",
         "accent": "#2e9254",
         "padding_top": 64,
-        "padding_bottom": 64,
-        "show_button": true,
-        "button_label": "Try Risk-Free Today"
+        "padding_bottom": 64
       }
     },
     "ticker_mid": {
@@ -961,29 +962,29 @@
         "step_1": {
           "type": "step",
           "settings": {
-            "label": "Days 1–14: Clearing Out†",
-            "points": "Gut begins its natural cleansing process\nBloating begins to ease after meals\nDigestion feels smoother"
+            "label": "Week 1 : Early Changes",
+            "points": "Digestion starts to feel lighter†\nBloating begins to settle\nMeals feel easier on your stomach†"
           }
         },
         "step_2": {
           "type": "step",
           "settings": {
-            "label": "Weeks 3–6: Energy Returns†",
-            "points": "Steady energy throughout the day\nBrain fog starts to lift\nSome customers notice steadier energy after meals"
+            "label": "Weeks 2–4: Energy Returns",
+            "points": "Steadier energy throughout the day†\nLess afternoon fatigue and brain fog†\nYou start feeling more like yourself again†"
           }
         },
         "step_3": {
           "type": "step",
           "settings": {
-            "label": "Months 2–3: Deep Support†",
-            "points": "Your liver gets the prolonged support it's been craving\nStart feeling lighter\nYour body continues its natural elimination and cleansing process"
+            "label": "Months 2–3: Deeper Support",
+            "points": "Liver support builds with consistent use†\nDigestion and gut comfort feel more balanced†\nYou feel lighter and more consistent day to day†"
           }
         },
         "step_4": {
           "type": "step",
           "settings": {
-            "label": "Months 4–6: Sustained Support†",
-            "points": "Your new energy levels are in full swing\nYou keep a weight baseline consistently\nYour liver gets the support it needs"
+            "label": "Months 4+: Long-Term Balance",
+            "points": "Steady energy starts to feel normal†\nDigestion feels more predictable†\nNülive® becomes part of your everyday routine†"
           }
         }
       },
@@ -995,8 +996,8 @@
       ],
       "settings": {
         "image": "shopify://shop_images/hf_20261002_174930_42a62afe-9478-4d12-86e5-b9073212a4be.png",
-        "heading": "<strong>The Journey: </strong><em><strong>Real Help Takes Time.</strong></em>",
-        "text": "<p>Nülive® is built for daily use, not quick fixes. Here's how things tend to shift once it's part of your routine.</p>",
+        "heading": "<strong>&nbsp;Your Nülive®</strong><em><strong> Wellness Journey&nbsp;</strong></em>",
+        "text": "<p>Nülive® is built for daily use, not quick fixes. Here’s how things can start to shift as it becomes part of your routine.†</p>",
         "button_label": "Start My Journey →",
         "button_link": "",
         "bg": "#ffffff",
