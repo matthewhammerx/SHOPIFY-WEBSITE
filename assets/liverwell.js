@@ -118,6 +118,11 @@
       });
       this.querySelectorAll('[data-lw-save]').forEach((n) => {
         let save = compare ? Number(compare) - Number(price) : 0;
+        // optionally add the value of the free gifts this offer unlocks
+        if (n.dataset.gifts === 'true') {
+          const unlockedN = Number(d.gifts || 0);
+          this.gifts.forEach((g, i) => { if (i < unlockedN) { const v = parseMoney((g.querySelector('.lw-gift__value') || {}).textContent); if (v) save += v; } });
+        }
         // "Rounded up" option: $71.96 -> $72
         if (n.dataset.round !== 'exact') save = Math.ceil(save / 100) * 100;
         n.hidden = save <= 0;

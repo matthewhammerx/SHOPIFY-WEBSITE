@@ -129,7 +129,8 @@
       "default": "FALL SALE - Save [amount]",
       "info": "[amount] = savings of the selected offer. Leave empty to hide."
     },
-    {"type": "select", "id": "save_rounding", "label": "Savings amount", "default": "up", "options": [{"value": "up", "label": "Rounded up ($72)"}, {"value": "exact", "label": "Exact ($71.96)"}]},
+    {"type": "select", "id": "save_rounding", "label": "Savings amount", "default": "up", "options": [{"value": "up", "label": "Rounded up ($72)"},
+    {"type": "checkbox", "id": "save_include_gifts", "label": "Include free gifts in savings", "default": true, "info": "Adds the value of the gifts the selected offer unlocks to the 'Save' amount."}, {"value": "exact", "label": "Exact ($71.96)"}]},
     {
       "type": "header",
       "content": "Subscribe & save"
