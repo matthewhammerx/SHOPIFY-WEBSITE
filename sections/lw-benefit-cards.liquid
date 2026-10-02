@@ -16,6 +16,9 @@
         </details>
       {%- endfor -%}
     </div>
+    {%- if section.settings.show_button and section.settings.button_label != blank -%}
+      <div class="lw-center" style="margin-top: 36px;"><a class="lw-btn lw-btn--wide" href="{{ section.settings.button_link | default: '#lw-offers' }}">{{ section.settings.button_label }}</a></div>
+    {%- endif -%}
   </div>
 </section>
 
@@ -36,6 +39,24 @@
       "type": "richtext",
       "id": "text",
       "label": "Text"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_button",
+      "label": "Show button",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Try Risk-Free Today"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link",
+      "info": "Leave empty to scroll to the offers."
     },
     {
       "type": "header",

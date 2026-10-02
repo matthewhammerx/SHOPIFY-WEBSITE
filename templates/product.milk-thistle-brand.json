@@ -887,7 +887,9 @@
         "fg": "#16301f",
         "accent": "#2e9254",
         "padding_top": 64,
-        "padding_bottom": 64
+        "padding_bottom": 64,
+        "show_button": true,
+        "button_label": "Try Risk-Free Today"
       }
     },
     "ticker_mid": {
