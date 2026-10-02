@@ -984,7 +984,7 @@
         "step_4"
       ],
       "settings": {
-        "image": "shopify://shop_images/Family_laughter_on_a_leafy_park_path.png",
+        "image": "shopify://shop_images/Joyful_family_swing_on_the_park_path_1.png",
         "heading": "The Journey: <em>Real Help Takes Time.</em>",
         "text": "<p>LiverWell® is built for daily use, not quick fixes. Here's how things tend to shift once it's part of your routine.</p>",
         "button_label": "Start My Journey →",
@@ -1240,63 +1240,11 @@
         "video_5",
         "video_6"
       ],
+      "disabled": true,
       "settings": {
         "heading": "Real People. <em>Real Results.</em>",
         "text": "Hear it in their own words.",
         "columns": 6,
-        "bg": "#fafaf5",
-        "fg": "#16301f",
-        "accent": "#2e9254",
-        "padding_top": 64,
-        "padding_bottom": 64
-      }
-    },
-    "science": {
-      "type": "lw-science",
-      "blocks": {
-        "stat_1": {
-          "type": "stat",
-          "settings": {
-            "number": "80",
-            "suffix": "%",
-            "text": "Silymarin concentration. The threshold used in clinical studies showing meaningful liver support. Most brands use 50 to 65%."
-          }
-        },
-        "stat_2": {
-          "type": "stat",
-          "settings": {
-            "number": "300",
-            "suffix": "mg",
-            "text": "Milk thistle extract per serving, the dose studied for liver support.†"
-          }
-        },
-        "stat_3": {
-          "type": "stat",
-          "settings": {
-            "number": "6",
-            "suffix": "",
-            "text": "Active ingredients formulated for liver support, gut wellness, and healthy digestion.†"
-          }
-        },
-        "stat_4": {
-          "type": "stat",
-          "settings": {
-            "number": "0",
-            "suffix": "",
-            "text": "Proprietary blends, fillers or artificial additives."
-          }
-        }
-      },
-      "block_order": [
-        "stat_1",
-        "stat_2",
-        "stat_3",
-        "stat_4"
-      ],
-      "settings": {
-        "heading": "Backed by Research. <em>Built on Results.</em>",
-        "text": "Silymarin, the active compound in milk thistle, is one of the most studied liver-support ingredients in the world.",
-        "footnote": "†Figures refer to published research on the ingredients, not clinical trials of this product.",
         "bg": "#fafaf5",
         "fg": "#16301f",
         "accent": "#2e9254",
@@ -1517,7 +1465,7 @@
         "verified_label": "Verified customer",
         "initial": 4,
         "more_label": "Load More Reviews",
-        "bg": "#fafaf5",
+        "bg": "#F5FAF5",
         "fg": "#16301f",
         "accent": "#2e9254",
         "padding_top": 64,
@@ -1584,6 +1532,7 @@
         "row_5",
         "row_6"
       ],
+      "disabled": true,
       "settings": {
         "heading": "Full Transparency. <em>No Proprietary Blends.</em>",
         "text": "<p>Every ingredient, every dose — right on the label. What you see is exactly what's in every capsule.</p>",
@@ -1660,6 +1609,7 @@
         "question_6",
         "question_7"
       ],
+      "disabled": true,
       "settings": {
         "heading": "Frequently Asked Questions",
         "text": "Got questions? We've got answers.",
@@ -1700,7 +1650,6 @@
     "comparison",
     "guarantee",
     "videos",
-    "science",
     "bundle",
     "review_list",
     "facts",
