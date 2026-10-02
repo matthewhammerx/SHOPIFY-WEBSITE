@@ -940,7 +940,7 @@
         "speed": 40,
         "repeat": 2,
         "border": true,
-        "bg": "#fafaf5",
+        "bg": "#F7F8F2",
         "fg": "#16301f",
         "icon_color": "#2e9254"
       }
@@ -989,7 +989,7 @@
         "text": "<p>LiverWell® is built for daily use, not quick fixes. Here's how things tend to shift once it's part of your routine.</p>",
         "button_label": "Start My Journey →",
         "button_link": "",
-        "bg": "#fafaf5",
+        "bg": "#FFFFFF",
         "fg": "#16301f",
         "accent": "#2e9254",
         "padding_top": 64,
@@ -1374,6 +1374,10 @@
         "stock_percent": 93,
         "stock_text": "[percent]% Sold",
         "app_bundles": false,
+        "kaching_sync": true,
+        "kaching_selector": "V1",
+        "kaching_prices": true,
+        "kaching_titles": true,
         "show_price_header": true,
         "sale_badge_text": "FALL SALE - Save [amount]",
         "enable_subscription": false,
@@ -1399,11 +1403,7 @@
         "fg": "#16301f",
         "accent": "#2e9254",
         "padding_top": 64,
-        "padding_bottom": 64,
-        "kaching_sync": true,
-        "kaching_selector": "V1",
-        "kaching_prices": true,
-        "kaching_titles": true
+        "padding_bottom": 64
       }
     },
     "review_list": {
@@ -1490,7 +1490,7 @@
         "verified_label": "Verified customer",
         "initial": 4,
         "more_label": "Load More Reviews",
-        "bg": "#F5FAF5",
+        "bg": "#f5faf5",
         "fg": "#16301f",
         "accent": "#2e9254",
         "padding_top": 64,
