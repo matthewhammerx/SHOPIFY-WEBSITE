@@ -458,7 +458,7 @@
         "ingredient_1": {
           "type": "ingredient",
           "settings": {
-            "image": "shopify://shop_images/Pink_Milk_Thistle_Blossom_on_Seeds.png",
+            "image": "shopify://shop_images/Two_milk_thistle_blooms_over_seeds.png",
             "dose": "300mg",
             "name": "Milk Thistle Extract (80% Silymarin)",
             "text": "The hero ingredient. Dosed at the exact level shown in research to help support your liver and protect it from daily stress.†"
@@ -467,6 +467,7 @@
         "ingredient_2": {
           "type": "ingredient",
           "settings": {
+            "image": "shopify://shop_images/Fine_inositol_powder_with_sculpted_ridges.png",
             "dose": "200mg",
             "name": "Inositol",
             "text": "Supports healthy blood sugar metabolism and helps your liver process fats as part of its natural function.†"
@@ -475,6 +476,7 @@
         "ingredient_3": {
           "type": "ingredient",
           "settings": {
+            "image": "shopify://shop_images/Kudzu_root_slices_with_fresh_leaves.png",
             "dose": "68mg",
             "name": "Pueraria Extract (10% Puerarin)",
             "text": "Traditionally used to support liver function and help reduce oxidative stress on overworked cells.†"
@@ -483,6 +485,7 @@
         "ingredient_4": {
           "type": "ingredient",
           "settings": {
+            "image": "shopify://shop_images/L-Methionine_crystalline_powder_macro.png",
             "dose": "10mg",
             "name": "L-Methionine",
             "text": "A key amino acid that supports your body's natural waste removal and processing.†"
@@ -491,6 +494,7 @@
         "ingredient_5": {
           "type": "ingredient",
           "settings": {
+            "image": "shopify://shop_images/Fresh_orange_slices_with_citrus_leaf.png",
             "dose": "10mg",
             "name": "Vitamin C",
             "text": "An essential antioxidant that supports immune function and helps shield liver cells from free radical damage.†"
