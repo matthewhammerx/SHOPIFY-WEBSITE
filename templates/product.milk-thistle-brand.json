@@ -489,7 +489,7 @@
             "image": "shopify://shop_images/Two_milk_thistle_blooms_over_seeds.png",
             "dose": "300mg",
             "name": "Milk Thistle Extract (80% Silymarin)",
-            "text": "The hero ingredient. Dosed at the exact level shown in research to help support your liver and protect it from daily stress.†"
+            "text": "The hero ingredient. High-standardized milk thistle to support liver function and help protect against everyday oxidative stress.†"
           }
         },
         "ingredient_2": {
@@ -498,7 +498,7 @@
             "image": "shopify://shop_images/Fine_inositol_powder_with_sculpted_ridges.png",
             "dose": "200mg",
             "name": "Inositol",
-            "text": "Supports healthy blood sugar metabolism and helps your liver process fats as part of its natural function.†"
+            "text": "Supports healthy metabolic function and helps your liver process fats as part of its normal function.†"
           }
         },
         "ingredient_3": {
@@ -507,7 +507,7 @@
             "image": "shopify://shop_images/Kudzu_root_slices_with_fresh_leaves.png",
             "dose": "68mg",
             "name": "Pueraria Extract (10% Puerarin)",
-            "text": "Traditionally used to support liver function and help reduce oxidative stress on overworked cells.†"
+            "text": "Traditionally used to support liver function and help defend against oxidative stress.†"
           }
         },
         "ingredient_4": {
@@ -516,7 +516,7 @@
             "image": "shopify://shop_images/L-Methionine_crystalline_powder_macro.png",
             "dose": "10mg",
             "name": "L-Methionine",
-            "text": "A key amino acid that supports your body's natural waste removal and processing.†"
+            "text": "An essential amino acid involved in your body’s natural processing and detoxification pathways.†"
           }
         },
         "ingredient_5": {
@@ -525,7 +525,7 @@
             "image": "shopify://shop_images/Fresh_orange_slices_with_citrus_leaf.png",
             "dose": "10mg",
             "name": "Vitamin C",
-            "text": "An essential antioxidant that supports immune function and helps shield liver cells from free radical damage.†"
+            "text": "A proven antioxidant that helps protect cells from oxidative stress and supports immune function.†"
           }
         },
         "ingredient_6": {
@@ -534,7 +534,7 @@
             "image": "shopify://shop_images/Golden_Turmeric_Rhizomes_and_Fine_Powder.png",
             "dose": "4mg",
             "name": "Turmeric Extract (95% Curcuminoids)",
-            "text": "A powerful antioxidant that supports liver health and helps comfort the body.†"
+            "text": "A concentrated antioxidant extract that supports liver health and helps defend against everyday oxidative stress.†"
           }
         }
       },
