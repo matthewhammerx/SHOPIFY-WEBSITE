@@ -1724,3 +1724,5 @@ lw-buy-box.lw-k-pending[data-kaching-titles] .lw-offer__title { visibility: hidd
 .lw-offer__extra .lw-offer__extra-line + .lw-offer__extra-line { margin-top: 10px; }
 .lw-offer__extra-div { display: flex; align-items: center; gap: 10px; margin: 10px 0; font-size: 10.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--lw-accent); }
 .lw-offer__extra-div::before, .lw-offer__extra-div::after { content: ""; flex: 1; height: 1px; background: currentColor; opacity: .35; }
+/* first bonus row: filled circle check (Resilia) */
+.lw-offer__extra-line--main .lw-icon { width: 20px; height: 20px; flex: 0 0 20px; margin-top: -1px; color: #1fa463; }

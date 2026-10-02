@@ -128,8 +128,8 @@
           {%- if s.extra_title != blank or s.extra_title_2 != blank or s.extra_title_3 != blank -%}
             <div class="lw-offer__extra">
               {%- if s.extra_title != blank -%}
-              <div class="lw-offer__extra-line">
-                {% render 'lw-icon', icon: 'check' %}
+              <div class="lw-offer__extra-line lw-offer__extra-line--main">
+                {% render 'lw-icon', icon: 'check-circle' %}
                 <div><strong>{{ s.extra_title }}</strong>{% if s.extra_text != blank %}<small>{{ s.extra_text }}</small>{% endif %}</div>
               </div>
               {%- endif -%}
