@@ -186,7 +186,7 @@
           {%- when 'eyebrow' -%}
             <div class="lw-pdp__eyebrow" {{ block.shopify_attributes }}>{{ block.settings.text }}</div>
           {%- when 'title' -%}
-            <h1 class="lw-pdp__title" {{ block.shopify_attributes }}>{% if block.settings.title != blank %}{{ block.settings.title }}{% else %}{{ lw_product.title }}{% endif %}</h1>
+            <h1 class="lw-pdp__title{% if block.settings.weight != blank and block.settings.weight != 'normal' %} lw-pdp__title--{{ block.settings.weight }}{% endif %}" {{ block.shopify_attributes }}>{% if block.settings.title != blank %}{{ block.settings.title }}{% else %}{{ lw_product.title }}{% endif %}</h1>
           {%- when 'text' -%}
             <div class="lw-pdp__desc lw-rte" {{ block.shopify_attributes }}>
               {%- if block.settings.use_product_description -%}{{ lw_product.description }}{%- else -%}{{ block.settings.text }}{%- endif -%}
@@ -555,6 +555,17 @@
           "id": "title",
           "label": "Title",
           "info": "Leave empty to use the product title."
+        },
+        {
+          "type": "select",
+          "id": "weight",
+          "label": "Title weight",
+          "default": "normal",
+          "options": [
+            { "value": "normal", "label": "Normal" },
+            { "value": "semibold", "label": "Semi-bold" },
+            { "value": "bold", "label": "Bold" }
+          ]
         }
       ]
     },
