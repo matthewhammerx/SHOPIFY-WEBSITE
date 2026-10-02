@@ -523,7 +523,8 @@
         "fg": "#16301f",
         "accent": "#2e9254",
         "padding_top": 64,
-        "padding_bottom": 64
+        "padding_bottom": 64,
+        "desktop_slider": true
       }
     },
     "reviews_stories": {

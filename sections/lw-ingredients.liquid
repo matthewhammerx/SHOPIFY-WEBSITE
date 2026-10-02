@@ -4,8 +4,9 @@
       <h2 class="lw-h lw-h--lg">{{ section.settings.heading }}</h2>
       {%- if section.settings.text != blank -%}<p class="lw-sub">{{ section.settings.text }}</p>{%- endif -%}
     </div>
-    <div class="lw-ingr__wrap{% if section.settings.mobile_slider %} lw-slider lw-ingr__slider{% endif %}" {% if section.settings.mobile_slider %}data-lw-slider{% endif %} style="--lw-col-m: 84%; --lw-gap: 14px;">
-    <div class="lw-ingr__grid{% if section.settings.mobile_slider %} lw-slider__track{% endif %}" style="--lw-cols: {{ section.settings.columns }};">
+    {%- assign ingr_slider = false -%}{%- if section.settings.mobile_slider or section.settings.desktop_slider -%}{%- assign ingr_slider = true -%}{%- endif -%}
+    <div class="lw-ingr__wrap{% if ingr_slider %} lw-slider lw-ingr__slider{% endif %}{% if section.settings.desktop_slider %} lw-ingr__slider--desk{% endif %}{% if section.settings.mobile_slider == false %} lw-ingr__slider--no-m{% endif %}" {% if ingr_slider %}data-lw-slider{% endif %} style="--lw-col-m: 84%; --lw-gap: 14px;">
+    <div class="lw-ingr__grid{% if ingr_slider %} lw-slider__track{% endif %}" style="--lw-cols: {{ section.settings.columns }};">
       {%- for block in section.blocks -%}
         <div class="lw-ingr lw-reveal" {{ block.shopify_attributes }}>
           <div class="lw-ingr__img">
@@ -17,7 +18,7 @@
         </div>
       {%- endfor -%}
     </div>
-    {%- if section.settings.mobile_slider -%}
+    {%- if ingr_slider -%}
       <div class="lw-slider__nav lw-slider__nav--round"><div class="lw-slider__dots" hidden></div><div class="lw-slider__arrows">
         <button type="button" data-lw-prev aria-label="Previous">{% render 'lw-icon', icon: 'arrow-left' %}</button>
         <button type="button" data-lw-next aria-label="Next">{% render 'lw-icon', icon: 'arrow-right' %}</button>
@@ -62,6 +63,13 @@
       "id": "mobile_slider",
       "label": "Swipeable slider on mobile",
       "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "desktop_slider",
+      "label": "Carousel on desktop",
+      "default": false,
+      "info": "Shows 'Columns' cards at a time with arrows instead of a grid."
     },
     {
       "type": "text",
