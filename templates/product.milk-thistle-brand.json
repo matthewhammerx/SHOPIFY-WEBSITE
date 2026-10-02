@@ -458,6 +458,7 @@
         "ingredient_1": {
           "type": "ingredient",
           "settings": {
+            "image": "shopify://shop_images/Pink_Milk_Thistle_Blossom_on_Seeds.png",
             "dose": "300mg",
             "name": "Milk Thistle Extract (80% Silymarin)",
             "text": "The hero ingredient. Dosed at the exact level shown in research to help support your liver and protect it from daily stress.†"
@@ -517,14 +518,14 @@
         "text": "Every capsule is packed with essentials. Perfect dosages.",
         "columns": 3,
         "mobile_slider": true,
+        "desktop_slider": true,
         "button_label": "",
         "button_link": "",
         "bg": "#fafaf5",
         "fg": "#16301f",
         "accent": "#2e9254",
         "padding_top": 64,
-        "padding_bottom": 64,
-        "desktop_slider": true
+        "padding_bottom": 64
       }
     },
     "reviews_stories": {
