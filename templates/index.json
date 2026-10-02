@@ -111,6 +111,7 @@
         "card_2",
         "card_3"
       ],
+      "disabled": true,
       "settings": {
         "eyebrow": "The root cause",
         "heading": "Why your liver matters.",
@@ -444,6 +445,7 @@
         "video_5",
         "video_6"
       ],
+      "disabled": true,
       "settings": {
         "heading": "Real people. <em>Real results.</em>",
         "text": "See how our customers are feeling with LiverWell.",
@@ -675,6 +677,7 @@
         "card_2": {
           "type": "card",
           "settings": {
+            "image": "shopify://shop_images/IMG_8776.png",
             "bg": "#16301f",
             "title": "Try it risk-free for 90 days.",
             "text": "If you don't feel the difference, we'll refund every cent.",
