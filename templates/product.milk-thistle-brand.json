@@ -103,7 +103,7 @@
           "type": "text",
           "settings": {
             "use_product_description": false,
-            "text": "<p>Science backed 80% silymarin formula that supports liver function, eases bloating, and boosts energy.†</p>"
+            "text": "<p>Clinically studied milk thistle with 80% silymarin to support liver function, ease bloating, improve digestion, and boost daily energy.†</p>"
           }
         },
         "benefits_5": {
@@ -140,6 +140,7 @@
             "kaching_titles": true,
             "show_price_header": true,
             "sale_badge_text": "FALL SALE - Save [amount]",
+            "save_rounding": "up",
             "enable_subscription": false,
             "subscription_default": false,
             "subscription_label": "Subscribe & Save an extra 15%",
@@ -1400,6 +1401,7 @@
         "kaching_titles": true,
         "show_price_header": true,
         "sale_badge_text": "FALL SALE - Save [amount]",
+        "save_rounding": "up",
         "enable_subscription": false,
         "subscription_default": false,
         "subscription_label": "Subscribe & Save an extra 15%",
