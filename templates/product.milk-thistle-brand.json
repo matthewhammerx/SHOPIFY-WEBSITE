@@ -427,7 +427,7 @@
             "prefix": "",
             "number": "80",
             "suffix": "%",
-            "label": "Silymarin concentration – the clinical threshold"
+            "label": "Standardized silymarin concentration"
           }
         },
         "stat_2": {
@@ -466,7 +466,7 @@
       ],
       "settings": {
         "heading": "<strong>Clinically Studied. More Energy. </strong><em><strong>A&nbsp;Happier Liver.</strong></em><strong>†</strong>",
-        "text": "When traditional botanicals meet modern research, the results speak for themselves.",
+        "text": "When traditional milk thistle meets modern research, the results speak for themselves.",
         "button_label": "Try Risk-Free Today",
         "button_link": "",
         "image_opacity": 20,
