@@ -186,7 +186,7 @@
         {%- for b in section.blocks -%}
           {%- if b.type != 'gift' -%}{%- continue -%}{%- endif -%}
           {%- assign gi = gi | plus: 1 -%}
-          {%- if gi > 1 -%}<span class="lw-gifts__sep" aria-hidden="true"></span>{%- endif -%}
+          {%- if gi > 1 -%}<span class="lw-gifts__sep" aria-hidden="true"><svg viewBox="0 0 12 12" width="8" height="8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 2v8M2 6h8"/></svg></span>{%- endif -%}
           <div class="lw-gift{% if gi > default_gifts %} is-locked{% endif %}" data-lw-gift
             {% if b.settings.gift_product != blank %}data-gift-variant="{{ b.settings.gift_product.selected_or_first_available_variant.id }}"{% endif %} {{ b.shopify_attributes }}>
             <div class="lw-gift__img">

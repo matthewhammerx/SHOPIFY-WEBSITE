@@ -1726,3 +1726,5 @@ lw-buy-box.lw-k-pending[data-kaching-titles] .lw-offer__title { visibility: hidd
 .lw-offer__extra-div::before, .lw-offer__extra-div::after { content: ""; flex: 1; height: 1px; background: currentColor; opacity: .35; }
 /* first bonus row: filled circle check (Resilia) */
 .lw-offer__extra-line--main .lw-icon { width: 20px; height: 20px; flex: 0 0 20px; margin-top: -1px; color: #1fa463; }
+/* gift separators: small circle with a plus (Resilia) */
+.lw-gifts__sep { width: 18px; height: 18px; flex: 0 0 18px; display: grid; place-items: center; border: 1px solid #b9c2b5; background: #fff; color: #2e9254; }
