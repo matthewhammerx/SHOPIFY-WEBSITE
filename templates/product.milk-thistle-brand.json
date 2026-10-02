@@ -198,7 +198,7 @@
             "bottles": 4,
             "badge": "Most Popular",
             "badge_color": "",
-            "default_selected": false,
+            "default_selected": true,
             "gifts": 2,
             "extra_title": "FREE Liver Wellness Guide ($14.95 value)",
             "extra_text": "Premium Guide",
@@ -224,7 +224,7 @@
             "bottles": 6,
             "badge": "Free Shipping",
             "badge_color": "",
-            "default_selected": true,
+            "default_selected": false,
             "gifts": 3,
             "extra_title": "6x Nülive Milk Thistle + Daily Liver Guide + Routine Tracker ($175.90 Value)",
             "extra_text": "",
@@ -557,7 +557,9 @@
       "blocks": {
         "photo_1": {
           "type": "photo",
-          "settings": {}
+          "settings": {
+            "image": "shopify://shop_images/Woman_with_Nulive_Milk_Thistle_bottle-7.png"
+          }
         },
         "photo_2": {
           "type": "photo",
