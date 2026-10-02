@@ -274,6 +274,7 @@
             "heading": "Description",
             "icon": "none",
             "content": "<p></p><p><strong>Nülive® combines 300mg of Milk Thistle Extract standardized to 80% silymarin with Inositol, Pueraria, L-Methionine, Vitamin C and Turmeric in one daily capsule.†</strong></p><p>Milk thistle has been used for centuries for liver support, with silymarin being the key active compound behind its benefits.† The rest of the formula works alongside it to support digestion, energy, antioxidant defense and everyday liver function.†</p><p><strong>Six active ingredients working together in one daily capsule — high-standardized milk thistle on one side, complementary liver and metabolic support on the other.</strong></p><p><strong>No proprietary blends, no hidden doses, just targeted daily support you can feel.†</strong></p>",
+            "checklist": false,
             "page": "",
             "open": false
           }
@@ -284,6 +285,7 @@
             "heading": "Why You Need Nülive® Milk Thistle+",
             "icon": "none",
             "content": "<p></p><p><strong>If you feel bloated after meals, your energy crashes during the day, or you just don’t feel as good as you used to, your liver may need more support. Nülive® was made for you.</strong></p><p>Milk thistle has been used for centuries to support liver health.† Our formula delivers 80% standardized silymarin, paired with Inositol, Pueraria, L-Methionine, Vitamin C and Turmeric to support liver function, digestion, energy and antioxidant defense.†</p><p><strong>One high-standardized botanical, five supporting ingredients, all working for you every day.</strong></p>",
+            "checklist": false,
             "page": "",
             "open": false
           }
@@ -294,6 +296,7 @@
             "heading": "About Your Free Gifts",
             "icon": "none",
             "content": "<p>These digital tools are designed to make your Nülive® routine easier to follow and easier to stick with. They’re included free with your first order as a thank-you for trying Nülive®.</p><p><strong>Daily Liver Wellness Guide</strong></p><p>A practical guide built to help you get more out of your daily routine. Inside, you’ll find simple nutrition, hydration and lifestyle tips designed to support everyday liver wellness, digestion and energy.</p><p><strong>30-Day Nülive® Routine Tracker</strong></p><p>A simple daily checklist designed to help you stay consistent with your Nülive® routine. Track each day, build the habit, and make it easier to stay on course long enough to actually feel the difference.</p><p><strong>Both gifts are digital and delivered by email with your first order.</strong></p>",
+            "checklist": false,
             "page": "",
             "open": false
           }
@@ -304,9 +307,9 @@
             "heading": "Benefits",
             "icon": "none",
             "content": "<p>✓ Supports healthy liver function†<br/>✓ Helps reduce bloating and support smoother digestion†<br/>✓ Supports steady daily energy and mental clarity†<br/>✓ Supports gut wellness and digestive comfort†<br/>✓ Provides antioxidant protection against everyday oxidative stress†<br/>✓ Supports healthy metabolic function†<br/>✓ Helps support clearer-looking skin over time†<br/>✓ Easy once-daily capsule<br/>✓ No proprietary blends or hidden doses</p>",
+            "checklist": true,
             "page": "",
-            "open": false,
-            "checklist": true
+            "open": false
           }
         },
         "collapsible_17": {
@@ -314,7 +317,8 @@
           "settings": {
             "heading": "Recommended Use",
             "icon": "none",
-            "content": "<p><strong>Take 1 capsule daily</strong> with water, preferably with a meal. Morning is best for a strong start to your day, and taking it at the same time each day keeps your system balanced.</p><p></p><p>For <strong>better results* take 2 capsules daily</strong>. That's why we offer free bottles for the starters.</p>",
+            "content": "<p><strong>Take 1 capsule daily with water, preferably with food.</strong>&nbsp;</p><p>Consistent daily use delivers the best results.</p>",
+            "checklist": false,
             "page": "",
             "open": false
           }
@@ -325,6 +329,7 @@
             "heading": "Do You Offer a Guarantee?",
             "icon": "none",
             "content": "<p>Yes. Every order is protected by our 90-day money-back guarantee. If you don't feel lighter, clearer, and more energized, we'll refund every cent.</p>",
+            "checklist": false,
             "page": "",
             "open": false
           }
