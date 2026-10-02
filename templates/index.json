@@ -24,6 +24,7 @@
         "note": "90-day money-back guarantee",
         "overlay": 35,
         "product": "milk-thistle",
+        "product_image": "shopify://shop_images/Nulive_19.png",
         "height": 85,
         "fg": "#16301f"
       }
@@ -255,6 +256,7 @@
         "text": "Every capsule is packed with essentials. Perfect dosages.",
         "columns": 3,
         "mobile_slider": true,
+        "desktop_slider": false,
         "button_label": "",
         "button_link": "",
         "bg": "#fafaf5",
