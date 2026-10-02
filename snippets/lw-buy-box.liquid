@@ -125,12 +125,29 @@
               <div class="lw-offer__was" data-lw-offer-was{% if compare <= 0 %} hidden{% endif %}>{% if compare > 0 %}{{ compare | money }}{% endif %}</div>
             </div>
           </div>
-          {%- if s.extra_title != blank -%}
+          {%- if s.extra_title != blank or s.extra_title_2 != blank or s.extra_title_3 != blank -%}
             <div class="lw-offer__extra">
+              {%- if s.extra_title != blank -%}
               <div class="lw-offer__extra-line">
                 {% render 'lw-icon', icon: 'check' %}
                 <div><strong>{{ s.extra_title }}</strong>{% if s.extra_text != blank %}<small>{{ s.extra_text }}</small>{% endif %}</div>
               </div>
+              {%- endif -%}
+              {%- if s.extra_divider != blank and s.extra_title_2 != blank -%}
+                <div class="lw-offer__extra-div"><span>{{ s.extra_divider }}</span></div>
+              {%- endif -%}
+              {%- if s.extra_title_2 != blank -%}
+              <div class="lw-offer__extra-line">
+                {% render 'lw-icon', icon: 'check' %}
+                <div><strong>{{ s.extra_title_2 }}</strong>{% if s.extra_text_2 != blank %}<small>{{ s.extra_text_2 }}</small>{% endif %}</div>
+              </div>
+              {%- endif -%}
+              {%- if s.extra_title_3 != blank -%}
+              <div class="lw-offer__extra-line">
+                {% render 'lw-icon', icon: 'check' %}
+                <div><strong>{{ s.extra_title_3 }}</strong>{% if s.extra_text_3 != blank %}<small>{{ s.extra_text_3 }}</small>{% endif %}</div>
+              </div>
+              {%- endif -%}
             </div>
           {%- endif -%}
         </label>
