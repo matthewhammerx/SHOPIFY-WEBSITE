@@ -1731,3 +1731,5 @@ lw-buy-box.lw-k-pending[data-kaching-titles] .lw-offer__title { visibility: hidd
 /* Benefit cards: square thumbnails */
 .lw-bcard summary { grid-template-columns: 86px 1fr auto; }
 .lw-bcard__img, .lw-brand .lw-bcard__img, .lw-soft .lw-bcard__img { width: 86px; height: 74px; border-radius: 16px; }
+/* Guarantee section: square image corners */
+.lw-guar .lw-guar__img, .lw-guar .lw-guar__img > img, .lw-guar .lw-guar__img > svg, .lw-brand .lw-guar__img > img, .lw-soft .lw-guar__img > img { border-radius: 0 !important; }
