@@ -503,6 +503,7 @@
         "ingredient_6": {
           "type": "ingredient",
           "settings": {
+            "image": "shopify://shop_images/Golden_Turmeric_Rhizomes_and_Fine_Powder.png",
             "dose": "4mg",
             "name": "Turmeric Extract (95% Curcuminoids)",
             "text": "A powerful antioxidant that supports liver health and helps comfort the body.†"
