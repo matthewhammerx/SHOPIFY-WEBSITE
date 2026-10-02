@@ -78,7 +78,7 @@
         "rating_1": {
           "type": "rating",
           "settings": {
-            "text": "Rated 4.9 | Excellent",
+            "text": "Rated 4.9 | Trusted by 70,000+",
             "show_avatars": true,
             "avatar_1": "shopify://shop_images/hf_20260902_033720_e571900f-7268-4c91-9176-6075ca71faf1.png",
             "avatar_2": "shopify://shop_images/hf_20260724_060713_4151b648-fff7-4163-a926-0fe76139263b.png",
@@ -1431,6 +1431,7 @@
             "title": "\"Finally stopped feeling bloated after every meal!\"",
             "body": "I've dealt with bloating for years. About a week and a half into LiverWell my stomach felt calmer and I stopped dreading lunch. Easy to take, no aftertaste.",
             "name": "CLARA D.",
+            "avatar": "shopify://shop_images/Woman_holding_a_Milk_Thistle_bottle-11.png",
             "tags": "Less Bloating, Better Digestion"
           }
         },
@@ -1442,6 +1443,7 @@
             "title": "\"My afternoon crash is gone.\"",
             "body": "I used to hit a wall every day around 2pm. After a few weeks I noticed my energy stayed steady and my mornings felt so much easier.",
             "name": "Sample M.",
+            "avatar": "shopify://shop_images/31.png",
             "tags": "Steady Energy, Better Mornings"
           }
         },
@@ -1453,6 +1455,7 @@
             "title": "\"A clean product that actually works.\"",
             "body": "I love that the label is fully transparent – 80% silymarin and no proprietary blends. I can feel the difference and I trust what I'm putting in my body.",
             "name": "JOSEPH T.",
+            "avatar": "shopify://shop_images/hf_20260902_033720_e571900f-7268-4c91-9176-6075ca71faf1.png",
             "tags": "Clean Ingredients, Transparency"
           }
         },
@@ -1464,6 +1467,7 @@
             "title": "\"Part of my daily routine now.\"",
             "body": "I enjoy a glass of wine on weekends and wanted to give my liver some support. LiverWell is now a staple next to my coffee every morning.",
             "name": "KATIE B.",
+            "avatar": "shopify://shop_images/616043840_122104787721210876_2654775654088331384_n.jpg",
             "tags": "Daily Support, Easy Routine"
           }
         },
@@ -1499,7 +1503,7 @@
         "review_6"
       ],
       "settings": {
-        "summary": "Rated 4.9 / 5 | Trusted by thousands",
+        "summary": "Rated 4.9 / 5 | Trusted by 70,000+",
         "heading": "They Felt the Shift. You Will Too.",
         "verified_label": "Verified customer",
         "initial": 4,
