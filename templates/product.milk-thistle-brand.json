@@ -769,7 +769,7 @@
             "icon": "liver",
             "value": "",
             "suffix": "%",
-            "text": "Silymarin helps protect liver cells from daily stress.†"
+            "text": "Helps support healthy liver function and antioxidant protection."
           }
         },
         "card_2": {
@@ -779,27 +779,27 @@
             "icon": "gut",
             "value": "",
             "suffix": "%",
-            "text": "Less bloating and smoother digestion after meals.†"
+            "text": "Helps reduce bloating and support smoother digestion after meals."
           }
         },
         "card_3": {
           "type": "card",
           "settings": {
-            "title": "Steady Energy",
+            "title": "Steady Energy & Clarity†",
             "icon": "bolt",
             "value": "",
             "suffix": "%",
-            "text": "Natural, all-day energy. No caffeine, no crash.†"
+            "text": "Supports steady daily energy and mental clarity without caffeine."
           }
         },
         "card_4": {
           "type": "card",
           "settings": {
-            "title": "Glowing Skin",
+            "title": "Gut Wellness†",
             "icon": "sparkle",
             "value": "",
             "suffix": "%",
-            "text": "Clearer skin as your body rebalances from within.†"
+            "text": "Supports digestive comfort and everyday gut balance."
           }
         }
       },
@@ -812,7 +812,7 @@
       "settings": {
         "eyebrow": "",
         "heading": "<strong>Feel Better. </strong><em><strong>Every Day.</strong></em>",
-        "text": "<p>From smoother digestion to steadier energy, here's what Nülive does every morning.</p>",
+        "text": "<p>From smoother digestion to steadier energy, here’s what Nülive® supports every morning.†</p>",
         "button_label": "Try Risk-Free Today",
         "button_link": "",
         "footnote": "",
