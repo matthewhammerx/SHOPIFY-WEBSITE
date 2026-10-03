@@ -1444,6 +1444,18 @@
     "review_list": {
       "type": "lw-review-list",
       "blocks": {
+        "review_DV8iUA": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "score": "5.0",
+            "title": "“I almost didn’t order because I’ve wasted money on supplements before.”",
+            "body": "I kept going back and forth for a few days. What finally made me try Nülive was the 90-day guarantee and the fact that every ingredient is clearly listed. I’m glad I did. It’s simple to take, and now it’s just part of my routine.",
+            "name": "Customer N.",
+            "avatar": "shopify://shop_images/Woman_Holding_Nulive_Milk_Thistle_Bottle-12.png",
+            "tags": "Easy to Take, Worth Trying"
+          }
+        },
         "review_1": {
           "type": "review",
           "settings": {
@@ -1480,6 +1492,18 @@
             "tags": "Clean Ingredients, Transparency"
           }
         },
+        "review_jm7wex": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "score": "5.0",
+            "title": "“I didn’t want another complicated routine.”",
+            "body": "I’ve bought supplements before that came with too many steps and I never stuck with them. One capsule a day was exactly what I wanted. I take it with breakfast and move on with my day.",
+            "name": "Customer N.",
+            "avatar": "shopify://shop_images/Woman_holding_milk_thistle_bottle-4.png",
+            "tags": "Simple Routine, One Capsule Daily"
+          }
+        },
         "review_4": {
           "type": "review",
           "settings": {
@@ -1491,37 +1515,15 @@
             "avatar": "shopify://shop_images/616043840_122104787721210876_2654775654088331384_n.jpg",
             "tags": "Daily Support, Easy Routine"
           }
-        },
-        "review_5": {
-          "type": "review",
-          "settings": {
-            "rating": 5,
-            "score": "5.0",
-            "title": "\"Clearer skin was a surprise bonus.\"",
-            "body": "I bought it for digestion but by the second month my skin looked brighter too. Already on my third order.",
-            "name": "Sample L.",
-            "tags": "Glowing Skin, Feeling Lighter"
-          }
-        },
-        "review_6": {
-          "type": "review",
-          "settings": {
-            "rating": 5,
-            "score": "4.8",
-            "title": "\"Worth it for the guarantee alone.\"",
-            "body": "The 90-day guarantee made it easy to try. Glad I did – I feel lighter and more focused.",
-            "name": "Sample J.",
-            "tags": "Risk-Free, More Focus"
-          }
         }
       },
       "block_order": [
+        "review_DV8iUA",
         "review_1",
         "review_2",
         "review_3",
-        "review_4",
-        "review_5",
-        "review_6"
+        "review_jm7wex",
+        "review_4"
       ],
       "settings": {
         "summary": "Rated 4.9 / 5 | Trusted by 75,000+",
