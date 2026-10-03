@@ -1480,6 +1480,18 @@
             "tags": "Steady Energy, Better Mornings"
           }
         },
+        "review_fNH8zU": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "score": "5.0",
+            "title": "\"Part of my wellness routine now.\"",
+            "body": "Every time I feel something coming on, I reach for Nulive first. It's become a staple for me, especially during fall and winter when my routine matters most.",
+            "name": "Customer N.",
+            "avatar": "shopify://shop_images/Kitchen_Portrait_with_Milk_Thistle_Bottle-10.png",
+            "tags": "Daily Fefense, Seasonal Wellness"
+          }
+        },
         "review_jm7wex": {
           "type": "review",
           "settings": {
@@ -1521,6 +1533,7 @@
         "review_1",
         "review_3",
         "review_2",
+        "review_fNH8zU",
         "review_jm7wex",
         "review_DV8iUA",
         "review_4"
