@@ -1132,6 +1132,7 @@
         },
         "point_8": {
           "type": "point",
+          "disabled": true,
           "settings": {
             "bold": "Clinically-Studied Ingredients —",
             "text": "300mg standardized to 80% silymarin, the concentration used in research.†"
@@ -1139,6 +1140,7 @@
         },
         "point_9": {
           "type": "point",
+          "disabled": true,
           "settings": {
             "bold": "Liver + Gut Support —",
             "text": "Built to support liver function, digestion, gut wellness and daily energy together.†"
@@ -1146,6 +1148,7 @@
         },
         "point_10": {
           "type": "point",
+          "disabled": true,
           "settings": {
             "bold": "Clean & Transparent —",
             "text": "Every active ingredient and dose is clearly listed. No proprietary blends."
@@ -1153,6 +1156,7 @@
         },
         "point_11": {
           "type": "point",
+          "disabled": true,
           "settings": {
             "bold": "Visible, Gradual Results —",
             "text": "One capsule a day with a 90-day guarantee to actually give your routine time to work."
