@@ -1134,28 +1134,28 @@
           "type": "point",
           "settings": {
             "bold": "Clinically-Studied Ingredients —",
-            "text": "Milk thistle standardized to 80% silymarin, the concentration used in research."
+            "text": "300mg standardized to 80% silymarin, the concentration used in research.†"
           }
         },
         "point_9": {
           "type": "point",
           "settings": {
             "bold": "Liver + Gut Support —",
-            "text": "Built to support liver function, digestion and energy together, not just one piece.†"
+            "text": "Built to support liver function, digestion, gut wellness and daily energy together.†"
           }
         },
         "point_10": {
           "type": "point",
           "settings": {
             "bold": "Clean & Transparent —",
-            "text": "No fillers, no proprietary blends, every dose on the label."
+            "text": "Every active ingredient and dose is clearly listed. No proprietary blends."
           }
         },
         "point_11": {
           "type": "point",
           "settings": {
             "bold": "Visible, Gradual Results —",
-            "text": "A daily ritual that keeps working, week after week.†"
+            "text": "One capsule a day with a 90-day guarantee to actually give your routine time to work."
           }
         }
       },
