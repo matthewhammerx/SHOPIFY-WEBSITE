@@ -1691,6 +1691,7 @@
     },
     "sticky": {
       "type": "lw-sticky-atc",
+      "disabled": true,
       "settings": {
         "product": "nulive-milk-thistle",
         "image": "shopify://shop_images/Nulive_27.png",
