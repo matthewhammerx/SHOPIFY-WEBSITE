@@ -1444,18 +1444,6 @@
     "review_list": {
       "type": "lw-review-list",
       "blocks": {
-        "review_DV8iUA": {
-          "type": "review",
-          "settings": {
-            "rating": 5,
-            "score": "5.0",
-            "title": "“I almost didn’t order because I’ve wasted money on supplements before.”",
-            "body": "I kept going back and forth for a few days. What finally made me try Nülive was the 90-day guarantee and the fact that every ingredient is clearly listed. I’m glad I did. It’s simple to take, and now it’s just part of my routine.",
-            "name": "Customer N.",
-            "avatar": "shopify://shop_images/Woman_Holding_Nulive_Milk_Thistle_Bottle-12.png",
-            "tags": "Easy to Take, Worth Trying"
-          }
-        },
         "review_1": {
           "type": "review",
           "settings": {
@@ -1466,18 +1454,6 @@
             "name": "CLARA D.",
             "avatar": "shopify://shop_images/Woman_holding_a_Milk_Thistle_bottle-11.png",
             "tags": "Less Bloating, Better Digestion"
-          }
-        },
-        "review_2": {
-          "type": "review",
-          "settings": {
-            "rating": 5,
-            "score": "5.0",
-            "title": "\"My afternoon crash is gone.\"",
-            "body": "I used to hit a wall every day around 2pm. After a few weeks, my energy felt steadier and I wasn’t reaching for coffee just to get through the afternoon.",
-            "name": "Sample M.",
-            "avatar": "shopify://shop_images/31.png",
-            "tags": "Steady Energy, Better Mornings"
           }
         },
         "review_3": {
@@ -1492,6 +1468,18 @@
             "tags": "Clean Ingredients, Transparency"
           }
         },
+        "review_2": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "score": "5.0",
+            "title": "\"My afternoon crash is gone.\"",
+            "body": "I used to hit a wall every day around 2pm. After a few weeks, my energy felt steadier and I wasn’t reaching for coffee just to get through the afternoon.",
+            "name": "Sample M.",
+            "avatar": "shopify://shop_images/31.png",
+            "tags": "Steady Energy, Better Mornings"
+          }
+        },
         "review_jm7wex": {
           "type": "review",
           "settings": {
@@ -1502,6 +1490,18 @@
             "name": "Customer N.",
             "avatar": "shopify://shop_images/Woman_holding_milk_thistle_bottle-4.png",
             "tags": "Simple Routine, One Capsule Daily"
+          }
+        },
+        "review_DV8iUA": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "score": "5.0",
+            "title": "“I almost didn’t order because I’ve wasted money on supplements before.”",
+            "body": "I kept going back and forth for a few days. What finally made me try Nülive was the 90-day guarantee and the fact that every ingredient is clearly listed. I’m glad I did. It’s simple to take, and now it’s just part of my routine.",
+            "name": "Customer N.",
+            "avatar": "shopify://shop_images/Woman_Holding_Nulive_Milk_Thistle_Bottle-12.png",
+            "tags": "Easy to Take, Worth Trying"
           }
         },
         "review_4": {
@@ -1518,18 +1518,18 @@
         }
       },
       "block_order": [
-        "review_DV8iUA",
         "review_1",
-        "review_2",
         "review_3",
+        "review_2",
         "review_jm7wex",
+        "review_DV8iUA",
         "review_4"
       ],
       "settings": {
         "summary": "Rated 4.9 / 5 | Trusted by 75,000+",
         "heading": "<strong>They Felt the Shift. You Will Too.</strong>",
         "verified_label": "Verified customer",
-        "initial": 4,
+        "initial": 2,
         "more_label": "Load More Reviews",
         "bg": "#f5faf5",
         "fg": "#16301f",
