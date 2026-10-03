@@ -1475,7 +1475,7 @@
             "score": "5.0",
             "title": "\"My afternoon crash is gone.\"",
             "body": "I used to hit a wall every day around 2pm. After a few weeks, my energy felt steadier and I wasn’t reaching for coffee just to get through the afternoon.",
-            "name": "Sample M.",
+            "name": "MEGAN M.",
             "avatar": "shopify://shop_images/31.png",
             "tags": "Steady Energy, Better Mornings"
           }
@@ -1487,7 +1487,7 @@
             "score": "5.0",
             "title": "\"Part of my wellness routine now.\"",
             "body": "Every time I feel something coming on, I reach for Nulive first. It's become a staple for me, especially during fall and winter when my routine matters most.",
-            "name": "Customer N.",
+            "name": "SIMON N.",
             "avatar": "shopify://shop_images/Kitchen_Portrait_with_Milk_Thistle_Bottle-10.png",
             "tags": "Daily Fefense, Seasonal Wellness"
           }
@@ -1499,7 +1499,7 @@
             "score": "5.0",
             "title": "“I didn’t want another complicated routine.”",
             "body": "I’ve bought supplements before that came with too many steps and I never stuck with them. One capsule a day was exactly what I wanted. I take it with breakfast and move on with my day.",
-            "name": "Customer N.",
+            "name": "JAMIE K.",
             "avatar": "shopify://shop_images/Woman_holding_milk_thistle_bottle-4.png",
             "tags": "Simple Routine, One Capsule Daily"
           }
@@ -1511,7 +1511,7 @@
             "score": "5.0",
             "title": "“I almost didn’t order because I’ve wasted money on supplements before.”",
             "body": "I kept going back and forth for a few days. What finally made me try Nülive was the 90-day guarantee and the fact that every ingredient is clearly listed. I’m glad I did. It’s simple to take, and now it’s just part of my routine.",
-            "name": "Customer N.",
+            "name": "EMILY J.",
             "avatar": "shopify://shop_images/Woman_Holding_Nulive_Milk_Thistle_Bottle-12.png",
             "tags": "Easy to Take, Worth Trying"
           }
@@ -1704,7 +1704,6 @@
     },
     "sticky": {
       "type": "lw-sticky-atc",
-      "disabled": true,
       "settings": {
         "product": "nulive-milk-thistle",
         "image": "shopify://shop_images/Nulive_27.png",
