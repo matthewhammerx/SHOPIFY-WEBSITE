@@ -1015,7 +1015,7 @@
           "settings": {
             "image": "shopify://shop_images/ChatGPT_Image_Oct_2_2026_01_13_43_PM-1.png",
             "title": "Clinically-Dosed, Not Underdosed",
-            "text": "Most brands use 50–65% silymarin. Ours is standardized to 80% — the threshold used in clinical research — at 300mg per serving."
+            "text": "Most milk thistle formulas use lower-standardized extracts. Nülive® delivers 300mg of milk thistle standardized to 80% silymarin — the concentration used in clinical research.†"
           }
         },
         "reason_2": {
@@ -1023,7 +1023,7 @@
           "settings": {
             "image": "shopify://shop_images/ChatGPT_Image_Oct_2_2026_01_13_43_PM-2.png",
             "title": "Supports Liver AND Gut Together",
-            "text": "Why take three different supplements? Nülive pairs milk thistle with 5 supporting ingredients for liver, digestion and energy in one daily formula.†"
+            "text": "Why take multiple supplements? Nülive® combines milk thistle with 5 supporting ingredients to support liver function, digestion, bloating and daily energy in one formula.†"
           }
         },
         "reason_3": {
@@ -1031,7 +1031,7 @@
           "settings": {
             "image": "shopify://shop_images/ChatGPT_Image_Oct_2_2026_01_13_44_PM-3.png",
             "title": "Full Transparency, No Blends",
-            "text": "Every ingredient and dose is on the label. No proprietary blends, no fillers, no hidden extras."
+            "text": "Every ingredient and dose is clearly listed. No proprietary blends, no hidden amounts, no filler ingredients."
           }
         },
         "reason_4": {
@@ -1039,7 +1039,7 @@
           "settings": {
             "image": "shopify://shop_images/ChatGPT_Image_Oct_2_2026_01_13_45_PM-4.png",
             "title": "Third-Party Tested",
-            "text": "Every batch is tested for purity and potency and made in a GMP-certified facility."
+            "text": "Every batch is tested for purity and potency and produced in a GMP-certified facility."
           }
         },
         "reason_5": {
@@ -1047,7 +1047,7 @@
           "settings": {
             "image": "shopify://shop_images/ChatGPT_Image_Oct_2_2026_01_13_46_PM-5.png",
             "title": "A Daily Routine, Not a Quick Fix",
-            "text": "Nülive isn’t a cleanse, harsh detox, or overnight fix. It’s daily support designed to fit your routine and support liver, digestion, and everyday wellbeing over time."
+            "text": "Nülive® isn’t a cleanse, harsh detox or 7-day miracle. It’s daily support designed to fit your routine and support your liver, digestion and energy over time.†"
           }
         }
       },
@@ -1060,7 +1060,7 @@
       ],
       "settings": {
         "badge": "5 Reasons Why",
-        "heading": "<strong>Nülive® is Different From Everything You've Tried</strong>",
+        "heading": "<strong>&nbsp;Why Thousands Choose Nülive®&nbsp;</strong>",
         "label_prefix": "Reason",
         "button_label": "Try Risk-Free Today",
         "button_link": "",
@@ -1082,14 +1082,6 @@
             "them_text": "50–65% Silymarin"
           }
         },
-        "row_2": {
-          "type": "row",
-          "settings": {
-            "icon": "shield",
-            "us_text": "Protects AND Strengthens†",
-            "them_text": "Protection Only"
-          }
-        },
         "row_3": {
           "type": "row",
           "settings": {
@@ -1102,24 +1094,32 @@
           "type": "row",
           "settings": {
             "icon": "gut",
-            "us_text": "Digestion & Gut Support†",
-            "them_text": "No Gut Support"
+            "us_text": "Liver + Gut Support†",
+            "them_text": "Primarily Liver Support"
           }
         },
         "row_5": {
           "type": "row",
           "settings": {
             "icon": "droplet",
-            "us_text": "Blood Sugar Support†",
-            "them_text": "Not Included"
+            "us_text": "Full Dose Transparency",
+            "them_text": "Proprietary Blends or Hidden Doses"
           }
         },
         "row_6": {
           "type": "row",
           "settings": {
             "icon": "leaf",
-            "us_text": "Naturally Sourced",
-            "them_text": "Synthetic Fillers"
+            "us_text": "Third-Party Tested",
+            "them_text": "Testing Standards Vary"
+          }
+        },
+        "row_2": {
+          "type": "row",
+          "settings": {
+            "icon": "shield",
+            "us_text": "Once Daily Formula",
+            "them_text": "Multiple Products or Doses"
           }
         },
         "row_7": {
@@ -1161,11 +1161,11 @@
       },
       "block_order": [
         "row_1",
-        "row_2",
         "row_3",
         "row_4",
         "row_5",
         "row_6",
+        "row_2",
         "row_7",
         "point_8",
         "point_9",
